@@ -14,9 +14,9 @@ public interface IUser {
 
 	void reviewPostComments(Post post);
 
-	void likePost(Post post);
+	void likePost(Post post); 
 
-	void dislikePost(Post post);
+	void dislikePost(Post post); 
 
 	void changePassword(String password);
 

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Comment {
 
+	public static final Scanner sc = new Scanner(System.in);
 	private Post post;
 	private String text;
 	private LocalDate date;
@@ -16,7 +17,6 @@ public class Comment {
 	}
 
 	public String createComment() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Plese enter a comment");
 		this.text = sc.nextLine();
 		this.date = LocalDate.now();

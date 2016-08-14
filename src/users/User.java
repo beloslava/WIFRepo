@@ -14,7 +14,8 @@ public class User implements IUser {
 
 	@Override
 	public void createProfile() {
-		// TODO Auto-generated method stub
+		this.settings = new ProfileSettings();
+		settings.setOwner(this);
 
 	}
 
