@@ -34,6 +34,9 @@ public class Post implements IPost {
 		this.owner = owner;
 	}
 
+	public String getTag() {
+		return tag;
+	}
 	@Override
 	public void setLike() {
 		this.like++;

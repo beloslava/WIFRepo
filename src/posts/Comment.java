@@ -14,17 +14,23 @@ public class Comment {
 
 	public Comment(Post post) {
 		this.post = post;
-	}
-
-	public String createComment() {
 		System.out.println("Plese enter a comment");
 		this.text = sc.nextLine();
 		this.date = LocalDate.now();
 		this.time = LocalTime.now();
 		sc.close();
-		return text;
-
+		
 	}
+
+//	public String createComment() {
+//		System.out.println("Plese enter a comment");
+//		this.text = sc.nextLine();
+//		this.date = LocalDate.now();
+//		this.time = LocalTime.now();
+//		sc.close();
+//		return text;
+//
+//	}
 
 	@Override
 	public String toString() {

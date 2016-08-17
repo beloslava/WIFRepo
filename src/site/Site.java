@@ -1,6 +1,7 @@
 package site;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.TreeMap;
 
 import posts.Post;
@@ -18,7 +19,13 @@ public class Site implements ISite {
 
 	@Override
 	public void searchPost(String tagName) {
-		// TODO Auto-generated method stub
+		for (Iterator p =posts.entrySet().iterator(); p.hasNext();) {
+			
+			if(posts.get(p).getTag().equals(tagName)){
+				System.out.println(posts.get(p));
+			}
+		}
+		
 
 	}
 

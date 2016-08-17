@@ -9,17 +9,22 @@ public interface IUser {
 	void makePost(Post post, String title, String tag);
 
 	void uploadPost();
+	
+	void deletePost(Post post);
 
 	void writeComment(Post post);
 
-	void reviewPostComments(Post post);
+	void reviewPostComments(Post post);//?
 
 	void likePost(Post post); 
 
 	void dislikePost(Post post); 
 
-	void changePassword(String password);
+	void changePassword();
 
-	void deletePost(Post post);
+	void changeName(String name);
 
+	void addFeatures();
+
+	void changeSettings();
 }
