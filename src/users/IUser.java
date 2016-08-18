@@ -24,9 +24,8 @@ public interface IUser {
 
 	void changeName(String name);
 
-	void addFeatures();
-
 	void changeSettings();
 
+	
 	
 }

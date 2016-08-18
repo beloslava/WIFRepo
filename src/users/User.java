@@ -14,23 +14,21 @@ public class User implements IUser {
 	private static String NAME_MESSAGE = "Enter new name";
 	private static String NEW_PASSWORD_MESSAGE = "Enter your new password";
 	private static String REPEAT_PASSWORD_MESSAGE = "Repeat password";
-//	private static String EMAIL_MESSAGE = "Enter your email address";
 	private static String PASSWORD_MESSAGE = "Enter password";
 
 	private String password;
-	// private String email;
 	private ProfileSettings settings;
 	private Site site;
 	private TreeMap<Integer, Post> posts; // id post -> post
-
-	public User() {
-		// this.settings = new ProfileSettings();
-	}
 
 	public ProfileSettings getSettings() {
 		return settings;
 	}
 
+	public User(){
+		this.posts = new TreeMap<Integer, Post>();
+	}
+	
 	@Override
 	public void createProfile() {
 		this.settings = new ProfileSettings();
@@ -90,7 +88,7 @@ public class User implements IUser {
 
 	}
 
-	//upload the post on the site
+	// upload the post on the site
 	@Override
 	public void uploadPost() {
 
@@ -98,11 +96,11 @@ public class User implements IUser {
 
 	@Override
 	public void makePost(Post post) {
-		posts.put(post.id, post);
-		
+		this.posts.put(post.id, post);
+
 	}
 
-	//changing the name
+	// change name
 	@Override
 	public void changeName(String newName) {
 		String name = "";
@@ -114,7 +112,7 @@ public class User implements IUser {
 		// System.out.println(this.settings.getName());
 	}
 
-	//change the profile settings - name, pass, country, description
+	// change the profile settings - name, pass, country, description
 	@Override
 	public void changeSettings() {
 		int ch;
@@ -123,6 +121,7 @@ public class User implements IUser {
 		System.out.println("2 for change your password");
 		System.out.println("3 for change your country");
 		System.out.println("4 for change your description");
+		System.out.println("5 for adding your gender");
 		System.out.println("0 for exit");
 		do {
 			System.out.println("Enter your choice");
@@ -142,6 +141,9 @@ public class User implements IUser {
 			case 4:
 				this.settings.addPersonalDescription();
 				break;
+			case 5:
+				this.settings.addGender();
+				break;
 			case 0:
 				return;
 			default:
@@ -149,13 +151,6 @@ public class User implements IUser {
 			}
 		} while (ch != 0);
 
-	}
-
-	@Override
-	public void addFeatures() {
-		this.settings.addCountry();
-		this.settings.addGender();
-		this.settings.addPersonalDescription();
 	}
 
 }

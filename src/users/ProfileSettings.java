@@ -15,10 +15,9 @@ public class ProfileSettings {
 	private static String PASSWORD_MESSAGE = "Enter password";
 	private static String REPEAT_PASSWORD_MESSAGE = "Repeat password";
 	private static String AGE_MESSAGE = "Enter your age";
-	private static String GENDER_MESSAGE = "Enter your gender";
+	private static String GENDER_MESSAGE = "Enter your gender - male or female";
 	private static String COUNTRY_MESSAGE = "Enter your country";
 	private static String DESCRIPTION_MESSAGE = "Enter your personal description";
-	
 
 	private String email;
 	private String name;
@@ -30,11 +29,10 @@ public class ProfileSettings {
 	private String personalDescription;
 	private User owner;
 
-	
 	public String getPassword() {
 		return password;
 	}
-	
+
 	// profile with email, name, username, password, age
 	public ProfileSettings() {
 
@@ -73,19 +71,28 @@ public class ProfileSettings {
 
 		this.password = password;
 
-		try {
-			int age = 0;
-			do {
+		// try {
+		int age = 0;
+		boolean validAge = false;
+		do {
+			try {
 				System.out.println(AGE_MESSAGE);
 				age = sc.nextInt();
-			} while (age < 0 && age > 200);
+				if (age > 0 && age < 200) {
+					validAge = true;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Your age must be a number");
+				return;
+			}
+		} while (!validAge);
 
-			this.age = age;
+		this.age = age;
 
-		} catch (InputMismatchException e) {
-			System.out.println("Invalid data");
-			return;
-		}
+		// } catch (InputMismatchException e) {
+		// System.out.println("Invalid data");
+		// return;
+		// }
 
 		System.out.println("Email address: " + email + "\nName: " + name + "\nusername: " + username + "\nPassword: "
 				+ password + "\nAge: " + age);
@@ -94,6 +101,7 @@ public class ProfileSettings {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
@@ -140,40 +148,39 @@ public class ProfileSettings {
 		return false;
 	}
 
-	//set gender
+	// set gender
 	protected void addGender() {
 		String sex;
 		do {
 			System.out.println(GENDER_MESSAGE);
-			sex = sc.nextLine();
-		} while (!sex.equals("woman") || !sex.equals("man"));
+			sex = sc.next();
+		} while (!(sex.equals("female") || sex.equals("male")));
 		this.gender = sex;
+		System.out.println("Gender: " + this.gender);
 	}
 
-	//set country
+	// set country
 	protected void addCountry() {
 		String cntr;
-		do {
-			System.out.println(COUNTRY_MESSAGE);
-			cntr = sc.nextLine();
-		} while (cntr == null && cntr.isEmpty());
+		System.out.println(COUNTRY_MESSAGE);
+		cntr = sc.nextLine();
 		this.country = cntr;
+		System.out.println("Country: " + this.country);
 	}
 
-	//add personal description
+	// add personal description
 	protected void addPersonalDescription() {
 		String description;
-		do {
-			System.out.println(DESCRIPTION_MESSAGE);
-			description = sc.nextLine();
-		} while (description == null && description.isEmpty());			
+		System.out.println(DESCRIPTION_MESSAGE);
+		description = sc.nextLine();
 		this.personalDescription = description;
+		System.out.println("Your personal description: " + this.personalDescription);
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
