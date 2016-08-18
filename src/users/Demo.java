@@ -16,8 +16,8 @@ public class Demo {
 		user.createProfile();
 //		user.changePassword();
 //		user.addFeatures();
-		user.changeSettings();
-		user.makePost(post);
+//		user.changeSettings();
+//		user.makePost(post);
 
 	}
 

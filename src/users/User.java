@@ -25,10 +25,10 @@ public class User implements IUser {
 		return settings;
 	}
 
-	public User(){
+	public User() {
 		this.posts = new TreeMap<Integer, Post>();
 	}
-	
+
 	@Override
 	public void createProfile() {
 		this.settings = new ProfileSettings();
@@ -66,7 +66,7 @@ public class User implements IUser {
 		String pass;
 		do {
 			System.out.println(PASSWORD_MESSAGE);
-			pass = sc.nextLine();
+			pass = sc.next();
 		} while (!pass.equals(this.password));
 		String newPassword = "";
 		String newPassword2 = "";
@@ -120,8 +120,7 @@ public class User implements IUser {
 		System.out.println("1 for change your name");
 		System.out.println("2 for change your password");
 		System.out.println("3 for change your country");
-		System.out.println("4 for change your description");
-		System.out.println("5 for adding your gender");
+		System.out.println("4 for change your personal description");
 		System.out.println("0 for exit");
 		do {
 			System.out.println("Enter your choice");
@@ -136,13 +135,14 @@ public class User implements IUser {
 				this.changePassword();
 				break;
 			case 3:
-				this.settings.addCountry();
+				System.out.println(ProfileSettings.COUNTRY_MESSAGE);
+				String country = sc.nextLine();
+				this.changeCountry(country);
 				break;
 			case 4:
-				this.settings.addPersonalDescription();
-				break;
-			case 5:
-				this.settings.addGender();
+				System.out.println(ProfileSettings.DESCRIPTION_MESSAGE);
+				String desc = sc.nextLine();
+				this.changePersonalDescription(desc);
 				break;
 			case 0:
 				return;
@@ -150,6 +150,28 @@ public class User implements IUser {
 				break;
 			}
 		} while (ch != 0);
+
+	}
+
+	@Override
+	public void changePersonalDescription(String desc) {
+		String description = "";
+		do {
+			description = sc.nextLine();
+		} while (description == null);
+
+		this.settings.setPersonalDescription(description);
+
+	}
+
+	@Override
+	public void changeCountry(String country) {
+		String cntr = "";
+		do {
+			cntr = sc.nextLine();
+		} while (cntr == null);
+
+		this.settings.setCountry(cntr);
 
 	}
 

@@ -16,8 +16,8 @@ public class ProfileSettings {
 	private static String REPEAT_PASSWORD_MESSAGE = "Repeat password";
 	private static String AGE_MESSAGE = "Enter your age";
 	private static String GENDER_MESSAGE = "Enter your gender - male or female";
-	private static String COUNTRY_MESSAGE = "Enter your country";
-	private static String DESCRIPTION_MESSAGE = "Enter your personal description";
+	static String COUNTRY_MESSAGE = "Enter your country";
+	static String DESCRIPTION_MESSAGE = "Enter your personal description";
 
 	private String email;
 	private String name;
@@ -94,8 +94,22 @@ public class ProfileSettings {
 		// return;
 		// }
 
-		System.out.println("Email address: " + email + "\nName: " + name + "\nusername: " + username + "\nPassword: "
-				+ password + "\nAge: " + age);
+		String sex;
+		do {
+			System.out.println(GENDER_MESSAGE);
+			sex = sc.next();
+		} while (!(sex.equals("female") || sex.equals("male")));
+		this.gender = sex;
+
+		System.out.println(COUNTRY_MESSAGE);
+		this.country = sc.nextLine();
+
+		System.out.println(DESCRIPTION_MESSAGE);
+		this.personalDescription = sc.nextLine();
+
+		System.out.println("Email address: " + email + "\nName: " + name + "\nUsername: " + username + "\nPassword: "
+				+ password + "\nAge: " + age + "\nGender: " + gender + "\nCountry: " + country
+				+ "\nPersonal Description: " + personalDescription);
 	}
 
 	public void setName(String name) {
@@ -148,33 +162,12 @@ public class ProfileSettings {
 		return false;
 	}
 
-	// set gender
-	protected void addGender() {
-		String sex;
-		do {
-			System.out.println(GENDER_MESSAGE);
-			sex = sc.next();
-		} while (!(sex.equals("female") || sex.equals("male")));
-		this.gender = sex;
-		System.out.println("Gender: " + this.gender);
+	public void setPersonalDescription(String personalDescription) {
+		this.personalDescription = personalDescription;
 	}
 
-	// set country
-	protected void addCountry() {
-		String cntr;
-		System.out.println(COUNTRY_MESSAGE);
-		cntr = sc.nextLine();
-		this.country = cntr;
-		System.out.println("Country: " + this.country);
-	}
-
-	// add personal description
-	protected void addPersonalDescription() {
-		String description;
-		System.out.println(DESCRIPTION_MESSAGE);
-		description = sc.nextLine();
-		this.personalDescription = description;
-		System.out.println("Your personal description: " + this.personalDescription);
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public String getName() {
