@@ -9,5 +9,5 @@ public interface IPost {
 	public void setComment(Comment postComment);
 
 	public void reviewComments();
-
+	
 }

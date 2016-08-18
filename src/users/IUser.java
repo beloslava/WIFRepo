@@ -6,7 +6,7 @@ public interface IUser {
 
 	void createProfile();
 
-	void makePost(Post post, String title, String tag);
+	void makePost(Post post);
 
 	void uploadPost();
 	
@@ -27,4 +27,6 @@ public interface IUser {
 	void addFeatures();
 
 	void changeSettings();
+
+	
 }

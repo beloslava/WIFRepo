@@ -11,12 +11,14 @@ public class Demo {
 		Post post = new Post(ross, "demo", "");
 
 		User user = new User();
-		user.writeComment(post);
-		//ross.reviewPostComments(post);
-//		user.createProfile();
+//		user.writeComment(post);
+//		ross.reviewPostComments(post);
+		user.createProfile();
 //		user.changePassword();
-		
+//		user.addFeatures();
+		user.changeSettings();
 
 	}
 
+	
 }

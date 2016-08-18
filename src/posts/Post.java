@@ -1,13 +1,12 @@
 package posts;
 
 import java.util.ArrayList;
-import java.util.concurrent.PriorityBlockingQueue;
 
 import users.User;
 
-public class Post implements IPost {
+public class Post implements IPost{
 
-	static int id = 0;
+	public static int id = 0;
 
 	private User owner;
 	private String title;
@@ -59,4 +58,5 @@ public class Post implements IPost {
 		}
 
 	}
+	
 }

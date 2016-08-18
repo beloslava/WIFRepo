@@ -37,4 +37,5 @@ public class Comment {
 		return "Post: " + post.getTitle() + "\nComment: " + text + "\n date: " + date + " at " + time;
 	}
 
+	
 }

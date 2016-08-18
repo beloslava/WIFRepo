@@ -2,6 +2,7 @@ package site;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import posts.Post;
@@ -19,25 +20,24 @@ public class Site implements ISite {
 
 	@Override
 	public void searchPost(String tagName) {
-		for (Iterator p =posts.entrySet().iterator(); p.hasNext();) {
-			
-			if(posts.get(p).getTag().equals(tagName)){
+		for (Iterator<Entry<String, Post>> p = posts.entrySet().iterator(); p.hasNext();) {
+
+			if (posts.get(p).getTag().equals(tagName)) {
 				System.out.println(posts.get(p));
 			}
 		}
-		
 
 	}
 
 	@Override
 	public void addUser(User user) {
-		// TODO Auto-generated method stub
+		users.put(user.getSettings().getUsername(), user);
 
 	}
 
 	@Override
 	public void addPost(Post post) {
-		// TODO Auto-generated method stub
+		posts.put(post.getTag(), post);
 
 	}
 

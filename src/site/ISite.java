@@ -10,5 +10,5 @@ public interface ISite {
 	void addUser(User user);
 
 	void addPost(Post post);
-
+	
 }
