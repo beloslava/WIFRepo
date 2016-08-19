@@ -22,12 +22,12 @@ public interface IUser {
 
 	void changePassword();
 
-	void changeName(String name);
-
 	void changePersonalDescription(String desc);
 
 	void changeCountry(String country);
 
 	void changeSettings();
+
+	void changeName();
 
 }

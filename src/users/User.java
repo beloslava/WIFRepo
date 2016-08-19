@@ -20,9 +20,6 @@ public class User implements IUser {
 	private Site site;
 	private TreeMap<Integer, Post> posts; // id post -> post
 
-	public ProfileSettings getSettings() {
-		return settings;
-	}
 
 	public User() {
 		this.posts = new TreeMap<Integer, Post>();
@@ -61,27 +58,6 @@ public class User implements IUser {
 	}
 
 	@Override
-	public void changePassword() {
-		String pass;
-		do {
-			System.out.println(ProfileSettings.PASSWORD_MESSAGE);
-			pass = sc.next();
-		} while (!pass.equals(this.password));
-		String newPassword = "";
-		String newPassword2 = "";
-		do {
-			System.out.println(NEW_PASSWORD_MESSAGE);
-			newPassword = sc.next();
-			System.out.println(ProfileSettings.REPEAT_PASSWORD_MESSAGE);
-			newPassword2 = sc.next();
-		} while (!newPassword.equals(newPassword2) || !ProfileSettings.isPaswordStrong(newPassword));
-
-		this.password = newPassword;
-		System.out.println("Your password is changed!");
-
-	}
-
-	@Override
 	public void deletePost(Post post) {
 		post = null;
 
@@ -97,18 +73,6 @@ public class User implements IUser {
 	public void makePost(Post post) {
 		this.posts.put(post.id, post);
 
-	}
-
-	// change name
-	@Override
-	public void changeName(String newName) {
-		String name = "";
-		do {
-			name = sc.nextLine();
-		} while (name == null);
-
-		this.settings.setName(name);
-		// System.out.println(this.settings.getName());
 	}
 
 	// change the profile settings - name, pass, country, description
@@ -128,15 +92,12 @@ public class User implements IUser {
 				ch = sc.nextInt();
 				switch (ch) {
 				case 1:
-					System.out.println(NEW_NAME_MESSAGE);
-					String newName = sc.nextLine();
-					this.changeName(newName);
+					this.changeName();
 					break;
 				case 2:
 					this.changePassword();
 					break;
 				case 3:
-					System.out.println(ProfileSettings.COUNTRY_MESSAGE);
 					String country = sc.nextLine();
 					this.changeCountry(country);
 					break;
@@ -159,13 +120,49 @@ public class User implements IUser {
 	}
 
 	@Override
+	public void changePassword() {
+		String pass;
+		do {
+			System.out.println(ProfileSettings.PASSWORD_MESSAGE);
+			pass = sc.next();
+		} while (!pass.equals(this.password));
+		String newPassword = "";
+		String newPassword2 = "";
+		do {
+			System.out.println(NEW_PASSWORD_MESSAGE);
+			newPassword = sc.next();
+			System.out.println(ProfileSettings.REPEAT_PASSWORD_MESSAGE);
+			newPassword2 = sc.next();
+		} while (!newPassword.equals(newPassword2) || !ProfileSettings.isPaswordStrong(newPassword));
+
+		this.password = newPassword;
+		System.out.println("Your password is changed!");
+
+	}
+	
+	// change name
+	@Override
+	public void changeName() {
+		String name = "";
+		do {
+			System.out.println(NEW_NAME_MESSAGE);
+			name = sc.next();
+		} while (name == null);
+
+		this.settings.setName(name);
+		System.out.println("Your name is changed to "+this.settings.getName()+"!");
+	}
+	
+	@Override
 	public void changePersonalDescription(String desc) {
 		String description = "";
 		do {
-			description = sc.nextLine();
+			System.out.println(ProfileSettings.DESCRIPTION_MESSAGE);
+			description = sc.next();
 		} while (description == null);
 
 		this.settings.setPersonalDescription(description);
+		System.out.println("Your description is changet to "+this.settings.getPersonalDescription());
 
 	}
 
@@ -173,11 +170,17 @@ public class User implements IUser {
 	public void changeCountry(String country) {
 		String cntr = "";
 		do {
-			cntr = sc.nextLine();
+			System.out.println(ProfileSettings.COUNTRY_MESSAGE);
+			cntr = sc.next();
 		} while (cntr == null);
 
 		this.settings.setCountry(cntr);
+		System.out.println("Your country is changed to "+this.settings.getCountry());
 
 	}
 
+
+	public ProfileSettings getSettings() {
+		return settings;
+	}
 }

@@ -6,7 +6,7 @@ import users.User;
 
 public class Post implements IPost{
 
-	public static int id = 0;
+	public int id = 0;
 
 	private User owner;
 	private String title;

@@ -29,10 +29,6 @@ public class ProfileSettings {
 	private String personalDescription;
 	private User owner;
 
-	public String getPassword() {
-		return password;
-	}
-
 	// profile with email, name, username, password, age
 	public ProfileSettings() {
 
@@ -104,23 +100,17 @@ public class ProfileSettings {
 
 		do {
 			System.out.println(COUNTRY_MESSAGE);
-			this.country = sc.nextLine();
-		} while (country.isEmpty());
+			this.country = sc.next();
+		} while (country.isEmpty()&&country==null);
 
+		do{
 		System.out.println(DESCRIPTION_MESSAGE);
-		this.personalDescription = sc.nextLine();
+		this.personalDescription = sc.next();
+		}while(this.personalDescription.isEmpty()&&this.personalDescription==null);
 
 		System.out.println("Email address: " + email + "\nName: " + name + "\nUsername: " + username + "\nPassword: "
 				+ password + "\nAge: " + age + "\nGender: " + gender + "\nCountry: " + country
 				+ "\nPersonal Description: " + personalDescription);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
 	}
 
 	// validation of email address
@@ -173,11 +163,29 @@ public class ProfileSettings {
 		this.country = country;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
 	public String getName() {
 		return name;
 	}
 
 	public String getUsername() {
 		return username;
+	}
+	public String getPersonalDescription() {
+		return personalDescription;
+	}
+	public String getCountry() {
+		return country;
 	}
 }
