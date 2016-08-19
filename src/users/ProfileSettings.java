@@ -9,15 +9,15 @@ public class ProfileSettings {
 
 	public static final Scanner sc = new Scanner(System.in);
 
-	private static String EMAIL_MESSAGE = "Enter your email address";
-	private static String NAME_MESSAGE = "Enter your name";
-	private static String USERNAME_MESSAGE = "Enter username";
-	private static String PASSWORD_MESSAGE = "Enter password";
-	private static String REPEAT_PASSWORD_MESSAGE = "Repeat password";
-	private static String AGE_MESSAGE = "Enter your age";
-	private static String GENDER_MESSAGE = "Enter your gender - male or female";
-	static String COUNTRY_MESSAGE = "Enter your country";
-	static String DESCRIPTION_MESSAGE = "Enter your personal description";
+	private static final String EMAIL_MESSAGE = "Enter your email address";
+	private static final String NAME_MESSAGE = "Enter your name";
+	private static final String USERNAME_MESSAGE = "Enter username";
+	static final String PASSWORD_MESSAGE = "Enter password";
+	static final String REPEAT_PASSWORD_MESSAGE = "Repeat password";
+	private static final String AGE_MESSAGE = "Enter your age";
+	private static final String GENDER_MESSAGE = "Enter your gender - male or female";
+	static final String COUNTRY_MESSAGE = "Enter your country";
+	static final String DESCRIPTION_MESSAGE = "Enter your personal description";
 
 	private String email;
 	private String name;
@@ -83,7 +83,8 @@ public class ProfileSettings {
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Your age must be a number");
-				return;
+				validAge = true;
+				break;
 			}
 		} while (!validAge);
 
@@ -101,8 +102,10 @@ public class ProfileSettings {
 		} while (!(sex.equals("female") || sex.equals("male")));
 		this.gender = sex;
 
-		System.out.println(COUNTRY_MESSAGE);
-		this.country = sc.nextLine();
+		do {
+			System.out.println(COUNTRY_MESSAGE);
+			this.country = sc.nextLine();
+		} while (country.isEmpty());
 
 		System.out.println(DESCRIPTION_MESSAGE);
 		this.personalDescription = sc.nextLine();

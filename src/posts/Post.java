@@ -24,7 +24,7 @@ public class Post implements IPost{
 		this.comments = new ArrayList<Comment>();
 		++id;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
