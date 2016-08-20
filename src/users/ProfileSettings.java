@@ -100,13 +100,13 @@ public class ProfileSettings {
 
 		do {
 			System.out.println(COUNTRY_MESSAGE);
-			this.country = sc.next();
-		} while (country.isEmpty()&&country==null);
+			this.country = sc.nextLine();
+		} while (country.isEmpty() || country == null);
 
-		do{
-		System.out.println(DESCRIPTION_MESSAGE);
-		this.personalDescription = sc.next();
-		}while(this.personalDescription.isEmpty()&&this.personalDescription==null);
+		do {
+			System.out.println(DESCRIPTION_MESSAGE);
+			this.personalDescription = sc.nextLine();
+		} while (this.personalDescription.isEmpty() || this.personalDescription == null);
 
 		System.out.println("Email address: " + email + "\nName: " + name + "\nUsername: " + username + "\nPassword: "
 				+ password + "\nAge: " + age + "\nGender: " + gender + "\nCountry: " + country
@@ -170,11 +170,11 @@ public class ProfileSettings {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -182,9 +182,11 @@ public class ProfileSettings {
 	public String getUsername() {
 		return username;
 	}
+
 	public String getPersonalDescription() {
 		return personalDescription;
 	}
+
 	public String getCountry() {
 		return country;
 	}

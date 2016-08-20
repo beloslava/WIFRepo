@@ -20,7 +20,6 @@ public class User implements IUser {
 	private Site site;
 	private TreeMap<Integer, Post> posts; // id post -> post
 
-
 	public User() {
 		this.posts = new TreeMap<Integer, Post>();
 	}
@@ -102,7 +101,6 @@ public class User implements IUser {
 					this.changeCountry(country);
 					break;
 				case 4:
-					System.out.println(ProfileSettings.DESCRIPTION_MESSAGE);
 					String desc = sc.nextLine();
 					this.changePersonalDescription(desc);
 					break;
@@ -139,30 +137,30 @@ public class User implements IUser {
 		System.out.println("Your password is changed!");
 
 	}
-	
+
 	// change name
 	@Override
 	public void changeName() {
 		String name = "";
 		do {
 			System.out.println(NEW_NAME_MESSAGE);
-			name = sc.next();
-		} while (name == null);
+			name = sc.nextLine();
+		} while (name == null || name.isEmpty());
 
 		this.settings.setName(name);
-		System.out.println("Your name is changed to "+this.settings.getName()+"!");
+		System.out.println("Your name is changed to " + this.settings.getName() + "!");
 	}
-	
+
 	@Override
 	public void changePersonalDescription(String desc) {
 		String description = "";
 		do {
 			System.out.println(ProfileSettings.DESCRIPTION_MESSAGE);
-			description = sc.next();
+			description = sc.nextLine();
 		} while (description == null);
 
 		this.settings.setPersonalDescription(description);
-		System.out.println("Your description is changet to "+this.settings.getPersonalDescription());
+		System.out.println("Your description is changet to " + this.settings.getPersonalDescription());
 
 	}
 
@@ -171,14 +169,13 @@ public class User implements IUser {
 		String cntr = "";
 		do {
 			System.out.println(ProfileSettings.COUNTRY_MESSAGE);
-			cntr = sc.next();
+			cntr = sc.nextLine();
 		} while (cntr == null);
 
 		this.settings.setCountry(cntr);
-		System.out.println("Your country is changed to "+this.settings.getCountry());
+		System.out.println("Your country is changed to " + this.settings.getCountry());
 
 	}
-
 
 	public ProfileSettings getSettings() {
 		return settings;
