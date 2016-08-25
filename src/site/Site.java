@@ -10,8 +10,8 @@ import users.User;
 
 public class Site implements ISite {
 
-	TreeMap<String, User> users; // username -> user
-	HashMap<String, Post> posts; // post tag -> post
+	private TreeMap<String, User> users; // username -> user
+	private HashMap<Post, String> posts; // post tag -> post
 
 	public Site() {
 		this.users = new TreeMap<>();
@@ -20,10 +20,10 @@ public class Site implements ISite {
 
 	@Override
 	public void searchPost(String tagName) {
-		for (Iterator<Entry<String, Post>> p = posts.entrySet().iterator(); p.hasNext();) {
 
-			if (posts.get(p).getTag().equals(tagName)) {
-				System.out.println(posts.get(p));
+		for (Entry<Post, String> entry : posts.entrySet()) {
+			if (entry.getValue().equals(tagName)) {
+				System.out.println(entry.getKey());
 			}
 		}
 
@@ -37,7 +37,7 @@ public class Site implements ISite {
 
 	@Override
 	public void addPost(Post post) {
-		posts.put(post.getTag(), post);
+		posts.put(post, post.getTag());
 
 	}
 

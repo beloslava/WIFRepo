@@ -58,5 +58,9 @@ public class Post implements IPost{
 		}
 
 	}
+	@Override
+	public String toString() {
+		return "Post: " + title + " - " + tag;
+	}
 	
 }

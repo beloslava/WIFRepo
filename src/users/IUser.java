@@ -6,15 +6,13 @@ public interface IUser {
 
 	void createProfile();
 
-	void makePost(Post post);
-
-	void uploadPost();
+	Post makePost();
 
 	void deletePost(Post post);
 
 	void writeComment(Post post);
 
-	void reviewPostComments(Post post);// ?
+	void reviewPostComments(Post post);
 
 	void likePost(Post post);
 
@@ -29,5 +27,7 @@ public interface IUser {
 	void changeSettings();
 
 	void changeName();
+	
+	public void searchPost(String tag);
 
 }

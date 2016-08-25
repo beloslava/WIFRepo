@@ -17,7 +17,7 @@ public class User implements IUser {
 
 	private String password;
 	private ProfileSettings settings;
-	private Site site;
+	private static final Site SITE = new Site();
 	private TreeMap<Integer, Post> posts; // id post -> post
 
 	public User() {
@@ -62,16 +62,19 @@ public class User implements IUser {
 
 	}
 
-	// upload the post on the site
+	//make post
 	@Override
-	public void uploadPost() {
-
-	}
-
-	@Override
-	public void makePost(Post post) {
+	public Post makePost() {
+		System.out.println("Enter title");
+		String title = sc.nextLine();
+		System.out.println("Enter tag");
+		String tag = sc.nextLine();
+		
+		Post post = new Post(this, title, tag);
 		this.posts.put(post.id, post);
+		SITE.addPost(post);
 
+		return post;
 	}
 
 	// change the profile settings - name, pass, country, description
@@ -179,5 +182,10 @@ public class User implements IUser {
 
 	public ProfileSettings getSettings() {
 		return settings;
+	}
+
+	@Override
+	public void searchPost(String tag) {
+		SITE.searchPost(tag);
 	}
 }
