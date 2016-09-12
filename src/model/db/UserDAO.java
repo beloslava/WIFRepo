@@ -11,10 +11,17 @@ import model.exceptions.DBException;
 import model.pojo.User;
 
 public class UserDAO {
-
+	//email, password, name, avatarPath, age, gender, personalDescription
 	
-private static final String SELECT_ALL_USERS = "SELECT email, password, name, avatarPath, age, gender, personalDescription FROM users;";
-private static final String INSERT_INTO_USERS = "INSERT INTO users (email, password, name, avatarPath, age, gender, personalDescription) VALUES (?, ?, ?, ?, ?, ?, ?);";
+private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name, avatar, age, gender, about FROM users;";
+private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name, avatar, age, gender, about) VALUES (?, ?, ?, ?, ?, ?, ?);";
+private static final String UPDATE_USER_PASSWORD = "UPDATE users SET user_password = ? WHERE email = ?;"; 
+private static final String UPDATE_USER_NAME = "UPDATE users SET user_name = ? WHERE email = ?;"; 
+private static final String UPDATE_USER_AVATAR = "UPDATE users SET avarar = ? WHERE email = ?;"; 
+private static final String UPDATE_USER_AGE = "UPDATE users SET age = ? WHERE email = ?;"; 
+private static final String UPDATE_USER_PERSONAL_DESCRIPTION = "UPDATE users SET about = ? WHERE email = ?;"; 
+
+
 
 private static UserDAO instance;
 	
@@ -36,13 +43,12 @@ private static UserDAO instance;
 				
 				users.add(new User(	
 									resultSet.getString("email"),
-									resultSet.getString("password"),
-									resultSet.getString("name"),
-									resultSet.getString("avatarPath"),
+									resultSet.getString("user_password"),
+									resultSet.getString("user_name"),
+									resultSet.getString("avatar"),
 									resultSet.getInt("age"), 
 									resultSet.getString("gender"),
-									resultSet.getString("personalDescription")
-
+									resultSet.getString("about")
 									
 									
 									));
@@ -75,6 +81,87 @@ private static UserDAO instance;
 		}
 		
 	}
+	
+	public void updateUserPassword(String email, String password) {
+		try {
+			
+			PreparedStatement statement = DBManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_USER_PASSWORD);
+			statement.setString(1, email);
+			statement.setString(2, password);
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Cannot update password right now!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void updateUserName(String email, String name) {
+		try {
+			
+			PreparedStatement statement = DBManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_USER_NAME);
+			statement.setString(1, email);
+			statement.setString(2, name);
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Cannot update name right now!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void updateUserAvatar(String email, String avatarPath) {
+		try {
+		
+			PreparedStatement statement = DBManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_USER_AVATAR);
+			statement.setString(1, email);
+			statement.setString(2, avatarPath);
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Cannot update avatar right now!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void updateUserAge(String email, int age) {
+		try {
+			
+			PreparedStatement statement = DBManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_USER_AGE);
+			statement.setString(1, email);
+			statement.setInt(2, age);
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Cannot update age right now!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void updateUserPersonalDescription(String email, String desc) {
+		try {
+			
+			PreparedStatement statement = DBManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_USER_PERSONAL_DESCRIPTION);
+			statement.setString(1, email);
+			statement.setString(1, desc);
+			statement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Cannot update personal description right now!");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 }

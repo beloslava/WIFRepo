@@ -11,7 +11,7 @@ public class User {
 	private String avatarPath;
 	private int age;
 	private String gender;
-	private String personalDescription;
+	private String about;
 	private TreeMap<Integer, Post> posts; // id post -> post
 	
 	
@@ -24,7 +24,7 @@ public class User {
 		this.avatarPath = avatarPath;
 		this.age = age;
 		this.gender = gender;
-		this.personalDescription = personalDescription;
+		this.about = personalDescription;
 		this.posts = new TreeMap<>();
 	}
 
@@ -60,12 +60,54 @@ public class User {
 
 
 	public String getPersonalDescription() {
-		return personalDescription;
+		return about;
 	}
 
 
 	public TreeMap<Integer, Post> getPosts() {
 		return (TreeMap<Integer, Post>) posts.clone();
 	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setAvatarPath(String avatarPath) {
+		this.avatarPath = avatarPath;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+	public void setPersonalDescription(String personalDescription) {
+		this.about = personalDescription;
+	}
+
+
+	public void setPosts(TreeMap<Integer, Post> posts) {
+		this.posts = posts;
+	}
+	
+	
 	
 }
