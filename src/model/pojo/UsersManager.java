@@ -22,11 +22,11 @@ public class UsersManager {
 		return instance;
 	}
 	
-	public boolean validLogin(String username, String password){
-		if(!registerredUsers.containsKey(username)){
+	public boolean validLogin(String email, String password){
+		if(!registerredUsers.containsKey(email)){
 			return false;
 		}
-		return registerredUsers.get(username).getPassword().equals(password);
+		return registerredUsers.get(email).getPassword().equals(password);
 	}
 	
 	public void regUser(String email, String password, String name, String avatarPath, int age, String gender,

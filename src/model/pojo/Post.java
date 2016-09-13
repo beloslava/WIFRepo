@@ -1,6 +1,8 @@
 package model.pojo;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Post {
@@ -11,20 +13,40 @@ public class Post {
 	private String photoPath;
 	private int like;
 	private int dislike;
-	private LocalDateTime dateAndTime;
+	private String createdOn;
 	ArrayList<Comment> comments;
 	
 
 
-	public Post(int id, String userEmail, String tag, String photoPath) {
+	public Post(int id, String userEmail, String tag, String photoPath, Timestamp time) {
 		
 		this.id = id;
 		this.userEmail = userEmail;
 		this.tag = tag;
 		this.photoPath = photoPath;
-		this.dateAndTime = LocalDateTime.now();
+		this.createdOn = time.toLocalDateTime().format(
+				DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.comments = new ArrayList<>();
 	}
+	
+	
+
+
+
+	public Post(int id, String userEmail, String tag, String photoPath, int like, int dislike,
+			Timestamp time) {
+		
+		this.id = id;
+		this.userEmail = userEmail;
+		this.tag = tag;
+		this.photoPath = photoPath;
+		this.like = like;
+		this.dislike = dislike;
+		this.createdOn = time.toLocalDateTime().format(
+				DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+	}
+
+
 
 
 
@@ -64,14 +86,24 @@ public class Post {
 
 
 
-	public LocalDateTime getDateAndTime() {
-		return dateAndTime;
+	public String getCreatedOn() {
+		return createdOn;
 	}
 
 
 
 	public ArrayList<Comment> getComments() {
 		return (ArrayList<Comment>) comments.clone();
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", userEmail=" + userEmail + ", tag=" + tag + ", photoPath=" + photoPath + ", like="
+				+ like + ", dislike=" + dislike + ", createdOn=" + createdOn + ", comments=" + comments + "]";
 	}
 
 
