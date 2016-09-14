@@ -28,11 +28,12 @@ public class RegisterServlet extends HttpServlet {
 		int age = Integer.parseInt(request.getParameter("age"));
 		String gender=request.getParameter("gender");
 		String description=request.getParameter("description");
-		boolean validation=false;
-		Pattern pattern = Pattern.compile("[a-zA-Z0-9_.]*@[a-zA-Z]*.[a-zA-Z]*");//"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+		
+		Pattern pattern = Pattern.compile("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
 		Matcher mattcher = pattern.matcher(email);
+		boolean validation=mattcher.matches();
 		String html="";
-		if(mattcher.matches()&&email!=null&&password.equals(password2)&&password!=null&&name!=null&&age>0&&(gender.equals("female")||gender.equals("male"))){
+		if((mattcher.matches())&& (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2)) &&(!name.isEmpty())&&(age>0)&&(gender.equals("female")||gender.equals("male"))){
 			UsersManager.getInstance().regUser( email, password, name,age, gender, description);
 			html="index.html";
 		}else{
