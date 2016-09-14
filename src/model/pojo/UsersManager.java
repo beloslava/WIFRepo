@@ -29,9 +29,9 @@ public class UsersManager {
 		return registerredUsers.get(email).getPassword().equals(password);
 	}
 	
-	public void regUser(String email, String password, String name, String avatarPath, int age, String gender,
+	public void regUser(String email, String password, String name, int age, String gender,
 			String personalDescription){
-		User user = new User(email, password, name, avatarPath, age, gender, personalDescription);
+		User user = new User(email, password, name,  age, gender, personalDescription);
 		registerredUsers.put(email, user);
 		UserDAO.getInstance().saveUser(user);
 	}

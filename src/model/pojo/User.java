@@ -16,13 +16,13 @@ public class User {
 	private TreeMap<Integer, Post> posts; // id post -> post
 	
 	
-	public User(String email, String password, String name, String avatarPath, int age, String gender,
+	public User(String email, String password, String name,int age, String gender,
 			String personalDescription) {
 		
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.avatarPath = avatarPath;
+		//this.avatarPath = avatarPath;
 		this.age = age;
 		this.gender = gender;
 		this.about = personalDescription;

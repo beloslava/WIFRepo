@@ -12,8 +12,8 @@ import model.pojo.User;
 public class UserDAO implements IUserDAO {
 	// email, password, name, avatarPath, age, gender, personalDescription
 
-	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name, avatar, age, gender, about FROM users;";
-	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name, avatar, age, gender, about) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about FROM users;";
+	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about) VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String UPDATE_USER_PASSWORD = "UPDATE users SET user_password = ? WHERE email = ?;";
 	private static final String UPDATE_USER_NAME = "UPDATE users SET user_name = ? WHERE email = ?;";
 	private static final String UPDATE_USER_AVATAR = "UPDATE users SET avarar = ? WHERE email = ?;";
@@ -42,8 +42,7 @@ public class UserDAO implements IUserDAO {
 
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
-									resultSet.getString("user_name"), 
-									resultSet.getString("avatar"),
+									resultSet.getString("user_name"),
 									resultSet.getInt("age"),
 									resultSet.getString("gender"), 
 									resultSet.getString("about")
@@ -66,11 +65,9 @@ public class UserDAO implements IUserDAO {
 			st.setString(1, user.getEmail());
 			st.setString(2, user.getPassword());
 			st.setString(3, user.getName());
-			st.setString(4, user.getAvatarPath());
-			st.setInt(5, user.getAge());
-			st.setString(6, user.getGender());
-			st.setString(7, user.getPersonalDescription());
-
+			st.setInt(4, user.getAge());
+			st.setString(5, user.getGender());
+			st.setString(6, user.getPersonalDescription());
 			st.executeUpdate();
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
