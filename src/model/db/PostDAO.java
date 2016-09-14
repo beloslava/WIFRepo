@@ -19,8 +19,8 @@ public class PostDAO implements IPostDAO {
 	private static final String DELETE_POST = "DELETE FROM posts WHERE post_id = ?;";
 	private static final String LIKE_POST = "UPDATE posts SET post_like = post_like+1 WHERE post_id = ?;";
 	private static final String DISLIKE_POST = "UPDATE posts SET post_dislike = post_dislike+1 WHERE post_id = ?;";
-	private static final String SELECT_POSTS_BY_USER = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE user_email = ?;";
-	private static final String SELECT_POSTS_BY_TAG = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE tag_name = ?;";
+	private static final String SELECT_POSTS_BY_USER = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE user_email = ? ORDER BY post_date DESC;";
+	private static final String SELECT_POSTS_BY_TAG = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE tag_name = ? ORDER BY post_date DESC;";
 
 	ConcurrentHashMap<Integer, Post> allPosts; //all posts from the page
 	private static PostDAO instance;
@@ -120,37 +120,62 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public Set<Post> getAllPostsByUser(User user) {
-		//TODO
+		
 		TreeSet<Post> postsByUser = new TreeSet<>();
 		Statement st;
 		try {
 			st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_USER);
 			while (resultSet.next()) {
-//			postsByUser.add(new Post(
-//					resultSet.getInt("post_id"),
-//					resultSet.getString("user_email"),
-//					resultSet.getString("tag_name")
-//					resultSet.getBinaryStream("picture"),
-//					resultSet.getInt("post_like"),
-//					resultSet.getInt("post_dislike"),
-//					resultSet.getTimestamp("post_date")
-//					
-//					));
+			postsByUser.add(new Post(
+					resultSet.getInt("post_id"),
+					resultSet.getString("user_email"),
+					resultSet.getString("tag_name"),
+					resultSet.getBinaryStream("picture"),
+					resultSet.getInt("post_like"),
+					resultSet.getInt("post_dislike"),
+					resultSet.getTimestamp("post_date")
+					
+					));
 					
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Cannot get user's posts right now");
 			e.printStackTrace();
+			return postsByUser;
+			
 		}
 		
-		return null;
+		return postsByUser;
 	}
 
 	@Override
 	public Set<Post> getAllPostsByTag(String tag) {
-		// TODO Auto-generated method stub
-		return null;
+		TreeSet<Post> postsByTag = new TreeSet<>();
+		Statement st;
+		try {
+			st = DBManager.getInstance().getConnection().createStatement();
+			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_TAG);
+			while (resultSet.next()) {
+				postsByTag.add(new Post(
+					resultSet.getInt("post_id"),
+					resultSet.getString("user_email"),
+					resultSet.getString("tag_name"),
+					resultSet.getBinaryStream("picture"),
+					resultSet.getInt("post_like"),
+					resultSet.getInt("post_dislike"),
+					resultSet.getTimestamp("post_date")
+					
+					));
+					
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get posts right now");
+			e.printStackTrace();
+			return postsByTag;
+			
+		}
+		return postsByTag;
 	}
 
 	

@@ -30,14 +30,14 @@ public class DBManager {
 		}
 	}
 	
-	synchronized static DBManager getInstance(){
+	public synchronized static DBManager getInstance(){
 		if(instance == null){
 			instance = new DBManager();
 		}
 		return instance;
 	}
 	
-	Connection getConnection() {
+	public Connection getConnection() {
 		return connection;
 	}
 	
