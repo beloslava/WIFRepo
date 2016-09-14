@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>My WIF | Home :: w3layouts</title>
+<title>My WIF | Home </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
@@ -18,27 +18,6 @@
 		});
 	</script>
 	<!------ Eng Light Box ------>
-	<!---- Contact form ----->
-	<script type="text/javascript">
-            $(document).ready(function(){
-
-                $("#contactLink").click(function(){
-                    if ($("#contactForm").is(":hidden")){
-                        $("#contactForm").slideDown("slow");
-                    }
-                    else{
-                        $("#contactForm").slideUp("slow");
-                    }
-                });
-                
-            });
-            
-            function closeForm(){
-                $("#messageSent").show("slow");
-                setTimeout('$("#messageSent").hide();$("#contactForm").slideUp("slow")', 2000);
-           }
-        </script>
-	<!--- End Contactform ----->
 </head>
 <body>
    <div class="main">
@@ -60,21 +39,6 @@
 		   			</div>
 		</div>
 	</div>
-	<div id="contactFormContainer">
-                <div id="contactForm">
-                    <fieldset>
-                        <label for="Name">Name *</label>
-                        <input id="name" type="text" />
-                        <label for="Email">Email address *</label>
-                        <input id="Email" type="text" />
-                        <label for="Message">Your message *</label>
-                        <textarea id="Message" rows="3" cols="20"></textarea>
-                        <input id="sendMail" type="submit" name="submit" onClick="closeForm()" />
-                        <span id="messageSent">Your message has been sent successfully!</span>
-                   </fieldset>
-                </div>
-                <div id="contactLink"></div>
-            </div>
 		<div class="right-content">
 			<div class="header">
 	   			<div class="social-icons">						
