@@ -8,27 +8,7 @@
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
  <script type="text/javascript" src="js/jquery.min.js"></script>
-	<!---- Contact form ----->
-	<script type="text/javascript">
-            $(document).ready(function(){
-
-                $("#contactLink").click(function(){
-                    if ($("#contactForm").is(":hidden")){
-                        $("#contactForm").slideDown("slow");
-                    }
-                    else{
-                        $("#contactForm").slideUp("slow");
-                    }
-                });
-                
-            });
-            
-            function closeForm(){
-                $("#messageSent").show("slow");
-                setTimeout('$("#messageSent").hide();$("#contactForm").slideUp("slow")', 2000);
-           }
-        </script>
-	<!--- End Contactform ----->
+	
 </head>
 <body>
    <div class="main">
@@ -71,8 +51,9 @@
 			
 		<div class="content">
 			<div class="box1">
-   				 <h3><a href="details.html">Making it look like readable English. Many desktop packages and web page</a></h3>
-    				<span>By Kieth Deviec- 2 hours ago<span class="comments">8 Comments</span></span> 
+			
+   				 <h3><a href="details.html">User name</a></h3>
+    				<span>upload date<span class="comments">comments</span></span> 
 			   <div class="blog-img">
 					<div class="view-back">
 						<span class="views" title="views">(566)</span>
@@ -86,7 +67,34 @@
 				</div>
 			<div class="clear"></div>
 		</div>			
-		<!----------------  Comment Area -------------------->
+			<!----------------  Comment Area -------------------->
+		<div class="comments-area">
+							<form>
+								<p>
+									<label>Comment</label>
+									<textarea></textarea>
+								</p>
+								<p>
+									<input type="submit" value="Post">
+								</p>
+							</form>		
+						</div>
+						<div class="box comment">
+	    <h2><span>(0)</span> Comment's</h2>
+	    <ul class="list">
+	        <li>
+	            <div class="preview"><a href="#"><img src="http://lorempixel.com/50/50" alt=""></a></div>
+	            <div class="data">
+	                <div class="title">user's name <a href="#"> date</a></div>
+	                <p>Comment</p>
+	            </div>
+	            <div class="clear"></div>
+	        </li>
+	        
+	    </ul>
+	  <div class="clear"></div>
+	</div>
+	<div class="clear"> </div>
 		<!----------------- End Comment Area ----------------->				
     </div>
   </div>

@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<link rel="stylesheet" href="css/style_1.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
   <!------ Light Box ------>
@@ -51,35 +52,26 @@
 		                    <li><a class="vimeo" href="https://dribbble.com/" target="_blank"></a></li>
 		                    <div class="clear"></div>
 		                </ul>
-		 		    </div>  	   
-				   			<div class="search_box">
-							    <form>
-									<input type="text" class="text-box" placeholder="Search............."><input type="submit" value="">
-							    </form>
-						   </div>
+		 		    </div>  
 			  		 <div class="clear"></div>
 		  		 </div>
 			
 		<div id="content">
 				<div id="main" role="main">
+				
+       
         <ul id="tiles">
-        <!--
-          These are our grid items. Notice how each one has classes assigned that
-          are used for filtering. The classes match the "data-filter" properties above.
-          -->
-        
-       <a href="images/img1_b.jpg" class="swipebox" title="Image Name">   <li data-filter-class='["photos", "blog"]'>
-          <img src="images/img1.jpg" alt="" />
-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />
-             	<img src="images/blog-icon2.png" title="views" alt="" />
-             	<img src="images/blog-icon3.png" title="comments" alt="" />
-             	<img src="images/blog-icon5.png" title="link" alt="" />
-             	<span>Sample Text</span>
-             	<div class="clear"></div>
-             </a></p>
+          <li data-filter-class='["photos", "blog"]'>
+          <form action="UploadPostServlet" method="POST">
+			 <p>Type tag (nature, nature, people, fun, pets):<br>
+				<input type="text" name="textline" size="30">
+				</p>
+				<input type="file" name="pic" accept="image/*">
+				<div>
+				<input type="submit" value="Post">
+				</div>
+				</form>
        </li></a>
-         
-        <!-- End of grid blocks -->
       </ul>
 
     </div>

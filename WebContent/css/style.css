@@ -277,7 +277,7 @@ body{
 	position:fixed;
 	height: 100%;
 	width:170px;
-	padding:50px 40px 50px 15px;
+	padding:70px 40px 50px 15px;
 	color: #CFCFCF;
 	-webkit-transition: left 0.3s;
 	-moz-transition: left 0.3s;
@@ -758,6 +758,7 @@ a#cancel-comment-reply-link{
 	display: block;
 	
 }
+
 #commentform input[type="submit"]{
 	color:#F05F3D;
 	  font-family: 'Monda', sans-serif;
