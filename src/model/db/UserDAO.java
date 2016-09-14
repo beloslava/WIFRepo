@@ -14,11 +14,7 @@ public class UserDAO implements IUserDAO {
 
 	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about FROM users;";
 	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about) VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_USER_PASSWORD = "UPDATE users SET user_password = ? WHERE email = ?;";
-	private static final String UPDATE_USER_NAME = "UPDATE users SET user_name = ? WHERE email = ?;";
-	private static final String UPDATE_USER_AVATAR = "UPDATE users SET avarar = ? WHERE email = ?;";
-	private static final String UPDATE_USER_AGE = "UPDATE users SET age = ? WHERE email = ?;";
-	private static final String UPDATE_USER_PERSONAL_DESCRIPTION = "UPDATE users SET about = ? WHERE email = ?;";
+	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?   WHERE email = ?;";
 
 	private static UserDAO instance;
 
@@ -67,7 +63,7 @@ public class UserDAO implements IUserDAO {
 			st.setString(3, user.getName());
 			st.setInt(4, user.getAge());
 			st.setString(5, user.getGender());
-			st.setString(6, user.getPersonalDescription());
+			st.setString(6, user.getAbout());
 			st.executeUpdate();
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
@@ -77,96 +73,25 @@ public class UserDAO implements IUserDAO {
 
 	}
 
-	boolean vaildPass(User u, String pass){
-		//TODO
-		return false;
-	}
 	
 	@Override
-	public void updateUserPassword(String email, String password) {
+	public void updateUser(User user) {
 		try {
-
 			PreparedStatement statement = DBManager.getInstance().getConnection()
-					.prepareStatement(UPDATE_USER_PASSWORD);
-			//if(vaildPass(user, newPassword)){
-			statement.setString(1, email);
-			statement.setString(2, password);
-			statement.executeUpdate();
-			//}
-//			else{
-//				System.out.println("Your password is incorrect");
-//			}
-
-		} catch (SQLException e) {
-			System.out.println("Cannot update password right now!");
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public void updateUserName(String email, String name) {
-		try {
-
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER_NAME);
-			statement.setString(1, email);
-			statement.setString(2, name);
+					.prepareStatement(UPDATE_USER);
+			//email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?
+			statement.setString(1, user.getEmail());
+			statement.setString(1, user.getPassword());
+			statement.setInt(1, user.getAge());
+			statement.setString(1, user.getGender());
+			statement.setString(1, user.getAbout());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("Cannot update name right now!");
+			System.out.println("Can not updadte user right now");
 			e.printStackTrace();
 		}
-
-	}
-
-	@Override
-	public void updateUserAvatar(String email, String avatarPath) {
-		try {
-
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER_AVATAR);
-			statement.setString(1, email);
-			statement.setString(2, avatarPath);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			System.out.println("Cannot update avatar right now!");
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public void updateUserAge(String email, int age) {
-		try {
-
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER_AGE);
-			statement.setString(1, email);
-			statement.setInt(2, age);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			System.out.println("Cannot update age right now!");
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public void updateUserPersonalDescription(String email, String desc) {
-		try {
-
-			PreparedStatement statement = DBManager.getInstance().getConnection()
-					.prepareStatement(UPDATE_USER_PERSONAL_DESCRIPTION);
-			statement.setString(1, email);
-			statement.setString(1, desc);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			System.out.println("Cannot update personal description right now!");
-			e.printStackTrace();
-		}
-
+		
 	}
 
 }

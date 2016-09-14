@@ -1,45 +1,32 @@
 package model.pojo;
 
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Post {
 
 	private int id;
 	private String userEmail;
 	private String tag;
-	private String photoPath;
+	private InputStream picture;
 	private int like;
 	private int dislike;
 	private String createdOn;
-	ArrayList<Comment> comments;
+	private TreeSet<Comment> comments;
 	
 
 
-	public Post(int id, String userEmail, String tag, String photoPath, Timestamp time) {
-		
-		this.id = id;
-		this.userEmail = userEmail;
-		this.tag = tag;
-		this.photoPath = photoPath;
-		this.createdOn = time.toLocalDateTime().format(
-				DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-		this.comments = new ArrayList<>();
-	}
-	
-	
-
-
-
-	public Post(int id, String userEmail, String tag, String photoPath, int like, int dislike,
+	public Post(int id, String userEmail, String tag, InputStream picture, int like, int dislike,
 			Timestamp time) {
 		
 		this.id = id;
 		this.userEmail = userEmail;
 		this.tag = tag;
-		this.photoPath = photoPath;
+		this.picture = picture;
 		this.like = like;
 		this.dislike = dislike;
 		this.createdOn = time.toLocalDateTime().format(
@@ -68,8 +55,8 @@ public class Post {
 
 
 
-	public String getPhotoPath() {
-		return photoPath;
+	public InputStream getPicture() {
+		return picture;
 	}
 
 
@@ -92,19 +79,79 @@ public class Post {
 
 
 
-	public ArrayList<Comment> getComments() {
-		return (ArrayList<Comment>) comments.clone();
+	public TreeSet<Comment> getComments() {
+		return (TreeSet<Comment>) comments.clone();
 	}
 
 
 
 
 
-	@Override
-	public String toString() {
-		return "Post [id=" + id + ", userEmail=" + userEmail + ", tag=" + tag + ", photoPath=" + photoPath + ", like="
-				+ like + ", dislike=" + dislike + ", createdOn=" + createdOn + ", comments=" + comments + "]";
+	public void setId(int id) {
+		this.id = id;
 	}
+
+
+
+
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+
+
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+
+
+
+	public void setPicture(InputStream picture) {
+		this.picture = picture;
+	}
+
+
+
+
+
+	public void setLike(int like) {
+		this.like = like;
+	}
+
+
+
+
+
+	public void setDislike(int dislike) {
+		this.dislike = dislike;
+	}
+
+
+
+
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+
+
+
+
+
+	public void setComments(TreeSet<Comment> comments) {
+		this.comments = (TreeSet<Comment>) comments.clone();
+	}
+
+
+
+
+
+
 
 
 	

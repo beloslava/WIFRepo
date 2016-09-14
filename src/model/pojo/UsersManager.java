@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import model.db.UserDAO;
 
-public class UsersManager {
+public class UsersManager implements IUserManager{
 
 	private ConcurrentHashMap<String, User> registerredUsers;//username -> user
 	private static UsersManager instance;
@@ -22,6 +22,7 @@ public class UsersManager {
 		return instance;
 	}
 	
+	@Override
 	public boolean validLogin(String email, String password){
 		if(!registerredUsers.containsKey(email)){
 			return false;
@@ -29,11 +30,29 @@ public class UsersManager {
 		return registerredUsers.get(email).getPassword().equals(password);
 	}
 	
+	@Override
 	public void regUser(String email, String password, String name, int age, String gender,
 			String personalDescription){
 		User user = new User(email, password, name,  age, gender, personalDescription);
 		registerredUsers.put(email, user);
 		UserDAO.getInstance().saveUser(user);
+	}
+	
+	@Override
+	public void changeSettings(String email, String password, String name, int age, String gender,
+			String about){
+		
+		registerredUsers.get(email).setEmail(email);
+		registerredUsers.get(email).setPassword(password);
+		registerredUsers.get(email).setName(name);
+		registerredUsers.get(email).setAge(age);
+		registerredUsers.get(email).setGender(gender);
+		registerredUsers.get(email).setAbout(about);
+		
+		User u = new User(email, password, name, age, gender, about);
+		UserDAO.getInstance().saveUser(u);
+
+
 	}
 	
 }

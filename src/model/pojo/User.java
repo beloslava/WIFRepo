@@ -60,7 +60,7 @@ public class User {
 	}
 
 
-	public String getPersonalDescription() {
+	public String getAbout() {
 		return about;
 	}
 
@@ -100,8 +100,8 @@ public class User {
 	}
 
 
-	public void setPersonalDescription(String personalDescription) {
-		this.about = personalDescription;
+	public void setAbout(String about) {
+		this.about = about;
 	}
 
 
