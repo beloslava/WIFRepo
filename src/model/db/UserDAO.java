@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
+import model.pojo.Comment;
+import model.pojo.Post;
 import model.pojo.User;
 
 public class UserDAO implements IUserDAO {
@@ -44,6 +47,15 @@ public class UserDAO implements IUserDAO {
 									resultSet.getString("avatar")
 
 				));
+			}
+			
+			for (User u : users) {
+				TreeSet<Post> userPosts = (TreeSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
+				for (Post p : userPosts) {
+					TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
+					p.setComments(postComments);
+				}
+				u.setPosts(userPosts);
 			}
 		} catch (SQLException e) {
 			System.out.println("Cannot get all users right now!");

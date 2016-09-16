@@ -119,6 +119,7 @@ public class PostDAO implements IPostDAO {
 	public void removePost(User user, Post post) {
 		if (getAllPostsByUser(user).contains(post)) {
 			getAllPostsByUser(user).remove(post);
+			user.getPosts().remove(post);
 			allPosts.remove(post.getId());
 		
 			try {
@@ -143,6 +144,7 @@ public class PostDAO implements IPostDAO {
 			statement.setInt(1, post.getId());
 			int like = post.getLike()+1;
 			post.setLike(like);
+			allPosts.put(post.getId(), post);
 		} catch (SQLException e) {
 			System.out.println("The post cannot be liked right now");
 			e.printStackTrace();
@@ -157,6 +159,7 @@ public class PostDAO implements IPostDAO {
 			statement.setInt(1, post.getId());
 			int like = post.getDislike()+1;
 			post.setDislike(like);
+			allPosts.put(post.getId(), post);
 		} catch (SQLException e) {
 			System.out.println("The post cannot be disliked right now");
 			e.printStackTrace();
