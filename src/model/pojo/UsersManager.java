@@ -1,11 +1,8 @@
 package model.pojo;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-import model.db.CommentDAO;
-import model.db.PostDAO;
 import model.db.UserDAO;
 
 public class UsersManager implements IUserManager {
@@ -49,7 +46,7 @@ public class UsersManager implements IUserManager {
 
 	@Override
 	public void regUser(String email, String password, String name, int age, String gender, String personalDescription,
-			String avatarPath, TreeSet<Post> posts) {
+			String avatarPath, HashSet<Post> posts) {
 		User user = new User(email, password, name, age, gender, personalDescription, avatarPath, posts);
 		registerredUsers.put(email, user);
 		UserDAO.getInstance().saveUser(user);

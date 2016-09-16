@@ -1,5 +1,6 @@
 package model.db;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import model.pojo.Comment;
@@ -7,6 +8,9 @@ import model.pojo.Post;
 
 public class CommentDAO implements ICommentDAO {
 
+	private static final String SELECT_COMMENTS_BY_POST = "SELECT comment_id, post_id, user_email, comment_text, comment_date FROM post_comments WHERE post_id = ? ORDER BY comment_date DESC;";
+	
+	
 	private static CommentDAO instance;
 
 	private CommentDAO() {
@@ -33,7 +37,9 @@ public class CommentDAO implements ICommentDAO {
 
 	@Override
 	public Set<Comment> getAllCommentsByPost(Post p) {
-		// TODO Auto-generated method stub
+		//comment_id, post_id, user_email, comment_text, comment_date FROM post_comments
+		HashSet<Comment> postComments = new HashSet<>();
+		
 		return null;
 	}
 	

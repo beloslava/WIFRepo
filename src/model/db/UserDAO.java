@@ -50,7 +50,7 @@ public class UserDAO implements IUserDAO {
 			}
 			
 			for (User u : users) {
-				TreeSet<Post> userPosts = (TreeSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
+				HashSet<Post> userPosts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
 				for (Post p : userPosts) {
 					TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
 					p.setComments(postComments);

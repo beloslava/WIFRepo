@@ -1,6 +1,7 @@
 package model.pojo;
 
 
+import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -14,7 +15,7 @@ public class User {
 	private int age;
 	private String gender;
 	private String about;
-	private TreeSet<Post> posts; // posts
+	private HashSet<Post> posts; // posts
 	
 	
 	public User(String email, String password, String name,int age, String gender,
@@ -27,14 +28,14 @@ public class User {
 		this.age = age;
 		this.gender = gender;
 		this.about = personalDescription;
-		this.posts = new TreeSet<Post>();
+		this.posts = new HashSet<Post>();
 	}
 
 	
 	
 
 	public User(String email, String password, String name, int age, String avatarPath, String gender, String about,
-			TreeSet<Post> posts) {
+			HashSet<Post> posts) {
 		
 		this.email = email;
 		this.password = password;
@@ -84,8 +85,8 @@ public class User {
 	}
 
 
-	public TreeSet<Post> getPosts() {
-		return (TreeSet<Post>) posts.clone();
+	public HashSet<Post> getPosts() {
+		return (HashSet<Post>) posts.clone();
 	}
 
 
@@ -124,7 +125,7 @@ public class User {
 	}
 
 
-	public void setPosts(TreeSet<Post> posts) {
+	public void setPosts(HashSet<Post> posts) {
 		this.posts = posts;
 	}
 	
