@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -29,13 +30,13 @@ public class PostDAO implements IPostDAO {
 
 	
 	
-	ConcurrentHashMap<Integer, Post> allPosts; // all posts from the page
+	HashMap<Integer, Post> allPosts; // all posts from the page
 	private static PostDAO instance;
 
 	private PostDAO() {
 
-		allPosts = new ConcurrentHashMap<Integer, Post>();
-		allPosts = (ConcurrentHashMap<Integer, Post>) getAllPosts();
+		allPosts = new HashMap<Integer, Post>();
+		allPosts = (HashMap<Integer, Post>) getAllPosts();
 
 	}
 
@@ -54,7 +55,7 @@ public class PostDAO implements IPostDAO {
 	
 	@Override
 	public Map<Integer, Post> getAllPosts() {
-		HashMap<Integer, Post> allPosts = new HashMap<>();
+		HashMap<Integer, Post> allPosts = new HashMap<Integer, Post>();
 		Statement st;
 		try {
 			st = DBManager.getInstance().getConnection().createStatement();
@@ -77,11 +78,15 @@ public class PostDAO implements IPostDAO {
 		} catch (SQLException e) {
 			System.out.println("Cannot get posts right now");
 			e.printStackTrace();
-			return Collections.unmodifiableMap(allPosts);
+			//return Collections.unmodifiableMap(allPosts);
+			return (Map<Integer, Post>) allPosts.clone();
 
 		}
 		
-		return Collections.unmodifiableMap(allPosts);
+		//return Collections.unmodifiableMap(allPosts);
+		return (Map<Integer, Post>) allPosts.clone();
+
+		
 	}
 	
 	@Override
@@ -170,11 +175,12 @@ public class PostDAO implements IPostDAO {
 	@Override
 	public Set<Post> getAllPostsByUser(User user) {
 
-		TreeSet<Post> postsByUser = new TreeSet<>();
-		Statement st;
+		HashSet<Post> postsByUser = new HashSet<>();
+		PreparedStatement statement;
 		try {
-			st = DBManager.getInstance().getConnection().createStatement();
-			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_USER);
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_POSTS_BY_USER);
+			statement.setString(1, user.getEmail());
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				postsByUser.add(new Post(resultSet.getInt("post_id"),
 										resultSet.getString("user_email"),
@@ -199,11 +205,12 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public Set<Post> getAllPostsByTag(String tag) {
-		TreeSet<Post> postsByTag = new TreeSet<>();
-		Statement st;
+		HashSet<Post> postsByTag = new HashSet<>();
+		PreparedStatement statement;
 		try {
-			st = DBManager.getInstance().getConnection().createStatement();
-			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_TAG);
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_POSTS_BY_TAG);
+			statement.setString(1, tag);
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				postsByTag.add(new Post(resultSet.getInt("post_id"), 
 										resultSet.getString("user_email"),
@@ -227,7 +234,7 @@ public class PostDAO implements IPostDAO {
 	
 	@Override
 	public Set<Post> getTopTenPosts(){
-		TreeSet<Post> topTen = new TreeSet<>();
+		HashSet<Post> topTen = new HashSet<>();
 		Statement st;
 		try {
 			st = DBManager.getInstance().getConnection().createStatement();

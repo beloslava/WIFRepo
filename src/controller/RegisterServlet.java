@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
 				dir.mkdir();
 			}
 			File avatarFile = new File(dir, name+"-profile-pic."+ avatar.getContentType().split("/")[1]);
-			UsersManager.getInstance().regUser( email, password, name,age, gender, description,avatarFile.getName() , new TreeSet<>());
+			UsersManager.getInstance().regUser( email, password, name,age, gender, description,avatarFile.getName() , new HashSet<>());
 			html="index.html";
 		}else{
 			html="RegisterFailed.html";
