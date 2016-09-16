@@ -1,5 +1,6 @@
 package model.db;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import model.pojo.Post;
@@ -7,7 +8,8 @@ import model.pojo.User;
 
 public interface IPostDAO {
 
-	void addPost(User user, Post post);
+	void addPost(String userEmail, String tag, String picture, int like, int dislike,
+			Timestamp time);
 
 	void editPost(Post post);
 

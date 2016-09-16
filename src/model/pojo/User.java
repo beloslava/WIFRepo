@@ -2,6 +2,7 @@ package model.pojo;
 
 
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class User {
 	//email, password, name, avatarPath, age, gender, personalDescription
@@ -13,21 +14,39 @@ public class User {
 	private int age;
 	private String gender;
 	private String about;
-	private TreeMap<Integer, Post> posts; // id post -> post
+	private TreeSet<Post> posts; // posts
 	
 	
 	public User(String email, String password, String name,int age, String gender,
-			String personalDescription) {
+			String personalDescription, String avatarPath) {
 		
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		//this.avatarPath = avatarPath;
+		this.avatarPath = avatarPath;
 		this.age = age;
 		this.gender = gender;
 		this.about = personalDescription;
-		this.posts = new TreeMap<>();
+		this.posts = new TreeSet<Post>();
 	}
+
+	
+	
+
+	public User(String email, String password, String name, int age, String avatarPath, String gender, String about,
+			TreeSet<Post> posts) {
+		
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.avatarPath = avatarPath;
+		this.age = age;
+		this.gender = gender;
+		this.about = about;
+		this.posts = posts;
+	}
+
+
 
 
 	public String getAvatarPath() {
@@ -65,8 +84,8 @@ public class User {
 	}
 
 
-	public TreeMap<Integer, Post> getPosts() {
-		return (TreeMap<Integer, Post>) posts.clone();
+	public TreeSet<Post> getPosts() {
+		return (TreeSet<Post>) posts.clone();
 	}
 
 
@@ -105,7 +124,7 @@ public class User {
 	}
 
 
-	public void setPosts(TreeMap<Integer, Post> posts) {
+	public void setPosts(TreeSet<Post> posts) {
 		this.posts = posts;
 	}
 	

@@ -1,10 +1,8 @@
 package model.pojo;
 
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Post {
@@ -12,7 +10,7 @@ public class Post {
 	private int id;
 	private String userEmail;
 	private String tag;
-	private InputStream picture;
+	private String picture;
 	private int like;
 	private int dislike;
 	private String createdOn;
@@ -20,7 +18,7 @@ public class Post {
 	
 
 
-	public Post(int id, String userEmail, String tag, InputStream picture, int like, int dislike,
+	public Post(int id, String userEmail, String tag, String picture, int like, int dislike,
 			Timestamp time) {
 		
 		this.id = id;
@@ -55,7 +53,7 @@ public class Post {
 
 
 
-	public InputStream getPicture() {
+	public String getPicture() {
 		return picture;
 	}
 
@@ -111,7 +109,7 @@ public class Post {
 
 
 
-	public void setPicture(InputStream picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 

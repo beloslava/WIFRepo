@@ -12,9 +12,9 @@ import model.pojo.User;
 public class UserDAO implements IUserDAO {
 	// email, password, name, avatarPath, age, gender, personalDescription
 
-	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about FROM users;";
-	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about) VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?   WHERE email = ?;";
+	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about, avatar FROM users;";
+	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?  WHERE email = ?;";
 
 	private static UserDAO instance;
 
@@ -35,13 +35,13 @@ public class UserDAO implements IUserDAO {
 			Statement st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
-
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
 									resultSet.getInt("age"),
 									resultSet.getString("gender"), 
-									resultSet.getString("about")
+									resultSet.getString("about"),
+									resultSet.getString("avatar")
 
 				));
 			}
@@ -64,6 +64,8 @@ public class UserDAO implements IUserDAO {
 			st.setInt(4, user.getAge());
 			st.setString(5, user.getGender());
 			st.setString(6, user.getAbout());
+			st.setString(6, user.getAvatarPath());
+
 			st.executeUpdate();
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
@@ -79,12 +81,13 @@ public class UserDAO implements IUserDAO {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection()
 					.prepareStatement(UPDATE_USER);
-			//email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?
+			//email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?
 			statement.setString(1, user.getEmail());
-			statement.setString(1, user.getPassword());
-			statement.setInt(1, user.getAge());
-			statement.setString(1, user.getGender());
-			statement.setString(1, user.getAbout());
+			statement.setString(2, user.getPassword());
+			statement.setInt(3, user.getAge());
+			statement.setString(4, user.getGender());
+			statement.setString(5, user.getAbout());
+			statement.setString(5, user.getAvatarPath());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
