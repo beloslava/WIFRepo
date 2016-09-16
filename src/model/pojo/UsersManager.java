@@ -17,12 +17,12 @@ public class UsersManager implements IUserManager {
 
 		registerredUsers = new ConcurrentHashMap<>();
 		for (User u : UserDAO.getInstance().getAllUsers()) {
-			TreeSet<Post> userPosts = (TreeSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
-			for (Post p : userPosts) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
-				p.setComments(postComments);
-			}
-			u.setPosts(userPosts);
+//			TreeSet<Post> userPosts = (TreeSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
+//			for (Post p : userPosts) {
+//				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
+//				p.setComments(postComments);
+//			}
+//			u.setPosts(userPosts);
 			registerredUsers.put(u.getEmail(), u);
 		}
 	}

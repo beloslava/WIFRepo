@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,6 +35,7 @@ public class PostDAO implements IPostDAO {
 	private PostDAO() {
 
 		allPosts = new ConcurrentHashMap<Integer, Post>();
+		allPosts = (ConcurrentHashMap<Integer, Post>) getAllPosts();
 
 	}
 
@@ -44,7 +46,41 @@ public class PostDAO implements IPostDAO {
 		return instance;
 	}
 
+	
+	public Post getPost(Post post){
+		//TODO
+		return post;
+	}
+	
+	@Override
 	public Map<Integer, Post> getAllPosts() {
+		HashMap<Integer, Post> allPosts = new HashMap<>();
+		Statement st;
+		try {
+			st = DBManager.getInstance().getConnection().createStatement();
+			//post_id, user_email, tag_name, picture, post_like, post_dislike, post_date
+			ResultSet resultSet = st.executeQuery(SELECT_ALL_POSTS);
+			while (resultSet.next()) {
+				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"),
+																	resultSet.getString("user_email"),
+																	resultSet.getString("tag_name"),
+																	resultSet.getString("picture"),
+																	resultSet.getInt("post_like"),
+																	resultSet.getInt("post_dislike"),
+																	resultSet.getTimestamp("post_date")
+
+																  
+						
+						));
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get posts right now");
+			e.printStackTrace();
+			return Collections.unmodifiableMap(allPosts);
+
+		}
+		
 		return Collections.unmodifiableMap(allPosts);
 	}
 	
@@ -78,27 +114,24 @@ public class PostDAO implements IPostDAO {
 	}
 
 
-	@Override
-	public void editPost(Post post) {
-		// TODO
-
-	}
 
 	@Override
 	public void removePost(User user, Post post) {
-//		Set<Post> posts = getAllPostsByUser(user);
 		if (getAllPostsByUser(user).contains(post)) {
 			getAllPostsByUser(user).remove(post);
-//			posts.remove(post);
+			allPosts.remove(post.getId());
+		
+			try {
+				PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_POST);
+				statement.setInt(1, post.getId());
+				statement.executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("The post can not be delete right now");
+				e.printStackTrace();
+			}
 		}
-		allPosts.remove(post);
-		try {
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_POST);
-			statement.setInt(1, post.getId());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("The post can not be delete right now");
-			e.printStackTrace();
+		else{
+			System.out.println("There is no such post for this user");
 		}
 
 	}
@@ -108,6 +141,8 @@ public class PostDAO implements IPostDAO {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
 			statement.setInt(1, post.getId());
+			int like = post.getLike()+1;
+			post.setLike(like);
 		} catch (SQLException e) {
 			System.out.println("The post cannot be liked right now");
 			e.printStackTrace();
@@ -120,6 +155,8 @@ public class PostDAO implements IPostDAO {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(DISLIKE_POST);
 			statement.setInt(1, post.getId());
+			int like = post.getDislike()+1;
+			post.setDislike(like);
 		} catch (SQLException e) {
 			System.out.println("The post cannot be disliked right now");
 			e.printStackTrace();
@@ -136,9 +173,13 @@ public class PostDAO implements IPostDAO {
 			st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_USER);
 			while (resultSet.next()) {
-				postsByUser.add(new Post(resultSet.getInt("post_id"), resultSet.getString("user_email"),
-						resultSet.getString("tag_name"), resultSet.getString("picture"), resultSet.getInt("post_like"),
-						resultSet.getInt("post_dislike"), resultSet.getTimestamp("post_date")
+				postsByUser.add(new Post(resultSet.getInt("post_id"),
+										resultSet.getString("user_email"),
+										resultSet.getString("tag_name"),
+										resultSet.getString("picture"), 
+										resultSet.getInt("post_like"),
+										resultSet.getInt("post_dislike"), 
+										resultSet.getTimestamp("post_date")
 
 				));
 
@@ -161,9 +202,13 @@ public class PostDAO implements IPostDAO {
 			st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_POSTS_BY_TAG);
 			while (resultSet.next()) {
-				postsByTag.add(new Post(resultSet.getInt("post_id"), resultSet.getString("user_email"),
-						resultSet.getString("tag_name"), resultSet.getString("picture"), resultSet.getInt("post_like"),
-						resultSet.getInt("post_dislike"), resultSet.getTimestamp("post_date")
+				postsByTag.add(new Post(resultSet.getInt("post_id"), 
+										resultSet.getString("user_email"),
+										resultSet.getString("tag_name"), 
+										resultSet.getString("picture"), 
+										resultSet.getInt("post_like"),
+										resultSet.getInt("post_dislike"), 
+										resultSet.getTimestamp("post_date")
 
 				));
 
@@ -177,6 +222,7 @@ public class PostDAO implements IPostDAO {
 		return postsByTag;
 	}
 	
+	@Override
 	public Set<Post> getTopTenPosts(){
 		TreeSet<Post> topTen = new TreeSet<>();
 		Statement st;
@@ -185,12 +231,12 @@ public class PostDAO implements IPostDAO {
 			ResultSet resultSet = st.executeQuery(SELECT_TOP_TEN_POSTS);
 			while (resultSet.next()) {
 				topTen.add(new Post(resultSet.getInt("post_id"), 
-						resultSet.getString("user_email"),
-						resultSet.getString("tag_name"),
-						resultSet.getString("picture"), 
-						resultSet.getInt("post_like"),
-						resultSet.getInt("post_dislike"),
-						resultSet.getTimestamp("post_date")
+									resultSet.getString("user_email"),
+									resultSet.getString("tag_name"),
+									resultSet.getString("picture"), 
+									resultSet.getInt("post_like"),
+									resultSet.getInt("post_dislike"),
+									resultSet.getTimestamp("post_date")
 
 				));
 
