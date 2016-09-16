@@ -14,14 +14,13 @@ body {
 }
 .content h1 {
 	color:#34EFCA;
-	font-size:45px;
+	font-size:30px;
 	font-family: 'Oswald', sans-serif;
 }
 .content p {
-	font-size:30px;
+	font-size:15px;
 	color:#34EFCA;
 	font-family: 'Lobster', cursive;
-	line-height:25px;
 }
 input[type="email"] {
 	padding:10px;
@@ -29,10 +28,9 @@ input[type="email"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:7%;
 	text-align:center;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	border-radius:26px;
 	font-family: 'Oswald', sans-serif;
 }
@@ -42,11 +40,10 @@ input[type="password"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:40px;
 	text-align:center;
 	border-radius:26px;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	font-family: 'Oswald', sans-serif;
 }
 input[type="name"] {
@@ -55,11 +52,10 @@ input[type="name"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:40px;
 	text-align:center;
 	border-radius:26px;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	font-family: 'Oswald', sans-serif;
 }
 input[type="about"] {
@@ -68,11 +64,10 @@ input[type="about"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:40px;
 	text-align:center;
 	border-radius:26px;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	font-family: 'Oswald', sans-serif;
 }
 input[type="age"] {
@@ -81,11 +76,10 @@ input[type="age"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:40px;
 	text-align:center;
 	border-radius:26px;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	font-family: 'Oswald', sans-serif;
 }
 input[type="gender"] {
@@ -94,11 +88,10 @@ input[type="gender"] {
 	background-color:#620462;
 	border:2px solid white;
 	color:white;
-	margin-top:40px;
 	text-align:center;
 	border-radius:26px;
 	outline:none;
-	font-size:20px;
+	font-size:15px;
 	font-family: 'Oswald', sans-serif;
 }
 input[type="submit"] {
@@ -130,7 +123,7 @@ button[type="submit"] {
 	color:white;
 	font-weight:bold;
 	font-size:20px;
-	top:125%;
+	top:135%;
 	left:35%;
 	font-family: 'Oswald', sans-serif;
 	position:absolute;

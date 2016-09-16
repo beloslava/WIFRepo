@@ -15,43 +15,45 @@
 	<div class="wrap">
 		<div class="left-content">
 			<div class="logo">
-				<h1><a href="index.html"><img src="images/logo.png" alt="" /></a></h1>
+				<h1><a href="Main.jsp"><img src="images/logo.png" alt="" /></a></h1>
 			</div>
 			<div class="menu">			
 			  <ol id="filters">
-			  	    <li class="home"><a href="index.html">Home</a></li>
-			        <li class="photo"><a href="index.html">Photos</a></li>
-			        <li class="video"><a href="index.html">Video</a></li>
-			        <li class="music"><a href="index.html">Music</a></li>
-			        <li class="blog"><a href="index.html">Blog</a></li>
+			  	    <li class="home"><a href="Main.jsp">Home</a></li>
+			        <li class="video"><a href="MyProfile.jsp">My Profile</a></li>
+			        <li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>
+			        <li class="photo"><a href="TopTen.jsp">Top 10</a></li>
+			        <li class="photo"><a href="People.jsp">People</a></li>
+			        <li class="photo"><a href="Nature.jsp">Nature</a></li>
+			        <li class="photo"><a href="Fun.jsp">Fun</a></li>
+			        <li class="photo"><a href="Pets.jsp">Pets</a></li>
+			        <li class="photo"><a href="FoodAndDrinks.jsp">Food and Drinks</a></li>
 			  </ol>
+			</div>
 		</div>
-	</div>
-	
 		<div class="right-content">
-			<div class="header">
-	   			<div class="social-icons">						
-		                <ul>
-		                    <li><a class="facebook" href="#" target="_blank"> </a></li>
-		                    <li><a class="twitter" href="#" target="_blank"></a></li>
-		                    <li><a class="googleplus" href="#" target="_blank"></a></li>
-		                    <li><a class="pinterest" href="#" target="_blank"></a></li>
-		                    <li><a class="dribbble" href="#" target="_blank"></a></li>
-		                    <li><a class="vimeo" href="#" target="_blank"></a></li>
-		                    <div class="clear"></div>
-		                </ul>
-		 		    </div>  	   
-				   			<div class="search_box">
-							    <form>
-									<input type="text" class="text-box" placeholder="Search............."><input type="submit" value="">
-							    </form>
-						   </div>
+				<div class="header">
+					<div class="social-icons">
+						<ul>
+							<li><a class="facebook" href="https://www.facebook.com/"target="_blank"> </a></li>
+							<li><a class="twitter" href="https://twitter.com/"target="_blank"></a></li>
+							<li><a class="googleplus" href="https://plus.google.com/"target="_blank"></a></li>
+							<li><a class="pinterest" href="https://www.pinterest.com/"target="_blank"></a></li>
+							<li><a class="dribbble" href="https://dribbble.com/"target="_blank"></a></li>
+							<li><a class="vimeo" href="https://dribbble.com/"target="_blank"></a></li>
+							<li><a class="logoutbtn" href="LogOutServlet"></a></li>
+						</ul>
+						<div class="clear"></div>
+					</div>  	   
+				   	<div class="search_box">
+						<form>
+							<input type="text" class="text-box" placeholder="Search............."><input type="submit" value="">
+						</form>
+					</div>
 			  		 <div class="clear"></div>
 		  		 </div>
-			
 		<div class="content">
 			<div class="box1">
-			
    				 <h3><a href="details.html">User name</a></h3>
     				<span>upload date<span class="comments">comments</span></span> 
 			   <div class="blog-img">
@@ -63,8 +65,7 @@
 					</div>
 					<img src="images/blog-img.jpg">
 				</div>
-				<div class="blog-data">
-				</div>
+				<div class="blog-data"></div>
 			<div class="clear"></div>
 		</div>			
 			<!----------------  Comment Area -------------------->
