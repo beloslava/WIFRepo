@@ -10,15 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class MainServlet
- */
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String html = "";
-		String userEmail = (String) session.getAttribute("USER");
+		String userEmail = session.getAttribute("USER").toString();
+		System.out.println(userEmail);
 		if (userEmail != null) {
 			html = "Main.jsp";
 		} else {

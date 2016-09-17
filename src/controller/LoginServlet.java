@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("USER", email);
 			html="MainServlet";
 		} else {
-			html="loginFailed.html";
+			html="LoginFailed.html";
 		}
 		RequestDispatcher view = request.getRequestDispatcher(html);
 		view.forward(request, response);

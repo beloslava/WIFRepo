@@ -32,6 +32,7 @@
 			  </ol>
 			</div>
 		</div>
+		<input type="button" onclick="UploadPost">upload
 		<div class="right-content">
 				<div class="header">
 					<div class="social-icons">
@@ -42,7 +43,7 @@
 							<li><a class="pinterest" href="https://www.pinterest.com/"target="_blank"></a></li>
 							<li><a class="dribbble" href="https://dribbble.com/"target="_blank"></a></li>
 							<li><a class="vimeo" href="https://dribbble.com/"target="_blank"></a></li>
-							<li><a class="logoutbtn" href="LogOutServlet"></a></li>
+							<li><form  action="LogOutServlet" method="GET" ><input type="submit" class="logoutbtn"></form></li>
 						</ul>
 						<div class="clear"></div>
 					</div>  	   
