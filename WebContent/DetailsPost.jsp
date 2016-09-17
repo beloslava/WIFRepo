@@ -18,17 +18,16 @@
 				<h1><a href="Main.jsp"><img src="images/logo.png" alt="" /></a></h1>
 			</div>
 			<div class="menu">			
-			  <ol id="filters">
-			  	    <li class="home"><a href="Main.jsp">Home</a></li>
-			        <li class="video"><a href="MyProfile.jsp">My Profile</a></li>
-			        <li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>
-			        <li class="photo"><a href="TopTen.jsp">Top 10</a></li>
-			        <li class="photo"><a href="People.jsp">People</a></li>
-			        <li class="photo"><a href="Nature.jsp">Nature</a></li>
-			        <li class="photo"><a href="Fun.jsp">Fun</a></li>
-			        <li class="photo"><a href="Pets.jsp">Pets</a></li>
-			        <li class="photo"><a href="FoodAndDrinks.jsp">Food and Drinks</a></li>
-			  </ol>
+			<ol id="filters">
+						<li class="home"><a href="main.jsp">Home</a></li>
+						<li class="video"><a href="myProfile.jsp">My Profile</a></li>
+						<li class="photo"><a href="myPhotos.jsp">My Photos</a></li>
+						<li class="photo"><a href="topTen.jsp">Top 10</a></li>
+						<li class="photo"><a href="people.jsp">People</a></li>
+						<li class="photo"><a href="nature.jsp">Nature</a></li>
+						<li class="photo"><a href="fun.jsp">Fun</a></li>
+						<li class="photo"><a href="pets.jsp">Pets</a></li>
+					</ol>
 			</div>
 		</div>
 		<div class="right-content">
