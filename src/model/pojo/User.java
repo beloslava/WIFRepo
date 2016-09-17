@@ -18,13 +18,13 @@ public class User {
 	private List<Post> posts; // posts
 	
 
-	public User(String email, String password, String name, int age, String gender, String about, String avatar,
+	public User(String email, String password, String name, int age, String gender, String about,  String avatarPath,
 			List<Post> posts) {
 		
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.avatarPath = avatar;
+		this.avatarPath = avatarPath;
 		this.age = age;
 		this.gender = gender;
 		this.about = about;

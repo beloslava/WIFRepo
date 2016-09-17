@@ -4,11 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import model.pojo.Comment;
-import model.pojo.Post;
 
 public class CommentDAO implements ICommentDAO {
 
@@ -29,20 +30,21 @@ public class CommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public void addComment(Post post, Comment c) {
+	public void addComment(int postId, String userEmail, String text) {
 		//TODO
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS);
 			//post_id, user_email, comment_text
-			statement.setInt(1, post.getId());
-			statement.setString(2, c.getUserEmail());
-			statement.setString(3, c.getText());
+			statement.setInt(1, postId);
+			statement.setString(2, userEmail);
+			statement.setString(3, text);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
-			long id = rs.getLong(1);
-			c.setComment_id((int)id);
+			long commentId = rs.getLong(1);
 			
+			Comment commet = new Comment((int)commentId, postId, userEmail, text, new Timestamp(System.currentTimeMillis()));
+			PostDAO.getInstance().getPost(postId).getComments().add(commet);
 		} catch (SQLException e) {
 			System.out.println("Cannot add comment right now");
 			e.printStackTrace();
@@ -51,13 +53,13 @@ public class CommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public void removeComment(Comment c) {
+	public void removeComment(int commentId) {
 		
 		PreparedStatement statement;
 		
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_COMMENT_BY_ID);
-				statement.setInt(1, c.getComment_id());
+				statement.setInt(1, commentId);
 				statement.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println("Cannot delete comment right now");

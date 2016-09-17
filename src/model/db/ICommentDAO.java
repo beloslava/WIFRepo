@@ -8,9 +8,9 @@ import model.pojo.Post;
 
 public interface ICommentDAO {
 
-	void addComment(Post post, Comment c);
+	void addComment(int postId, String userEmail, String text);
 
-	void removeComment(Comment c);
+	void removeComment(int commentId);
 
 	List<Comment> getAllCommentsByPost(int postId);
 

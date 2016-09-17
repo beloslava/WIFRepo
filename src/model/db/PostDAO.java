@@ -46,8 +46,8 @@ public class PostDAO implements IPostDAO {
 	}
 
 	
-	public Post getPost(Post post){
-		return allPosts.get(post.getId());
+	public Post getPost(int postId){
+		return allPosts.get(postId);
 	}
 	
 	@Override
