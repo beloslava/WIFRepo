@@ -29,6 +29,10 @@
 			        <li class="photo"><a href="Fun.jsp">Fun</a></li>
 			        <li class="photo"><a href="Pets.jsp">Pets</a></li>
 			        <li class="photo"><a href="FoodAndDrinks.jsp">Food and Drinks</a></li>
+			        <li></li>
+			        <li></li>
+			        <li></li>
+			        <li></li>
 			  </ol>
 			</div>
 		</div>

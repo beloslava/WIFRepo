@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="content">
-		<form action="RegisterServlet" method="POST">
+		<form action="RegisterServlet" method="POST" enctype="multipart/form-data">
 				<h1>Create your world in frames.</h1>
 				<p>Name:</p>
 				<input type="name" name="name" value="name..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'NAME';}">
@@ -30,7 +30,10 @@
 				<p>Description</p>
 				<input type="about" name="description" value="about..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'ABOUT';}">
 				<p>Upload your profile picture</p>
-				<input type="file" 	name="avatar" 	placeholder="Profile pic"/>     
+				<div class="fileChoose">
+					<input type="file" name="file" id="file" class="inputfile" />
+					<label for="file">Choose a file</label>
+				</div>    
 				<input type="submit" value="SIGN IN">
 			</form>
 	</div>
