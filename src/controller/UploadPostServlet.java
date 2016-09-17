@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,7 +42,7 @@ public class UploadPostServlet extends HttpServlet {
 				pictureFile.createNewFile();
 			}			
 			Files.copy(pictureStream, pictureFile.toPath());
-			PostDAO.getInstance().addPost(email, tag, pictureFile.getName(), like, dislike, Timestamp.valueOf(LocalDateTime.now()));
+			PostDAO.getInstance().addPost(email, tag, pictureFile.getName(), like, dislike, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
 		}
 	}
 

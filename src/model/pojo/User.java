@@ -1,9 +1,9 @@
 package model.pojo;
 
 
-import java.util.HashSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.List;
+
 
 public class User {
 	//email, password, name, avatarPath, age, gender, personalDescription
@@ -15,32 +15,16 @@ public class User {
 	private int age;
 	private String gender;
 	private String about;
-	private HashSet<Post> posts; // posts
+	private List<Post> posts; // posts
 	
-	
-	public User(String email, String password, String name,int age, String gender,
-			String personalDescription, String avatarPath) {
+
+	public User(String email, String password, String name, int age, String gender, String about, String avatar,
+			List<Post> posts) {
 		
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.avatarPath = avatarPath;
-		this.age = age;
-		this.gender = gender;
-		this.about = personalDescription;
-		this.posts = new HashSet<Post>();
-	}
-
-	
-	
-
-	public User(String email, String password, String name, int age, String avatarPath, String gender, String about,
-			HashSet<Post> posts) {
-		
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.avatarPath = avatarPath;
+		this.avatarPath = avatar;
 		this.age = age;
 		this.gender = gender;
 		this.about = about;
@@ -85,8 +69,8 @@ public class User {
 	}
 
 
-	public HashSet<Post> getPosts() {
-		return (HashSet<Post>) posts.clone();
+	public List<Post> getPosts() {
+		return Collections.unmodifiableList(posts);
 	}
 
 
@@ -125,7 +109,7 @@ public class User {
 	}
 
 
-	public void setPosts(HashSet<Post> posts) {
+	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
 	

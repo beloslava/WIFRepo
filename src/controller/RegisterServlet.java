@@ -7,6 +7,7 @@ import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.cert.PKIXRevocationChecker.Option;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
 		int age = Integer.parseInt(request.getParameter("age"));
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
-		String about = request.getParameter("about");
+		String about = request.getParameter("description");
 		Part avatar = request.getPart("file");
 		InputStream avatarStream = avatar.getInputStream();
 		Pattern pattern = Pattern.compile(
@@ -48,20 +49,16 @@ public class RegisterServlet extends HttpServlet {
 				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male"))) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
-				dir.mkdir();
+				dir.mkdirs();
 			}
 			System.out.println(avatar.getContentType());
 			File avatarFile=new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
-//			if(!avatarFile.exists()){
-//				avatarFile.createNewFile();
-//			}
 			System.out.println(avatarFile.getAbsolutePath());
 			Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
-		//	Files.copy(avatarStream, avatarFile.toPath());
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
 			UsersManager.getInstance().regUser(email, password, name, age, gender, about, avatarFile.getName(),
-					new HashSet<>());
+					new ArrayList<>());
 			html="index.html";
 		}
 		else{
