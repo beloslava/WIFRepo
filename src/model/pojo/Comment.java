@@ -41,4 +41,7 @@ public class Comment {
 		return createdOn;
 	}
 
+	public void setComment_id(int comment_id) {
+		this.comment_id = comment_id;
+	}
 }

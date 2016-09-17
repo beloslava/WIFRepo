@@ -68,7 +68,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void saveUser(User user) {
 		try {
-
+			//email, user_password, user_name,  age, gender, about, avatar
 			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_USERS);
 			st.setString(1, user.getEmail());
 			st.setString(2, user.getPassword());
