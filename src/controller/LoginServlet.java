@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("USER", email);
 			response.sendRedirect("MainServlet");
 		} else {
-			response.sendRedirect("InvalidLogin.html");
+			response.sendRedirect("LoginFailed.html");
 		}
 	}
 
