@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,17 +15,17 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
-		 public void doGet(HttpServletRequest request,  HttpServletResponse response) 
-		 throws ServletException, IOException { 
-		 HttpSession session = request.getSession(); 
-		 String userEmail = (String) 
-		 session.getAttribute("USER");
-		 if (userEmail != null) {
-			 response.sendRedirect("Main.jsp"); 
-		 } else {
-		 response.sendRedirect("index.html"); 
-		 }
-		 }
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String html = "";
+		String userEmail = (String) session.getAttribute("USER");
+		if (userEmail != null) {
+			html = "Main.jsp";
+		} else {
+			html = "index.html";
+		}
+		RequestDispatcher view = request.getRequestDispatcher(html);
+		view.forward(request, response);
+	}
 
-		
 }

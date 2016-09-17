@@ -19,8 +19,11 @@ public class LogOutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		if(session.getAttribute("USER")!=null){
 		session.invalidate();
-		response.sendRedirect("index.html");
+		}
+		RequestDispatcher view = request.getRequestDispatcher("index.html");
+		view.forward(request, response);
 	}
 
 	@Override

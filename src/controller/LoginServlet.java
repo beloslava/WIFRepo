@@ -14,17 +14,18 @@ import model.pojo.UsersManager;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String html = "";
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		if (UsersManager.getInstance().validLogin(email, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("USER", email);
-			response.sendRedirect("MainServlet");
+			html="MainServlet";
 		} else {
-			response.sendRedirect("LoginFailed.html");
+			html="loginFailed.html";
 		}
+		RequestDispatcher view = request.getRequestDispatcher(html);
+		view.forward(request, response);
 	}
-
 }
