@@ -1,5 +1,6 @@
 package model.pojo;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,18 +25,18 @@ public class UsersManager implements IUserManager {
 		}
 		return instance;
 	}
-	
+
 	@Override
 	public User getUser(String email) {
 		return registerredUsers.get(email);
 	}
 
 	@Override
-	public boolean validLogin(String email, String password) {
+	public boolean validLogin(String email, String password) throws UnsupportedEncodingException {
 		if (!registerredUsers.containsKey(email)) {
 			return false;
 		}
-		return registerredUsers.get(email).getPassword().equals(password);
+		return registerredUsers.get(email).getPassword().equals(convertToMd5(password));
 	}
 
 	@Override
@@ -48,10 +49,10 @@ public class UsersManager implements IUserManager {
 
 	@Override
 	public void changeSettings(String email, String password, String name, int age, String gender, String about,
-			String avatarPath) {
+			String avatarPath) throws UnsupportedEncodingException {
 		User user = registerredUsers.get(email);
 		registerredUsers.get(email).setEmail(email);
-		registerredUsers.get(email).setPassword(password);
+		registerredUsers.get(email).setPassword(convertToMd5(password));
 		registerredUsers.get(email).setName(name);
 		registerredUsers.get(email).setAge(age);
 		registerredUsers.get(email).setGender(gender);
@@ -62,5 +63,20 @@ public class UsersManager implements IUserManager {
 		// UserDAO.getInstance().saveUser(user);
 
 	}
+	
+	private static String convertToMd5(final String md5) throws UnsupportedEncodingException {
+        StringBuffer sb=null;
+        try {
+            final java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            final byte[] array = md.digest(md5.getBytes("UTF-8"));
+            sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (final java.security.NoSuchAlgorithmException e) {
+        }
+        return sb.toString();
+    }
 
 }

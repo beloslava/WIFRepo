@@ -6,7 +6,6 @@ import java.util.Map;
 
 import model.pojo.Comment;
 import model.pojo.Post;
-import model.pojo.User;
 
 
 public interface IPostDAO {

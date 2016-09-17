@@ -1,14 +1,14 @@
 package model.db;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
 import model.pojo.Comment;
-import model.pojo.Post;
 
 public interface ICommentDAO {
 
-	void addComment(int postId, String userEmail, String text);
+	void addComment(int postId, String userEmail, String text, Timestamp time);
 
 	void removeComment(int commentId);
 

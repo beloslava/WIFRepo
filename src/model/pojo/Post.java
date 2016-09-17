@@ -16,20 +16,17 @@ public class Post {
 	private int dislike;
 	private String createdOn;
 	private List<Comment> comments;
-	
 
+	public Post(int id, String userEmail, String tag, String picture, int like, int dislike, Timestamp time,
+			List<Comment> comments) {
 
-	public Post(int id, String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, List<Comment> comments) {
-		
 		this.id = id;
 		this.userEmail = userEmail;
 		this.tag = tag;
 		this.picture = picture;
 		this.like = like;
 		this.dislike = dislike;
-		this.createdOn = time.toLocalDateTime().format(
-				DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.comments = comments;
 	}
 
@@ -48,7 +45,7 @@ public class Post {
 	public String getPicture() {
 		return picture;
 	}
-	
+
 	public int getLike() {
 		return like;
 	}
