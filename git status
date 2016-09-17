@@ -1,0 +1,316 @@
+[1mdiff --git a/WebContent/FoodAndDrinks.jsp b/WebContent/FoodAndDrinks.jsp[m
+[1mdeleted file mode 100644[m
+[1mindex 686fc77..0000000[m
+[1m--- a/WebContent/FoodAndDrinks.jsp[m
+[1m+++ /dev/null[m
+[36m@@ -1,215 +0,0 @@[m
+[31m-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"[m
+[31m-    pageEncoding="ISO-8859-1"%>[m
+[31m-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">[m
+[31m-<html>[m
+[31m-<head>[m
+[31m-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">[m
+[31m-<title>MyWif | Food and Drinks</title>[m
+[31m-<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">[m
+[31m-<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />[m
+[31m-<link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />[m
+[31m- <script type="text/javascript" src="js/jquery.min.js"></script>[m
+[31m-	[m
+[31m-</head>[m
+[31m-<body>[m
+[31m-   <div class="main">[m
+[31m-	<div class="wrap">[m
+[31m-		<div class="left-content">[m
+[31m-			<div class="logo">[m
+[31m-				<h1><a href="Main.jsp"><img src="images/logo.png" alt="" /></a></h1>[m
+[31m-			</div>[m
+[31m-			<div class="menu">			[m
+[31m-			  <ol id="filters">[m
+[31m-			  	    <li class="home"><a href="Main.jsp">Home</a></li>[m
+[31m-			        <li class="video"><a href="MyProfile.jsp">My Profile</a></li>[m
+[31m-			        <li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>[m
+[31m-			        <li class="photo"><a href="TopTen.jsp">Top 10</a></li>[m
+[31m-			        <li class="photo"><a href="People.jsp">People</a></li>[m
+[31m-			        <li class="photo"><a href="Nature.jsp">Nature</a></li>[m
+[31m-			        <li class="photo"><a href="Fun.jsp">Fun</a></li>[m
+[31m-			        <li class="photo"><a href="Pets.jsp">Pets</a></li>[m
+[31m-			        <li class="photo"><a href="FoodAndDrinks.jsp">Food and Drinks</a></li>[m
+[31m-			  </ol>[m
+[31m-			</div>[m
+[31m-		</div>[m
+[31m-		<div class="right-content">[m
+[31m-				<div class="header">[m
+[31m-					<div class="social-icons">[m
+[31m-						<ul>[m
+[31m-							<li><a class="facebook" href="https://www.facebook.com/"target="_blank"> </a></li>[m
+[31m-							<li><a class="twitter" href="https://twitter.com/"target="_blank"></a></li>[m
+[31m-							<li><a class="googleplus" href="https://plus.google.com/"target="_blank"></a></li>[m
+[31m-							<li><a class="pinterest" href="https://www.pinterest.com/"target="_blank"></a></li>[m
+[31m-							<li><a class="dribbble" href="https://dribbble.com/"target="_blank"></a></li>[m
+[31m-							<li><a class="vimeo" href="https://dribbble.com/"target="_blank"></a></li>[m
+[31m-							<li><a class="logoutbtn" href="LogOutServlet"></a></li>[m
+[31m-						</ul>[m
+[31m-						<div class="clear"></div>[m
+[31m-					</div>  	   [m
+[31m-				   	<div class="search_box">[m
+[31m-						<form>[m
+[31m-							<input type="text" class="text-box" placeholder="Search............."><input type="submit" value="">[m
+[31m-						</form>[m
+[31m-					</div>[m
+[31m-			  		 <div class="clear"></div>[m
+[31m-		  		 </div>[m
+[31m-	[m
+[31m-		<div id="content">[m
+[31m-				<div id="main" role="main">[m
+[31m-        <ul id="tiles">[m
+[31m-       <a href="images/img1_b.jpg" class="swipebox" title="Image Name">   <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img1.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-       </li></a>[m
+[31m-      <a href="images/img2_b.jpg" class="swipebox" title="Image Name">    <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img2.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-      </li></a>[m
+[31m-         <a href="images/img3_b.jpg" class="swipebox" title="Image Name"> <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img3.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-        </li></a>[m
+[31m-       <a href="images/img4_b.jpg" class="swipebox" title="Image Name">   <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img4.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-       </li></a>[m
+[31m-       <a href="images/img5_b.jpg" class="swipebox" title="Image Name">   <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img5.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-       </li></a>[m
+[31m-         <li data-filter-class='["music", "video"]'>[m
+[31m-          <img src="images/video2.jpg" height="188" width="300" alt="" />[m
+[31m-             <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-        </li>[m
+[31m-        <a href="images/img6_b.jpg" class="swipebox" title="Image Name">  <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img6.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-        </li></a>[m
+[31m-         <a href="images/img7_b.jpg" class="swipebox" title="Image Name"> <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img7.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-        </li></a>[m
+[31m-        <a href="images/img8_b.jpg" class="swipebox" title="Image Name">  <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img8.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-        </li></a>[m
+[31m-     <a href="images/img9_b.jpg" class="swipebox" title="Image Name">     <li data-filter-class='["photos", "blog"]'>[m
+[31m-          <img src="images/img9.jpg" alt="" />[m
+[31m-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />[m
+[31m-             	<img src="images/blog-icon2.png" title="views" alt="" />[m
+[31m-             	<img src="images/blog-icon3.png" title="comments" alt="" />[m
+[31m-             	<img src="images/blog-icon5.png" title="link" alt="" />[m
+[31m-             	<span>Sample Text</span>[m
+[31m-             	<div class="clear"></div>[m
+[31m-             </a></p>[m
+[31m-      </li></a>  [m
+[31m-        <!-- End of grid blocks -->[m
+[31m-      </ul>[m
+[31m-[m
+[31m-    </div>[m
+[31m-   [m
+[31m-[m
+[31m-  <!-- Include the imagesLoaded plug-in -->[m
+[31m-  <script src="js/jquery.imagesloaded.js"></script>[m
+[31m-  <script src="js/jquery.wookmark.js"></script>[m
+[31m-  <!-- Once the page is loaded, initalize the plug-in. -->[m
+[31m-  <script type="text/javascript">[m
+[31m-    (function ($){[m
+[31m-      $('#tiles').imagesLoaded(function() {[m
+[31m-        // Prepare layout options.[m
+[31m-        var options = {[m
+[31m-          autoResize: true, // This will auto-update the layout when the browser window is resized.[m
+[31m-          container: $('#main'), // Optional, used for some extra CSS styling[m
+[31m-          offset: 2, // Optional, the distance between grid items[m
+[31m-          itemWidth:310 // Optional, the width of a grid item[m
+[31m-        };[m
+[31m-[m
+[31m-        // Get a reference to your grid items.[m
+[31m-        var handler = $('#tiles li'),[m
+[31m-            filters = $('#filters li');[m
+[31m-[m
+[31m-        // Call the layout function.[m
+[31m-        handler.wookmark(options);[m
+[31m-[m
+[31m-        /**[m
+[31m-         * When a filter is clicked, toggle it's active state and refresh.[m
+[31m-         */[m
+[31m-        var onClickFilter = function(event) {[m
+[31m-          var item = $(event.currentTarget),[m
+[31m-              activeFilters = [];[m
+[31m-          item.toggleClass('active');[m
+[31m-[m
+[31m-          // Collect active filter strings[m
+[31m-          filters.filter('.active').each(function() {[m
+[31m-            activeFilters.push($(this).data('filter'));[m
+[31m-          });[m
+[31m-[m
+[31m-          handler.wookmarkInstance.filter(activeFilters, 'or');[m
+[31m-        }[m
+[31m-[m
+[31m-        // Capture filter click events.[m
+[31m-        filters.click(onClickFilter);[m
+[31m-      });[m
+[31m-    })(jQuery);[m
+[31m-  </script>[m
+[31m-	</div>[m
+[31m-  </div>[m
+[31m-		<div class="clear"></div>[m
+[31m-	</div>[m
+[31m-</div>[m
+[31m-</body>[m
+[31m-</html>[m
+[1mdiff --git a/WebContent/Main.jsp b/WebContent/Main.jsp[m
+[1mindex 29c0cc6..d59f188 100644[m
+[1m--- a/WebContent/Main.jsp[m
+[1m+++ b/WebContent/Main.jsp[m
+[36m@@ -1,5 +1,10 @@[m
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"[m
+ 	pageEncoding="ISO-8859-1"%>[m
+[32m+[m[32m<%@ page import="model.pojo.UsersManager" %>[m[41m[m
+[32m+[m[32m<%@ page import="model.db.UserDAO" %>[m[41m[m
+[32m+[m[32m<%@ page import="model.pojo.User" %>[m[41m[m
+[32m+[m[32m<%@ page import="model.pojo.Post" %>[m[41m[m
+[32m+[m[32m<%@ page import="model.db.PostDAO" %>[m[41m[m
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">[m
+ <html>[m
+ <head>[m
+[36m@@ -69,11 +74,12 @@[m
+ 				<div id="content">[m
+ 					<div id="main" role="main">[m
+ 						<ul id="tiles">[m
+[31m-							<a href="images/img1_b.jpg" class="swipebox" title="Image Name">[m
+[31m-								<li data-filter-class='["photos", "blog"]'><img[m
+[31m-									src="images/img1.jpg" alt="" />[m
+[32m+[m						[32m<% for(Post post: PostDAO.getInstance().getAllPosts().values()) {%>[m[41m[m
+[32m+[m							[32m<a class="swipebox" title="Image Name">[m[41m[m
+[32m+[m								[32m<li data-filter-class='["photos", "blog"]'>[m[41m[m
+[32m+[m[32m<%-- 								<img src="PostPictureServlet?postId=<%=post.getId()%>" alt="" /> --%>[m[41m[m
+ 									<p>[m
+[31m-										<a href="details.html"><img src="images/blog-icon1.png"[m
+[32m+[m										[32m<a href="details.html"><img src="PostPictureServlet?postId=<%=post.getId()%>"[m[41m[m
+ 											title="posted date" alt="" /> <img[m
+ 											src="images/blog-icon2.png" title="views" alt="" /> <img[m
+ 											src="images/blog-icon3.png" title="comments" alt="" /> <img[m
+[36m@@ -82,6 +88,7 @@[m
+ 											<div class="clear"></div> </a>[m
+ 									</p></li>[m
+ 							</a>[m
+[32m+[m							[32m<%} %>[m[41m[m
+ 							<!-- End of grid blocks -->[m
+ 						</ul>[m
+ [m
+[1mdiff --git a/src/controller/LoginServlet.java b/src/controller/LoginServlet.java[m
+[1mindex 9fbb6c9..3c5767a 100644[m
+[1m--- a/src/controller/LoginServlet.java[m
+[1m+++ b/src/controller/LoginServlet.java[m
+[36m@@ -22,7 +22,7 @@[m [mpublic class LoginServlet extends HttpServlet {[m
+ 			request.getSession().setAttribute("USER", email);[m
+ 			html="MainServlet";[m
+ 		} else {[m
+[31m-			html="LoginFailed.html";[m
+[32m+[m			[32mhtml="loginFailed.html";[m[41m[m
+ 		}[m
+ 		RequestDispatcher view = request.getRequestDispatcher(html);[m
+ 		view.forward(request, response);[m
+[1mdiff --git a/src/controller/MainServlet.java b/src/controller/MainServlet.java[m
+[1mindex 9143453..2a162bf 100644[m
+[1m--- a/src/controller/MainServlet.java[m
+[1m+++ b/src/controller/MainServlet.java[m
+[36m@@ -16,7 +16,7 @@[m [mpublic class MainServlet extends HttpServlet {[m
+ 		String html = "";[m
+ 		String userEmail = request.getSession().getAttribute("USER").toString();[m
+ 		if (userEmail != null) {[m
+[31m-			html = "Main.jsp";[m
+[32m+[m			[32mhtml = "main.jsp";[m[41m[m
+ 		} else {[m
+ 			html = "index.html";[m
+ 		}[m
+[1mdiff --git a/src/controller/PictureServlet.java b/src/controller/PictureServlet.java[m
+[1mindex 4cb863d..b23a596 100644[m
+[1m--- a/src/controller/PictureServlet.java[m
+[1m+++ b/src/controller/PictureServlet.java[m
+[36m@@ -21,8 +21,7 @@[m [mimport model.pojo.UsersManager;[m
+ @WebServlet("/PictureServlet")[m
+ public class PictureServlet extends HttpServlet {[m
+ 	public static void returnProfilePic(User u,  HttpServletResponse response) throws IOException{[m
+[31m-[m
+[31m-		File profilePicFile = new File("userProfilePics", u.getAvatarPath());[m
+[32m+[m		[32mFile profilePicFile = new File("D:\\MyWifPictures\\userProfilePics", u.getAvatarPath());[m[41m[m
+ 		response.setContentLength((int)profilePicFile.length());[m
+ 		String contentType = "image/"+profilePicFile.getName().split("[.]")[profilePicFile.getName().split("[.]").length-1];[m
+ 		response.setContentType(contentType);[m
+[36m@@ -32,12 +31,12 @@[m [mpublic class PictureServlet extends HttpServlet {[m
+ 	 [m
+ 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {[m
+ 		[m
+[31m-		String requestedUsername = request.getParameter("username");[m
+[32m+[m		[32mString requestedUsername = request.getParameter("email");[m[41m[m
+ 		if(requestedUsername != null){[m
+ 			User user = UsersManager.getInstance().getUser(requestedUsername);[m
+ 			returnProfilePic(user, response);[m
+ 		}[m
+[31m-		String logged = (String) request.getSession().getAttribute("loggedAs");[m
+[32m+[m		[32mString logged = (String) request.getSession().getAttribute("USER");[m[41m[m
+ 		if(logged == null){//session is new or expired[m
+ 			System.out.println("This should not happen right now. Might happen later on other pages");[m
+ 		}[m

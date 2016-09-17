@@ -21,8 +21,7 @@ import model.pojo.UsersManager;
 @WebServlet("/PictureServlet")
 public class PictureServlet extends HttpServlet {
 	public static void returnProfilePic(User u,  HttpServletResponse response) throws IOException{
-
-		File profilePicFile = new File("userProfilePics", u.getAvatarPath());
+		File profilePicFile = new File("D:\\MyWifPictures\\userProfilePics", u.getAvatarPath());
 		response.setContentLength((int)profilePicFile.length());
 		String contentType = "image/"+profilePicFile.getName().split("[.]")[profilePicFile.getName().split("[.]").length-1];
 		response.setContentType(contentType);
@@ -32,12 +31,12 @@ public class PictureServlet extends HttpServlet {
 	 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String requestedUsername = request.getParameter("username");
+		String requestedUsername = request.getParameter("email");
 		if(requestedUsername != null){
 			User user = UsersManager.getInstance().getUser(requestedUsername);
 			returnProfilePic(user, response);
 		}
-		String logged = (String) request.getSession().getAttribute("loggedAs");
+		String logged = (String) request.getSession().getAttribute("USER");
 		if(logged == null){//session is new or expired
 			System.out.println("This should not happen right now. Might happen later on other pages");
 		}
