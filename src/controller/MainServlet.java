@@ -16,7 +16,7 @@ public class MainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String html = "";
 		String userEmail = session.getAttribute("USER").toString();
-		System.out.println(userEmail);
+		//System.out.println(userEmail);
 		if (userEmail != null) {
 			html = "Main.jsp";
 		} else {

@@ -19,8 +19,7 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		if (UsersManager.getInstance().validLogin(email, password)) {
-			HttpSession session = request.getSession();
-			session.setAttribute("USER", email);
+			request.getSession().setAttribute("USER", email);
 			html="MainServlet";
 		} else {
 			html="LoginFailed.html";

@@ -8,7 +8,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
 	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
-	b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend,
+	b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form,
+
+	legend,
 	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
 	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
 	output, ruby, section, summary, time, mark, audio, video {
@@ -254,43 +256,7 @@ body {
 }
 /*** End Header ***/
 
-.inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
-}
-label {
-	text-align:center;
-}
-.inputfile + label {
-	line-height: 1.90em;
-    font-size: 1.2em;
-    font-weight: 800;
-    color: white;
-    background-color: #16a085;
-    display: block;
-    width: 8em;
-    height: 2em;
-    margin: 0 auto;
-}
-.fileChoose{
-	margin-top:0.8em;
-}
 
-.inputfile:focus + label,
-.inputfile + label:hover {
-    background-color: #16a085;
-}
-.inputfile + label {
-	cursor: pointer; /* "hand" cursor */
-}
-.inputfile:focus + label {
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
-}
 .left-content {
 	background-image: url(../images/noise.png);
 	background-color: #2A3F44;

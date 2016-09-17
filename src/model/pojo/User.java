@@ -70,7 +70,7 @@ public class User {
 
 
 	public List<Post> getPosts() {
-		return Collections.unmodifiableList(posts);
+		return posts;
 	}
 
 

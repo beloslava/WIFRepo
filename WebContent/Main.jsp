@@ -21,6 +21,7 @@
 			<div class="menu">			
 			  <ol id="filters">
 			  	    <li class="home"><a href="Main.jsp">Home</a></li>
+			  	    <li class="photo"><a href="UploadPost.html">Food and Drinks</a></li>
 			        <li class="video"><a href="MyProfile.jsp">My Profile</a></li>
 			        <li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>
 			        <li class="photo"><a href="TopTen.jsp">Top 10</a></li>

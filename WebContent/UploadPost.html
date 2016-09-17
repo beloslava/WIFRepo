@@ -5,81 +5,90 @@
 <title>My WIF | Upload</title>
 <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-<link rel="stylesheet" href="css/style_1.css" type="text/css" media="all" />
-<link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
+<link rel="stylesheet" href="css/style_1.css" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="css/grids_upload.css" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
-  <!------ Light Box ------>
+<!------ Light Box ------>
 <link rel="stylesheet" href="css/swipebox.css">
-<script src="js/ios-orientationchange-fix.js"></script> 
-<script src="js/jquery.swipebox.min.js"></script> 
+<script src="js/ios-orientationchange-fix.js"></script>
+<script src="js/jquery.swipebox.min.js"></script>
 </head>
 <body>
-   <div class="main">
-	<div class="wrap">
-		<div class="left-content">
-			<div class="logo">
-				<h1><a href="home.html"><img src="images/logo.png" alt="" /></a></h1>
+	<div class="main">
+		<div class="wrap">
+			<div class="left-content">
+				<div class="logo">
+					<h1>
+						<a href="home.html"><img src="images/logo.png" alt="" /></a>
+					</h1>
+				</div>
+				<div class="menu">
+					<ol id="filters">
+						<li class="home"><a href="Main.jsp">Home</a></li>
+						<li class="video"><a href="MyProfile.jsp">My Profile</a></li>
+						<li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>
+						<li class="photo"><a href="TopTen.jsp">Top 10</a></li>
+						<li class="photo"><a href="People.jsp">People</a></li>
+						<li class="photo"><a href="Nature.jsp">Nature</a></li>
+						<li class="photo"><a href="Fun.jsp">Fun</a></li>
+						<li class="photo"><a href="Pets.jsp">Pets</a></li>
+						<li class="photo"><a href="FoodAndDrinks.jsp">Food and
+								Drinks</a></li>
+					</ol>
+					<div class="copy_right">
+						<p>
+							<a href="http://w3layouts.com"></a>
+						</p>
+					</div>
+				</div>
 			</div>
-			<div class="menu">			
-			  <ol id="filters">
-					<li class="home"><a href="Main.jsp">Home</a></li>
-			        <li class="video"><a href="MyProfile.jsp">My Profile</a></li>
-			        <li class="photo"><a href="MyPhotos.jsp">My Photos</a></li>
-			        <li class="photo"><a href="TopTen.jsp">Top 10</a></li>
-			        <li class="photo"><a href="People.jsp">People</a></li>
-			        <li class="photo"><a href="Nature.jsp">Nature</a></li>
-			        <li class="photo"><a href="Fun.jsp">Fun</a></li>
-			        <li class="photo"><a href="Pets.jsp">Pets</a></li>
-			        <li class="photo"><a href="FoodAndDrinks.jsp">Food and Drinks</a></li>
-			  </ol>
-			  <div class="copy_right">
-						<p><a href="http://w3layouts.com"></a></p>
-		   			</div>
-		</div>
-	</div>
-		<div class="right-content">
-			<div class="header">
-	   			<div class="social-icons">						
-		                <ul>
-		                    <li><a class="facebook" href="https://www.facebook.com/" target="_blank"> </a></li>
-		                    <li><a class="twitter" href="https://twitter.com/" target="_blank"></a></li>
-		                    <li><a class="googleplus" href="https://plus.google.com/" target="_blank"></a></li>
-		                    <li><a class="pinterest" href="https://www.pinterest.com/" target="_blank"></a></li>
-		                    <li><a class="dribbble" href="https://dribbble.com/" target="_blank"></a></li>
-		                    <li><a class="vimeo" href="https://dribbble.com/" target="_blank"></a></li>
-		                    <li><a class="logoutbtn" href="LogOutServlet"></a></li>
-		                    <div class="clear"></div>
-		                </ul>
-		 		    </div>  
-			  		 <div class="clear"></div>
-		  		 </div>
-			
-		<div id="content">
-          <form action="UploadPostServlet" method="POST">
-			 <p>Type tag (nature, nature, people, fun, pets):<br>
-			 	<label>
-				<input id="upl" type="text" name="tag" size="30">
-				</label>
-				</p>
-				<div class="fileChoose">
-					<input type="file" name="file" id="file" class="inputfile" />
-					<label for="file">Choose a file</label>
-					<input id="post" type="submit" value="Post">
+			<div class="right-content">
+				<div class="header">
+					<div class="social-icons">
+						<ul>
+							<li><a class="facebook" href="https://www.facebook.com/"
+								target="_blank"> </a></li>
+							<li><a class="twitter" href="https://twitter.com/"
+								target="_blank"></a></li>
+							<li><a class="googleplus" href="https://plus.google.com/"
+								target="_blank"></a></li>
+							<li><a class="pinterest" href="https://www.pinterest.com/"
+								target="_blank"></a></li>
+							<li><a class="dribbble" href="https://dribbble.com/"
+								target="_blank"></a></li>
+							<li><a class="vimeo" href="https://dribbble.com/"
+								target="_blank"></a></li>
+							<li><a class="logoutbtn" href="LogOutServlet"></a></li>
+							<div class="clear"></div>
+						</ul>
+					</div>
+					<div class="clear"></div>
 				</div>
 
-				</form>
-
-
-    </div>
-   
-
-  
-	</div>
-  </div>
+				<div id="content">
+					<form action="UploadPostServlet" method="POST" enctype="multipart/form-data">
+						<p>
+							Type tag (nature, nature, people, fun, pets):<br> <label>
+								<input id="upl" type="text" name="tag" size="30">
+							</label>
+						</p>
+						<div class="fileChoose">
+							<input type="file" name="file" id="file" class="inputfile" /> <label
+								for="file">Choose a file</label> <input id="post" type="submit"
+								value="Post">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 		<div class="clear"></div>
 	</div>
-</div>
+	</div>
 </body>
 </html>
