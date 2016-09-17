@@ -68,7 +68,7 @@ public class CommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public Set<Comment> getAllCommentsByPost(Post p) {
+	public Set<Comment> getAllCommentsByPost(int postId) {
 		// comment_id, post_id, user_email, comment_text, comment_date FROM
 		// post_comments
 		HashSet<Comment> postComments = new HashSet<>();
@@ -76,9 +76,10 @@ public class CommentDAO implements ICommentDAO {
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_POST);
-			statement.setInt(1, p.getId());
+			statement.setInt(1, postId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				
 				postComments.add(new Comment(resultSet.getInt("comment_id"),
 											resultSet.getInt("post_id"),
 											resultSet.getString("user_email"), 

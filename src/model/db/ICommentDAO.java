@@ -11,6 +11,6 @@ public interface ICommentDAO {
 
 	void removeComment(Comment c);
 
-	Set<Comment> getAllCommentsByPost(Post p);
+	Set<Comment> getAllCommentsByPost(int postId);
 
 }
