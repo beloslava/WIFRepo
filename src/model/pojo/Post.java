@@ -19,7 +19,7 @@ public class Post {
 
 
 	public Post(int id, String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, TreeSet<Comment> comments) {
+			Timestamp time) {
 		
 		this.id = id;
 		this.userEmail = userEmail;
@@ -29,7 +29,6 @@ public class Post {
 		this.dislike = dislike;
 		this.createdOn = time.toLocalDateTime().format(
 				DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-		this.comments = comments;
 	}
 
 

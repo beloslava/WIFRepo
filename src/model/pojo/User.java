@@ -18,18 +18,18 @@ public class User {
 	private HashSet<Post> posts; // posts
 	
 	
-//	public User(String email, String password, String name,int age, String gender,
-//			String personalDescription, String avatarPath) {
-//		
-//		this.email = email;
-//		this.password = password;
-//		this.name = name;
-//		this.avatarPath = avatarPath;
-//		this.age = age;
-//		this.gender = gender;
-//		this.about = personalDescription;
-//		this.posts = new HashSet<Post>();
-//	}
+	public User(String email, String password, String name,int age, String gender,
+			String personalDescription, String avatarPath) {
+		
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.avatarPath = avatarPath;
+		this.age = age;
+		this.gender = gender;
+		this.about = personalDescription;
+		this.posts = new HashSet<Post>();
+	}
 
 	
 	

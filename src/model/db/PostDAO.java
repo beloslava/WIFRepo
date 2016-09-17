@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-import model.pojo.Comment;
 import model.pojo.Post;
 import model.pojo.User;
 import model.pojo.UsersManager;
@@ -62,15 +61,13 @@ public class PostDAO implements IPostDAO {
 			//post_id, user_email, tag_name, picture, post_like, post_dislike, post_date
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_POSTS);
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
 				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"),
 																	resultSet.getString("user_email"),
 																	resultSet.getString("tag_name"),
 																	resultSet.getString("picture"),
 																	resultSet.getInt("post_like"),
 																	resultSet.getInt("post_dislike"),
-																	resultSet.getTimestamp("post_date"),
-																	postComments
+																	resultSet.getTimestamp("post_date")
 
 																  
 						
@@ -93,7 +90,7 @@ public class PostDAO implements IPostDAO {
 	
 	@Override
 	public void addPost(String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, TreeSet<Comment> comments) {
+			Timestamp time) {
 
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS,
@@ -108,7 +105,7 @@ public class PostDAO implements IPostDAO {
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			long id = rs.getLong(1);
-			Post post = new Post((int)id, userEmail, tag, picture, like, dislike, time, comments);
+			Post post = new Post((int)id, userEmail, tag, picture, like, dislike, time);
 
 			User user = UsersManager.getInstance().getUser(userEmail);
 			user.getPosts().add(post);
@@ -123,10 +120,10 @@ public class PostDAO implements IPostDAO {
 
 
 	@Override
-	public void removePost(String userEmail, Post post) {
-		if (getAllPostsByUser(userEmail).contains(post)) {
-			getAllPostsByUser(userEmail).remove(post);
-			//user.getPosts().remove(post);
+	public void removePost(User user, Post post) {
+		if (getAllPostsByUser(user).contains(post)) {
+			getAllPostsByUser(user).remove(post);
+			user.getPosts().remove(post);
 			allPosts.remove(post.getId());
 		
 			try {
@@ -175,27 +172,22 @@ public class PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public Set<Post> getAllPostsByUser(String userEmail ) {
+	public Set<Post> getAllPostsByUser(User user) {
 
 		HashSet<Post> postsByUser = new HashSet<>();
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_POSTS_BY_USER);
-			statement.setString(1, userEmail);
+			statement.setString(1, user.getEmail());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
-
-				
 				postsByUser.add(new Post(resultSet.getInt("post_id"),
 										resultSet.getString("user_email"),
 										resultSet.getString("tag_name"),
 										resultSet.getString("picture"), 
 										resultSet.getInt("post_like"),
-										resultSet.getInt("post_dislike"),
-										resultSet.getTimestamp("post_date"),
-										postComments
+										resultSet.getInt("post_dislike"), 
+										resultSet.getTimestamp("post_date")
 
 				));
 
@@ -219,16 +211,13 @@ public class PostDAO implements IPostDAO {
 			statement.setString(1, tag);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
-
 				postsByTag.add(new Post(resultSet.getInt("post_id"), 
 										resultSet.getString("user_email"),
 										resultSet.getString("tag_name"), 
 										resultSet.getString("picture"), 
 										resultSet.getInt("post_like"),
 										resultSet.getInt("post_dislike"), 
-										resultSet.getTimestamp("post_date"),
-										postComments
+										resultSet.getTimestamp("post_date")
 
 				));
 
@@ -250,16 +239,13 @@ public class PostDAO implements IPostDAO {
 			st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_TOP_TEN_POSTS);
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
-
 				topTen.add(new Post(resultSet.getInt("post_id"), 
 									resultSet.getString("user_email"),
 									resultSet.getString("tag_name"),
 									resultSet.getString("picture"), 
 									resultSet.getInt("post_like"),
 									resultSet.getInt("post_dislike"),
-									resultSet.getTimestamp("post_date"),
-									postComments
+									resultSet.getTimestamp("post_date")
 
 				));
 

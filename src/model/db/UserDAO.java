@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -39,29 +38,25 @@ public class UserDAO implements IUserDAO {
 			Statement st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
-				
-				HashSet<Post> posts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
-				
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
 									resultSet.getInt("age"),
 									resultSet.getString("gender"), 
 									resultSet.getString("about"),
-									resultSet.getString("avatar"),
-									posts
+									resultSet.getString("avatar")
 
 				));
 			}
 			
-//			for (User u : users) {
-//				HashSet<Post> userPosts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(u.getEmail());
-//				for (Post p : userPosts) {
-//					TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(postId);
-//					p.setComments(postComments);
-//				}
-//				u.setPosts(userPosts);
-//			}
+			for (User u : users) {
+				HashSet<Post> userPosts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
+				for (Post p : userPosts) {
+					TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
+					p.setComments(postComments);
+				}
+				u.setPosts(userPosts);
+			}
 		} catch (SQLException e) {
 			System.out.println("Cannot get all users right now!");
 			return users;
@@ -82,7 +77,6 @@ public class UserDAO implements IUserDAO {
 			st.setString(5, user.getGender());
 			st.setString(6, user.getAbout());
 			st.setString(7, user.getAvatarPath());
-
 			st.executeUpdate();
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
@@ -104,7 +98,7 @@ public class UserDAO implements IUserDAO {
 			statement.setInt(3, user.getAge());
 			statement.setString(4, user.getGender());
 			statement.setString(5, user.getAbout());
-			statement.setString(6, user.getAvatarPath());
+			statement.setString(5, user.getAvatarPath());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {

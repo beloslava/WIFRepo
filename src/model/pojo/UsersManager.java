@@ -45,9 +45,9 @@ public class UsersManager implements IUserManager {
 	}
 
 	@Override
-	public void regUser(String email, String password, String name, int age, String gender, String personalDescription,
+	public void regUser(String email, String password, String name, int age, String gender, String about,
 			String avatarPath, HashSet<Post> posts) {
-		User user = new User(email, password, name, age, gender, personalDescription, avatarPath, posts);
+		User user = new User(email, password, name, age, gender, about, avatarPath, posts);
 		registerredUsers.put(email, user);
 		UserDAO.getInstance().saveUser(user);
 	}

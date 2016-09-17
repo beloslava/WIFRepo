@@ -26,6 +26,8 @@ import model.pojo.UsersManager;
 @MultipartConfig
 public class RegisterServlet extends HttpServlet {
 
+	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name = request.getParameter("name");
@@ -44,16 +46,17 @@ public class RegisterServlet extends HttpServlet {
 		if ((mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
 				&& (!name.isEmpty()) && (age > 0)
 				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male"))) {
-			File dir = new File("userProfilePics");
+			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
 			System.out.println(avatar.getContentType());
 			File avatarFile=new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
-			if(!avatarFile.exists()){
-				avatarFile.createNewFile();
-			}			
-Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
+//			if(!avatarFile.exists()){
+//				avatarFile.createNewFile();
+//			}
+			System.out.println(avatarFile.getAbsolutePath());
+			Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
 		//	Files.copy(avatarStream, avatarFile.toPath());
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
