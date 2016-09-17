@@ -19,7 +19,7 @@ public class LogOutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if(request.getSession().getAttribute("USER")!=null){
-		request.setAttribute("USER", null);
+		request.getSession().setAttribute("USER", null);
 		request.getSession().invalidate();
 		}
 		RequestDispatcher view = request.getRequestDispatcher("MainServlet");

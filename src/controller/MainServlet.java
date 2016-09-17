@@ -13,10 +13,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		String html = "";
-		String userEmail = session.getAttribute("USER").toString();
-		//System.out.println(userEmail);
+		String userEmail = request.getSession().getAttribute("USER").toString();
 		if (userEmail != null) {
 			html = "Main.jsp";
 		} else {
