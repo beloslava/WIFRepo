@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
 		if ((mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
 				&& (!name.isEmpty()) && (age > 0)
 				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male"))) {
-			File dir = new File("C:\\Users\\Iliyana\\Documents\\workspace\\MyWif\\userProfilePics");
+			File dir = new File("userProfilePics");
 			if (!dir.exists()) {
 				dir.mkdir();
 			}

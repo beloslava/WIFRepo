@@ -76,8 +76,7 @@ public class UserDAO implements IUserDAO {
 			st.setInt(4, user.getAge());
 			st.setString(5, user.getGender());
 			st.setString(6, user.getAbout());
-			st.setString(6, user.getAvatarPath());
-
+			st.setString(7, user.getAvatarPath());
 			st.executeUpdate();
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
