@@ -1,7 +1,6 @@
 package model.pojo;
 
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.List;
 
 
 public interface IUserManager {
@@ -10,7 +9,7 @@ public interface IUserManager {
 			String about, String avatarPath);
 	
 	void regUser(String email, String password, String name, int age, String gender,
-			String personalDescription, String avatarPath, HashSet<Post> posts);
+			String personalDescription, String avatarPath, List<Post> posts);
 	
 	boolean validLogin(String email, String password);
 	

@@ -1,6 +1,6 @@
 package model.pojo;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.db.UserDAO;
@@ -14,12 +14,6 @@ public class UsersManager implements IUserManager {
 
 		registerredUsers = new ConcurrentHashMap<>();
 		for (User u : UserDAO.getInstance().getAllUsers()) {
-//			TreeSet<Post> userPosts = (TreeSet<Post>) PostDAO.getInstance().getAllPostsByUser(u);
-//			for (Post p : userPosts) {
-//				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(p);
-//				p.setComments(postComments);
-//			}
-//			u.setPosts(userPosts);
 			registerredUsers.put(u.getEmail(), u);
 		}
 	}
@@ -46,7 +40,7 @@ public class UsersManager implements IUserManager {
 
 	@Override
 	public void regUser(String email, String password, String name, int age, String gender, String personalDescription,
-			String avatarPath, HashSet<Post> posts) {
+			String avatarPath, List<Post> posts) {
 		User user = new User(email, password, name, age, gender, personalDescription, avatarPath, posts);
 		registerredUsers.put(email, user);
 		UserDAO.getInstance().saveUser(user);

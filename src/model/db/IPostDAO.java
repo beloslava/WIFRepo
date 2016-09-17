@@ -1,18 +1,18 @@
 package model.db;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+
 
 import model.pojo.Comment;
 import model.pojo.Post;
-import model.pojo.User;
+
 
 public interface IPostDAO {
 
 	void addPost(String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, TreeSet<Comment> comments);
+			Timestamp time, List<Comment> comments);
 
 	void removePost(String userEmail, Post post);
 
@@ -20,13 +20,13 @@ public interface IPostDAO {
 
 	void dislikePost(Post post);
 
-	Set<Post> getAllPostsByUser(String userEmail);
+	List<Post> getAllPostsByUser(String userEmail);
 
-	Set<Post> getAllPostsByTag(String tag);
+	List<Post> getAllPostsByTag(String tag);
 	
 	Map<Integer, Post> getAllPosts();
 	
-	Set<Post> getTopTenPosts();
+	List<Post> getTopTenPosts();
 
 
 }

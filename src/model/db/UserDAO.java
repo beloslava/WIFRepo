@@ -5,11 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
-import model.pojo.Comment;
 import model.pojo.Post;
 import model.pojo.User;
 
@@ -33,14 +30,14 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public Set<User> getAllUsers() {
-		Set<User> users = new HashSet<User>();
+	public List<User> getAllUsers() {
+		List<User> users = new ArrayList<User>();
 		try {
 			Statement st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
 				
-				HashSet<Post> posts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
+				List<Post> posts =  (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
 				
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
@@ -54,14 +51,7 @@ public class UserDAO implements IUserDAO {
 				));
 			}
 			
-//			for (User u : users) {
-//				HashSet<Post> userPosts = (HashSet<Post>) PostDAO.getInstance().getAllPostsByUser(u.getEmail());
-//				for (Post p : userPosts) {
-//					TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(postId);
-//					p.setComments(postComments);
-//				}
-//				u.setPosts(userPosts);
-//			}
+
 		} catch (SQLException e) {
 			System.out.println("Cannot get all users right now!");
 			return users;

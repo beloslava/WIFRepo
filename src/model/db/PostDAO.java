@@ -5,13 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 import model.pojo.Comment;
 import model.pojo.Post;
@@ -62,7 +60,7 @@ public class PostDAO implements IPostDAO {
 			//post_id, user_email, tag_name, picture, post_like, post_dislike, post_date
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_POSTS);
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
+				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
 				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"),
 																	resultSet.getString("user_email"),
 																	resultSet.getString("tag_name"),
@@ -93,7 +91,7 @@ public class PostDAO implements IPostDAO {
 	
 	@Override
 	public void addPost(String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, TreeSet<Comment> comments) {
+			Timestamp time, List<Comment> comments) {
 
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS,
@@ -175,9 +173,9 @@ public class PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public Set<Post> getAllPostsByUser(String userEmail ) {
+	public List<Post> getAllPostsByUser(String userEmail ) {
 
-		HashSet<Post> postsByUser = new HashSet<>();
+		List<Post> postsByUser = new ArrayList<>();
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_POSTS_BY_USER);
@@ -185,7 +183,7 @@ public class PostDAO implements IPostDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
+				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
 
 				
 				postsByUser.add(new Post(resultSet.getInt("post_id"),
@@ -211,15 +209,15 @@ public class PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public Set<Post> getAllPostsByTag(String tag) {
-		HashSet<Post> postsByTag = new HashSet<>();
+	public List<Post> getAllPostsByTag(String tag) {
+		List<Post> postsByTag = new ArrayList<>();
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_POSTS_BY_TAG);
 			statement.setString(1, tag);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
+				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
 
 				postsByTag.add(new Post(resultSet.getInt("post_id"), 
 										resultSet.getString("user_email"),
@@ -243,14 +241,14 @@ public class PostDAO implements IPostDAO {
 	}
 	
 	@Override
-	public Set<Post> getTopTenPosts(){
-		HashSet<Post> topTen = new HashSet<>();
+	public List<Post> getTopTenPosts(){
+		List<Post> topTen = new ArrayList<>();
 		Statement st;
 		try {
 			st = DBManager.getInstance().getConnection().createStatement();
 			ResultSet resultSet = st.executeQuery(SELECT_TOP_TEN_POSTS);
 			while (resultSet.next()) {
-				TreeSet<Comment> postComments = (TreeSet<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
+				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance().getAllCommentsByPost(resultSet.getInt("post_id"));
 
 				topTen.add(new Post(resultSet.getInt("post_id"), 
 									resultSet.getString("user_email"),

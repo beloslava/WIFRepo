@@ -3,7 +3,8 @@ package model.pojo;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.List;
 
 public class Post {
 
@@ -14,12 +15,12 @@ public class Post {
 	private int like;
 	private int dislike;
 	private String createdOn;
-	private TreeSet<Comment> comments;
+	private List<Comment> comments;
 	
 
 
 	public Post(int id, String userEmail, String tag, String picture, int like, int dislike,
-			Timestamp time, TreeSet<Comment> comments) {
+			Timestamp time, List<Comment> comments) {
 		
 		this.id = id;
 		this.userEmail = userEmail;
@@ -78,8 +79,8 @@ public class Post {
 
 
 
-	public TreeSet<Comment> getComments() {
-		return (TreeSet<Comment>) comments.clone();
+	public List<Comment> getComments() {
+		return (List<Comment>) Collections.unmodifiableCollection(comments);
 	}
 
 
@@ -142,8 +143,8 @@ public class Post {
 
 
 
-	public void setComments(TreeSet<Comment> comments) {
-		this.comments = (TreeSet<Comment>) comments.clone();
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 

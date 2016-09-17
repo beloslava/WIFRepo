@@ -1,6 +1,7 @@
 package model.db;
 
-import java.util.Set;
+import java.util.List;
+
 
 import model.pojo.Comment;
 import model.pojo.Post;
@@ -11,6 +12,6 @@ public interface ICommentDAO {
 
 	void removeComment(Comment c);
 
-	Set<Comment> getAllCommentsByPost(int postId);
+	List<Comment> getAllCommentsByPost(int postId);
 
 }
