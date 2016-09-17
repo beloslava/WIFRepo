@@ -19,14 +19,14 @@ import model.pojo.UsersManager;
 
 public class PostDAO implements IPostDAO {
 
-	private static final String INSERT_INTO_POSTS = "INSERT INTO posts (user_email, tag_id, post_like, post_dislike,picture) VALUES (?,?,?,?,?);";
+	private static final String INSERT_INTO_POSTS = "INSERT INTO posts (user_email, tag_name, picture, post_like, post_dislike) VALUES (?,?,?,?,?);";
 	private static final String DELETE_POST = "DELETE FROM posts WHERE post_id = ?;";
 	private static final String LIKE_POST = "UPDATE posts SET post_like = post_like+1 WHERE post_id = ?;";
 	private static final String DISLIKE_POST = "UPDATE posts SET post_dislike = post_dislike+1 WHERE post_id = ?;";
-	private static final String SELECT_POSTS_BY_USER = "SELECT post_id, user_email, tag_id, picture, post_like, post_dislike, post_date FROM posts WHERE user_email = ? ORDER BY post_date DESC;";
-	private static final String SELECT_POSTS_BY_TAG = "SELECT post_id, user_email, tag_id, picture, post_like, post_dislike, post_date FROM posts WHERE tag_id = ? ORDER BY post_date DESC;";
-	private static final String SELECT_ALL_POSTS = "SELECT post_id, user_email, tag_id, picture, post_like, post_dislike, post_date FROM posts ORDER BY post_date DESC;";
-	private static final String SELECT_TOP_TEN_POSTS = "SELECT post_id, user_email, tag_id, picture, post_like, post_dislike, post_date FROM posts ORDER BY post_like DESC LIMIT 10;";
+	private static final String SELECT_POSTS_BY_USER = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE user_email = ? ORDER BY post_date DESC;";
+	private static final String SELECT_POSTS_BY_TAG = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts WHERE tag_name = ? ORDER BY post_date DESC;";
+	private static final String SELECT_ALL_POSTS = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts ORDER BY post_date DESC;";
+	private static final String SELECT_TOP_TEN_POSTS = "SELECT post_id, user_email, tag_name, picture, post_like, post_dislike, post_date FROM posts ORDER BY post_like DESC LIMIT 10;";
 
 	
 	
@@ -59,12 +59,12 @@ public class PostDAO implements IPostDAO {
 		Statement st;
 		try {
 			st = DBManager.getInstance().getConnection().createStatement();
-			//post_id, user_email, tag_id, picture, post_like, post_dislike, post_date
+			//post_id, user_email, tag_name, picture, post_like, post_dislike, post_date
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_POSTS);
 			while (resultSet.next()) {
 				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"),
 																	resultSet.getString("user_email"),
-																	resultSet.getString("tag_id"),
+																	resultSet.getString("tag_name"),
 																	resultSet.getString("picture"),
 																	resultSet.getInt("post_like"),
 																	resultSet.getInt("post_dislike"),
@@ -184,7 +184,7 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				postsByUser.add(new Post(resultSet.getInt("post_id"),
 										resultSet.getString("user_email"),
-										resultSet.getString("tag_id"),
+										resultSet.getString("tag_name"),
 										resultSet.getString("picture"), 
 										resultSet.getInt("post_like"),
 										resultSet.getInt("post_dislike"), 
@@ -214,7 +214,7 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				postsByTag.add(new Post(resultSet.getInt("post_id"), 
 										resultSet.getString("user_email"),
-										resultSet.getString("tag_id"), 
+										resultSet.getString("tag_name"), 
 										resultSet.getString("picture"), 
 										resultSet.getInt("post_like"),
 										resultSet.getInt("post_dislike"), 
@@ -242,7 +242,7 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				topTen.add(new Post(resultSet.getInt("post_id"), 
 									resultSet.getString("user_email"),
-									resultSet.getString("tag_id"),
+									resultSet.getString("tag_name"),
 									resultSet.getString("picture"), 
 									resultSet.getInt("post_like"),
 									resultSet.getInt("post_dislike"),
