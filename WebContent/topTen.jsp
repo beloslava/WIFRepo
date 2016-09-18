@@ -80,27 +80,28 @@
 				<div id="main" role="main">
         <ul id="tiles">
        <% for(Post post: PostDAO.getInstance().getTopTenPosts()) {%>
-							<a href="PostPictureServlet?postId=<%=post.getId()%>" class="swipebox" title="Image Name">
-								<li data-filter-class='["photos", "blog"]'>
-								<img
-									src="PostPictureServlet?postId=<%=post.getId()%>" width="300"
-									alt="" />
-									<p>
-										<a href="detailsPost.jsp">
-										<img src="images/blog-icon1.png" title="<%=post.getCreatedOn() %>" alt="" /> 
-											<img src="images/blog-icon2.png" title="<%=post.getLike() %>" alt="" />
-											 <img src="images/blog-icon3.png" title="<%=post.getComments().size() %>" alt="" />
-											<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></span>
-											<div class="clear"></div> 
-											</a>
-									</p></li>
-							</a>
-							<%} %>
-        <!-- End of grid blocks -->
-      </ul>
+							
+							<li data-filter-class='["photos", "blog"]'>
+								<form action="DetailsServlet" method="POST">
+								<input type="hidden" name="postpic" value="<%=post.getId() %>"/>
+									<input type="image" src="PostPictureServlet?postId=<%=post.getId()%>" width="300" />
+									
+								</form>
+										<p>
+											<img src="images/blog-icon1.png" title="<%=post.getCreatedOn()%>" alt="" /> <img src="images/blog-icon2.png" title="<%=post.getLike()%>" alt="" /> 
+												<img src="images/blog-icon3.png"title="<%=post.getComments().size()%>" alt="" /> 
+												<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></span>
+												<div class="clear"></div>
+										</p>
+									</a>
+								</li>
+							
+							<%
+								}
+							%>
+						</ul>
 
-    </div>
-   
+					</div>
 
   <!-- Include the imagesLoaded plug-in -->
   <script src="js/jquery.imagesloaded.js"></script>

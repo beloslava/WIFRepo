@@ -46,7 +46,12 @@ body{
  */
 #tiles li p {
   color: #666;
-  font-size: 12px;
+  font-size: 15px;
+}
+#tiles li h1{
+	color:#620462;
+	font-size:20px;
+	font-family: 'Oswald', sans-serif;
 }
 #tiles li p img{
 	float:left;

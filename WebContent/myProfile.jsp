@@ -15,14 +15,14 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!------ Light Box ------>
 <link rel="stylesheet" href="css/swipebox.css">
-<script src="js/ios-orientationchange-fix.js"></script> 
-<script src="js/jquery.swipebox.min.js"></script> 
+<script src="js/ios-orientationchange-fix.js"></script>
+<script src="js/jquery.swipebox.min.js"></script>
 <script type="text/javascript">
-		jQuery(function($) {
-			$(".swipebox").swipebox();
-		});
-	</script>
-	<!------ Eng Light Box ------>
+	jQuery(function($) {
+		$(".swipebox").swipebox();
+	});
+</script>
+<!------ Eng Light Box ------>
 </head>
 <body>
 	<div class="main">
@@ -77,18 +77,75 @@
 						</form>
 					</div>
 					<div class="clear"></div>
-					<form action="ViewProfileServlet" method="GET"></form>
+
 				</div>
 				<div id="content">
 					<div id="main" role="main">
-					<img alt="" src="PictureServlet?email=<%= request.getSession().getAttribute("USER") %>">
-					<p>Name:<%= UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getName() %></p>
-					<p>Email:<%= request.getSession().getAttribute("USER").toString() %></p>
-					<p>Age:<%= UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getAge()%></p>
-					<p>Gender:<%= UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getGender() %></p>
-					<p>About:<%= UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getAbout() %></p>	
-							
+						<ul id="tiles">
+							<li>
+								<img src="PictureServlet?email=<%=request.getSession().getAttribute("USER")%>" width="355" alt="" />
+								<h1><b>Name: </b><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getName()%></h1>
+								<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
+								<h1><b>Age: </b><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getAge()%></h1>
+								<h1><b>Gender: </b><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getGender()%></h1>
+								<h1><b>About: </b><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getAbout()%></h1>
+							</li>
+						</ul>
 					</div>
+					<!-- Include the imagesLoaded plug-in -->
+					<script src="js/jquery.imagesloaded.js"></script>
+					<script src="js/jquery.wookmark.js"></script>
+					<script type="text/javascript">
+						(function($) {
+							$('#tiles')
+									.imagesLoaded(
+											function() {
+												// Prepare layout options.
+												var options = {
+													autoResize : true, // This will auto-update the layout when the browser window is resized.
+													container : $('#main'), // Optional, used for some extra CSS styling
+													offset : 2, // Optional, the distance between grid items
+													itemWidth : 310
+												// Optional, the width of a grid item
+												};
+
+												// Get a reference to your grid items.
+												var handler = $('#tiles li'), filters = $('#filters li');
+
+												// Call the layout function.
+												handler.wookmark(options);
+
+												/**
+												 * When a filter is clicked, toggle it's active state and refresh.
+												 */
+												var onClickFilter = function(
+														event) {
+													var item = $(event.currentTarget), activeFilters = [];
+													item.toggleClass('active');
+
+													// Collect active filter strings
+													filters
+															.filter('.active')
+															.each(
+																	function() {
+																		activeFilters
+																				.push($(
+																						this)
+																						.data(
+																								'filter'));
+																	});
+
+													handler.wookmarkInstance
+															.filter(
+																	activeFilters,
+																	'or');
+												}
+
+												// Capture filter click events.
+												filters.click(onClickFilter);
+											});
+						})(jQuery);
+					</script>
 				</div>
 			</div>
 			<div class="clear"></div>
