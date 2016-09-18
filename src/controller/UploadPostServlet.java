@@ -34,7 +34,7 @@ public class UploadPostServlet extends HttpServlet {
 		String email = request.getSession().getAttribute("USER").toString();
 		String tag = request.getParameter("tag");
 		tag=tag.toLowerCase();
-		Part picture = request.getPart("file");
+		Part picture = request.getPart("fileField");
 		InputStream pictureStream = picture.getInputStream();
 		System.out.println(email);
 		if (tag.equalsIgnoreCase("people") || tag.equalsIgnoreCase("fun") || tag.equalsIgnoreCase("pets")
