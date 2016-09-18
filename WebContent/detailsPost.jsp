@@ -67,7 +67,6 @@
     				<span>upload date<span class="comments">comments</span></span> 
 			   <div class="blog-img">
 					<div class="view-back">
-						<span class="views" title="views">(566)</span>
 						<span class="likes" title="likes">(124)</span>
 						<span class="link" title="link">(24)</span>
 						<a href="#"> </a>

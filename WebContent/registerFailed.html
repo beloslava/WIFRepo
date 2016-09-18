@@ -10,6 +10,17 @@
 <script type="application/x-javascript">
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
+<script type="text/javascript">
+	function validateFileExtension(fld) {
+		if (!/(\.bmp|\.gif|\.jpg|\.jpeg)$/i.test(fld.value)) {
+			alert("Invalid image file type.");
+			fld.form.reset();
+			fld.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
 <link href='//fonts.googleapis.com/css?family=Lobster' rel='stylesheet'
 	type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet'
@@ -52,8 +63,9 @@
 				onblur="if (this.value == '') {this.value = 'ABOUT';}">
 			<p>Upload your profile picture</p>
 			<div class="fileChoose">
-				<input type="file" name="file" style="border: 3px solid #ff0000" id="file" class="inputfile" /> <label
-					for="file">Choose a file</label>
+				<input type="file" name="fileField" id="file" class="inputfile"
+					onchange="return validateFileExtension(this)" /> <label for="file">Choose
+					a file</label>
 			</div>
 			<input type="submit" value="SIGN IN">
 		</form>
