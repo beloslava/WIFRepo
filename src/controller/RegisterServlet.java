@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
 		String about = request.getParameter("description");
-		Part avatar = request.getPart("file");
+		Part avatar = request.getPart("fileField");
 		InputStream avatarStream = avatar.getInputStream();
 		Pattern pattern = Pattern.compile(
 				"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");

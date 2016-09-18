@@ -14,6 +14,6 @@ public interface ICommentDAO {
 
 	List<Comment> getAllCommentsByPost(int postId);
 	
-	List<Comment> selectAllCommentsByPost(int postId);
+//	List<Comment> selectAllCommentsByPost(int postId);
 
 }
