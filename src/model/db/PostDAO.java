@@ -73,13 +73,16 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance()
 						.getAllCommentsByPost(resultSet.getInt("post_id"));
-				allPosts.put(resultSet.getInt("post_id"),
-						new Post(resultSet.getInt("post_id"), resultSet.getString("user_email"),
-								resultSet.getString("tag_name"), resultSet.getString("picture"),
-								resultSet.getInt("post_like"), resultSet.getInt("post_dislike"),
-								resultSet.getTimestamp("post_date"), postComments
+				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"), 
+																	resultSet.getString("user_email"),
+																	resultSet.getString("tag_name"),
+																	resultSet.getString("picture"),
+																	resultSet.getInt("post_like"),
+																	resultSet.getInt("post_dislike"),
+																	resultSet.getTimestamp("post_date"),
+																	postComments
 
-						));
+														));
 
 			}
 		} catch (SQLException e) {
