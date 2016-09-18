@@ -9,13 +9,12 @@ import java.util.List;
 
 import model.pojo.Post;
 import model.pojo.User;
-import model.pojo.UsersManager;
 
 public class UserDAO implements IUserDAO {
 	// email, password, name, avatarPath, age, gender, personalDescription
 
 	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about, avatar FROM users;";
-	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about, avatar) VALUES (?, MD5(?), ?, ?, ?, ?, ?);";
 	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?  WHERE email = ?;";
 
 	private static UserDAO instance;

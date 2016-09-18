@@ -37,16 +37,7 @@ public class PostPictureServlet extends HttpServlet {
 		}
 		
 		String logged = (String) request.getSession().getAttribute("USER");
-		if(logged == null){//session is new or expired
-			System.out.println("This should not happen right now. Might happen later on other pages");
-		}
-		else{
-			Post post=PostDAO.getInstance().getPost(postId);
-			returnPic(post, response);
-			
-		}
 	}
-			
-			
+		
 	}
 

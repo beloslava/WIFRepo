@@ -13,14 +13,13 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String html = "";
-		String userEmail = request.getSession().getAttribute("USER").toString();
-		if (userEmail != null) {
-			html = "main.jsp";
+		RequestDispatcher view;
+		if (request.getSession().getAttribute("USER").toString() != null) {
+			view = request.getRequestDispatcher("main.jsp");
 		} else {
-			html = "index.html";
+			view = request.getRequestDispatcher("index.html");
 		}
-		RequestDispatcher view = request.getRequestDispatcher(html);
+		
 		view.forward(request, response);
 	}
 

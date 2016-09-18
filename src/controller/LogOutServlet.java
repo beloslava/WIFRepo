@@ -16,13 +16,13 @@ import model.db.DBManager;
 @WebServlet("/LogOutServlet")
 public class LogOutServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if(request.getSession().getAttribute("USER")!=null){
 		request.getSession().setAttribute("USER", null);
 		request.getSession().invalidate();
 		}
-		RequestDispatcher view = request.getRequestDispatcher("MainServlet");
+		RequestDispatcher view = request.getRequestDispatcher("index.html");
 		view.forward(request, response);
 	}
 

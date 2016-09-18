@@ -36,8 +36,6 @@ public class UsersManager implements IUserManager {
 		if (!registerredUsers.containsKey(email)) {
 			return false;
 		}
-		System.out.println(registerredUsers.get(email).getPassword());
-		System.out.println(convertToMd5(password));
 		return registerredUsers.get(email).getPassword().equals(convertToMd5(password));
 	}
 
@@ -46,12 +44,6 @@ public class UsersManager implements IUserManager {
 			String avatarPath, List<Post> posts) {
 		User user = new User(email, password, name, age, gender, about, avatarPath, posts);
 		registerredUsers.put(email, user);
-		try {
-			registerredUsers.get(email).setPassword(convertToMd5(password));
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Something went wrong with crypting the password");
-			e.printStackTrace();
-		}
 		UserDAO.getInstance().saveUser(user);
 	}
 

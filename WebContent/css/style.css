@@ -160,8 +160,17 @@ body {
 .social-icons a.logoutbtn {
 		background: url(../images/settings_icon.png) no-repeat;
 }
+.logoutbtn {
+    background-image: url ('/image/settings_icon.png') no-repeat;
+    cursor:pointer;
+}
+.social-icons a.upload {
+		background: url(../images/post_icon.png) no-repeat;
+}
 
-.social-icons a.facebook:hover {
+.social-icons a.upload:hover {
+	background-position: 0px top;
+}.social-icons a.facebook:hover {
 	background-position: 0px top;
 }
 
