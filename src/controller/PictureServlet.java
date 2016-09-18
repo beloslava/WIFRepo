@@ -31,9 +31,9 @@ public class PictureServlet extends HttpServlet {
 	 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String requestedUsername = request.getParameter("email");
-		if(requestedUsername != null){
-			User user = UsersManager.getInstance().getUser(requestedUsername);
+		String requestedEmail = request.getParameter("email");
+		if(requestedEmail != null){
+			User user = UsersManager.getInstance().getUser(requestedEmail);
 			returnProfilePic(user, response);
 		}
 		String logged = (String) request.getSession().getAttribute("USER");
@@ -42,7 +42,6 @@ public class PictureServlet extends HttpServlet {
 		}
 		else{
 			User user = UsersManager.getInstance().getUser(logged);
-			File profilePicFile = new File("userProfilePics", user.getAvatarPath());
 			returnProfilePic(user, response);
 			
 		}

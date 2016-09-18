@@ -49,7 +49,7 @@ public class UploadPostServlet extends HttpServlet {
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			PostDAO.getInstance().addPost(email, tag, pictureFile.getName(), 0, 0,Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
-			html = "Main.jsp";
+			html = "main.jsp";
 		} else {
 			html = "index.html";
 		}

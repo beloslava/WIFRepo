@@ -9,12 +9,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MyWif | Post details</title>
+<title>MyWif | </title>
 <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
-
+<!------ Light Box ------>
+<link rel="stylesheet" href="css/swipebox.css">
+<script src="js/ios-orientationchange-fix.js"></script> 
+<script src="js/jquery.swipebox.min.js"></script> 
+<script type="text/javascript">
+		jQuery(function($) {
+			$(".swipebox").swipebox();
+		});
+	</script>
+	<!------ Eng Light Box ------>
+<%
+  if (session == null)
+  {
+    String address ="index.html";
+    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+    dispatcher.forward(request,response);
+  }
+%>
 </head>
 <body>
 	<div class="main">
@@ -55,9 +72,8 @@
 								target="_blank"></a></li>
 							<li><a class="vimeo" href="https://dribbble.com/"
 								target="_blank"></a></li>
-							<li><form action="LogOutServlet" method="GET">
-									<input type="submit" class="logoutbtn">
-								</form></li>
+								<li><button class="logoutbtn" type="submit" formaction="LogOutServlet"  method="GET"></button></li>
+							
 						</ul>
 						<div class="clear"></div>
 					</div>
@@ -75,17 +91,19 @@
 					<div id="main" role="main">
 						<ul id="tiles">
 						<% for(Post post: PostDAO.getInstance().getAllPosts().values()) {%>
-							<a class="swipebox" title="Image Name">
+							<a href="PostPictureServlet?postId=<%=post.getId()%>" class="swipebox" title="Image Name">
 								<li data-filter-class='["photos", "blog"]'>
-<%-- 								<img src="PostPictureServlet?postId=<%=post.getId()%>" alt="" /> --%>
+								<img
+									src="PostPictureServlet?postId=<%=post.getId()%>" width="300"
+									alt="" />
 									<p>
-										<a href="details.html"><img src="PostPictureServlet?postId=<%=post.getId()%>"
-											title="posted date" alt="" /> <img
-											src="images/blog-icon2.png" title="views" alt="" /> <img
-											src="images/blog-icon3.png" title="comments" alt="" /> <img
-											src="images/blog-icon5.png" title="link" alt="" /> <span>Sample
-												Text</span>
-											<div class="clear"></div> </a>
+										<a href="detailsPost.jsp">
+										<img src="images/blog-icon1.png" title="<%=post.getCreatedOn() %>" alt="" /> 
+											<img src="images/blog-icon2.png" title="<%=post.getLike() %>" alt="" />
+											 <img src="images/blog-icon3.png" title="<%=post.getComments().size() %>" alt="" />
+											<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></span>
+											<div class="clear"></div> 
+											</a>
 									</p></li>
 							</a>
 							<%} %>

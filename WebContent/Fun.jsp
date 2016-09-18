@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="model.pojo.UsersManager" %>
+<%@ page import="model.db.UserDAO" %>
+<%@ page import="model.pojo.User" %>
+<%@ page import="model.pojo.Post" %>
+<%@ page import="model.db.PostDAO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,7 +14,16 @@
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
  <script type="text/javascript" src="js/jquery.min.js"></script>
-	
+	<!------ Light Box ------>
+<link rel="stylesheet" href="css/swipebox.css">
+<script src="js/ios-orientationchange-fix.js"></script> 
+<script src="js/jquery.swipebox.min.js"></script> 
+<script type="text/javascript">
+		jQuery(function($) {
+			$(".swipebox").swipebox();
+		});
+	</script>
+	<!------ Eng Light Box ------>
 </head>
 <body>
    <div class="main">
@@ -57,15 +71,21 @@
 	<div id="content">
 				<div id="main" role="main">
         <ul id="tiles">
-       <a href="images/img1_b.jpg" class="swipebox" title="Image Name">   <li data-filter-class='["photos", "blog"]'>
-          <img src="images/img1.jpg" alt="" />
-          <p><a href="details.html"><img src="images/blog-icon1.png" title="posted date" alt="" />
-             	<img src="images/blog-icon2.png" title="views" alt="" />
-             	<img src="images/blog-icon3.png" title="comments" alt="" />
-             	<img src="images/blog-icon5.png" title="link" alt="" />
-             	<span>Sample Text</span>
-             	<div class="clear"></div>
-             </a></p>
+      <% for(Post post: PostDAO.getInstance().getAllPostsByTag("fun")) {%>
+							<a class="swipebox" title="Image Name">
+								<li data-filter-class='["photos", "blog"]'>
+<%-- 								<img src="PostPictureServlet?postId=<%=post.getId()%>" alt="" /> --%>
+									<p>
+										<a href="details.html"><img src="PostPictureServlet?postId=<%=post.getId()%>"
+											title="posted date" alt=""  /> <img
+											src="images/blog-icon2.png" title="views" alt="" /> <img
+											src="images/blog-icon3.png" title="comments" alt="" /> <img
+											src="images/blog-icon5.png" title="link" alt="" /> <span>Sample
+												Text</span>
+											<div class="clear"></div> </a>
+									</p></li>
+							</a>
+							<%} %>
        </li></a>
         <!-- End of grid blocks -->
       </ul>

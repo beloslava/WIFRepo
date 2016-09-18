@@ -62,7 +62,7 @@
 						<span class="link" title="link">(24)</span>
 						<a href="#"> </a>
 					</div>
-					<img src="images/blog-img.jpg">
+					<img src=""PostPictureServlet"">
 				</div>
 				<div class="blog-data"></div>
 			<div class="clear"></div>

@@ -59,7 +59,7 @@ public class Post {
 	}
 
 	public List<Comment> getComments() {
-		return (List<Comment>) Collections.unmodifiableCollection(comments);
+		return comments;
 	}
 
 	public void setId(int id) {

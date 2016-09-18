@@ -16,32 +16,37 @@ import model.pojo.Post;
 import model.pojo.User;
 import model.pojo.UsersManager;
 
-/**
- * Servlet implementation class PostPictureServlet
- */
 @WebServlet("/PostPictureServlet")
 public class PostPictureServlet extends HttpServlet {
 	public static void returnPic(Post post,  HttpServletResponse response) throws IOException{
 		String email=post.getUserEmail();
 		User user=UsersManager.getInstance().getUser(email);
-		File PicFile = new File("D:\\MyWifPictures\\userPostPics"+user.getName(), post.getPicture());
-		response.setContentLength((int)PicFile.length());
-		
-		String contentType = "image/"+PicFile.getName().split("[.]")[PicFile.getName().split("[.]").length-1];
+		File picFile = new File("D:\\MyWifPictures\\userPostPics"+user.getName(), post.getPicture());
+		response.setContentLength((int)picFile.length());
+		String contentType = "image/"+picFile.getName().split("[.]")[picFile.getName().split("[.]").length-1];
 		response.setContentType(contentType);
 		OutputStream out = response.getOutputStream();
-		Files.copy(PicFile.toPath(), out);
+		Files.copy(picFile.toPath(), out);
 	}
 	 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int postId=Integer.parseInt(request.getParameter("postId"));
 		if(PostDAO.getInstance().getAllPosts().containsKey(postId)){
-			Post post=PostDAO.getInstance().getPost(postId);
+			Post post=PostDAO.getInstance().getAllPosts().get(postId);
 			returnPic(post, response);
 		}
+		
+		String logged = (String) request.getSession().getAttribute("USER");
+		if(logged == null){//session is new or expired
+			System.out.println("This should not happen right now. Might happen later on other pages");
+		}
+		else{
+			Post post=PostDAO.getInstance().getPost(postId);
+			returnPic(post, response);
+			
+		}
+	}
 			
 			
 	}
 
-}

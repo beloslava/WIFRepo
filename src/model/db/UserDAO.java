@@ -88,7 +88,7 @@ public class UserDAO implements IUserDAO {
 			statement.setInt(3, user.getAge());
 			statement.setString(4, user.getGender());
 			statement.setString(5, user.getAbout());
-			statement.setString(5, user.getAvatarPath());
+			statement.setString(6, user.getAvatarPath());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
