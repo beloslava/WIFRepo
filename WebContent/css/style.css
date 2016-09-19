@@ -449,13 +449,13 @@ body {
 	transition: transform 150ms ease-in-out;
 }
 
-.blog-img div.view-back {
-	height: 100%;
-	position: absolute;
-	right: 0;
-	background: #222;
-	z-index: 0;
-}
+/* .blog-img div.view-back { */
+/* 	height: 100%; */
+/* 	position: absolute; */
+/* 	right: 0; */
+/* 	background: #222; */
+/* 	z-index: 0; */
+/* } */
 
 .view-back span {
 	display: block;
@@ -466,18 +466,6 @@ body {
 	font-size: 12px;
 	color: #CCC;
 	cursor: pointer;
-}
-
-.view-back span.views {
-	background: url(../images/views.png) no-repeat 160px 14px;
-}
-
-.view-back span.likes {
-	background: url(../images/likes.png) no-repeat 160px 5px;
-}
-
-.view-back span.link {
-	background: url(../images/link.png) no-repeat 160px 8px;
 }
 
 .view-back span:first-child {
@@ -927,7 +915,7 @@ a#cancel-comment-reply-link {
 		background-image: url(../images/mail-2-hover.png);
 	}
 	.blog-img {
-		height: 255px;
+/* 		height: 255px; */
 	}
 	.comment .data {
 		width: 80%;
