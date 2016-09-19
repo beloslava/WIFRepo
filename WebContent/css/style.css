@@ -387,7 +387,6 @@ body {
 }
 
 .box1 {
-	border-bottom: 1px solid #D8D8D8;
 	padding: 15px 0;
 }
 
@@ -395,9 +394,7 @@ body {
 	overflow: hidden;
 }
 
-.blog-img:hover img {
-	left: -85px;
-}
+
 
 .blog-img div.view-back {
 	background: #666;
@@ -411,22 +408,7 @@ body {
 	perspective: 1000px;
 }
 
-.blog-img {
-	width: 80%;
-	height: 400px;
-	margin: 10px 0;
-	position: relative;
-	border: 5px solid #fff;
-	box-shadow: 1px 1px 10px #555;
-	-webkit-box-shadow: 1px 1px 10px #555;
-	-moz-box-shadow: 1px 1px 10px #555;
-	-o-box-shadow: 1px 1px 10px #555;
-	-webkit-perspective: 500px;
-	-moz-perspective: 500px;
-	-o-perspective: 500px;
-	-ms-perspective: 500px;
-	perspective: 500px;
-}
+
 
 .blog-img .slice {
 	width: 60px;
@@ -510,7 +492,9 @@ body {
 }
 
 .blog-img img {
-	position: absolute;
+	box-shadow: 5px 5px 5px 5px #ccc;
+	border: 5px solid white;
+	margin: 15px 15px;
 	z-index: 0;
 	-webkit-transition: left 0.3s ease-in-out;
 	-o-transition: left 0.3s ease-in-out;
@@ -871,6 +855,10 @@ a#cancel-comment-reply-link {
 .copy_right p a:hover {
 	color: #620462;
 	text-decoration: none;
+}
+.likes{
+	width: 25px;
+	margin-left: 2em;
 }
 /*** responsice layout ***/
 @media all and (max-width: 1024px) {

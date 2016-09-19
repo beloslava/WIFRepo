@@ -84,11 +84,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					%>
 					<div class="box1">
 						<span>By <%=user.getName()%>- <%=post.getCreatedOn()%><span
-							class="comments"><%=post.getId()%> Comments</span></span>
+							class="comments"><%=post.getComments().size()%> Comments</span></span>
 						<div class="blog-img">
 							<img src="PostPictureServlet?postId=<%=post.getId()%>">
 						</div>
 						<div class="clear"></div>
+					</div>
+					<div>			
+					<div>
+						<a href="LikesServlet?postId=<%=post.getId()%>"><img  class="likes" src="images/likes.png" alt="" /></a><span><%=post.getLike() %></span>
 					</div>
 					<!----------------  Comment Area -------------------->
 					<div class="comments-area">
@@ -136,6 +140,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</ul>
 						<div class="clear"></div>
 					</div>
+
 					<!----------------- End Comment Area ----------------->
 				</div>
 			</div>
@@ -144,3 +149,4 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div>
 </body>
 </html>
+				

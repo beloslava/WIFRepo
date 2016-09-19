@@ -18,26 +18,26 @@ import model.pojo.UsersManager;
 
 @WebServlet("/PostPictureServlet")
 public class PostPictureServlet extends HttpServlet {
-	public static void returnPic(Post post,  HttpServletResponse response) throws IOException{
-		String email=post.getUserEmail();
-		User user=UsersManager.getInstance().getUser(email);
-		File picFile = new File("D:\\MyWifPictures\\userPostPics"+user.getName(), post.getPicture());
-		response.setContentLength((int)picFile.length());
-		String contentType = "image/"+picFile.getName().split("[.]")[picFile.getName().split("[.]").length-1];
+	public static void returnPic(Post post, HttpServletResponse response) throws IOException {
+		String email = post.getUserEmail();
+		User user = UsersManager.getInstance().getUser(email);
+		File picFile = new File("D:\\MyWifPictures\\userPostPics" + user.getName(), post.getPicture());
+		response.setContentLength((int) picFile.length());
+		String contentType = "image/" + picFile.getName().split("[.]")[picFile.getName().split("[.]").length - 1];
 		response.setContentType(contentType);
 		OutputStream out = response.getOutputStream();
 		Files.copy(picFile.toPath(), out);
 	}
-	 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postId=Integer.parseInt(request.getParameter("postId"));
-		if(PostDAO.getInstance().getAllPosts().containsKey(postId)){
-			Post post=PostDAO.getInstance().getAllPosts().get(postId);
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int postId = Integer.parseInt(request.getParameter("postId"));
+		if (PostDAO.getInstance().getAllPosts().containsKey(postId)) {
+			Post post = PostDAO.getInstance().getAllPosts().get(postId);
 			returnPic(post, response);
 		}
-		
+
 		String logged = (String) request.getSession().getAttribute("USER");
 	}
-		
-	}
 
+}

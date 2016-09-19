@@ -146,6 +146,7 @@ public class PostDAO implements IPostDAO {
 			int like = post.getLike() + 1;
 			post.setLike(like);
 			allPosts.put(post.getId(), post);
+			System.out.println("like");
 		} catch (SQLException e) {
 			System.out.println("The post cannot be liked right now");
 			e.printStackTrace();
