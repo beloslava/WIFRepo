@@ -143,6 +143,7 @@ public class PostDAO implements IPostDAO {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
 			statement.setInt(1, post.getId());
+			statement.executeUpdate();
 			int like = post.getLike() + 1;
 			post.setLike(like);
 			allPosts.put(post.getId(), post);
@@ -159,6 +160,7 @@ public class PostDAO implements IPostDAO {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(DISLIKE_POST);
 			statement.setInt(1, post.getId());
+			statement.executeUpdate();
 			int like = post.getDislike() + 1;
 			post.setDislike(like);
 			allPosts.put(post.getId(), post);
@@ -216,8 +218,6 @@ public class PostDAO implements IPostDAO {
 
 		for (Post post : top) {
 			topTen.add(post);
-			// System.out.println(post.getLike());
-
 			if (topTen.size() == 10) {
 				break;
 			}
