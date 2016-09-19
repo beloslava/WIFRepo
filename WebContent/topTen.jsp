@@ -30,7 +30,7 @@
 	<div class="wrap">
 		<div class="left-content">
 			<div class="logo">
-				<h1><a href="Main.jsp"><img src="images/logo.png" alt="" /></a></h1>
+				<h1><a href="main.jsp"><img src="images/logo.png" alt="" /></a></h1>
 			</div>
 			<div class="menu">			
 			  <ol id="filters">
