@@ -89,19 +89,21 @@
 
 							<li data-filter-class='["photos", "blog"]'>
 								<form action="DetailsServlet" method="POST">
-								<input type="hidden" name="postpic" value="<%=post.getId() %>"/>
-									<input type="image" src="PostPictureServlet?postId=<%=post.getId()%>" width="300" />
-									
+									<input type="hidden" name="postpic" value="<%=post.getId()%>" />
+									<input type="image"
+										src="PostPictureServlet?postId=<%=post.getId()%>" width="300" />
+
 								</form>
-										<p>
-											<img src="images/blog-icon1.png" title="<%=post.getCreatedOn()%>" alt="" /> <img src="images/blog-icon2.png" title="<%=post.getLike()%>" alt="" /> 
-												<img src="images/blog-icon3.png"title="<%=post.getComments().size()%>" alt="" /> 
-												<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></span>
-												<div class="clear"></div>
-										</p>
-									</a>
-								</li>
-							
+								<p>
+									<img src="images/blog-icon1.png"
+										title="<%=post.getCreatedOn()%>" alt="" /> <img
+										src="images/blog-icon2.png" title="<%=post.getLike()%>" alt="" />
+									<img src="images/blog-icon3.png"
+										title="<%=post.getComments().size()%>" alt="" /> <span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></span>
+								<div class="clear"></div>
+								</p>
+							</li>
+
 							<%
 								}
 							%>

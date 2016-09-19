@@ -86,7 +86,7 @@
 				<div id="content">
 					<div id="main" role="main">
 						<ul id="tiles">
-							<%
+							<% int x=1;
 								for (Post post : PostDAO.getInstance().getAllPosts().values()) {
 							%>
 								<li data-filter-class='["photos", "blog"]'>
@@ -104,7 +104,10 @@
 									</a>
 								</li>
 							
-							<%
+							<%x++;
+							if(x==11){
+								break;
+							}
 								}
 							%>
 						</ul>
