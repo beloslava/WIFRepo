@@ -62,7 +62,7 @@ public class RegisterServlet extends HttpServlet {
 			html="index.html";
 		}
 		else{
-			html="RegisterFailed.html";
+			html="registerFailed.html";
 		}
 
 		RequestDispatcher view = request.getRequestDispatcher(html);
