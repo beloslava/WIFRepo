@@ -34,7 +34,12 @@ public class RegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String password2 = request.getParameter("password2");
-		int age = Integer.parseInt(request.getParameter("age"));
+		int age = 0;
+		try{
+		 age = Integer.parseInt(request.getParameter("age"));
+		}catch(NumberFormatException e){
+			System.out.println("Invalid age");
+		}
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
 		String about = request.getParameter("description");
@@ -62,7 +67,7 @@ public class RegisterServlet extends HttpServlet {
 			html="index.html";
 		}
 		else{
-			html="RegisterFailed.html";
+			html="registerFailed.html";
 		}
 
 		RequestDispatcher view = request.getRequestDispatcher(html);
