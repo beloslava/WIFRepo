@@ -20,8 +20,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  <script type="text/javascript" src="js/jquery.min.js"></script>
 </head>
 <body>
-   <div class="menu">			
-			  <ol id="filters">
+	<div class="main">
+		<div class="wrap">
+			<div class="left-content">
+				<div class="logo">
+					<h1>
+						<a href="Main.jsp"><img src="images/logo.png" alt="" /></a>
+					</h1>
+				</div>
+				<div class="menu">
+					<ol id="filters">
 						<li class="home"><a href="main.jsp">Home</a></li>
 						<li class="video"><a href="myProfile.jsp">My Profile</a></li>
 						<li class="photo"><a href="myPhotos.jsp">My Photos</a></li>
@@ -31,9 +39,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<li class="photo"><a href="fun.jsp">Fun</a></li>
 						<li class="photo"><a href="pets.jsp">Pets</a></li>
 					</ol>
+				</div>
 			</div>
-		</div>
-		<div class="right-content">
+			<div class="right-content">
 				<div class="header">
 					<div class="social-icons">
 						<ul>
@@ -56,8 +64,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								</form></li>
 						</ul>
 						<div class="clear"></div>
-					</div>  	   
-			
+					</div>
+					<div class="search_box">
+						<form>
+							<input type="text" class="text-box"
+								placeholder="Search............."><input type="submit"
+								value="">
+						</form>
+					</div>
+					<div class="clear"></div>
+				</div>
 		<div class="content">
 		<%Post post=PostDAO.getInstance().getPost(Integer.parseInt(request.getAttribute("postId").toString()));
                         		User user=UsersManager.getInstance().getUser(post.getUserEmail()); %>
