@@ -17,16 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig
 public class DetailsServlet extends HttpServlet {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view;
-		if(!request.getSession().getAttribute("USER").toString().isEmpty()){
-			String userEmail=request.getSession().getAttribute("USER").toString();
-			int postId=Integer.parseInt(request.getParameter("postpic"));
-			request.setAttribute("postId", postId);
-			view=request.getRequestDispatcher("detailsPost.jsp");
-		}else{
-			view=request.getRequestDispatcher("index.html");
-		}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int postId=Integer.parseInt(request.getParameter("postId"));
+		request.setAttribute("postId", postId);
+		RequestDispatcher view=request.getRequestDispatcher("detailsPost.jsp");
 		view.forward(request, response);
 	}
 

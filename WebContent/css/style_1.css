@@ -20,7 +20,7 @@ body {
 .content p {
 	font-size:15px;
 	color:#34EFCA;
-	font-family: 'Lobster', cursive;
+	font-family: 'Oswald', sans-serif;
 }
 input[type="email"] {
 	padding:10px;
