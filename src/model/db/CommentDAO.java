@@ -21,18 +21,9 @@ public class CommentDAO implements ICommentDAO {
 	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
 	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, comment_text) VALUES (?,?,?);";
 
-	//HashMap<Integer, ArrayList<Comment>> allComments; // post id -> comment
-
 	private static CommentDAO instance;
 
 	private CommentDAO() {
-
-//		allComments = new HashMap<>();
-//
-//		for (Post p : PostDAO.getInstance().takeAllPosts().values()) {
-//			allComments.put(p.getId(), (ArrayList<Comment>) p.getComments());
-//		}
-
 	}
 
 	public synchronized static CommentDAO getInstance() {
@@ -58,10 +49,6 @@ public class CommentDAO implements ICommentDAO {
 
 			Comment comment = new Comment((int) commentId, postId, userEmail, text, time);
 			PostDAO.getInstance().getPost(postId).getComments().add(comment);
-//			if (!allComments.containsKey(postId)) {
-//				allComments.put(postId, new ArrayList<>());
-//			}
-//			allComments.get(postId).add(comment);
 
 		} catch (SQLException e) {
 			System.out.println("Cannot add comment right now");
@@ -96,8 +83,10 @@ public class CommentDAO implements ICommentDAO {
 			statement.setInt(1, postId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				postComments.add(new Comment(resultSet.getInt("comment_id"), resultSet.getInt("post_id"),
-						resultSet.getString("user_email"), resultSet.getString("comment_text"),
+				postComments.add(new Comment(resultSet.getInt("comment_id"), 
+						resultSet.getInt("post_id"),
+						resultSet.getString("user_email"), 
+						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date")
 
 				));
@@ -113,12 +102,13 @@ public class CommentDAO implements ICommentDAO {
 		return postComments;
 
 	}
-
-//	@Override
-//	public List<Comment> selectAllCommentsByPost(int postId) { 
-//
-//		ArrayList<Comment> commentsByPost = allComments.get(postId);
-//		Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
-//		return commentsByPost;
-//	}
+	
+	@Override
+	public List<Comment> takeAllCommentsByPost(int postId) { 
+		Post post = PostDAO.getInstance().getPost(postId);
+		ArrayList<Comment> commentsByPost = (ArrayList<Comment>) post.getComments();
+		Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return commentsByPost;
+	}
+	
 }
