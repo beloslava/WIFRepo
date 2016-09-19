@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MyWif | Post details</title>
+<title>MyWif | My photos</title>
 <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/grids.css" type="text/css" media="all" />
@@ -72,11 +72,6 @@
 						<div class="clear"></div>
 					</div>
 					<div class="search_box">
-						<form>
-							<input type="text" class="text-box"
-								placeholder="Search............."><input type="submit"
-								value="">
-						</form>
 					</div>
 					<div class="clear"></div>
 				</div>

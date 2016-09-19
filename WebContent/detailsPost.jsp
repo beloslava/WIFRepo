@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <%@page import="model.db.CommentDAO"%>
 <%@page import="model.pojo.Comment"%>
@@ -69,11 +63,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="clear"></div>
 					</div>
 					<div class="search_box">
-						<form>
-							<input type="text" class="text-box"
-								placeholder="Search............."><input type="submit"
-								value="">
-						</form>
 					</div>
 					<div class="clear"></div>
 				</div>
