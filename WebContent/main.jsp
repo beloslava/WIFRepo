@@ -74,11 +74,6 @@
 						<div class="clear"></div>
 					</div>
 					<div class="search_box">
-						<form>
-							<input type="text" class="text-box"
-								placeholder="Search............."><input type="submit"
-								value="">
-						</form>
 					</div>
 					<div class="clear"></div>
 				</div>
