@@ -1,4 +1,0 @@
-.cssPagination .pages > .page:target ~ .page:last-child,
-.cssPagination .pages > .page {display: none;}
-.cssPagination .pages > :last-child,
-.cssPagination .pages > .page:target {display: block;}			
