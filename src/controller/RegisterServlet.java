@@ -49,9 +49,10 @@ public class RegisterServlet extends HttpServlet {
 				"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
 		Matcher mattcher = pattern.matcher(email);
 		String html = "";
-		if ((mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
+		
+		if ( ((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
 				&& (!name.isEmpty()) && (age > 0)
-				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male"))) {
+				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male")) ) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();

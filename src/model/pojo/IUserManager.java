@@ -15,4 +15,6 @@ public interface IUserManager {
 	boolean validLogin(String email, String password) throws UnsupportedEncodingException;
 	
 	User getUser(String username);
+	
+	boolean isUserExists(String email);
 }

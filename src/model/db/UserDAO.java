@@ -53,6 +53,7 @@ public class UserDAO implements IUserDAO {
 			return users;
 		}
 		System.out.println("Users loaded successfully");
+		//System.out.println("Users " + users.size());
 		return users;
 	}
 
@@ -68,22 +69,22 @@ public class UserDAO implements IUserDAO {
 			st.setString(5, user.getGender());
 			st.setString(6, user.getAbout());
 			st.setString(7, user.getAvatarPath());
-			st.executeUpdate();
+				
+			 st.executeUpdate();
+				
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
 			System.out.println("Cannot save user right now!");
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	@Override
 	public void updateUser(User user) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
-			// email = ?, user_password = ?, user_name = ?, age = ?, gender
-			// = ?,
-			// about = ?, avatar = ?
+			// email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?
 			statement.setString(1, user.getEmail());
 			statement.setString(2, user.getPassword());
 			statement.setInt(3, user.getAge());
