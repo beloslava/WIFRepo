@@ -5,6 +5,9 @@
 <%@page import="model.pojo.UsersManager"%>
 <%@page import="model.pojo.Post"%>
 <%@page import="model.pojo.User"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+           
 <html>
 <head>
 <title>My Wif | Post details</title>

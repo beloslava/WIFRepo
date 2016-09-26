@@ -5,6 +5,7 @@
 <%@ page import="model.pojo.User"%>
 <%@ page import="model.pojo.Post"%>
 <%@ page import="model.db.PostDAO"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -78,7 +79,8 @@
 				<div id="content">
 					<div id="main" role="main">
 						<ul id="tiles">
-							<%
+						
+						<%
 								for (Post post : UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString())
 										.getPosts()) {
 							%><a href="PostPictureServlet?postId=<%=post.getId() %>" class="swipebox" title="Image Name">
@@ -96,6 +98,7 @@
 							<%
 								}
 							%>
+							
 						</ul>
 
 					</div>
@@ -118,13 +121,10 @@
 													itemWidth : 310
 												// Optional, the width of a grid item
 												};
-
 												// Get a reference to your grid items.
 												var handler = $('#tiles li'), filters = $('#filters li');
-
 												// Call the layout function.
 												handler.wookmark(options);
-
 												/**
 												 * When a filter is clicked, toggle it's active state and refresh.
 												 */
@@ -132,7 +132,6 @@
 														event) {
 													var item = $(event.currentTarget), activeFilters = [];
 													item.toggleClass('active');
-
 													// Collect active filter strings
 													filters
 															.filter('.active')
@@ -144,13 +143,11 @@
 																						.data(
 																								'filter'));
 																	});
-
 													handler.wookmarkInstance
 															.filter(
 																	activeFilters,
 																	'or');
 												}
-
 												// Capture filter click events.
 												filters.click(onClickFilter);
 											});

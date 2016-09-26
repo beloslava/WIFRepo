@@ -5,6 +5,9 @@
 <%@ page import="model.pojo.User"%>
 <%@ page import="model.pojo.Post"%>
 <%@ page import="model.db.PostDAO"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -81,24 +84,20 @@
 				<div id="content">
 					<div id="main" role="main">
 						<ul id="tiles">
-							<%
-								for (Post post : PostDAO.getInstance().getAllPosts().values()) {
-							%>
-						<a href="PostPictureServlet?postId=<%=post.getId() %>" class="swipebox" title="Image Name">
+							<c:forEach var='post' items='${PostDAO.getInstance().getAllPosts().values()}'>
+						<a href="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>" class="swipebox" title="Image Name">
 								<li data-filter-class='["photos", "blog"]'><img
-									src="PostPictureServlet?postId=<%=post.getId() %>"width="300" alt="" />
+									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"width="300" alt="" />
 									<p>
-										<a href="DetailsServlet?postId=<%=post.getId()%>">
-										<img src="images/blog-icon1.png" title="<%=post.getCreatedOn()%>" alt="" /> 
-										<img src="images/blog-icon2.png" title="<%=post.getLike()%>" alt="" /> 
-										<img src="images/blog-icon3.png" title="<%=post.getComments().size()%>" alt="" /> 
-										<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></span>
+										<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>">
+										<img src="images/blog-icon1.png" title="<c:out value="${post.createdOn}"></c:out>" alt="" /> 
+										<img src="images/blog-icon2.png" title="<c:out value="${post.like}"></c:out>" alt="" /> 
+										<img src="images/blog-icon3.png" title="<c:out value="${post.comments}"></c:out>" alt="" /> 
+										<span><c:out value="${UsersManager.getInstance().getUser(post.userEmail).name}"></c:out></span>
 											<div class="clear"></div> </a>
 									</p></li>
 							</a>
-							<%
-								}
-							%>
+							</c:forEach>
 
 						</ul>
 

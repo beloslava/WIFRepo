@@ -48,9 +48,8 @@ public class UsersManager implements IUserManager {
 	}
 
 	@Override
-	public void regUser(String email, String password, String name, int age, String gender, String about,
-			String avatarPath, List<Post> posts) {
-		User user = new User(email, password, name, age, gender, about, avatarPath, posts);
+	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts) {
+		User user = new User(email, password, name, 0, null, null, avatarPath, posts);
 		registerredUsers.put(email, user);
 		try {
 			registerredUsers.get(email).setPassword(convertToMd5(password));
