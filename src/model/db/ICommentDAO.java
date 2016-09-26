@@ -8,7 +8,7 @@ import model.pojo.Comment;
 
 public interface ICommentDAO {
 
-	void addComment(int postId, String userEmail, String text, Timestamp time);
+	void addComment(int postId, String userEmail, int parentCommentId, String text, Timestamp time);
 
 	void removeComment(int commentId);
 

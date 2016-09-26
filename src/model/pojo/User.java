@@ -9,24 +9,22 @@ public class User {
 	private String email;
 	private String password;
 	private String name;
-	private String avatarPath;
-	private int age;
 	private String gender;
 	private String about;
+	private String avatarPath;
 	private List<Post> posts; // posts
 
-	public User(String email, String password, String name, int age, String gender, String about, String avatarPath,
-			List<Post> posts) {
-
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.avatarPath = avatarPath;
-		this.age = age;
-		this.gender = gender;
-		this.about = about;
-		this.posts = posts;
-	}
+	public User(String email, String password, String name, String gender, String about, String avatarPath,
+		List<Post> posts) {
+	
+	this.email = email;
+	this.password = password;
+	this.name = name;
+	this.gender = gender;
+	this.about = about;
+	this.avatarPath = avatarPath;
+	this.posts = posts;
+}
 
 	public String getAvatarPath() {
 		return avatarPath;
@@ -46,10 +44,6 @@ public class User {
 
 	public String getGender() {
 		return gender;
-	}
-
-	public int getAge() {
-		return age;
 	}
 
 	public String getAbout() {
@@ -74,10 +68,6 @@ public class User {
 
 	public void setAvatarPath(String avatarPath) {
 		this.avatarPath = avatarPath;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public void setGender(String gender) {

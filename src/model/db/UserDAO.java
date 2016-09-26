@@ -12,11 +12,11 @@ import model.pojo.User;
 import model.pojo.UsersManager;
 
 public class UserDAO implements IUserDAO {
-	// email, password, name, avatarPath, age, gender, personalDescription
+	// email, password, name, gender, about, avatarPath
 
-	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name,  age, gender, about, avatar FROM users;";
-	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name,  age, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?  WHERE email = ?;";
+	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name, gender, about, avatar FROM users;";
+	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?);";
+	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, gender = ?, about = ?, avatar = ?  WHERE email = ?;";
 
 	private static UserDAO instance;
 
@@ -41,10 +41,10 @@ public class UserDAO implements IUserDAO {
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
-									resultSet.getInt("age"),
 									resultSet.getString("gender"),
 									resultSet.getString("about"),
-									resultSet.getString("avatar"), posts
+									resultSet.getString("avatar"),
+									posts
 			
 							));
 			}
@@ -60,15 +60,14 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void saveUser(User user) {
 		try {
-			// email, user_password, user_name, age, gender, about, avatar
+			// email, user_password, user_name, gender, about, avatar
 			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_USERS);
 			st.setString(1, user.getEmail());
 			st.setString(2, user.getPassword());
 			st.setString(3, user.getName());
-			st.setInt(4, user.getAge());
-			st.setString(5, user.getGender());
-			st.setString(6, user.getAbout());
-			st.setString(7, user.getAvatarPath());
+			st.setString(4, user.getGender());
+			st.setString(5, user.getAbout());
+			st.setString(6, user.getAvatarPath());
 				
 			 st.executeUpdate();
 				
@@ -87,10 +86,9 @@ public class UserDAO implements IUserDAO {
 			// email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?
 			statement.setString(1, user.getEmail());
 			statement.setString(2, user.getPassword());
-			statement.setInt(3, user.getAge());
-			statement.setString(4, user.getGender());
-			statement.setString(5, user.getAbout());
-			statement.setString(6, user.getAvatarPath());
+			statement.setString(3, user.getGender());
+			statement.setString(4, user.getAbout());
+			statement.setString(5, user.getAvatarPath());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {

@@ -49,7 +49,7 @@ public class UsersManager implements IUserManager {
 
 	@Override
 	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts) {
-		User user = new User(email, password, name, 0, null, null, avatarPath, posts);
+		User user = new User(email, password, name, null, null, avatarPath, posts);
 		registerredUsers.put(email, user);
 		try {
 			registerredUsers.get(email).setPassword(convertToMd5(password));
@@ -61,20 +61,17 @@ public class UsersManager implements IUserManager {
 	}
 
 	@Override
-	public void changeSettings(String email, String password, String name, int age, String gender, String about,
+	public void changeSettings(String email, String password, String name, String gender, String about,
 			String avatarPath) throws UnsupportedEncodingException {
 		User user = registerredUsers.get(email);
 		registerredUsers.get(email).setEmail(email);
 		registerredUsers.get(email).setPassword(convertToMd5(password));
 		registerredUsers.get(email).setName(name);
-		registerredUsers.get(email).setAge(age);
 		registerredUsers.get(email).setGender(gender);
 		registerredUsers.get(email).setAbout(about);
 		registerredUsers.get(email).setAvatarPath(avatarPath);
 
 		UserDAO.getInstance().updateUser(user);
-		// UserDAO.getInstance().saveUser(user);
-
 	}
 
 	private static String convertToMd5(final String md5) throws UnsupportedEncodingException {

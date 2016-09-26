@@ -17,10 +17,10 @@ import model.pojo.Post;
 
 public class CommentDAO implements ICommentDAO {
 
-	private static final String SELECT_COMMENTS_BY_POST = "SELECT comment_id, post_id, user_email, comment_text, comment_date FROM post_comments WHERE post_id = ? ORDER BY comment_date DESC;";
+	private static final String SELECT_COMMENTS_BY_POST = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE post_id = ? ORDER BY comment_date DESC;";
 	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
-	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, comment_text) VALUES (?,?,?);";
-
+	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, parent_comment_id, comment_text) VALUES (?,?,?,?);";
+	
 	private static CommentDAO instance;
 
 	private CommentDAO() {
@@ -34,15 +34,15 @@ public class CommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public void addComment(int postId, String userEmail, String text, Timestamp time) {
-		// statement;
+	public void addComment(int postId, String userEmail, int parentCommentId, String text, Timestamp time) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
 					Statement.RETURN_GENERATED_KEYS);
-			// post_id, user_email, comment_text
+			// post_id, user_email, parent_comment_id, comment_text
 			statement.setInt(1, postId);
 			statement.setString(2, userEmail);
-			statement.setString(3, text);
+			statement.setInt(3, parentCommentId);
+			statement.setString(4, text);
 			statement.executeUpdate();
 
 			
@@ -50,7 +50,7 @@ public class CommentDAO implements ICommentDAO {
 			rs.next();
 			long commentId = rs.getLong(1);
 
-			Comment comment = new Comment((int) commentId, postId, userEmail, text, time);
+			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time);
 			PostDAO.getInstance().getPost(postId).getComments().add(comment);
 
 		} catch (SQLException e) {
@@ -76,7 +76,7 @@ public class CommentDAO implements ICommentDAO {
 
 	@Override
 	public List<Comment> getAllCommentsByPost(int postId) {
-		// comment_id, post_id, user_email, comment_text, comment_date FROM
+		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
 		// post_comments
 		List<Comment> postComments = new ArrayList<>();
 
@@ -89,6 +89,7 @@ public class CommentDAO implements ICommentDAO {
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"), 
+						resultSet.getInt("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date")
 

@@ -5,93 +5,122 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class Post {
 
 	private int id;
 	private String userEmail;
-	private String tag;
+	private int albumId;
+	private String category;
 	private String picture;
-	private int like;
-	private int dislike;
+	private String name;
+	private String keyWords;
 	private String createdOn;
 	private List<Comment> comments;
+	private Set<String> likes; //user's emails of users that liked the post
+	private Set<String> dislikes; //user's emails of users that liked the post
 
-	public Post(int id, String userEmail, String tag, String picture, int like, int dislike, Timestamp time,
-			List<Comment> comments) {
 
+	public Post(int id, String userEmail, int albumId, String category, String picture, String name, String keyWords,
+			Timestamp time, List<Comment> comments) {
 		this.id = id;
 		this.userEmail = userEmail;
-		this.tag = tag;
+		this.albumId = albumId;
+		this.category = category;
 		this.picture = picture;
-		this.like = like;
-		this.dislike = dislike;
+		this.name = name;
+		this.keyWords = keyWords;
 		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.comments = comments;
 	}
 
+
 	public int getId() {
 		return id;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public int getLike() {
-		return like;
-	}
-
-	public int getDislike() {
-		return dislike;
-	}
-
-	public String getCreatedOn() {
-		return createdOn;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public String getUserEmail() {
+		return userEmail;
+	}
+
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public int getAlbumId() {
+		return albumId;
+	}
+
+	public void setAlbumId(int albumId) {
+		this.albumId = albumId;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getPicture() {
+		return picture;
 	}
 
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 
-	public void setLike(int like) {
-		this.like = like;
+	public String getName() {
+		return name;
 	}
 
-	public void setDislike(int dislike) {
-		this.dislike = dislike;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getKeyWords() {
+		return keyWords;
+	}
+
+	public void setKeyWords(String keyWords) {
+		this.keyWords = keyWords;
+	}
+
+	public String getCreatedOn() {
+		return createdOn;
 	}
 
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
+	public Set<String> getLikes() {
+		return likes;
+	}
+	
+	public void setLikes(Set<String> likes) {
+		this.likes = likes;
+	}
+	
+	public Set<String> getDislikes() {
+		return dislikes;
+	}
+	
+	public void setDislikes(Set<String> dislikes) {
+		this.dislikes = dislikes;
+	}
 }
