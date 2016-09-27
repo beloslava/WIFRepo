@@ -52,23 +52,17 @@
 				<div class="header">
 					<div class="social-icons">
 						<ul>
-							<li><a class="upload" href="upload.html"></a>
-							<li>
-							<li><a class="facebook" href="https://www.facebook.com/"
-								target="_blank"> </a></li>
-							<li><a class="twitter" href="https://twitter.com/"
-								target="_blank"></a></li>
-							<li><a class="googleplus" href="https://plus.google.com/"
-								target="_blank"></a></li>
-							<li><a class="pinterest" href="https://www.pinterest.com/"
-								target="_blank"></a></li>
-							<li><a class="dribbble" href="https://dribbble.com/"
-								target="_blank"></a></li>
-							<li><a class="vimeo" href="https://dribbble.com/"
-								target="_blank"></a></li>
+							<li><a class="facebook" href="https://www.facebook.com/"target="_blank"> </a></li>
+							<li><a class="twitter" href="https://twitter.com/"target="_blank"></a></li>
+							<li><a class="googleplus" href="https://plus.google.com/" target="_blank"></a></li>
+							<li><a class="pinterest" href="https://www.pinterest.com/" target="_blank"></a></li>
+							<li><a class="dribbble" href="https://dribbble.com/" target="_blank"></a></li>
+							<li><a class="vimeo" href="https://dribbble.com/" target="_blank"></a></li>
+							<li><a class="upload" title="upload" href="upload.html"></a></li>
 							<li><form action="LogOutServlet" method="POST">
-									<input type="image" src="images/settings_icon.png" />
-								</form></li>
+									<input type="image" title="log out" src="images/settings_icon.png" />
+								</form>
+							</li>
 						</ul>
 						<div class="clear"></div>
 					</div>
@@ -89,7 +83,7 @@
 									<p>
 										<a href="DetailsServlet?postId=<%=post.getId()%>">
 										<img src="images/blog-icon1.png" title="<%=post.getCreatedOn()%>" alt="" /> 
-										<img src="images/blog-icon2.png" title="<%=post.getLike()%>" alt="" /> 
+										<img src="images/blog-icon2.png" title="<%=post.getLikes()%>" alt="" /> 
 										<img src="images/blog-icon3.png" title="<%=post.getComments().size()%>" alt="" /> 
 										<span><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></span>
 											<div class="clear"></div> </a>

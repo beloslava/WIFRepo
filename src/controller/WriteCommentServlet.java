@@ -19,9 +19,10 @@ public class WriteCommentServlet extends HttpServlet {
 		String emailUser=request.getParameter("email");
 		String comment=request.getParameter("comment");
 		int postId=Integer.parseInt(request.getParameter("postId"));
+		String email=request.getSession().getAttribute("USER").toString();
 		String html="";
 		if(comment!=null){
-			CommentDAO.getInstance().addComment(postId, emailUser, comment, Timestamp.valueOf(LocalDateTime.now()));
+			CommentDAO.getInstance().addComment(postId, email, 0, comment, Timestamp.valueOf(LocalDateTime.now()));
 			html="DetailsServlet?postId="+postId;
 		}
 		RequestDispatcher view=request.getRequestDispatcher(html);

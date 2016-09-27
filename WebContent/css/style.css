@@ -108,7 +108,7 @@ img {
 
 body {
 	color: #333;
-	background: url(../images/bg2.png);
+	background: url(../images/bg.png);
 	font-family: Arial, Helvetica, sans-serif;
 }
 /****
@@ -268,12 +268,12 @@ body {
 
 .left-content {
 	background-image: url(../images/noise.png);
-	background-color: #2A3F44;
+	background-color: #006E53;
 	float: left;
 	position: fixed;
 	height: 100%;
 	width: 170px;
-	padding: 70px 40px 50px 15px;
+	padding: 5px 20px 50px 15px;
 	color: #CFCFCF;
 	-webkit-transition: left 0.3s;
 	-moz-transition: left 0.3s;
@@ -289,12 +289,12 @@ body {
 .menu li a {
 	display: block;
 	background-repeat: no-repeat;
-	font-size: 1em;
-	color: #006e52;
+	font-size: 1.1em;
+	color: #610459;
 }
 
 .menu li a:hover {
-	color: #5d0556;
+	color: #777ECE;
 }
 
 #filters {

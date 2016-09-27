@@ -17,8 +17,9 @@ public class LikesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postId=Integer.parseInt(request.getParameter("postId"));
 		request.setAttribute("postId", postId);
+		String email=request.getSession().getAttribute("USER").toString();
 		Post post=PostDAO.getInstance().getPost(postId);
-		PostDAO.getInstance().likePost(post);
+		PostDAO.getInstance().likePost(postId,email);
 		RequestDispatcher view=request.getRequestDispatcher("DetailsServlet?postId="+postId);
 		view.forward(request, response);
 

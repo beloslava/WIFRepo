@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,15 +35,7 @@ public class RegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String password2 = request.getParameter("password2");
-		int age = 0;
-		try{
-		 age = Integer.parseInt(request.getParameter("age"));
-		}catch(NumberFormatException e){
-			System.out.println("Invalid age");
-		}
-		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
-		String about = request.getParameter("description");
 		Part avatar = request.getPart("fileField");
 		InputStream avatarStream = avatar.getInputStream();
 		Pattern pattern = Pattern.compile(
@@ -51,8 +44,7 @@ public class RegisterServlet extends HttpServlet {
 		String html = "";
 		
 		if ( ((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
-				&& (!name.isEmpty()) && (age > 0)
-				&& (gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male")) ) {
+				&& (!name.isEmpty())) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
@@ -63,8 +55,7 @@ public class RegisterServlet extends HttpServlet {
 			Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
-			UsersManager.getInstance().regUser(email, password, name, avatarFile.getName(),
-					new ArrayList<>());
+			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new LinkedList<>());
 			html="index.html";
 		}
 		else{

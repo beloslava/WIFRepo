@@ -54,23 +54,17 @@
 				<div class="header">
 					<div class="social-icons">
 						<ul>
-							<li><a class="upload" href="upload.html"></a>
-							<li>
-							<li><a class="facebook" href="https://www.facebook.com/"
-								target="_blank"> </a></li>
-							<li><a class="twitter" href="https://twitter.com/"
-								target="_blank"></a></li>
-							<li><a class="googleplus" href="https://plus.google.com/"
-								target="_blank"></a></li>
-							<li><a class="pinterest" href="https://www.pinterest.com/"
-								target="_blank"></a></li>
-							<li><a class="dribbble" href="https://dribbble.com/"
-								target="_blank"></a></li>
-							<li><a class="vimeo" href="https://dribbble.com/"
-								target="_blank"></a></li>
+							<li><a class="facebook" href="https://www.facebook.com/"target="_blank"> </a></li>
+							<li><a class="twitter" href="https://twitter.com/"target="_blank"></a></li>
+							<li><a class="googleplus" href="https://plus.google.com/" target="_blank"></a></li>
+							<li><a class="pinterest" href="https://www.pinterest.com/" target="_blank"></a></li>
+							<li><a class="dribbble" href="https://dribbble.com/" target="_blank"></a></li>
+							<li><a class="vimeo" href="https://dribbble.com/" target="_blank"></a></li>
+							<li><a class="upload" title="upload" href="upload.html"></a></li>
 							<li><form action="LogOutServlet" method="POST">
-									<input type="image" src="images/settings_icon.png" />
-								</form></li>
+									<input type="image" title="log out" src="images/settings_icon.png" />
+								</form>
+							</li>
 						</ul>
 						<div class="clear"></div>
 					</div>
