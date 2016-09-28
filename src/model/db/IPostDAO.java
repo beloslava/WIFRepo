@@ -11,7 +11,7 @@ import model.pojo.Post;
 
 public interface IPostDAO {
 
-	void addPost(String userEmail, int albumId, String category, String picture, String name, String keyWords,
+	void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
 			Timestamp time, List<Comment> comments);
 
 	void removePost(String userEmail, Post post);

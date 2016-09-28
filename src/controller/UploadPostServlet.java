@@ -43,6 +43,9 @@ public class UploadPostServlet extends HttpServlet {
 		Part picture = request.getPart("fileField");
 		InputStream pictureStream = picture.getInputStream();
 		System.out.println(email);
+		System.out.println(category);
+		System.out.println(nameOfPost);
+		System.out.println(keyWords);
 		if (category!=null&&nameOfPost!=null&&keyWords!=null) {
 			File dir = new File("D:\\MyWifPictures\\userPostPics"+UsersManager.getInstance().getUser(email).getName());
 			if (!dir.exists()) {
@@ -50,10 +53,10 @@ public class UploadPostServlet extends HttpServlet {
 			}
 			File pictureFile = new File(dir,
 					UsersManager.getInstance().getUser(email).getName()
-							+ LocalDateTime.now() + "-post-pic."
+							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			PostDAO.getInstance().addPost(email, 0, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()), new LinkedList<>());
+			PostDAO.getInstance().addPost(email, null, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()), new LinkedList<>());
 			html = "main.jsp";
 		} else {
 			html = "index.html";

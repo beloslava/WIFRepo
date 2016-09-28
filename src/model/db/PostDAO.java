@@ -101,13 +101,13 @@ public class PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public void addPost(String userEmail, int albumId, String category, String picture, String name, String keyWords,
+	public void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
 			Timestamp time, List<Comment> comments) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS,
 					Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, userEmail);
-			statement.setInt(2, albumId);
+			statement.setNull(2, java.sql.Types.INTEGER);
 			statement.setString(3, category);
 			statement.setString(4, picture);
 			statement.setString(5, name);

@@ -11,7 +11,7 @@ public class Post {
 
 	private int id;
 	private String userEmail;
-	private int albumId;
+	private Integer albumId;
 	private String category;
 	private String picture;
 	private String name;
@@ -22,7 +22,7 @@ public class Post {
 	private Set<String> dislikes; //user's emails of users that liked the post
 
 
-	public Post(int id, String userEmail, int albumId, String category, String picture, String name, String keyWords,
+	public Post(int id, String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
 			Timestamp time, List<Comment> comments) {
 		this.id = id;
 		this.userEmail = userEmail;

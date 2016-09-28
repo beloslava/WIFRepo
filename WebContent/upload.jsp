@@ -104,7 +104,7 @@
             </li>
             <li class="form-row text-input-row">
               <label>Key words</label>
-              <input type="text" name="subject" value="" class="text-input required">
+              <input type="text" name="keyWords" value="" class="text-input required">
             </li>
             <li class="form-row text-area-row">
               <label>Upload your photo</label>
