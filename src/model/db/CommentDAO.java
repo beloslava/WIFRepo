@@ -34,14 +34,14 @@ public class CommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public void addComment(int postId, String userEmail, int parentCommentId, String text, Timestamp time) {
+	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
 					Statement.RETURN_GENERATED_KEYS);
 			// post_id, user_email, parent_comment_id, comment_text
 			statement.setInt(1, postId);
 			statement.setString(2, userEmail);
-			statement.setInt(3, parentCommentId);
+			statement.setNull(3, java.sql.Types.INTEGER);
 			statement.setString(4, text);
 			statement.executeUpdate();
 

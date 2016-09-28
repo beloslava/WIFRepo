@@ -145,12 +145,12 @@
       <div id="comment-form" class="comment-form">
         <div id="respond">
           <h3 id="reply-title">Leave a Reply</h3>
-          <form action="#" method="post" id="commentform">
+          <form action="WriteCommentServlet" method="get" id="commentform">
             <p class="comment-form-author">
-              <input id="author" name="author" type="hidden" value="" size="30" aria-required="true">
+              <input id="author" name="postId" type="hidden" value="<%=post.getId() %>" size="30" aria-required="true">
             </p>
             <p class="comment-form-email">
-              <input id="email" name="email" type="hidden" value="" size="30" aria-required="true">
+              <input id="email" name="email" type="hidden" value="<%=session.getAttribute("USER").toString() %>" size="30" aria-required="true">
             </p>
             <p class="comment-form-comment">
               <label for="comment">Comment</label>

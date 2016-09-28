@@ -9,11 +9,11 @@ public class Comment {
 	private int commentId;
 	private int postId;
 	private String userEmail;
-	private int parentCommentId;
+	private Integer parentCommentId;
 	private String text;
 	private String createdOn;
 	
-	public Comment(int commentId, int postId, String userEmail, int parentCommentId, String text, Timestamp time) {
+	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time) {
 		this.commentId = commentId;
 		this.postId = postId;
 		this.userEmail = userEmail;
