@@ -43,7 +43,7 @@
       <div id="menu" class="menu">
         <ul id="tiny">
           <li><a href="index.html">Home</a>
-		  <li><a href="myProfile.jsp">My profile</a>		  
+		  <li class="active"><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
@@ -62,7 +62,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li class="active"><a href="upload.jsp">Upload</a></li>
+          <li><a href="upload.jsp">Upload</a></li>
         </ul>
       </div>
     </div>

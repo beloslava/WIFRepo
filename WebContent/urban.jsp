@@ -8,7 +8,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>Obscura</title>
+<title>My Wif | Urban</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -41,9 +41,10 @@
     <div class="logo"> <a href="index.html"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
-        <ul id="tiny">
+       <ul id="tiny">
           <li><a href="index.html">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
+		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>
@@ -55,13 +56,13 @@
 			  <li><a href="people.jsp">People</a></li>
 			  <li><a href="sport.jsp">Sport</a></li>
 			  <li><a href="travel.jsp">Travel</a></li>
-			  <li><a href="urban.jsp">Urban</a></li>
+			  <li class="active"><a href="urban.jsp">Urban</a></li>
 			  <li><a href="uncategorized.jsp">Uncategorized</a></li>
             </ul>
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li class="active"><a href="upload.jsp">Upload</a></li>
+          <li><a href="upload.jsp">Upload</a></li>
         </ul>
       </div>
     </div>

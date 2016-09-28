@@ -56,7 +56,7 @@ public class UploadPostServlet extends HttpServlet {
 							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			PostDAO.getInstance().addPost(email, null, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()), new LinkedList<>());
+			PostDAO.getInstance().addPost(email, null, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>());
 			html = "main.jsp";
 		} else {
 			html = "index.html";

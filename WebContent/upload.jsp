@@ -38,6 +38,7 @@
         <ul id="tiny">
           <li><a href="index.html">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
+		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>

@@ -18,6 +18,7 @@ public class WriteCommentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String emailUser=request.getParameter("email");
 		String comment=request.getParameter("comment");
+		String parentCommentId=request.getParameter("parentCommentId");
 		int postId=Integer.parseInt(request.getParameter("postId"));
 		String email=request.getSession().getAttribute("USER").toString();
 		String html="";

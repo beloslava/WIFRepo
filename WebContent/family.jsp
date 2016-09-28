@@ -44,12 +44,13 @@
         <ul id="tiny">
           <li><a href="index.html">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
+		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>
               <li><a href="abstract.jsp">Abstract</a></li>
               <li><a href="animals.jsp">Animals</a></li>
-			  <li><a href="family.jsp">Family</a></li>
+			  <li class="active"><a href="family.jsp">Family</a></li>
 			  <li><a href="food.jsp">Food</a></li>
               <li><a href="nature.jsp">Nature</a></li>
 			  <li><a href="people.jsp">People</a></li>
@@ -61,7 +62,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li class="active"><a href="upload.jsp">Upload</a></li>
+          <li><a href="upload.jsp">Upload</a></li>
         </ul>
       </div>
     </div>
