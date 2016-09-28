@@ -114,7 +114,7 @@ public class CommentDAO implements ICommentDAO {
 				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"),
-						(Integer)resultSet.getObject("parent_comment_id"),
+						(int) resultSet.getLong("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date"),
 						commentComments
@@ -154,7 +154,7 @@ public class CommentDAO implements ICommentDAO {
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"), 
-						(Integer)resultSet.getObject("parent_comment_id"),
+				(int) resultSet.getLong("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date"),
 						commentComments

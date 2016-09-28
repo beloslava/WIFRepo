@@ -10,10 +10,12 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.print.attribute.HashAttributeSet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -56,7 +58,7 @@ public class UploadPostServlet extends HttpServlet {
 							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			PostDAO.getInstance().addPost(email, null, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>());
+			PostDAO.getInstance().addPost(email, null, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>(), new HashSet(), new HashSet<>());
 			html = "main.jsp";
 		} else {
 			html = "index.html";
