@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import model.pojo.Comment;
@@ -20,10 +22,15 @@ public class CommentDAO implements ICommentDAO {
 	private static final String SELECT_COMMENTS_BY_POST = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE post_id = ? ORDER BY comment_date DESC;";
 	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
 	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, parent_comment_id, comment_text) VALUES (?,?,?,?);";
+	private static final String SELECT_COMMENTS_BY_COMMENT = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE parent_comment_id = ? ORDER BY comment_date DESC;";
+	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
+	
+	TreeMap<Integer, Comment> allComments;
 	
 	private static CommentDAO instance;
 
 	private CommentDAO() {
+		allComments = (TreeMap<Integer, Comment>) getAllComments();
 	}
 
 	public synchronized static CommentDAO getInstance() {
@@ -33,25 +40,37 @@ public class CommentDAO implements ICommentDAO {
 		return instance;
 	}
 
+	public Comment getComment(int commentId){
+		return allComments.get(commentId);
+	}
+	
 	@Override
-	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time) {
+	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
+		
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
 					Statement.RETURN_GENERATED_KEYS);
 			// post_id, user_email, parent_comment_id, comment_text
 			statement.setInt(1, postId);
 			statement.setString(2, userEmail);
-			statement.setNull(3, java.sql.Types.INTEGER);
+			statement.setObject(3, parentCommentId);
+			//statement.setNull(3, java.sql.Types.INTEGER);
 			statement.setString(4, text);
 			statement.executeUpdate();
 
-			
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			long commentId = rs.getLong(1);
 
-			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time);
-			PostDAO.getInstance().getPost(postId).getComments().add(comment);
+			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time, commentComments);
+			
+			allComments.put((int)commentId, comment);
+			if(parentCommentId == null){			
+				PostDAO.getInstance().getPost(postId).getComments().add(comment);
+			}
+			else{
+				allComments.get(parentCommentId).getCommentComments().add(comment);	
+			}
 
 		} catch (SQLException e) {
 			System.out.println("Cannot add comment right now");
@@ -62,6 +81,7 @@ public class CommentDAO implements ICommentDAO {
 
 	@Override
 	public void removeComment(int commentId) {
+		//TODO
 		PreparedStatement statement;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_COMMENT_BY_ID);
@@ -74,6 +94,39 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 
+	
+	public Map<Integer, Comment> getAllComments() {
+		TreeMap<Integer, Comment> allComments = new TreeMap<Integer, Comment>((commentId1, commentId2) -> commentId2 - commentId1);
+		
+		Statement st;
+		try {
+			st = DBManager.getInstance().getConnection().createStatement();
+			//comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date
+			ResultSet resultSet = st.executeQuery(SELECT_ALL_COMMENTS);
+			while (resultSet.next()) {
+				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
+						resultSet.getInt("post_id"),
+						resultSet.getString("user_email"),
+						(Integer)resultSet.getObject("parent_comment_id"),
+						resultSet.getString("comment_text"),
+						resultSet.getTimestamp("comment_date"),
+						commentComments
+
+			));
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get comments right now");
+			e.printStackTrace();
+			return allComments;
+
+		}
+
+		return allComments;
+
+	}
+	
 	@Override
 	public List<Comment> getAllCommentsByPost(int postId) {
 		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
@@ -86,18 +139,20 @@ public class CommentDAO implements ICommentDAO {
 			statement.setInt(1, postId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"), 
-						resultSet.getInt("parent_comment_id"),
+						(Integer)resultSet.getObject("parent_comment_id"),
 						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date")
+						resultSet.getTimestamp("comment_date"),
+						commentComments
 
 				));
 
 			}
 		} catch (SQLException e) {
-			System.out.println("Cannot get user's posts right now");
+			System.out.println("Cannot get post's comments right now");
 			e.printStackTrace();
 			return postComments;
 
@@ -107,12 +162,55 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 	
+	
+	public List<Comment> getAllCommentsByComment(int commentId) {
+		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
+		// post_comments
+		List<Comment> commentComments = new ArrayList<>();
+
+		PreparedStatement statement;
+		try {
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_COMMENT);
+			statement.setInt(1, commentId);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				ArrayList<Comment> commentCommentscom = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				commentComments.add(new Comment(resultSet.getInt("comment_id"), 
+						resultSet.getInt("post_id"),
+						resultSet.getString("user_email"), 
+						resultSet.getInt("parent_comment_id"),
+						resultSet.getString("comment_text"),
+						resultSet.getTimestamp("comment_date"),
+						commentCommentscom
+
+				));
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get comment's comments right now");
+			e.printStackTrace();
+			return commentComments;
+
+		}
+
+		return commentComments;
+
+	}
+	
 	@Override
 	public List<Comment> takeAllCommentsByPost(int postId) { 
 		Post post = PostDAO.getInstance().getPost(postId);
 		ArrayList<Comment> commentsByPost = (ArrayList<Comment>) post.getComments();
 		Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByPost;
+	}
+	
+	
+	public List<Comment> takeAllCommentsByComment(int commentId) { 
+		Comment comment = getComment(commentId);
+		ArrayList<Comment> commentsByComment = (ArrayList<Comment>) comment.getCommentComments();
+		Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return commentsByComment;
 	}
 	
 }

@@ -71,6 +71,12 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance()
 						.getAllCommentsByPost(resultSet.getInt("post_id"));
+				for(Comment c : postComments){
+					List<Comment> commentComments = (List<Comment>) CommentDAO.getInstance()
+							.getAllCommentsByComment(c.getCommentId());
+					c.setCommentComments((ArrayList<Comment>) commentComments);
+				}
+				
 				Set<String> postLikes = getAllLikesForPost(resultSet.getInt("post_id"));
 				Set<String> postDislikes = getAllDislikesForPost(resultSet.getInt("post_id"));
 
@@ -131,6 +137,7 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public void removePost(String userEmail, Post post) {
+		//TODO
 		if (getAllPostsByUser(userEmail).contains(post)) {
 			getAllPostsByUser(userEmail).remove(post);
 			// user.getPosts().remove(post);

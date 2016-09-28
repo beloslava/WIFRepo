@@ -3,6 +3,7 @@ package model.pojo;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
 
 public class Comment {
 
@@ -12,16 +13,18 @@ public class Comment {
 	private Integer parentCommentId;
 	private String text;
 	private String createdOn;
+	ArrayList<Comment> commentComments;
 	
-	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time) {
+	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
 		this.commentId = commentId;
 		this.postId = postId;
 		this.userEmail = userEmail;
 		this.parentCommentId = parentCommentId;
 		this.text = text;
 		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+		this.commentComments = commentComments;
 	}
-
+	
 	public int getCommentId() {
 		return commentId;
 	}
@@ -70,5 +73,12 @@ public class Comment {
 		this.createdOn = createdOn;
 	}
 
+	public ArrayList<Comment> getCommentComments() {
+		return commentComments;
+	}
+	
+	public void setCommentComments(ArrayList<Comment> commentComments) {
+		this.commentComments = commentComments;
+	}
 
 }
