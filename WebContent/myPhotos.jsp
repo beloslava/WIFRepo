@@ -83,7 +83,7 @@
   <div class="blog-wrap">
     <div class="blog-grid">
    <%
-		for (Post post : PostDAO.getInstance().getAllPosts().values()) {
+		for (Post post : PostDAO.getInstance().getAllPostsByUser(request.getSession().getAttribute("USER").toString())) {
 	%>
       <div class="post format-image box">
         <div class="frame"> <a href=></a><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>

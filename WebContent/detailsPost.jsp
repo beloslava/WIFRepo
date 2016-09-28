@@ -88,8 +88,9 @@
   <div class="main-image">
   
     <%
-						Post post = PostDAO.getInstance().getPost(Integer.parseInt(request.getAttribute("postId").toString()));
-						User user = UsersManager.getInstance().getUser(post.getUserEmail());
+    Post post = PostDAO.getInstance().getPost(Integer.parseInt(request.getAttribute("postId").toString()));
+	User user = UsersManager.getInstance().getUser(post.getUserEmail());
+
 	%>
     <div class="outer"> <span class="inset"><img src="PostPictureServlet?postId=<%=post.getId()%>"></span> </div>
   </div>
@@ -99,7 +100,7 @@
       <div class="details"> 
 	      <span class="icon-image"><%=post.getCreatedOn()%></span> 
 	      <span class="likes">
-	      	<a href="#" class="likeThis"><%=post.getLikes().size() %></a>
+<%-- 	      	<a href="#" class="likeThis"><%=post.get %></a> --%>
 	      </span> 
 	      <span class="comments">
 	      	<a href="#"><%=post.getComments().size()%></a>
