@@ -42,22 +42,22 @@
     <div id="menu-wrapper">
       <div id="menu" class="menu">
        <ul id="tiny">
-          <li><a href="index.html">Home</a>
+          <li><a href="main.jsp">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
 		  <li class="active"><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>
-              <li><a href="abstract.jsp">Abstract</a></li>
-              <li><a href="animals.jsp">Animals</a></li>
-			  <li><a href="family.jsp">Family</a></li>
-			  <li><a href="food.jsp">Food</a></li>
-              <li><a href="nature.jsp">Nature</a></li>
-			  <li><a href="people.jsp">People</a></li>
-			  <li><a href="sport.jsp">Sport</a></li>
-			  <li><a href="travel.jsp">Travel</a></li>
-			  <li><a href="urban.jsp">Urban</a></li>
-			  <li><a href="uncategorized.jsp">Uncategorized</a></li>
+              <li><a href="CategoryServlet?category=abstract">Abstract</a></li>
+              <li><a href="CategoryServlet?category=animals">Animals</a></li>
+			  <li><a href="CategoryServlet?category=email">Family</a></li>
+			  <li><a href="CategoryServlet?category=food">Food</a></li>
+              <li><a href="CategoryServlet?category=nature">Nature</a></li>
+			  <li><a href="CategoryServlet?category=people">People</a></li>
+			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
+			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
+			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
+			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
           <li><a href="topTen.jsp">Top 10</a>
@@ -86,11 +86,11 @@
 		for (Post post : PostDAO.getInstance().getAllPostsByUser(request.getSession().getAttribute("USER").toString())) {
 	%>
       <div class="post format-image box">
-        <div class="frame"> <a href=></a><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <h2 class="title"><a href="DetailsServlet?postId=<%=post.getId()%>"><%= post.getName()%></a></h2>
+        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
 	        <span class="icon-image"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=post.getLikes()%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
 	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
         </div>
       </div>

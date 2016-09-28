@@ -42,22 +42,22 @@
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
-          <li><a href="index.html">Home</a>
+          <li><a href="main.jsp">Home</a>
 		  <li class="active"><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>
-              <li><a href="abstract.jsp">Abstract</a></li>
-              <li><a href="animals.jsp">Animals</a></li>
-			  <li><a href="family.jsp">Family</a></li>
-			  <li><a href="food.jsp">Food</a></li>
-              <li><a href="nature.jsp">Nature</a></li>
-			  <li><a href="people.jsp">People</a></li>
-			  <li><a href="sport.jsp">Sport</a></li>
-			  <li><a href="travel.jsp">Travel</a></li>
-			  <li><a href="urban.jsp">Urban</a></li>
-			  <li><a href="uncategorized.jsp">Uncategorized</a></li>
+              <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
+              <li><a href="CategoryServlet?category=animals">Animals</a></li>
+			  <li><a href="CategoryServlet?category=email">Family</a></li>
+			  <li><a href="CategoryServlet?category=food">Food</a></li>
+              <li><a href="CategoryServlet?category=nature">Nature</a></li>
+			  <li><a href="CategoryServlet?category=people">People</a></li>
+			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
+			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
+			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
+			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
           <li><a href="topTen.jsp">Top 10</a>

@@ -733,7 +733,7 @@ iframe {
     float: right;
     position: relative;
     height: 8px;
-    padding: 6px 0 7px 14px;
+    padding:6px 7px 7px 14px;
     cursor: pointer;
 }
 .post .details .likes a.done {

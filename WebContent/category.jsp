@@ -1,8 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="model.pojo.UsersManager"%>
+<%@ page import="model.db.UserDAO"%>
+<%@ page import="model.pojo.User"%>
+<%@ page import="model.pojo.Post"%>
+<%@ page import="model.db.PostDAO"%>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>My Wif</title>
-<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+<title>Obscura</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -32,16 +38,16 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
+    <div class="logo"> <a href="main.jsp"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
-        <ul id="tiny">
+       <ul id="tiny">
           <li><a href="main.jsp">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
-           <ul>
+            <ul>
               <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
               <li><a href="CategoryServlet?category=animals">Animals</a></li>
 			  <li><a href="CategoryServlet?category=email">Family</a></li>
@@ -56,7 +62,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li class="active"><a href="upload.jsp">Upload</a></li>
+          <li><a href="upload.jsp">Upload</a></li>
         </ul>
       </div>
     </div>
@@ -64,6 +70,7 @@
   </div>
 </div>
 <div class="wrapper">
+  <div class="intro">Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum, Vestibulum id ligula porta. </div>
   <ul class="social">
     <li><a class="rss" href="#"></a></li>
     <li><a class="facebook" href="#"></a></li>
@@ -73,61 +80,28 @@
     <li><a class="flickr" href="#"></a></li>
     <li><a class="linkedin" href="#"></a></li>
   </ul>
-  <div class="content box">
-    <h1 class="title">Upload</h1>
-    <h3>Feel Free to Drop Me a Line</h3>
-    <div class="form-container">
-      <form class="forms" action="UploadPostServlet" method="post" enctype="multipart/form-data">
-        <fieldset>
-          <ol>
-            <li class="form-row text-input-row">
-              <label>Say smth about your post</label>
-              <input type="text" name="nameOfPost" value="" class="text-input required">
-            </li>
-            <li class="form-row text-input-row">
-              <input type="hidden" name="email" value="<%=session.getAttribute("USER").toString() %>" class="text-input required">
-            </li>
-            <li class="form-row text-input-row">
-              <label>Category</label>
-              <input list="categories" name="category">
-			  <datalist id="categories">
-			    <option value="abstract">
-			    <option value="animals">
-			    <option value="family">
-			    <option value="food">
-			    <option value="nature">
-			    <option value="people">
-			    <option value="sport">
-			    <option value="travel">
-			    <option value="urban">
-			    <option value="uncategorized">
-			  </datalist>
-            </li>
-            <li class="form-row text-input-row">
-              <label>Key words</label>
-              <input type="text" name="keyWords" value="" class="text-input required">
-            </li>
-            <li class="form-row text-area-row">
-              <label>Upload your photo</label>
-              <input type="file" name="fileField" class="text-input required"></textarea>
-            </li>
-            <li class="button-row">
-              <input type="submit" value="Upload your post" name="submit" class="btn-submit">
-            </li>
-          </ol>
-        </fieldset>
-      </form>
+  <div class="blog-wrap">
+    <div class="blog-grid">
+   <%
+   String category=request.getAttribute("category").toString();
+	for (Post post : PostDAO.getInstance().getAllPostsByCategory(category)) {
+	%>
+      <div class="post format-image box">
+        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
+        <div class="details"> 
+	        <span class="icon-image"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
+        </div>
+      </div>
+      <%} %>
+      
     </div>
   </div>
-  <div class="sidebar box">
-    <div class="sidebox widget">
-      <p>"Nothing happens when you sit at home. I always make it a point to carry a camera with me at all times... I just shoot at whta interests me at that moment." Elliott Erwitt</p>
-    </div>
-    <div class="sidebox widget">
-      <p>"Beauty can be seen in all things, seeing and composing the beaty is what separates the snapshot from the photograph." Matt Hardy</p>
-    </div>
+  <div id="navigation">
+    <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div>
   </div>
-  <div class="clear"></div>
 </div>
 <div class="footer-wrapper">
   <div id="footer" class="four">
@@ -191,6 +165,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="site-generator-wrapper">
 </div>
 <script src="style/js/scripts.js"></script>
 </body>

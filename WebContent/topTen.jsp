@@ -38,26 +38,26 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
+    <div class="logo"> <a href="main.jsp"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
        <ul id="tiny">
-          <li><a href="index.html">Home</a>
+          <li><a href="main.jsp">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
             <ul>
-              <li><a href="abstract.jsp">Abstract</a></li>
-              <li><a href="animals.jsp">Animals</a></li>
-			  <li><a href="family.jsp">Family</a></li>
-			  <li><a href="food.jsp">Food</a></li>
-              <li><a href="nature.jsp">Nature</a></li>
-			  <li><a href="people.jsp">People</a></li>
-			  <li><a href="sport.jsp">Sport</a></li>
-			  <li><a href="travel.jsp">Travel</a></li>
-			  <li><a href="urban.jsp">Urban</a></li>
-			  <li><a href="uncategorized.jsp">Uncategorized</a></li>
+              <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
+              <li><a href="CategoryServlet?category=animals">Animals</a></li>
+			  <li><a href="CategoryServlet?category=email">Family</a></li>
+			  <li><a href="CategoryServlet?category=food">Food</a></li>
+              <li><a href="CategoryServlet?category=nature">Nature</a></li>
+			  <li><a href="CategoryServlet?category=people">People</a></li>
+			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
+			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
+			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
+			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
           <li class="active"><a href="topTen.jsp">Top 10</a>
@@ -87,11 +87,11 @@
 			
 	%>
       <div class="post format-image box">
-        <div class="frame"> <a href=></a><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <h2 class="title"><a href="DetailsServlet?postId=<%=post.getId()%>"><%= post.getName()%></a></h2>
+        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
 	        <span class="icon-image"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=post.getLikes()%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
 	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
         </div>
       </div>
@@ -113,14 +113,18 @@
         </form>
       </div>
       <div class="widget widget_archive">
-        <h3 class="widget-title">Archives</h3>
+        <h3 class="widget-title">Categories</h3>
         <ul>
-          <li><a href="#">September 2045</a> (6)</li>
-          <li><a href="#">August 2045</a> (2)</li>
-          <li><a href="#">July 2045</a> (2)</li>
-          <li><a href="#">June 2045</a> (4)</li>
-          <li><a href="#">May 2045</a> (3)</li>
-          <li><a href="#">January 2045</a> (1)</li>
+          <li><a href="asbtract.jsp">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+		  <li><a href="animals.jsp">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+          <li><a href="family.jsp">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+          <li><a href="food.jsp">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
+          <li><a href="nature.jsp">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
+		  <li><a href="people.jsp">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
+          <li><a href="sport.jsp">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
+		  <li><a href="travel.jsp">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
+          <li><a href="urban.jsp">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
+		  <li><a href="uncategorized.jsp">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
         </ul>
       </div>
     </div>
@@ -137,30 +141,23 @@
         <h3 class="widget-title">Popular Posts</h3>
         <ul class="post-list">
           <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s1.jpg" alt=""></a> </div>
+            <div class="frame"> <a href="#"><img src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>" alt=""></a> </div>
             <div class="meta">
-              <h6><a href="#">Charming Winter</a></h6>
-              <em>28th Sep 2045</em> </div>
+              <h6><a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"></a></h6>
+               </div>
           </li>
           <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s2.jpg" alt=""></a> </div>
+            <div class="frame"> <a href="#"><img src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>" alt=""></a> </div>
             <div class="meta">
-              <h6><a href="#">Trickling Stream</a></h6>
-              <em>5th Sep 2045</em> </div>
+              <h6><a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"></a></h6>
+              </div>
           </li>
           <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s3.jpg" alt=""></a> </div>
+            <div class="frame"> <a href="#"><img src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>" alt=""></a> </div>
             <div class="meta">
-              <h6><a href="#">Morning Glory</a></h6>
-              <em>26th Sep 2045</em> </div>
+              <h6><a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"></a></h6>
+              </div>
           </li>
-        </ul>
-      </div>
-    </div>
-    <div id="fourth" class="widget-area">
-      <div class="widget">
-        <h3 class="widget-title">Flickr</h3>
-        <ul class="flickr-feed">
         </ul>
       </div>
     </div>
