@@ -114,12 +114,17 @@
       <div class="widget widget_archive">
         <h3 class="widget-title">Archives</h3>
         <ul>
-          <li><a href="#">September 2045</a> (6)</li>
-          <li><a href="#">August 2045</a> (2)</li>
-          <li><a href="#">July 2045</a> (2)</li>
-          <li><a href="#">June 2045</a> (4)</li>
-          <li><a href="#">May 2045</a> (3)</li>
-          <li><a href="#">January 2045</a> (1)</li>
+         <li><a href="asbtract.jsp">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+		  <li><a href="animals.jsp">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+          <li><a href="family.jsp">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+          <li><a href="food.jsp">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
+          <li><a href="nature.jsp">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
+		  <li><a href="people.jsp">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%><)</li>
+          <li><a href="sport.jsp">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
+		  <li><a href="travel.jsp">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
+          <li><a href="urban.jsp">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
+		  <li><a href="uncategorized.jsp">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
+       
         </ul>
       </div>
     </div>

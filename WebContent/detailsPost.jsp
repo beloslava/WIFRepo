@@ -162,25 +162,28 @@
 					      </div>
     				</div>
             <div class="clear"></div>
-
-<!--             <ul class='children'> -->
-<!--               <li class="comment even depth-2" id="li-comment-5"> -->
-<!--                 <div id="comment-5" class="com-wrap"> -->
-<!--                   <div class="comment-author vcard user frame"> <img src="style/images/avatar.jpg" class="avatar avatar-70 photo" height="70" width="70" alt=""></div> -->
-<!--                   <div class="message"> <span class="reply-link"><a class="comment-reply-link" href="#">Reply</a></span> -->
-<!--                     <div class="info"> -->
-<!--                       <h2>Jason</h2> -->
-<!--                       <span class="meta"> September 13, 2045 at 1:27 pm </span> </div> -->
-<!--                     <div class="comment-body "> -->
-<!--                       <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Curabitur blandit tempus porttitor.</p> -->
-<!--                     </div> -->
-<!--                     <span class="edit-link"></span> </div> -->
-<!--                   <div class="clear"></div> -->
-<!--                 </div> -->
-<!--                 <div class="clear"></div> -->
-<!--               </li> -->
-<!--             </ul> -->
-         
+ <%
+								for (Comment o : CommentDAO.getInstance().takeAllCommentsByComment(c.getCommentId())) {
+									User ou = UsersManager.getInstance().getUser(o.getUserEmail());
+		%>
+            <ul class='children'>
+              <li class="comment even depth-2" id="li-comment-5">
+                <div id="comment-5" class="com-wrap">
+                  <div class="comment-author vcard user frame"> <img src="PictureServlet?email=<%=u.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt=""></div>
+                  <div class="message"> 
+                    <div class="info">
+                      <h2><%=ou.getName() %></h2>
+                      <span class="meta"><%=o.getCreatedOn() %></span> </div>
+                    <div class="comment-body ">
+                      <p><%=o.getText() %></p>
+                    </div>
+                    <span class="edit-link"></span> </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+              </li>
+            </ul>
+          <%} %>
              <%} %>
           </li>
         </ol>
@@ -192,6 +195,9 @@
             <p class="comment-form-author">
               <input id="author" name="postId" type="hidden" value="<%=post.getId() %>" size="30" aria-required="true">
             </p>
+            <p class="comment-form-author">
+				<input id="author" name="parentCommentId" type="hidden" value="parent" size="30" aria-required="true">
+			</p>
             <p class="comment-form-email">
               <input id="email" name="email" type="hidden" value="<%=session.getAttribute("USER").toString() %>" size="30" aria-required="true">
             </p>

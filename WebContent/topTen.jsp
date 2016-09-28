@@ -84,6 +84,7 @@
     <div class="blog-grid">
    <%
 		for (Post post : PostDAO.getInstance().getTopTenPosts()) {
+			
 	%>
       <div class="post format-image box">
         <div class="frame"> <a href=></a><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
