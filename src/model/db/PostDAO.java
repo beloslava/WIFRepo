@@ -50,16 +50,30 @@ public class PostDAO implements IPostDAO {
 		}
 		return instance;
 	}
-
+	
+	/**
+	 * get post by id from allPosts collection
+	 * @return post
+	 */
 	public Post getPost(int postId) {
 		return allPosts.get(postId);
 	}
 
+	/**
+	 * get all posts from allPosts collection
+	 * @return map with postId -> post values
+	 */
 	@Override
 	public Map<Integer, Post> getAllPosts() {
 		return allPosts;
 	}
-
+	
+	/**
+	 * take all posts from db
+	 * generate posts comments from db
+	 * generate likes and dislikes for posts from db
+	 * @return map with post id -> post values
+	 */
 	public Map<Integer, Post> takeAllPosts() {
 		TreeMap<Integer, Post> allPosts = new TreeMap<Integer, Post>((postId1, postId2) -> postId2 - postId1);
 		Statement st;
@@ -88,7 +102,9 @@ public class PostDAO implements IPostDAO {
 																	resultSet.getString("post_name"),
 																	resultSet.getString("key_words"),
 																	resultSet.getTimestamp("post_date"),
-																	postComments
+																	postComments, 
+																	postLikes, 
+																	postDislikes
 
 														));
 
@@ -106,9 +122,12 @@ public class PostDAO implements IPostDAO {
 
 	}
 
+	/**
+	 * add post in db, allPosts collection and user's posts
+	 */
 	@Override
 	public void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
-			Timestamp time, List<Comment> comments) {
+			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS,
 					Statement.RETURN_GENERATED_KEYS);
@@ -123,7 +142,12 @@ public class PostDAO implements IPostDAO {
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			long id = rs.getLong(1);
-			Post post = new Post((int) id, userEmail, albumId, category, picture, name, keyWords, time, comments);
+			
+			Set<String> postLikes = getAllLikesForPost((int)id);
+			Set<String> postDislikes = getAllDislikesForPost((int)id);
+			
+			Post post = new Post((int) id, userEmail, albumId, category, picture, name, keyWords, time, 
+					comments, postLikes, postDislikes);
 
 			User user = UsersManager.getInstance().getUser(userEmail);
 			user.getPosts().add(post);
@@ -156,7 +180,11 @@ public class PostDAO implements IPostDAO {
 		}
 
 	}
-
+	/**
+	 * like post and put it in db and user's posts
+	 * @param post id
+	 * @param user email
+	 */
 	@Override
 	public void likePost(int postId, String userEmail) {	
 		try {
@@ -165,7 +193,7 @@ public class PostDAO implements IPostDAO {
 			statement.setString(2, userEmail);
 			statement.executeUpdate();
 			allPosts.get(postId).getLikes().add(userEmail);
-			System.out.println("like");
+			System.out.println("like post");
 		} catch (SQLException e) {
 			System.out.println("The post cannot be liked right now");
 			e.printStackTrace();
@@ -173,6 +201,11 @@ public class PostDAO implements IPostDAO {
 
 	}
 
+	/**
+	 * dislike post and put it in db and user's posts
+	 * @param post id
+	 * @param user email
+	 */
 	@Override
 	public void dislikePost(int postId, String userEmail) {
 		try {
@@ -189,6 +222,11 @@ public class PostDAO implements IPostDAO {
 		
 	}
 
+	/**
+	 * get all likes for post from db
+	 * @param post id
+	 * @return set with users emails that liked the post
+	 */
 	@Override
 	public Set<String> getAllLikesForPost(int postId) {
 		
@@ -209,6 +247,11 @@ public class PostDAO implements IPostDAO {
 		return likesByPost;
 	}
 
+	/**
+	 * get all dislikes for post from db
+	 * @param post id
+	 * @return set with users emails that disliked the post
+	 */
 	@Override
 	public Set<String> getAllDislikesForPost(int postId) {
 		
@@ -229,6 +272,31 @@ public class PostDAO implements IPostDAO {
 		return dislikesByPost;
 	}
 	
+	/**
+	 * get number of likes for the post from post collection
+	 * @param post id
+	 * @return number of likes for the post
+	 */
+	@Override
+	public int getNumberOfPostLikes(int postId){
+		return getPost(postId).getLikes().size();
+	}
+	
+	/**
+	 * get number of dislikes for the post from post collection
+	 * @param post id
+	 * @return number of dislikes for the post
+	 */
+	@Override
+	public int getNumberOfPostDislikes(int postId){
+		return getPost(postId).getDislikes().size();
+	}
+	
+	/**
+	 * get all posts for a user from allPosts collection
+	 * @param user email
+	 * @return list with user's posts
+	 */
 	@Override
 	public List<Post> getAllPostsByUser(String userEmail) {
 
@@ -243,6 +311,11 @@ public class PostDAO implements IPostDAO {
 		return postsByUser;
 	}
 
+	/**
+	 * get all posts for a certain category from allPosts collection
+	 * @param category name
+	 * @return list with posts from this category
+	 */
 	@Override
 	public List<Post> getAllPostsByCategory(String category) {
 
@@ -257,7 +330,11 @@ public class PostDAO implements IPostDAO {
 		return postsByTag;
 
 	}
-
+	
+	/**
+	 * get top ten posts from allPosts collection
+	 * @return list with ten most liked posts
+	 */
 	@Override
 	public List<Post> getTopTenPosts() {
 		List<Post> top = new ArrayList<>();

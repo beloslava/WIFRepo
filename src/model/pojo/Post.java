@@ -23,7 +23,7 @@ public class Post {
 
 
 	public Post(int id, String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
-			Timestamp time, List<Comment> comments) {
+			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
 		this.id = id;
 		this.userEmail = userEmail;
 		this.albumId = albumId;
@@ -33,6 +33,8 @@ public class Post {
 		this.keyWords = keyWords;
 		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.comments = comments;
+		this.likes = likes;
+		this.dislikes = dislikes;
 	}
 
 

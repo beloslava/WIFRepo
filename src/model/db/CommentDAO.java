@@ -25,7 +25,7 @@ public class CommentDAO implements ICommentDAO {
 	private static final String SELECT_COMMENTS_BY_COMMENT = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE parent_comment_id = ? ORDER BY comment_date DESC;";
 	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
 	
-	TreeMap<Integer, Comment> allComments;
+	TreeMap<Integer, Comment> allComments; // comment id -> comment
 	
 	private static CommentDAO instance;
 
@@ -44,6 +44,9 @@ public class CommentDAO implements ICommentDAO {
 		return allComments.get(commentId);
 	}
 	
+	/**
+	 * add comment in db, allComments collection and post's comments or comment comments collection
+	 */
 	@Override
 	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
 		
@@ -94,7 +97,10 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 
-	
+	/**
+	 * get all comments from db
+	 * @return map with comment id -> comment 
+	 */
 	public Map<Integer, Comment> getAllComments() {
 		TreeMap<Integer, Comment> allComments = new TreeMap<Integer, Comment>((commentId1, commentId2) -> commentId2 - commentId1);
 		
@@ -127,6 +133,11 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 	
+	/**
+	 * get all comments for a post from db
+	 * @param comment id
+	 * @return list with comments for this post
+	 */
 	@Override
 	public List<Comment> getAllCommentsByPost(int postId) {
 		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
@@ -162,7 +173,11 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 	
-	
+	/**
+	 * get all comments for a comment from db
+	 * @param comment id
+	 * @return list with comments for this comment
+	 */
 	public List<Comment> getAllCommentsByComment(int commentId) {
 		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
 		// post_comments
@@ -197,6 +212,11 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 	
+	/**
+	 * get all comments for a post from the post 
+	 * @param post id
+	 * @return list with comments for this post
+	 */
 	@Override
 	public List<Comment> takeAllCommentsByPost(int postId) { 
 		Post post = PostDAO.getInstance().getPost(postId);
@@ -205,7 +225,11 @@ public class CommentDAO implements ICommentDAO {
 		return commentsByPost;
 	}
 	
-	
+	/**
+	 * get all comments for comment from the comment 
+	 * @param comment id
+	 * @return list with comments for this comment
+	 */
 	public List<Comment> takeAllCommentsByComment(int commentId) { 
 		Comment comment = getComment(commentId);
 		ArrayList<Comment> commentsByComment = (ArrayList<Comment>) comment.getCommentComments();

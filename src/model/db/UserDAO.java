@@ -29,7 +29,12 @@ public class UserDAO implements IUserDAO {
 		}
 		return instance;
 	}
-
+	
+	/**
+	 * get all users from db
+	 * generate posts from db
+	 * @return list with all users in db
+	 */
 	@Override
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
@@ -56,7 +61,10 @@ public class UserDAO implements IUserDAO {
 		//System.out.println("Users " + users.size());
 		return users;
 	}
-
+	
+	/**
+	 * save user in db
+	 */
 	@Override
 	public void saveUser(User user) {
 		try {
@@ -78,7 +86,10 @@ public class UserDAO implements IUserDAO {
 		}
 		
 	}
-
+	
+	/**
+	 * update user in db
+	 */
 	@Override
 	public void updateUser(User user) {
 		try {

@@ -26,17 +26,33 @@ public class UsersManager implements IUserManager {
 		return instance;
 	}
 
+	/**
+	 * check if user exist in registerredUsers
+	 * @param user email
+	 * @return if user exists or not in the collection
+	 */
 	@Override
 	public boolean isUserExists(String email) {
 		System.out.println(registerredUsers.containsKey(email) + " " + email);
 		return (registerredUsers.containsKey(email));
 	}
 
+	/**
+	 * get user by user email
+	 * @param user email
+	 * @return user
+	 */
 	@Override
 	public User getUser(String email) {
 		return registerredUsers.get(email);
 	}
 
+	/**
+	 * check if there is such user in reggisteredUsers
+	 * @param user email
+	 * @param user pass
+	 * @return if the log in is valid or not
+	 */
 	@Override
 	public boolean validLogin(String email, String password) throws UnsupportedEncodingException {
 		if (!registerredUsers.containsKey(email)) {
@@ -46,7 +62,10 @@ public class UsersManager implements IUserManager {
 		System.out.println(convertToMd5(password));
 		return registerredUsers.get(email).getPassword().equals(convertToMd5(password));
 	}
-
+	/**
+	 * put the user in reggisteredUsers and in db
+	 * @param user email, pass, name, avatarPath and posts
+	 */
 	@Override
 	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts) {
 		User user = new User(email, password, name, null, null, avatarPath, posts);
@@ -60,6 +79,10 @@ public class UsersManager implements IUserManager {
 		UserDAO.getInstance().saveUser(user);
 	}
 
+	/**
+	 * change the users fields in reggisteredUsers and db
+	 * @param user email, pass, name, gender, about, avatarPath
+	 */
 	@Override
 	public void changeSettings(String email, String password, String name, String gender, String about,
 			String avatarPath) throws UnsupportedEncodingException {
@@ -73,7 +96,12 @@ public class UsersManager implements IUserManager {
 
 		UserDAO.getInstance().updateUser(user);
 	}
-
+	
+	/**
+	 * convert the pass in md5
+	 * @param user pass
+	 * @return crypted pass
+	 */
 	private static String convertToMd5(final String md5) throws UnsupportedEncodingException {
 		StringBuffer sb = null;
 		try {
