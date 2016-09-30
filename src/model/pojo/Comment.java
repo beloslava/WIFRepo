@@ -15,6 +15,7 @@ public class Comment {
 	private String createdOn;
 	ArrayList<Comment> commentComments;
 	
+	
 	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
 		this.commentId = commentId;
 		this.postId = postId;

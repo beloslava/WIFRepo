@@ -1,7 +1,7 @@
 package model.pojo;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class User {
 	// email, password, name, avatarPath, age, gender, personalDescription
@@ -13,9 +13,12 @@ public class User {
 	private String about;
 	private String avatarPath;
 	private List<Post> posts; // posts
+	private Set<String> followers; //emails of users that follow this user
+	private Set<String> followed; //emails of users that this user follows
+
 
 	public User(String email, String password, String name, String gender, String about, String avatarPath,
-		List<Post> posts) {
+		List<Post> posts, Set<String> followers, Set<String> followed) {
 	
 	this.email = email;
 	this.password = password;
@@ -24,6 +27,8 @@ public class User {
 	this.about = about;
 	this.avatarPath = avatarPath;
 	this.posts = posts;
+	this.followers = followers;
+	this.followed = followed;
 }
 
 	public String getAvatarPath() {
@@ -80,6 +85,22 @@ public class User {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public Set<String> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(Set<String> followers) {
+		this.followers = followers;
+	}
+
+	public Set<String> getFollowed() {
+		return followed;
+	}
+
+	public void setFollowed(Set<String> followed) {
+		this.followed = followed;
 	}
 
 }

@@ -5,8 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import model.pojo.Comment;
 import model.pojo.Post;
 import model.pojo.User;
 import model.pojo.UsersManager;
@@ -16,7 +19,11 @@ public class UserDAO implements IUserDAO {
 
 	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name, gender, about, avatar FROM users;";
 	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_USER = "UPDATE users SET email = ?, user_password = ?, user_name = ?, gender = ?, about = ?, avatar = ?  WHERE email = ?;";
+	private static final String UPDATE_USER = "UPDATE users user_name = ?, user_password = ?,  gender = ?, about = ?  WHERE email = ?;";
+	private static final String UPDATE_AVATAR = "UPDATE users avatar = ? WHERE email = ?;";
+	private static final String SELECT_FOLLOWERS = "SELECT follower_email FROM followers WHERE user_email = ?;";
+	private static final String SELECT_FOLLOWED = "SELECT user_email FROM followers WHERE follower_email = ?;";
+	private static final String INSERT_FOLLOWER = "INSERT INTO followers (user_email, follower_email) VALUES (?,?);";
 
 	private static UserDAO instance;
 
@@ -43,13 +50,18 @@ public class UserDAO implements IUserDAO {
 			ResultSet resultSet = st.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
 				List<Post> posts = (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
+				Set<String> followers = getAllFollowersForUser(resultSet.getString("email"));
+				Set<String> followed = getAllFollowedForUser(resultSet.getString("email"));
+
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
 									resultSet.getString("gender"),
 									resultSet.getString("about"),
 									resultSet.getString("avatar"),
-									posts
+									posts, 
+									followers,
+									followed
 			
 							));
 			}
@@ -94,12 +106,12 @@ public class UserDAO implements IUserDAO {
 	public void updateUser(User user) {
 		try {
 			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
-			// email = ?, user_password = ?, user_name = ?, age = ?, gender = ?, about = ?, avatar = ?
-			statement.setString(1, user.getEmail());
+			// user_name = ?, user_password = ?,  gender = ?, about = ?
+			statement.setString(1, user.getName());
 			statement.setString(2, user.getPassword());
 			statement.setString(3, user.getGender());
 			statement.setString(4, user.getAbout());
-			statement.setString(5, user.getAvatarPath());
+			statement.setString(5, user.getEmail());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -108,5 +120,77 @@ public class UserDAO implements IUserDAO {
 		}
 
 	}
+	
+	public void updateAvatar(User user) {
+		try {
+			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_AVATAR);
+			// avatar = ?, email = ?
+			statement.setString(1, user.getAvatarPath());
+			statement.setString(2, user.getEmail());
+			statement.executeUpdate();
 
+		} catch (SQLException e) {
+			System.out.println("Can not updadte avatar right now");
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	public void followUser(String userEmail, String followerEmail){
+		try {
+			// email, user_password, user_name, gender, about, avatar
+			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
+			st.setString(1, userEmail);
+			st.setString(2, followerEmail);		
+			st.executeUpdate();
+				
+			System.out.println("User followed successfully");
+		} catch (SQLException e) {
+			System.out.println("Cannot follow user right now!");
+			e.printStackTrace();
+		}
+	}
+	
+	public Set<String> getAllFollowersForUser(String userEmail){
+		HashSet<String> followers = new HashSet<>();
+
+		try {
+			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWERS);
+			st.setString(1, userEmail);
+			ResultSet resultSet = st.executeQuery();
+			while (resultSet.next()) {
+				followers.add(resultSet.getString("follower_email"));
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get followers right now");
+			e.printStackTrace();
+			return followers;
+		}
+
+		return followers;
+
+	}
+	
+	public Set<String> getAllFollowedForUser(String followerEmail){
+		HashSet<String> followed = new HashSet<>();
+
+		try {
+			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWED);
+			st.setString(1, followerEmail);
+			ResultSet resultSet = st.executeQuery();
+			while (resultSet.next()) {
+				followed.add(resultSet.getString("user_email"));
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get followed right now");
+			e.printStackTrace();
+			return followed;
+		}
+
+		return followed;
+
+	}
+	
+	
 }

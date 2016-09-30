@@ -1,22 +1,37 @@
 package model.pojo;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.db.PostDAO;
 import model.db.UserDAO;
 
 public class UsersManager implements IUserManager {
 
 	private ConcurrentHashMap<String, User> registerredUsers;// username -> user
+	private HashMap<String, Set<String>> followers; //users that follow the user 
+	private HashMap<String, Set<String>> followed; //users that the user follows
+
+	
 	private static UsersManager instance;
 
 	private UsersManager() {
+		followers = new HashMap<>();
+		followed = new HashMap<>();
 
 		registerredUsers = new ConcurrentHashMap<>();
 		for (User u : UserDAO.getInstance().getAllUsers()) {
 			registerredUsers.put(u.getEmail(), u);
+			
+			for(String userEmail : registerredUsers.keySet()){
+				followers.put(userEmail, UserDAO.getInstance().getAllFollowersForUser(userEmail));
+				followed.put(userEmail, UserDAO.getInstance().getAllFollowedForUser(userEmail));
+			}
 		}
+		
 	}
 
 	public synchronized static UsersManager getInstance() {
@@ -67,8 +82,8 @@ public class UsersManager implements IUserManager {
 	 * @param user email, pass, name, avatarPath and posts
 	 */
 	@Override
-	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts) {
-		User user = new User(email, password, name, null, null, avatarPath, posts);
+	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts, Set<String> followers, Set<String> followed) {
+		User user = new User(email, password, name, null, null, avatarPath, posts, followers, followed);
 		registerredUsers.put(email, user);
 		try {
 			registerredUsers.get(email).setPassword(convertToMd5(password));
@@ -84,17 +99,49 @@ public class UsersManager implements IUserManager {
 	 * @param user email, pass, name, gender, about, avatarPath
 	 */
 	@Override
-	public void changeSettings(String email, String password, String name, String gender, String about,
-			String avatarPath) throws UnsupportedEncodingException {
+	public void changeSettings(String name, String password, String gender, String about, String email) 
+			throws UnsupportedEncodingException {
 		User user = registerredUsers.get(email);
-		registerredUsers.get(email).setEmail(email);
-		registerredUsers.get(email).setPassword(convertToMd5(password));
+		//registerredUsers.get(email).setEmail(email);
 		registerredUsers.get(email).setName(name);
+		registerredUsers.get(email).setPassword(convertToMd5(password));
 		registerredUsers.get(email).setGender(gender);
 		registerredUsers.get(email).setAbout(about);
-		registerredUsers.get(email).setAvatarPath(avatarPath);
 
 		UserDAO.getInstance().updateUser(user);
+	}
+	
+	public void changeAvatar(String avatarPath, String email) 
+			throws UnsupportedEncodingException {
+		User user = registerredUsers.get(email);
+		//registerredUsers.get(email).setEmail(email);
+		registerredUsers.get(email).setAvatarPath(avatarPath);
+		UserDAO.getInstance().updateAvatar(user);
+	}
+	
+	public void follow(String userEmail, String followerEmail){
+		getUser(userEmail).getFollowers().add(followerEmail); //add follower email in user's set of followers
+		getUser(followerEmail).getFollowed().add(userEmail); //add followed email in user's set of users that user follows
+		followers.get(userEmail).add(followerEmail); // add follower email in the set of followers
+		followed.get(followerEmail).add(userEmail);  // add user email in the set of followed
+	}
+	
+	/**
+	 * get all followers for a user
+	 * @param user email
+	 * @return a set from users emails that follow the user
+	 */
+	public Set<String> getFollowersByUser(String userEmail){
+		return followers.get(userEmail);
+	}
+	
+	/**
+	 * get all followed users by user
+	 * @param follower email
+	 * @return a set from users emails that the user follows
+	 */
+	public Set<String> getFollowedByUser(String followerEmail){
+		return followed.get(followerEmail);
 	}
 	
 	/**
