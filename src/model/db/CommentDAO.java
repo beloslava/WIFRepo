@@ -49,9 +49,10 @@ public class CommentDAO implements ICommentDAO {
 	 */
 	@Override
 	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
-		
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
 					Statement.RETURN_GENERATED_KEYS);
 			// post_id, user_email, parent_comment_id, comment_text
 			statement.setInt(1, postId);
@@ -78,6 +79,18 @@ public class CommentDAO implements ICommentDAO {
 		} catch (SQLException e) {
 			System.out.println("Cannot add comment right now");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -104,11 +117,12 @@ public class CommentDAO implements ICommentDAO {
 	public Map<Integer, Comment> getAllComments() {
 		TreeMap<Integer, Comment> allComments = new TreeMap<Integer, Comment>((commentId1, commentId2) -> commentId2 - commentId1);
 		
-		Statement st;
+		Statement statement = null;
+		ResultSet resultSet = null;
 		try {
-			st = DBManager.getInstance().getConnection().createStatement();
+			statement = DBManager.getInstance().getConnection().createStatement();
 			//comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date
-			ResultSet resultSet = st.executeQuery(SELECT_ALL_COMMENTS);
+			resultSet = statement.executeQuery(SELECT_ALL_COMMENTS);
 			while (resultSet.next()) {
 				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
@@ -127,6 +141,18 @@ public class CommentDAO implements ICommentDAO {
 			e.printStackTrace();
 			return allComments;
 
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return allComments;
@@ -144,11 +170,12 @@ public class CommentDAO implements ICommentDAO {
 		// post_comments
 		List<Comment> postComments = new ArrayList<>();
 
-		PreparedStatement statement;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_POST);
 			statement.setInt(1, postId);
-			ResultSet resultSet = statement.executeQuery();
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
@@ -167,6 +194,18 @@ public class CommentDAO implements ICommentDAO {
 			e.printStackTrace();
 			return postComments;
 
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return postComments;
@@ -183,11 +222,12 @@ public class CommentDAO implements ICommentDAO {
 		// post_comments
 		List<Comment> commentComments = new ArrayList<>();
 
-		PreparedStatement statement;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_COMMENT);
 			statement.setInt(1, commentId);
-			ResultSet resultSet = statement.executeQuery();
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				ArrayList<Comment> commentCommentscom = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				commentComments.add(new Comment(resultSet.getInt("comment_id"), 
@@ -206,6 +246,18 @@ public class CommentDAO implements ICommentDAO {
 			e.printStackTrace();
 			return commentComments;
 
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return commentComments;

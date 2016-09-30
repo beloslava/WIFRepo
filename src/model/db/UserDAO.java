@@ -45,9 +45,11 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
+		Statement statement = null;
+		ResultSet resultSet = null;
 		try {
-			Statement st = DBManager.getInstance().getConnection().createStatement();
-			ResultSet resultSet = st.executeQuery(SELECT_ALL_USERS);
+			statement = DBManager.getInstance().getConnection().createStatement();
+			resultSet = statement.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
 				List<Post> posts = (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
 				Set<String> followers = getAllFollowersForUser(resultSet.getString("email"));
@@ -68,6 +70,18 @@ public class UserDAO implements IUserDAO {
 		} catch (SQLException e) {
 			System.out.println("Cannot get all users right now!");
 			return users;
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.println("Users loaded successfully");
 		//System.out.println("Users " + users.size());
@@ -79,22 +93,33 @@ public class UserDAO implements IUserDAO {
 	 */
 	@Override
 	public void saveUser(User user) {
+		PreparedStatement statement = null;
 		try {
 			// email, user_password, user_name, gender, about, avatar
-			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_USERS);
-			st.setString(1, user.getEmail());
-			st.setString(2, user.getPassword());
-			st.setString(3, user.getName());
-			st.setString(4, user.getGender());
-			st.setString(5, user.getAbout());
-			st.setString(6, user.getAvatarPath());
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_USERS);
+			statement.setString(1, user.getEmail());
+			statement.setString(2, user.getPassword());
+			statement.setString(3, user.getName());
+			statement.setString(4, user.getGender());
+			statement.setString(5, user.getAbout());
+			statement.setString(6, user.getAvatarPath());
 				
-			 st.executeUpdate();
+			statement.executeUpdate();
 				
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
 			System.out.println("Cannot save user right now!");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -104,8 +129,9 @@ public class UserDAO implements IUserDAO {
 	 */
 	@Override
 	public void updateUser(User user) {
+		PreparedStatement statement = null;
 		try {
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
+			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
 			// user_name = ?, user_password = ?,  gender = ?, about = ?
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getPassword());
@@ -117,13 +143,24 @@ public class UserDAO implements IUserDAO {
 		} catch (SQLException e) {
 			System.out.println("Can not updadte user right now");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
 	
 	public void updateAvatar(User user) {
+		PreparedStatement statement = null;
 		try {
-			PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_AVATAR);
+			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_AVATAR);
 			// avatar = ?, email = ?
 			statement.setString(1, user.getAvatarPath());
 			statement.setString(2, user.getEmail());
@@ -132,33 +169,54 @@ public class UserDAO implements IUserDAO {
 		} catch (SQLException e) {
 			System.out.println("Can not updadte avatar right now");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
 
 	
 	public void followUser(String userEmail, String followerEmail){
+		PreparedStatement statement = null;
 		try {
 			// email, user_password, user_name, gender, about, avatar
-			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
-			st.setString(1, userEmail);
-			st.setString(2, followerEmail);		
-			st.executeUpdate();
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
+			statement.setString(1, userEmail);
+			statement.setString(2, followerEmail);		
+			statement.executeUpdate();
 				
 			System.out.println("User followed successfully");
 		} catch (SQLException e) {
 			System.out.println("Cannot follow user right now!");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public Set<String> getAllFollowersForUser(String userEmail){
 		HashSet<String> followers = new HashSet<>();
-
+		PreparedStatement statement = null;
 		try {
-			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWERS);
-			st.setString(1, userEmail);
-			ResultSet resultSet = st.executeQuery();
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWERS);
+			statement.setString(1, userEmail);
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				followers.add(resultSet.getString("follower_email"));
 			}
@@ -166,6 +224,16 @@ public class UserDAO implements IUserDAO {
 			System.out.println("Cannot get followers right now");
 			e.printStackTrace();
 			return followers;
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return followers;
@@ -174,11 +242,11 @@ public class UserDAO implements IUserDAO {
 	
 	public Set<String> getAllFollowedForUser(String followerEmail){
 		HashSet<String> followed = new HashSet<>();
-
+		PreparedStatement statement = null;
 		try {
-			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWED);
-			st.setString(1, followerEmail);
-			ResultSet resultSet = st.executeQuery();
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_FOLLOWED);
+			statement.setString(1, followerEmail);
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				followed.add(resultSet.getString("user_email"));
 			}
@@ -186,6 +254,16 @@ public class UserDAO implements IUserDAO {
 			System.out.println("Cannot get followed right now");
 			e.printStackTrace();
 			return followed;
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return followed;
