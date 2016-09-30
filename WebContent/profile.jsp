@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="model.pojo.UsersManager"%>
+<%@ page import="model.db.UserDAO"%>
 <%@ page import="model.pojo.User"%>
-<%@ taglib prefix="c" 
-           uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="model.pojo.Post"%>
+<%@ page import="model.db.PostDAO"%>
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -92,7 +93,7 @@
     <%
     User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
     %>
-    <div class="two-third last">
+    <div id="first" class="widget-area">
 	    <h2><%=user.getName() %></h2>
 		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
 		<%if(user.getGender()!=null) {%>
@@ -108,7 +109,21 @@
 	    			<h1><b>About: </b><i>Not specified</i></h1>
 	    	<%} %>  	
 	</div>
-	
+	<div class="two-third last">
+		<%
+		for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
+	%>
+      <div class="post format-image box">
+        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
+        <div class="details"> 
+	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
+	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	       <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
+        </div>
+      </div>
+      <%} %>
+	</div>
     <div class="clear"></div>
   </div>
 </div>

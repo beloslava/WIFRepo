@@ -99,7 +99,7 @@
 
     <div class="post format-image box">
       <div class="details"> 
-	      <span class="icon-image"><%=post.getCreatedOn()%></span> 
+	      <span class="icon-date"><%=post.getCreatedOn()%></span> 
 	      <span class="likes">
 	      	<a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a>
 	      	<a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a>
