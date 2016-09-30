@@ -19,8 +19,8 @@ public class UserDAO implements IUserDAO {
 
 	private static final String SELECT_ALL_USERS = "SELECT email, user_password, user_name, gender, about, avatar FROM users;";
 	private static final String INSERT_INTO_USERS = "INSERT INTO users (email, user_password, user_name, gender, about, avatar) VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_USER = "UPDATE users user_name = ?, user_password = ?,  gender = ?, about = ?  WHERE email = ?;";
-	private static final String UPDATE_AVATAR = "UPDATE users avatar = ? WHERE email = ?;";
+	private static final String UPDATE_USER = "UPDATE users SET user_name = ?, user_password = ?,  gender = ?, about = ?  WHERE email = ?;";
+	private static final String UPDATE_AVATAR = "UPDATE users SET avatar = ? WHERE email = ?;";
 	private static final String SELECT_FOLLOWERS = "SELECT follower_email FROM followers WHERE user_email = ?;";
 	private static final String SELECT_FOLLOWED = "SELECT user_email FROM followers WHERE follower_email = ?;";
 	private static final String INSERT_FOLLOWER = "INSERT INTO followers (user_email, follower_email) VALUES (?,?);";

@@ -229,7 +229,7 @@ public class PostDAO implements IPostDAO {
 		//System.out.println(postLikes.get(postId).contains(userEmail) + " " + postLikes.get(postId));
 		if((!postLikes.get(postId).contains(userEmail)) && (!postDislikes.get(postId).contains(userEmail))){
 			try {
-				 statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
+				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
 				statement.setInt(1, postId);
 				statement.setString(2, userEmail);
 				statement.executeUpdate();

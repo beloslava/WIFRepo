@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Comment {
 
@@ -13,10 +14,12 @@ public class Comment {
 	private Integer parentCommentId;
 	private String text;
 	private String createdOn;
-	ArrayList<Comment> commentComments;
+	private ArrayList<Comment> commentComments;
+	private Set<String> commentLikes;
 	
-	
-	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
+
+
+	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments, Set<String> commentLikes) {
 		this.commentId = commentId;
 		this.postId = postId;
 		this.userEmail = userEmail;
@@ -24,6 +27,16 @@ public class Comment {
 		this.text = text;
 		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.commentComments = commentComments;
+		this.commentLikes = commentLikes;
+	}
+	
+	
+	public Set<String> getCommentLikes() {
+		return commentLikes;
+	}
+
+	public void setCommentLikes(Set<String> commentLikes) {
+		this.commentLikes = commentLikes;
 	}
 	
 	public int getCommentId() {

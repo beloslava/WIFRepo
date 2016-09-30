@@ -1,7 +1,9 @@
 package model.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class User {
 	// email, password, name, avatarPath, age, gender, personalDescription
@@ -15,7 +17,7 @@ public class User {
 	private List<Post> posts; // posts
 	private Set<String> followers; //emails of users that follow this user
 	private Set<String> followed; //emails of users that this user follows
-
+	private TreeMap<Integer, ArrayList<Post>> albums; // album id -> list from posts
 
 	public User(String email, String password, String name, String gender, String about, String avatarPath,
 		List<Post> posts, Set<String> followers, Set<String> followed) {

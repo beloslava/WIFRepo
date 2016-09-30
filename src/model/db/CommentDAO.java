@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,13 +25,22 @@ public class CommentDAO implements ICommentDAO {
 	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, parent_comment_id, comment_text) VALUES (?,?,?,?);";
 	private static final String SELECT_COMMENTS_BY_COMMENT = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE parent_comment_id = ? ORDER BY comment_date DESC;";
 	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
+	private static final String SELECT_COMMENT_LIKES = "SELECT user_email FROM comments_likes WHERE comment_id = ?;";
+	private static final String LIKE_COMMENT = "INSERT INTO comments_likes (comment_id, user_email) VALUES (?,?);";
 	
 	private TreeMap<Integer, Comment> allComments; // comment id -> comment
+	private HashMap<Integer, HashSet<String>> commentLikes;
 	
 	private static CommentDAO instance;
 
 	private CommentDAO() {
+		commentLikes = new HashMap<>();
 		allComments = (TreeMap<Integer, Comment>) getAllComments();
+		
+		for(Comment comment : allComments.values()){
+			int id = comment.getCommentId();
+			commentLikes.put(id, (HashSet<String>) getAllLikesForComment(id));
+		}
 	}
 
 	public synchronized static CommentDAO getInstance() {
@@ -44,11 +54,15 @@ public class CommentDAO implements ICommentDAO {
 		return allComments.get(commentId);
 	}
 	
+	public Comment getPost(int commentId) {
+		return allComments.get(commentId);
+	}
+	
 	/**
 	 * add comment in db, allComments collection and post's comments or comment comments collection
 	 */
 	@Override
-	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments) {
+	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments, Set<String> commentLikes) {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -65,10 +79,14 @@ public class CommentDAO implements ICommentDAO {
 			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
 			long commentId = resultSet.getLong(1);
+			
+			Set<String> likes = getAllLikesForComment((int)commentId);
 
-			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time, commentComments);
+			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time,
+					commentComments, likes);
 			
 			allComments.put((int)commentId, comment);
+			
 			if(parentCommentId == null){			
 				PostDAO.getInstance().getPost(postId).getComments().add(comment);
 			}
@@ -125,13 +143,15 @@ public class CommentDAO implements ICommentDAO {
 			resultSet = statement.executeQuery(SELECT_ALL_COMMENTS);
 			while (resultSet.next()) {
 				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
 				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"),
 						(int) resultSet.getLong("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date"),
-						commentComments
+						commentComments, 
+						commentLikes
 
 			));
 
@@ -178,13 +198,16 @@ public class CommentDAO implements ICommentDAO {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
+
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"), 
 				(int) resultSet.getLong("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date"),
-						commentComments
+						commentComments, 
+						commentLikes
 
 				));
 
@@ -230,13 +253,15 @@ public class CommentDAO implements ICommentDAO {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				ArrayList<Comment> commentCommentscom = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
 				commentComments.add(new Comment(resultSet.getInt("comment_id"), 
 						resultSet.getInt("post_id"),
 						resultSet.getString("user_email"), 
 						resultSet.getInt("parent_comment_id"),
 						resultSet.getString("comment_text"),
 						resultSet.getTimestamp("comment_date"),
-						commentCommentscom
+						commentCommentscom,
+						commentLikes
 
 				));
 
@@ -287,6 +312,73 @@ public class CommentDAO implements ICommentDAO {
 		ArrayList<Comment> commentsByComment = (ArrayList<Comment>) comment.getCommentComments();
 		Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByComment;
+	}
+	
+	
+	public Set<String> getAllLikesForComment(int commentId) {	
+		HashSet<String> likesByComment = new HashSet<>();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENT_LIKES);
+			statement.setInt(1, commentId);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				likesByComment.add(resultSet.getString("user_email"));
+			}
+		} catch (SQLException e) {
+			System.out.println("The likes for the comment cannot be selected right now");
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return likesByComment;
+	}
+	
+	public void likeComment(int commentId, String userEmail){
+		PreparedStatement statement = null;
+		System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
+		if((!commentLikes.get(commentId).contains(userEmail))){
+			try {
+				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_COMMENT);
+				statement.setInt(1, commentId);
+				statement.setString(2, userEmail);
+				statement.executeUpdate();
+				
+				Comment comment = getComment(commentId);
+				HashSet<String> likes = (HashSet<String>) comment.getCommentLikes();
+				likes.add(userEmail);
+				comment.setCommentLikes(likes);
+				commentLikes.put(commentId, likes);
+				
+				System.out.println("like post");
+			} catch (SQLException e) {
+				System.out.println("The post cannot be liked right now");
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement != null) {
+						statement.close();
+					}
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 	
 }
