@@ -756,7 +756,8 @@ iframe {
 .icon-link,
 .icon-quote,
 .icon-standard,
-.icon-video {
+.icon-video
+.icon-author {
     display: block;
     float: left;
 }
@@ -770,6 +771,9 @@ iframe {
 }
 .icon-image {
     background: transparent url(../images/icon-image.png) no-repeat left 6px;
+    padding: 0 0 6px 20px;
+}
+.icon-author{
     padding: 0 0 6px 20px;
 }
 .icon-link {

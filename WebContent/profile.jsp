@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="model.pojo.UsersManager"%>
-<%@ page import="model.db.UserDAO"%>
 <%@ page import="model.pojo.User"%>
-<%@ page import="model.pojo.Post"%>
-<%@ page import="model.db.PostDAO"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>My Wif</title>
+<title>Obscura | Full Width</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -32,18 +32,24 @@
 <script src="style/js/mediaelementplayer.min.js"></script>
 <script src="style/js/jquery.dcflickr.1.0.js"></script>
 <script src="style/js/twitter.min.js"></script>
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+ }
+</script>
 <script>$.backstretch("style/images/bg/1.jpg");</script>
 </head>
 <body>
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="main.jsp"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
+    <div class="logo"> <a href="index.html"> <img src="style/images/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
-          <li class="active"><a href="main.jsp">Home</a>
-		  <li><a href="myProfile.jsp">My profile</a>
+          <li><a href="main.jsp">Home</a>
+		  <li class="active"><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
@@ -70,8 +76,7 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">My world in frames... </div>
-  <ul class="social">
+<ul class="social">
     <li><a class="rss" href="#"></a></li>
     <li><a class="facebook" href="#"></a></li>
     <li><a class="twitter" href="#"></a></li>
@@ -79,27 +84,32 @@
     <li><a class="dribbble" href="#"></a></li>
     <li><a class="flickr" href="#"></a></li>
     <li><a class="linkedin" href="#"></a></li>
-  </ul>
-  <div class="blog-wrap">
-    <div class="blog-grid">
-   <%
-		for (Post post : PostDAO.getInstance().getAllPosts().values()) {
-	%>
-      <div class="post format-image box">
-        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <div class="details"> 
-	         <span class="icon-image"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span> 
-	    </div>
-      </div>
-      <%} %>
-      
+</ul>
+  <div class="box">
+    <div class="one-third">
+      <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=request.getAttribute("email")%>" alt=""></span></div>
     </div>
-  </div>
-  <div id="navigation">
-    <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div>
+    <%
+    User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
+    %>
+    <div class="two-third last">
+	    <h2><%=user.getName() %></h2>
+		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
+		<%if(user.getGender()!=null) {%>
+	    <h1><b>Gender: </b><%=user.getGender()%></h1>
+	    <%} else
+	    	{%>
+	    	<h1><b>Gender: </b><i>Not specified</i></h1>
+	    	<%}
+		if(user.getAbout()!=null){%>
+		<h1><b>About: </b><%=user.getAbout()%></h1>
+		<%} else
+	    	{%>
+	    			<h1><b>About: </b><i>Not specified</i></h1>
+	    	<%} %>  	
+	</div>
+	
+    <div class="clear"></div>
   </div>
 </div>
 <div class="footer-wrapper">
@@ -164,8 +174,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="site-generator-wrapper">
 </div>
 <script src="style/js/scripts.js"></script>
 </body>

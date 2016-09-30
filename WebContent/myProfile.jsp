@@ -32,6 +32,12 @@
 <script src="style/js/mediaelementplayer.min.js"></script>
 <script src="style/js/jquery.dcflickr.1.0.js"></script>
 <script src="style/js/twitter.min.js"></script>
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+ }
+</script>
 <script>$.backstretch("style/images/bg/1.jpg");</script>
 </head>
 <body>
@@ -70,8 +76,7 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum, Vestibulum id ligula porta. </div>
-  <ul class="social">
+<ul class="social">
     <li><a class="rss" href="#"></a></li>
     <li><a class="facebook" href="#"></a></li>
     <li><a class="twitter" href="#"></a></li>
@@ -79,16 +84,54 @@
     <li><a class="dribbble" href="#"></a></li>
     <li><a class="flickr" href="#"></a></li>
     <li><a class="linkedin" href="#"></a></li>
-  </ul>
+</ul>
   <div class="box">
-    <h1 class="title">Full-Width</h1>
     <div class="one-third">
       <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=request.getSession().getAttribute("USER")%>" alt=""></span></div>
+      <a class="comment-reply-link" href="javascript:showhide('changePicture')">Change profile picture</a>
+      <div id="changePicture" style="display:none;">	
+		<fieldset>
+				<form action="" method="post">
+					Upload your new profile picture<input type="file" name="fileField" value="" class="text-input required"><br>
+					<input type="submit" value="Save">
+				</form>
+		</fieldset>
+		</div>
     </div>
+    <%
+    User user=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString());
+    %>
     <div class="two-third last">
-      <h2><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getName() %></h2>
-      <h1><b>Name: </b><%=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString()).getName()%></h1>
-	<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
+	    <h2><%=user.getName() %></h2>
+		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
+		<%if(user.getGender()!=null) {%>
+	    <h1><b>Gender: </b><%=user.getGender()%></h1>
+	    <%} else
+	    	{%>
+	    	<h1><b>Gender: </b><i>Not specified</i></h1>
+	    	<%}
+		if(user.getAbout()!=null){%>
+		<h1><b>About: </b><%=user.getAbout()%></h1>
+		<%} else
+	    	{%>
+	    			<h1><b>About: </b><i>Not specified</i></h1>
+	    	<%} %>  	
+	</div>
+	<div class="tree-third last">
+		<a class="comment-reply-link" href="javascript:showhide('changeProfile')">Change profile</a>
+		<div id="changeProfile" style="display:none;">	
+		<fieldset>
+				<form action="" method="post">
+					Enter new name<input type="text" name="newName" value="<%=user.getName() %>" class="text-input required">
+					Enter old password<input type="password" name="newPassword" value="" class="text-input required">
+					Enter new password<input type="password" name="newPassword" value="" class="text-input required">
+					Repeat new password<input type="password" name="newPassword" value="" class="text-input required">
+					Gender <span><input type="radio" name="gender" value="male">Male <input type="radio" name="gender" value="female">Female </span>
+					Enter your description<input type="text" name="newDescription" value="<%=user.getAbout() %>" class="text-input required"><br>
+					<input type="submit" value="Save profile settings">
+				</form>
+		</fieldset>
+		</div>
 	</div>
     <div class="clear"></div>
   </div>
@@ -155,9 +198,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="site-generator-wrapper">
-  <div class="site-generator">Copyright Obscura 2045. All rights reserved // Design by <a href="http://elemisfreebies.com">elemis</a>.</div>
 </div>
 <script src="style/js/scripts.js"></script>
 </body>

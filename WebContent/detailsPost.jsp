@@ -100,7 +100,8 @@
       <div class="details"> 
 	      <span class="icon-image"><%=post.getCreatedOn()%></span> 
 	      <span class="likes">
-<%-- 	      	<a href="#" class="likeThis"><%=post.get %></a> --%>
+	      	<a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a>
+	      	<a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a>
 	      </span> 
 	      <span class="comments">
 	      	<a href="#"><%=post.getComments().size()%></a>

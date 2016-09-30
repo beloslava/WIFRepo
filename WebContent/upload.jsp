@@ -109,7 +109,7 @@
             </li>
             <li class="form-row text-area-row">
               <label>Upload your photo</label>
-              <input type="file" name="fileField" class="text-input required"></textarea>
+              <input type="file" name="fileField" accept="image/* class="text-input required">
             </li>
             <li class="button-row">
               <input type="submit" value="Upload your post" name="submit" class="btn-submit">
