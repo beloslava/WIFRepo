@@ -30,9 +30,9 @@ public class PostDAO implements IPostDAO {
 	private static final String SELECT_LIKES_BY_POST = "SELECT user_email FROM post_likes WHERE post_id = ?;";
 	private static final String SELECT_DISLIKES_BY_POST = "SELECT user_email FROM post_dislikes WHERE post_id = ?;";
 	
-	TreeMap<Integer, Post> allPosts; // all posts from the page
-	HashMap<Integer, HashSet<String>> postLikes; // postId -> list from userEmails
-	HashMap<Integer, HashSet<String>> postDislikes; // postId -> list from userEmails
+	private TreeMap<Integer, Post> allPosts; // all posts from the page
+	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from userEmails
+	private HashMap<Integer, HashSet<String>> postDislikes; // postId -> list from userEmails
 
 
 	private static PostDAO instance;

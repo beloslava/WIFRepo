@@ -25,7 +25,7 @@ public class CommentDAO implements ICommentDAO {
 	private static final String SELECT_COMMENTS_BY_COMMENT = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE parent_comment_id = ? ORDER BY comment_date DESC;";
 	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
 	
-	TreeMap<Integer, Comment> allComments; // comment id -> comment
+	private TreeMap<Integer, Comment> allComments; // comment id -> comment
 	
 	private static CommentDAO instance;
 
@@ -62,9 +62,9 @@ public class CommentDAO implements ICommentDAO {
 			statement.setString(4, text);
 			statement.executeUpdate();
 
-			ResultSet rs = statement.getGeneratedKeys();
-			rs.next();
-			long commentId = rs.getLong(1);
+			resultSet = statement.getGeneratedKeys();
+			resultSet.next();
+			long commentId = resultSet.getLong(1);
 
 			Comment comment = new Comment((int) commentId, postId, userEmail, parentCommentId, text, time, commentComments);
 			
