@@ -70,7 +70,8 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum, Vestibulum id ligula porta. </div>
+<%String category=request.getAttribute("category").toString(); %>
+  <div class="intro"><%=category.substring(0,1).toUpperCase()+category.substring(1) %></div>
   <ul class="social">
     <li><a class="rss" href="#"></a></li>
     <li><a class="facebook" href="#"></a></li>
@@ -82,17 +83,16 @@
   </ul>
   <div class="blog-wrap">
     <div class="blog-grid">
-   <%
-   String category=request.getAttribute("category").toString();
+   <%   
 	for (Post post : PostDAO.getInstance().getAllPostsByCategory(category)) {
 	%>
       <div class="post format-image box">
         <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
-	      <span class="icon-image"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	        <span class="likes"><a href="DetailsServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span> 
+	      <span class="icon-artist"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
+	        <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	        <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span> 
 	    </div>
       </div>
       <%} %>

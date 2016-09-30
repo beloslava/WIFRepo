@@ -102,7 +102,7 @@ public class UsersManager implements IUserManager {
 	public void changeSettings(String name, String password, String gender, String about, String email) 
 			throws UnsupportedEncodingException {
 		User user = registerredUsers.get(email);
-		//registerredUsers.get(email).setEmail(email);
+		registerredUsers.get(email).setEmail(email);
 		registerredUsers.get(email).setName(name);
 		registerredUsers.get(email).setPassword(convertToMd5(password));
 		registerredUsers.get(email).setGender(gender);

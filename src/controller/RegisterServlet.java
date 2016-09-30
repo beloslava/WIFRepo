@@ -55,7 +55,7 @@ public class RegisterServlet extends HttpServlet {
 			Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
-			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new LinkedList<>());
+			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new ArrayList<>(),new HashSet<>(),new HashSet<>());
 			html="index.html";
 		}
 		else{

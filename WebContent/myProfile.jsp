@@ -121,11 +121,11 @@
 		<a class="comment-reply-link" href="javascript:showhide('changeProfile')">Change profile</a>
 		<div id="changeProfile" style="display:none;">	
 		<fieldset>
-				<form action="" method="post">
+				<form action="ChangeProfileServlet" method="post">
 					Enter new name<input type="text" name="newName" value="<%=user.getName() %>" class="text-input required">
-					Enter old password<input type="password" name="newPassword" value="" class="text-input required">
-					Enter new password<input type="password" name="newPassword" value="" class="text-input required">
-					Repeat new password<input type="password" name="newPassword" value="" class="text-input required">
+					Enter old password<input type="password" name="oldPass" value="" class="text-input required">
+					Enter new password<input type="password" name="newPass" value="" class="text-input required">
+					Repeat new password<input type="password" name="newPass2" value="" class="text-input required">
 					Gender <span><input type="radio" name="gender" value="male">Male <input type="radio" name="gender" value="female">Female </span>
 					Enter your description<input type="text" name="newDescription" value="<%=user.getAbout() %>" class="text-input required"><br>
 					<input type="submit" value="Save profile settings">
