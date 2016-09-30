@@ -75,7 +75,14 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum, Vestibulum id ligula porta. </div>
+<%
+    Post post = PostDAO.getInstance().getPost(Integer.parseInt(request.getAttribute("postId").toString()));
+	User postUser = UsersManager.getInstance().getUser(post.getUserEmail());
+
+	%>
+  <div class="intro">
+  <h1>"<%=post.getName()%>" created by <a href="ProfileServlet?email=<%=post.getUserEmail()%>"><%=postUser.getName() %></a></h1>
+  </div>
   <ul class="social">
     <li><a class="rss" href="#"></a></li>
     <li><a class="facebook" href="#"></a></li>
@@ -86,12 +93,6 @@
     <li><a class="linkedin" href="#"></a></li>
   </ul>
   <div class="main-image">
-  
-    <%
-    Post post = PostDAO.getInstance().getPost(Integer.parseInt(request.getAttribute("postId").toString()));
-	User user = UsersManager.getInstance().getUser(post.getUserEmail());
-
-	%>
     <div class="outer"> <span class="inset"><img src="PostPictureServlet?postId=<%=post.getId()%>"></span> </div>
   </div>
   <div class="content">
@@ -107,7 +108,6 @@
 	      	<a href="#"><%=post.getComments().size()%></a>
 	      </span>
       </div>
-      <h1 class="title"><%=post.getName() %></h1>
       <div class="tags"><a href="#"><%=post.getKeyWords() %></a></div>
     </div>
     <div id="comment-wrapper" class="box">
@@ -115,38 +115,41 @@
         <h3 id="comments-title"><%=post.getComments().size() %> Responses </h3>
         <ol id="singlecomments" class="commentlist">
           <%
-								for (Comment c : CommentDAO.getInstance().takeAllCommentsByPost(post.getId())) {
-									User u = UsersManager.getInstance().getUser(c.getUserEmail());
+          int x=0;
+								for (Comment comment : CommentDAO.getInstance().takeAllCommentsByPost(post.getId())) {
+									User user = UsersManager.getInstance().getUser(comment.getUserEmail());
+									x++;
 		%>
              
           <li class="comment">
             <div class="comment">
               <div class="comment-author vcard user frame"> 
-              	<img src="PictureServlet?email=<%=u.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
+              	<img src="PictureServlet?email=<%=user.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
               </div>
               <div class="message"> 
               	<span class="reply-link">
-              		<a class="comment-reply-link" href="javascript:showhide('uniquename')">Reply</a>
+              		<a class="comment-reply-link" href="javascript:showhide('reply<%=x%>')">Reply</a>
               	</span>
                 <div class="info">
-                  <h2><%=u.getName() %></h2>
-                  <span class="meta"><%=c.getCreatedOn() %></span> </div>
+                  <h2><%=user.getName() %></h2>
+                  <span class="meta"><%=comment.getCreatedOn() %></span> </div>
                 <div class="comment-body ">
-                  <p><%=c.getText() %></p>
+                  <p><%=comment.getText() %></p>
                 </div>
-                <span class="edit-link"></span> </div>
+              </div>
+              
               <div class="clear"></div>
             </div>
-            <div id="uniquename" style="display:none;">
+            <div id="reply<%=x%>" style="display:none;">
         				<div id="comment-form" class="comment-form">
 					        <div id="respond">
-					          <h3 id="reply-title">Leave a Reply to <%=u.getName() %> comment</h3>
+					          <h3 id="reply-title">Leave a Reply to <%=user.getName() %> comment</h3>
 					          <form action="WriteCommentServlet" method="get" id="commentform">
 					            <p class="comment-form-author">
 					              <input id="author" name="postId" type="hidden" value="<%=post.getId() %>" size="30" aria-required="true">
 					            </p>
 					            <p class="comment-form-author">
-					              <input id="author" name="parentCommentId" type="hidden" value="<%=c.getCommentId()%>" size="30" aria-required="true">
+					              <input id="author" name="parentCommentId" type="hidden" value="<%=comment.getCommentId()%>" size="30" aria-required="true">
 					            </p>
 					            <p class="comment-form-email">
 					              <input id="email" name="email" type="hidden" value="<%=session.getAttribute("USER").toString() %>" size="30" aria-required="true">
@@ -164,19 +167,19 @@
     				</div>
             <div class="clear"></div>
  <%
-								for (Comment o : CommentDAO.getInstance().takeAllCommentsByComment(c.getCommentId())) {
-									User ou = UsersManager.getInstance().getUser(o.getUserEmail());
+								for (Comment reply : CommentDAO.getInstance().takeAllCommentsByComment(comment.getCommentId())) {
+									User replyUser = UsersManager.getInstance().getUser(reply.getUserEmail());
 		%>
             <ul class='children'>
               <li class="comment even depth-2" id="li-comment-5">
                 <div id="comment-5" class="com-wrap">
-                  <div class="comment-author vcard user frame"> <img src="PictureServlet?email=<%=u.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt=""></div>
+                  <div class="comment-author vcard user frame"> <img src="PictureServlet?email=<%=replyUser.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt=""></div>
                   <div class="message"> 
                     <div class="info">
-                      <h2><%=ou.getName() %></h2>
-                      <span class="meta"><%=o.getCreatedOn() %></span> </div>
+                      <h2><%=replyUser.getName() %></h2>
+                      <span class="meta"><%=reply.getCreatedOn() %></span> </div>
                     <div class="comment-body ">
-                      <p><%=o.getText() %></p>
+                      <p><%=reply.getText() %></p>
                     </div>
                     <span class="edit-link"></span> </div>
                   <div class="clear"></div>
