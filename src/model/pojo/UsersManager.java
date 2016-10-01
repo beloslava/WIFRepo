@@ -173,7 +173,9 @@ public class UsersManager implements IUserManager {
 	public List<User> searchUsersByName(String name) {
 		ArrayList<User> users = new ArrayList<>();
 		for(User user : registerredUsers.values()){
-			if(user.getName().equals(name)){
+			String userName = user.getEmail().toLowerCase();
+			name = name.toLowerCase();
+			if(userName.equals(name)){
 				users.add(user);
 			}
 		}
