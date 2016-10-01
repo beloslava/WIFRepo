@@ -14,7 +14,15 @@ public class ProfileServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	String email=request.getParameter("email");
 	request.setAttribute("email", email);
-	RequestDispatcher view=request.getRequestDispatcher("profile.jsp");
+	String jsp="";
+	if(request.getSession().getAttribute("USER").toString().equals(email)){
+		jsp="myProfile.jsp";
+	}
+	else{
+		jsp="profile.jsp";
+	}
+	
+	RequestDispatcher view=request.getRequestDispatcher(jsp);
 	view.forward(request, response);
 }
 }

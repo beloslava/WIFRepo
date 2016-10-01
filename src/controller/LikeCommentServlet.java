@@ -19,7 +19,6 @@ public class LikeCommentServlet extends HttpServlet {
 		request.setAttribute("commentId", commentId);
 		int postId=Integer.parseInt(request.getParameter("postId").toString());
 		String email=request.getSession().getAttribute("USER").toString();
-		Post post=PostDAO.getInstance().getPost(commentId);
 		CommentDAO.getInstance().likeComment(commentId, email);
 		RequestDispatcher view=request.getRequestDispatcher("DetailsServlet?postId="+postId);
 		view.forward(request, response);
