@@ -4,7 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.db.UserDAO;
@@ -14,7 +16,6 @@ public class UsersManager implements IUserManager {
 	private ConcurrentHashMap<String, User> registerredUsers;// username -> user
 	private HashMap<String, Set<String>> followers; //users that follow the user 
 	private HashMap<String, Set<String>> followed; //users that the user follows
-
 	
 	private static UsersManager instance;
 
@@ -82,8 +83,9 @@ public class UsersManager implements IUserManager {
 	 * @param user email, pass, name, avatarPath and posts
 	 */
 	@Override
-	public void regUser(String email, String password, String name, String avatarPath, List<Post> posts, Set<String> followers, Set<String> followed) {
-		User user = new User(email, password, name, null, null, avatarPath, posts, followers, followed);
+	public void regUser(String email, String password, String name, String avatarPath, 
+			List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, ArrayList<Post>> albums) {
+		User user = new User(email, password, name, null, null, avatarPath, posts, followers, followed, albums);
 		registerredUsers.put(email, user);
 		try {
 			registerredUsers.get(email).setPassword(convertToMd5(password));
@@ -173,9 +175,9 @@ public class UsersManager implements IUserManager {
 	public List<User> searchUsersByName(String name) {
 		ArrayList<User> users = new ArrayList<>();
 		for(User user : registerredUsers.values()){
-			String userName = user.getEmail().toLowerCase();
+			String userName = user.getName().toLowerCase();
 			name = name.toLowerCase();
-			if(userName.equals(name)){
+			if(userName.contains(name)){
 				users.add(user);
 			}
 		}
@@ -183,4 +185,5 @@ public class UsersManager implements IUserManager {
 		return users;
 	}
 
+	
 }

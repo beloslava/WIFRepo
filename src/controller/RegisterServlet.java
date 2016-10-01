@@ -10,6 +10,8 @@ import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import model.pojo.Post;
 import model.pojo.UsersManager;
 
 @WebServlet("/RegisterServlet")
@@ -55,7 +58,9 @@ public class RegisterServlet extends HttpServlet {
 			Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
-			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new ArrayList<>(),new HashSet<>(),new HashSet<>());
+			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(),
+					new ArrayList<>(),new HashSet<>(),new HashSet<>(), 
+					new TreeMap<Integer, ArrayList<Post>>());
 			html="index.html";
 		}
 		else{

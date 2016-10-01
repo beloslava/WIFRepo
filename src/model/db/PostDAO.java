@@ -464,5 +464,15 @@ public class PostDAO implements IPostDAO {
 		}
 		return topTen;
 	}
+	
+	public List<Post> getPostsByAlbum(int albumId){
+		ArrayList<Post> postsForAlbum = new ArrayList<>();
+		for (Post post : allPosts.values()) {
+			if(post.getAlbumId() == albumId){
+				postsForAlbum.add(post);
+			}
+		}
+		return postsForAlbum;
+	}
 
 }

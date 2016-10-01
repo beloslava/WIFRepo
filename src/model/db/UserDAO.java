@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 import model.pojo.Post;
 import model.pojo.User;
@@ -52,7 +53,7 @@ public class UserDAO implements IUserDAO {
 				List<Post> posts = (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
 				Set<String> followers = getAllFollowersForUser(resultSet.getString("email"));
 				Set<String> followed = getAllFollowedForUser(resultSet.getString("email"));
-
+				TreeMap<Integer, ArrayList<Post>> albums = AlbumDAO.getInstance().getAllAlbumsByUser(resultSet.getString("email"));
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
@@ -61,7 +62,8 @@ public class UserDAO implements IUserDAO {
 									resultSet.getString("avatar"),
 									posts, 
 									followers,
-									followed
+									followed,
+									albums
 			
 							));
 			}
