@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,7 +27,7 @@ public class WriteCommentServlet extends HttpServlet {
 		int postId=Integer.parseInt(request.getParameter("postId"));
 		String html="";
 		if(comment!=null){
-			CommentDAO.getInstance().addComment(postId, emailUser, parentCommentId, comment, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>());
+			CommentDAO.getInstance().addComment(postId, emailUser, parentCommentId, comment, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(),new HashSet<>());
 			html="DetailsServlet?postId="+postId;
 		}
 		RequestDispatcher view=request.getRequestDispatcher(html);

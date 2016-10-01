@@ -129,6 +129,7 @@
               <div class="message"> 
               	<span class="reply-link">
               		<a class="comment-reply-link" href="javascript:showhide('reply<%=x%>')">Reply</a>
+              		<a class="comment-reply-link" href="LikeCommentServlet?commentId=<%=comment.getCommentId()%>&postId=<%=post.getId()%>">Like <%=comment.getCommentLikes().size()%></a>
               	</span>
                 <div class="info">
                   <h2><%=user.getName() %></h2>
@@ -175,6 +176,9 @@
                 <div id="comment-5" class="com-wrap">
                   <div class="comment-author vcard user frame"> <img src="PictureServlet?email=<%=replyUser.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt=""></div>
                   <div class="message"> 
+                  <span class="reply-link">
+              		<a class="comment-reply-link" href="LikeCommentServlet?commentId=<%=reply.getCommentId()%>&postId=<%=post.getId()%>">Like <%=reply.getCommentLikes().size()%></a>
+              	  </span>
                     <div class="info">
                       <h2><%=replyUser.getName() %></h2>
                       <span class="meta"><%=reply.getCreatedOn() %></span> </div>

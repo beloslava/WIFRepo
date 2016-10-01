@@ -91,7 +91,7 @@
       <a class="comment-reply-link" href="javascript:showhide('changePicture')">Change profile picture</a>
       <div id="changePicture" style="display:none;">	
 		<fieldset>
-				<form action="" method="post">
+				<form action="ChangeProfilePictureServlet" method="post" enctype="multipart/form-data">
 					Upload your new profile picture<input type="file" name="fileField" value="" class="text-input required"><br>
 					<input type="submit" value="Save">
 				</form>
