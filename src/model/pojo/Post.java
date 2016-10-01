@@ -3,7 +3,8 @@ package model.pojo;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -103,7 +104,9 @@ public class Post {
 	}
 
 	public List<Comment> getComments() {
-		return comments;
+		ArrayList<Comment> commentsCopy = new ArrayList<>();
+		commentsCopy.addAll(comments);
+		return commentsCopy;
 	}
 
 	public void setComments(List<Comment> comments) {
@@ -111,7 +114,9 @@ public class Post {
 	}
 
 	public Set<String> getLikes() {
-		return likes;
+		HashSet<String> likesCopy = new HashSet<>();
+		likesCopy.addAll(likes);
+		return likesCopy;
 	}
 	
 	public void setLikes(Set<String> likes) {
@@ -119,7 +124,9 @@ public class Post {
 	}
 	
 	public Set<String> getDislikes() {
-		return dislikes;
+		HashSet<String> dislikesCopy = new HashSet<>();
+		dislikesCopy.addAll(dislikes);
+		return dislikesCopy;
 	}
 	
 	public void setDislikes(Set<String> dislikes) {
