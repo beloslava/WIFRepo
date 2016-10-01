@@ -88,6 +88,7 @@
 </ul>
   <div class="box">
     <div class="one-third">
+    	<a href="FollowServlet?userEmail=<%=request.getAttribute("email")%>">follow me</a>
       <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=request.getAttribute("email")%>" alt=""></span></div>
     </div>
     <%
