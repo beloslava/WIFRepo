@@ -16,7 +16,6 @@ public class Comment {
 	private String createdOn;
 	private ArrayList<Comment> commentComments;
 	private Set<String> commentLikes;
-	
 
 
 	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments, Set<String> commentLikes) {

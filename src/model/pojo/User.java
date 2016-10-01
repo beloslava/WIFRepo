@@ -59,9 +59,7 @@ public class User {
 	}
 
 	public List<Post> getPosts() {
-		ArrayList<Post> postsCopy = new ArrayList<>();
-		postsCopy.addAll(posts);
-		return postsCopy;
+		return posts;
 	}
 
 	public void setEmail(String email) {
@@ -93,9 +91,7 @@ public class User {
 	}
 
 	public Set<String> getFollowers() {
-		HashSet<String> followersCopy = new HashSet<>();
-		followersCopy.addAll(followers);
-		return followersCopy;
+		return followers;
 	}
 
 	public void setFollowers(Set<String> followers) {
@@ -103,9 +99,7 @@ public class User {
 	}
 
 	public Set<String> getFollowed() {
-		HashSet<String> followedCopy = new HashSet<>();
-		followedCopy.addAll(followed);
-		return followedCopy;
+		return followed;
 	}
 
 	public void setFollowed(Set<String> followed) {

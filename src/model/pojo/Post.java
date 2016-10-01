@@ -104,9 +104,7 @@ public class Post {
 	}
 
 	public List<Comment> getComments() {
-		ArrayList<Comment> commentsCopy = new ArrayList<>();
-		commentsCopy.addAll(comments);
-		return commentsCopy;
+		return comments;
 	}
 
 	public void setComments(List<Comment> comments) {
@@ -114,9 +112,7 @@ public class Post {
 	}
 
 	public Set<String> getLikes() {
-		HashSet<String> likesCopy = new HashSet<>();
-		likesCopy.addAll(likes);
-		return likesCopy;
+		return likes;
 	}
 	
 	public void setLikes(Set<String> likes) {
@@ -124,9 +120,7 @@ public class Post {
 	}
 	
 	public Set<String> getDislikes() {
-		HashSet<String> dislikesCopy = new HashSet<>();
-		dislikesCopy.addAll(dislikes);
-		return dislikesCopy;
+		return dislikes;
 	}
 	
 	public void setDislikes(Set<String> dislikes) {

@@ -350,7 +350,7 @@ public class CommentDAO implements ICommentDAO {
 	public void likeComment(int commentId, String userEmail){
 		PreparedStatement statement = null;
 	//	System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
-		if((!commentLikes.get(commentId).contains(userEmail))){
+		if((!commentLikes.containsKey(commentId) || !commentLikes.get(commentId).contains(userEmail))){
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_COMMENT);
 				statement.setInt(1, commentId);
