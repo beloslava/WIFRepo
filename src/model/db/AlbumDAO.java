@@ -53,14 +53,13 @@ public class AlbumDAO {
 			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
 			long id = resultSet.getLong(1);
-			
-			
+						
 			Album album = new Album((int)id, albumName, userEmail, time, new ArrayList<Post>());
 			User user = UsersManager.getInstance().getUser(userEmail);
-			TreeMap<Integer, ArrayList<Post>> albums = new TreeMap<>();
-			albums.put((int)id, new ArrayList<>());
+//			TreeMap<Integer, Album> albums = new TreeMap<>();
+//			albums.put((int)id, album);
 
-			user.setAlbums(albums);
+			user.getAlbums().put((int)id, album);
 			allAlbums.put((int)id, album);
 	
 		} catch (SQLException e) {
@@ -128,12 +127,13 @@ public class AlbumDAO {
 		return allAlbums;
 	}
 	
-	public TreeMap<Integer, ArrayList<Post>> getAllAlbumsByUser(String userEmail){
-		TreeMap<Integer, ArrayList<Post>> albums = new TreeMap<>((albumId1, albumId2) -> albumId2 - albumId1); //album id->list from posts
+	public TreeMap<Integer, Album> getAllAlbumsByUser(String userEmail){
+		TreeMap<Integer, Album> albums = new TreeMap<>((albumId1, albumId2) -> albumId2 - albumId1); //album id->list from posts
 		for(Album album : allAlbums.values()){
-			int id = album.getAlbumId();
-			ArrayList<Post> postsByAlbum = (ArrayList<Post>) album.getPosts();
-			albums.put(id, postsByAlbum);
+			if(album.getUserEmail().equals(userEmail)){
+				albums.put(album.getAlbumId(), album);
+			}
+			
 		}
 		return albums;
 	}

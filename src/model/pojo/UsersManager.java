@@ -84,7 +84,7 @@ public class UsersManager implements IUserManager {
 	 */
 	@Override
 	public void regUser(String email, String password, String name, String avatarPath, 
-			List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, ArrayList<Post>> albums) {
+			List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, Album> albums) {
 		User user = new User(email, password, name, null, null, avatarPath, posts, followers, followed, albums);
 		registerredUsers.put(email, user);
 		try {
@@ -116,7 +116,6 @@ public class UsersManager implements IUserManager {
 	public void changeAvatar(String avatarPath, String email) 
 			throws UnsupportedEncodingException {
 		User user = registerredUsers.get(email);
-		//registerredUsers.get(email).setEmail(email);
 		registerredUsers.get(email).setAvatarPath(avatarPath);
 		UserDAO.getInstance().updateAvatar(user);
 	}

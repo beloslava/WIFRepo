@@ -3,14 +3,10 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import model.pojo.Album;
 import model.pojo.Post;
 import model.pojo.UsersManager;
 
@@ -60,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
 			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(),
 					new ArrayList<>(),new HashSet<>(),new HashSet<>(), 
-					new TreeMap<Integer, ArrayList<Post>>());
+					new TreeMap<Integer, Album>());
 			html="index.html";
 		}
 		else{

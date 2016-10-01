@@ -19,10 +19,10 @@ public class User {
 	private List<Post> posts; // posts
 	private Set<String> followers; //emails of users that follow this user
 	private Set<String> followed; //emails of users that this user follows
-	private Map<Integer, ArrayList<Post>> albums; // album id -> list from posts
+	private Map<Integer, Album> albums; // album id -> list from posts
 
 	public User(String email, String password, String name, String gender, String about, String avatarPath,
-		List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, ArrayList<Post>> albums) {
+		List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, Album> albums) {
 	
 	this.email = email;
 	this.password = password;
@@ -108,12 +108,12 @@ public class User {
 		this.followed = followed;
 	}
 	
-	public Map<Integer, ArrayList<Post>> getAlbums() {
+	public Map<Integer, Album> getAlbums() {
 		return albums;
 	}
 	
-	public void setAlbums(TreeMap<Integer, ArrayList<Post>> albums) {
-		this.albums = albums;
-	}
+//	public void setAlbums(TreeMap<Integer, Album> albums) {
+//		this.albums = albums;
+//	}
 
 }
