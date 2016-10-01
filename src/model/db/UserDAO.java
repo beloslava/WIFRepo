@@ -9,10 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.pojo.Comment;
 import model.pojo.Post;
 import model.pojo.User;
-import model.pojo.UsersManager;
 
 public class UserDAO implements IUserDAO {
 	// email, password, name, gender, about, avatarPath

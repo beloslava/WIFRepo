@@ -1,6 +1,7 @@
 package model.pojo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
@@ -58,7 +59,9 @@ public class User {
 	}
 
 	public List<Post> getPosts() {
-		return posts;
+		ArrayList<Post> postsCopy = new ArrayList<>();
+		postsCopy.addAll(posts);
+		return postsCopy;
 	}
 
 	public void setEmail(String email) {
@@ -90,7 +93,9 @@ public class User {
 	}
 
 	public Set<String> getFollowers() {
-		return followers;
+		HashSet<String> followersCopy = new HashSet<>();
+		followersCopy.addAll(followers);
+		return followersCopy;
 	}
 
 	public void setFollowers(Set<String> followers) {
@@ -98,7 +103,9 @@ public class User {
 	}
 
 	public Set<String> getFollowed() {
-		return followed;
+		HashSet<String> followedCopy = new HashSet<>();
+		followedCopy.addAll(followed);
+		return followedCopy;
 	}
 
 	public void setFollowed(Set<String> followed) {

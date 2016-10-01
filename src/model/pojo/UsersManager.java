@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import model.db.PostDAO;
 import model.db.UserDAO;
 
 public class UsersManager implements IUserManager {

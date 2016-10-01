@@ -54,15 +54,16 @@ public class CommentDAO implements ICommentDAO {
 		return allComments.get(commentId);
 	}
 	
-	public Comment getPost(int commentId) {
-		return allComments.get(commentId);
+	public int getCommentLikes(int commentId){
+		return getComment(commentId).getCommentLikes().size();
 	}
 	
 	/**
 	 * add comment in db, allComments collection and post's comments or comment comments collection
 	 */
 	@Override
-	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments, Set<String> commentLikes) {
+	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time,
+			ArrayList<Comment> commentComments, Set<String> commentLikes) {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -348,7 +349,7 @@ public class CommentDAO implements ICommentDAO {
 	
 	public void likeComment(int commentId, String userEmail){
 		PreparedStatement statement = null;
-		System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
+	//	System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
 		if((!commentLikes.get(commentId).contains(userEmail))){
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_COMMENT);
@@ -362,7 +363,7 @@ public class CommentDAO implements ICommentDAO {
 				comment.setCommentLikes(likes);
 				commentLikes.put(commentId, likes);
 				
-				System.out.println("like post");
+				System.out.println("like comment");
 			} catch (SQLException e) {
 				System.out.println("The post cannot be liked right now");
 				e.printStackTrace();
@@ -380,5 +381,7 @@ public class CommentDAO implements ICommentDAO {
 		}
 
 	}
+	
+	
 	
 }
