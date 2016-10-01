@@ -34,7 +34,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="style/images/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main.jsp"> <img src="style/images/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -63,28 +63,24 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum, Vestibulum id ligula porta. </div>
+  <div class="intro">Search results for "<%=request.getAttribute("userName") %>" <%=request.getAttribute("count") %> :</div>
   <ul class="social">
-    <li><a class="rss" href="#"></a></li>
-    <li><a class="facebook" href="#"></a></li>
-    <li><a class="twitter" href="#"></a></li>
-    <li><a class="pinterest" href="#"></a></li>
-    <li><a class="dribbble" href="#"></a></li>
-    <li><a class="flickr" href="#"></a></li>
-    <li><a class="linkedin" href="#"></a></li>
+   <li><a class="rss" href="https://www.rss.com/"></a></li>
+    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
+    <li><a class="twitter" href="https://twitter.com/"></a></li>
+    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
+    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
+    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
   </ul>
   <div class="box">
-    <h1 class="title">Search results for "<%=request.getAttribute("userName") %>" <%=request.getAttribute("count") %> :</h1>
-    <div class="one-third">
-      <div class="outer none"><span class="inset"><img src="style/images/art/about.jpg" alt="" width="100"></span></div>
-    </div>
     <div class="two-third last">
     <%
     ArrayList<User> users=(ArrayList<User>)request.getAttribute("users");
     for(User user: users){
     %>
-    <img alt="" src="PictureServlet?email=<%=user.getEmail()%>">
-      <p><%=user.getName() %></p>
+   <a href="ProfileServlet?email=<%=user.getEmail()%>"><img alt="" src="PictureServlet?email=<%=user.getEmail()%>" width="100px"><%=user.getName() %></a>
+
       <%} %>
        </div>
     <div class="clear"></div>

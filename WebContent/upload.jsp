@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>My Wif</title>
-<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+<link rel="shortcut icon" href="style/images/logo.png" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -32,7 +32,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
+ <div class="logo"> <a href="main.jsp"> <img src="style/images/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -65,13 +65,13 @@
 </div>
 <div class="wrapper">
   <ul class="social">
-    <li><a class="rss" href="#"></a></li>
-    <li><a class="facebook" href="#"></a></li>
-    <li><a class="twitter" href="#"></a></li>
-    <li><a class="pinterest" href="#"></a></li>
-    <li><a class="dribbble" href="#"></a></li>
-    <li><a class="flickr" href="#"></a></li>
-    <li><a class="linkedin" href="#"></a></li>
+    <li><a class="rss" href="https://www.rss.com/"></a></li>
+    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
+    <li><a class="twitter" href="https://twitter.com/"></a></li>
+    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
+    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
+    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
   </ul>
   <div class="content box">
     <h1 class="title">Upload</h1>

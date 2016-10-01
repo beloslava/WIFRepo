@@ -44,7 +44,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="style/images/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main.jsp"> <img src="style/images/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -76,14 +76,15 @@
   </div>
 </div>
 <div class="wrapper">
+  <div class="intro">Your profile...</div>
 <ul class="social">
-    <li><a class="rss" href="#"></a></li>
-    <li><a class="facebook" href="#"></a></li>
-    <li><a class="twitter" href="#"></a></li>
-    <li><a class="pinterest" href="#"></a></li>
-    <li><a class="dribbble" href="#"></a></li>
-    <li><a class="flickr" href="#"></a></li>
-    <li><a class="linkedin" href="#"></a></li>
+    <li><a class="rss" href="https://www.rss.com/"></a></li>
+    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
+    <li><a class="twitter" href="https://twitter.com/"></a></li>
+    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
+    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
+    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
 </ul>
   <div class="box">
     <div class="one-third">
