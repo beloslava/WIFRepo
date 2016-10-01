@@ -91,7 +91,11 @@
     User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
     %>
     <div class="one-third">
-    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>">follow me</a>
+<!--     <button onclick="document.getElementById('myImage').src='style/images/following.png'">Turn on the light</button> -->
+
+<!-- <img id="myImage" src="style/images/follow.png" style="width:100px"> -->
+    
+    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>"><img src="style/images/follow.png" width="100" alt="" /></a><br>
       <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=user.getEmail()%>" alt=""></span></div>
       <p>My followers</p>
       <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
@@ -103,7 +107,7 @@
       <%} %>
     </div>
     
-    <div id="first" class="widget-area">
+    <div id="first" class="widget-area"><br><br>
 	    <h2><%=user.getName() %></h2>
 		<h1><b>Email: </b><%=user.getEmail()%></h1>
 		<%if(user.getGender()!=null) {%>
@@ -142,8 +146,8 @@
     <div id="first" class="widget-area">
       <div class="widget widget_search">
         <h3 class="widget-title">Search</h3>
-        <form class="searchform" method="get" action="#">
-          <input type="text" name="s" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
+         <form class="searchform" method="get" action="SearchServlet">
+          <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
         </form>
       </div>
       <div class="widget widget_archive">

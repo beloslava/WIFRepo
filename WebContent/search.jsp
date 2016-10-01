@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ page import="model.pojo.UsersManager"%>
-<%@ page import="model.db.UserDAO"%>
-<%@ page import="model.pojo.User"%>
-<%@ page import="model.pojo.Post"%>
-<%@ page import="model.db.PostDAO"%>
 <!DOCTYPE HTML>
+<%@page import="model.pojo.UsersManager"%>
+<%@ page import="model.pojo.User"%>
+<%@page import="java.util.ArrayList" %>
 <html lang="en">
 <head>
-<title>Obscura</title>
+<title>Obscura | Full Width</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -38,31 +34,28 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
-    <div class="logo"> <a href="index.html"> <img src="images/logo.png" width="30%" alt=""> </a> </div>
+    <div class="logo"> <a href="index.html"> <img src="style/images/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
-       <ul id="tiny">
-          <li><a href="main.jsp">Home</a>
-		  <li><a href="myProfile.jsp">My profile</a>
-		  <li class="active"><a href="myPhotos.jsp">My photos</a>
-          </li>
-          <li><a>Categories</a>
+        <ul id="tiny">
+          <li><a href="index.html">Blog</a>
             <ul>
-              <li><a href="CategoryServlet?category=abstract">Abstract</a></li>
-              <li><a href="CategoryServlet?category=animals">Animals</a></li>
-			  <li><a href="CategoryServlet?category=email">Family</a></li>
-			  <li><a href="CategoryServlet?category=food">Food</a></li>
-              <li><a href="CategoryServlet?category=nature">Nature</a></li>
-			  <li><a href="CategoryServlet?category=people">People</a></li>
-			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
-			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
-			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
-			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
+              <li><a href="post.html">Blog Post</a></li>
             </ul>
           </li>
-          <li><a href="topTen.jsp">Top 10</a>
+          <li class="active"><a href="page-with-sidebar.html">Pages</a>
+            <ul>
+              <li><a href="page-with-sidebar.html">Page With Sidebar</a></li>
+              <li><a href="full-width.html">Full Width</a></li>
+            </ul>
           </li>
-          <li><a href="upload.jsp">Upload</a></li>
+          <li><a href="typography.html">Styles</a>
+            <ul>
+              <li><a href="typography.html">Typography</a></li>
+              <li><a href="columns.html">Columns</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -80,26 +73,21 @@
     <li><a class="flickr" href="#"></a></li>
     <li><a class="linkedin" href="#"></a></li>
   </ul>
-  <div class="blog-wrap">
-    <div class="blog-grid">
-   <%
-		for (Post post : PostDAO.getInstance().getAllPostsByUser(request.getSession().getAttribute("USER").toString())) {
-	%>
-      <div class="post format-image box">
-        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <div class="details"> 
-	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	       <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
-        </div>
-      </div>
-      <%} %>
-      
+  <div class="box">
+    <h1 class="title">Search results for "<%=request.getAttribute("userName") %>" <%=request.getAttribute("count") %> :</h1>
+    <div class="one-third">
+      <div class="outer none"><span class="inset"><img src="style/images/art/about.jpg" alt="" width="100"></span></div>
     </div>
-  </div>
-  <div id="navigation">
-    <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div>
+    <div class="two-third last">
+    <%
+    ArrayList<User> users=(ArrayList<User>)request.getAttribute("users");
+    for(User user: users){
+    %>
+    <img alt="" src="PictureServlet?email=<%=user.getEmail()%>">
+      <p><%=user.getName() %></p>
+      <%} %>
+       </div>
+    <div class="clear"></div>
   </div>
 </div>
 <div class="footer-wrapper">
@@ -107,7 +95,7 @@
     <div id="first" class="widget-area">
       <div class="widget widget_search">
         <h3 class="widget-title">Search</h3>
-         <form class="searchform" method="get" action="SearchServlet">
+          <form class="searchform" method="get" action="SearchServlet">
           <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
         </form>
       </div>
@@ -166,6 +154,7 @@
   </div>
 </div>
 <div class="site-generator-wrapper">
+  <div class="site-generator">Copyright Obscura 2045. All rights reserved // Design by <a href="http://elemisfreebies.com">elemis</a>.</div>
 </div>
 <script src="style/js/scripts.js"></script>
 </body>

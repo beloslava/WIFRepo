@@ -247,9 +247,9 @@
     </div>
     <div class="sidebox widget">
       <h3 class="widget-title">Search</h3>
-      <form class="searchform" method="get" action="#">
-        <input type="text" name="s" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
-      </form>
+       <form class="searchform" method="get" action="SearchServlet">
+          <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
+        </form>
     </div>
     <div class="sidebox widget">
       <h3 class="widget-title">Custom Text</h3>
