@@ -50,7 +50,7 @@
       <div id="menu" class="menu">
         <ul id="tiny">
           <li><a href="main.jsp">Home</a>
-		  <li class="active"><a href="myProfile.jsp">My profile</a>
+		  <li ><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myPhotos.jsp">My photos</a>
           </li>
           <li><a>Categories</a>
@@ -87,16 +87,25 @@
     <li><a class="linkedin" href="#"></a></li>
 </ul>
   <div class="box">
-    <div class="one-third">
-    	<a href="FollowServlet?userEmail=<%=request.getAttribute("email")%>">follow me</a>
-      <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=request.getAttribute("email")%>" alt=""></span></div>
-    </div>
     <%
     User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
     %>
+    <div class="one-third">
+    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>">follow me</a>
+      <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=user.getEmail()%>" alt=""></span></div>
+      <p>My followers</p>
+      <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
+      	<a href="ProfileServlet?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a>
+      <%} %>
+      <p>Followed users</p>
+      <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
+      	<a href="ProfileServlet?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a>
+      <%} %>
+    </div>
+    
     <div id="first" class="widget-area">
 	    <h2><%=user.getName() %></h2>
-		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
+		<h1><b>Email: </b><%=user.getEmail()%></h1>
 		<%if(user.getGender()!=null) {%>
 	    <h1><b>Gender: </b><%=user.getGender()%></h1>
 	    <%} else
@@ -114,7 +123,7 @@
 		<%
 		for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
 	%>
-      <div class="post format-image box">
+	 <div class="post format-image box" >
         <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
 	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
