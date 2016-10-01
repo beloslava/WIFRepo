@@ -267,6 +267,5 @@ public class UserDAO implements IUserDAO {
 		return followed;
 
 	}
-	
-	
+
 }

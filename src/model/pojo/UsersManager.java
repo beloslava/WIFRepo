@@ -1,6 +1,7 @@
 package model.pojo;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -161,6 +162,23 @@ public class UsersManager implements IUserManager {
 		} catch (final java.security.NoSuchAlgorithmException e) {
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * search users by name
+	 * @param user name
+	 * @return list of users that have that name
+	 */
+	@Override
+	public List<User> searchUsersByName(String name) {
+		ArrayList<User> users = new ArrayList<>();
+		for(User user : registerredUsers.values()){
+			if(user.getName().equals(name)){
+				users.add(user);
+			}
+		}
+		
+		return users;
 	}
 
 }

@@ -17,4 +17,6 @@ public interface IUserManager {
 	User getUser(String username);
 	
 	boolean isUserExists(String email);
+	
+	List<User> searchUsersByName(String name);
 }
