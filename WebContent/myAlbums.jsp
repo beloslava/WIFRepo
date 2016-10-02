@@ -123,7 +123,11 @@
 				<img src="style/images/bg/1.jpg">
 			<%}
       %> </a>
+      
        </div>
+       <div class="details"> 
+	         <span class="icon-artist"><a href="ProfileServlet?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
+	        </div>
       </div>
       <%} %>
       
