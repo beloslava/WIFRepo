@@ -467,7 +467,7 @@ public class PostDAO implements IPostDAO {
 	
 	public List<Post> getPostsByAlbum(int albumId){
 		ArrayList<Post> postsForAlbum = new ArrayList<>();
-		for (Post post : allPosts.values()) {
+		for (Post post : takeAllPosts().values()) { // or allPosts?
 			if(post.getAlbumId() == albumId){
 				postsForAlbum.add(post);
 			}

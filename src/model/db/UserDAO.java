@@ -55,6 +55,12 @@ public class UserDAO implements IUserDAO {
 				Set<String> followers = getAllFollowersForUser(resultSet.getString("email"));
 				Set<String> followed = getAllFollowedForUser(resultSet.getString("email"));
 				TreeMap<Integer, Album> albums = AlbumDAO.getInstance().getAllAlbumsByUser(resultSet.getString("email"));
+				for(Album album : albums.values()){ //put posts in each album
+					for(Post post : posts){
+						if(post.getAlbumId() == album.getAlbumId())
+							album.getPosts().add(post);
+					}
+				}
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
