@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
+<%@page import="model.db.CommentDAO"%>
+<%@page import="model.pojo.Comment"%>
+<%@page import="model.db.PostDAO"%>
 <%@page import="model.pojo.UsersManager"%>
-<%@ page import="model.pojo.User"%>
+<%@page import="model.pojo.Post"%>
+<%@page import="model.pojo.User"%>
 <%@page import="java.util.ArrayList" %>
 <html lang="en">
 <head>
@@ -38,24 +42,27 @@
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
-          <li><a href="index.html">Blog</a>
+          <li><a href="main.jsp">Home</a>
+		  <li ><a href="myProfile.jsp">My profile</a>
+		  <li><a href="myAlbums.jsp">My Albums</a>
+          </li>
+          <li><a>Categories</a>
             <ul>
-              <li><a href="post.html">Blog Post</a></li>
+              <li><a href="CategoryServlet?category=abstract">Abstract</a></li>
+              <li><a href="CategoryServlet?category=animals">Animals</a></li>
+			  <li><a href="CategoryServlet?category=email">Family</a></li>
+			  <li><a href="CategoryServlet?category=food">Food</a></li>
+              <li><a href="CategoryServlet?category=nature">Nature</a></li>
+			  <li><a href="CategoryServlet?category=people">People</a></li>
+			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
+			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
+			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
+			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
-          <li class="active"><a href="page-with-sidebar.html">Pages</a>
-            <ul>
-              <li><a href="page-with-sidebar.html">Page With Sidebar</a></li>
-              <li><a href="full-width.html">Full Width</a></li>
-            </ul>
+          <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li><a href="typography.html">Styles</a>
-            <ul>
-              <li><a href="typography.html">Typography</a></li>
-              <li><a href="columns.html">Columns</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="LogOutServlet">Log out</a></li>
         </ul>
       </div>
     </div>
@@ -87,71 +94,103 @@
   </div>
 </div>
 <div class="footer-wrapper">
-  <div id="footer" class="four">
-    <div id="first" class="widget-area">
-      <div class="widget widget_search">
-        <h3 class="widget-title">Search</h3>
-          <form class="searchform" method="get" action="SearchServlet">
+		<div id="footer" class="four">
+			<div id="first" class="widget-area">
+				<div class="widget widget_search">
+					<h3 class="widget-title">Search</h3>
+					 <form class="searchform" method="get" action="SearchServlet">
           <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
         </form>
-      </div>
-      <div class="widget widget_archive">
-        <h3 class="widget-title">Archives</h3>
-        <ul>
-          <li><a href="#">September 2045</a> (6)</li>
-          <li><a href="#">August 2045</a> (2)</li>
-          <li><a href="#">July 2045</a> (2)</li>
-          <li><a href="#">June 2045</a> (4)</li>
-          <li><a href="#">May 2045</a> (3)</li>
-          <li><a href="#">January 2045</a> (1)</li>
-        </ul>
-      </div>
-    </div>
-    <div id="second" class="widget-area">
-      <div id="twitter-2" class="widget widget_twitter">
-        <h3 class="widget-title">Twitter</h3>
-        <div id="twitter-wrapper">
-          <div id="twitter"></div>
-          <span class="username"><a href="#">&rarr; Follow @elemisdesign</a></span> </div>
-      </div>
-    </div>
-    <div id="third" class="widget-area">
-      <div id="example-widget-3" class="widget example">
-        <h3 class="widget-title">Popular Posts</h3>
-        <ul class="post-list">
-          <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s1.jpg" alt=""></a> </div>
-            <div class="meta">
-              <h6><a href="#">Charming Winter</a></h6>
-              <em>28th Sep 2045</em> </div>
-          </li>
-          <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s2.jpg" alt=""></a> </div>
-            <div class="meta">
-              <h6><a href="#">Trickling Stream</a></h6>
-              <em>5th Sep 2045</em> </div>
-          </li>
-          <li>
-            <div class="frame"> <a href="#"><img src="style/images/art/s3.jpg" alt=""></a> </div>
-            <div class="meta">
-              <h6><a href="#">Morning Glory</a></h6>
-              <em>26th Sep 2045</em> </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div id="fourth" class="widget-area">
-      <div class="widget">
-        <h3 class="widget-title">Flickr</h3>
-        <ul class="flickr-feed">
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="site-generator-wrapper">
-  <div class="site-generator">Copyright Obscura 2045. All rights reserved // Design by <a href="http://elemisfreebies.com">elemis</a>.</div>
-</div>
+				</div>
+				<div class="widget widget_archive">
+					<h3 class="widget-title">Categories</h3>
+					<ul>
+						<li><a href="asbtract.jsp">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+						<li><a href="animals.jsp">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+						<li><a href="family.jsp">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+						<li><a href="food.jsp">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
+						<li><a href="nature.jsp">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
+						<li><a href="people.jsp">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
+						<li><a href="sport.jsp">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
+						<li><a href="travel.jsp">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
+						<li><a href="urban.jsp">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
+						<li><a href="uncategorized.jsp">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
+					</ul>
+				</div>
+			</div>
+			<div id="second" class="widget-area">
+				<div id="example-widget-3" class="widget example">
+					<h3 class="widget-title">My followors</h3>
+					<%for(String user:UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())){ %>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+					<%} %>
+				</div>
+			</div>
+			<div id="third" class="widget-area">
+				<div id="example-widget-3" class="widget example">
+					<h3 class="widget-title">Users who follow</h3>
+					<%for(String user:UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {%>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+					<%} %>
+				</div>
+			</div>
+			<div id="fourth" class="widget-area">
+				<div id="example-widget-3" class="widget example">
+				<h3 class="widget-title">Popular Posts</h3>
+					<ul class="post-list">
+						<li>
+							<div class="frame">
+								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><img
+									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"
+									alt="" width="80px"></a>
+							</div>
+							<div class="meta">
+								<h6>
+									<a
+										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(0).getName()%></a>
+								</h6>
+								<em><%=PostDAO.getInstance().getTopTenPosts().get(0).getCreatedOn()%></em>
+							</div>
+							</li>
+							
+						<li>
+							<div class="frame">
+								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><img
+									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"
+									alt="" width="80px"></a>
+							</div>
+							<div class="meta">
+								<h6>
+									<a
+										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(1).getName()%></a>
+								</h6>
+								<em><%=PostDAO.getInstance().getTopTenPosts().get(1).getCreatedOn()%></em>
+							</div>
+							</li>
+						<li>
+							<div class="frame">
+								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><img
+									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"
+									alt="" width="80px"></a>
+							</div>
+							<div class="meta">
+								<h6>
+									<a
+										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"></a>
+								</h6>
+								<h6>
+									<a
+										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(2).getName()%></a>
+								</h6>
+								<em><%=PostDAO.getInstance().getTopTenPosts().get(2).getCreatedOn()%></em>
+							</div>
+				
+				</li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 <script src="style/js/scripts.js"></script>
 </body>
 </html>

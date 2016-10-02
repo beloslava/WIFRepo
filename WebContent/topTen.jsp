@@ -51,7 +51,7 @@
 					<ul id="tiny">
 						<li><a href="main.jsp">Home</a>
 						<li><a href="myProfile.jsp">My profile</a>
-						<li><a href="myPhotos.jsp">My photos</a></li>
+						<li><a href="myAlbums.jsp">My albums</a></li>
 						<li><a>Categories</a>
 							<ul>
 								<li class="active"><a
@@ -67,7 +67,7 @@
 								<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
 							</ul></li>
 						<li class="active"><a href="topTen.jsp">Top 10</a></li>
-						<li><a href="upload.jsp">Upload</a></li>
+						<li><a href="LogOutServlet">Log out</a></li>
 					</ul>
 				</div>
 			</div>
@@ -148,18 +148,24 @@
 				</div>
 			</div>
 			<div id="second" class="widget-area">
-				<div id="twitter-2" class="widget widget_twitter">
-					<h3 class="widget-title">Twitter</h3>
-					<div id="twitter-wrapper">
-						<div id="twitter"></div>
-						<span class="username"><a href="#">&rarr; Follow
-								@elemisdesign</a></span>
-					</div>
+				<div id="example-widget-3" class="widget example">
+					<h3 class="widget-title">My followors</h3>
+					<%for(String user:UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())){ %>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+					<%} %>
 				</div>
 			</div>
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
-					<h3 class="widget-title">Popular Posts</h3>
+					<h3 class="widget-title">Users who follow</h3>
+					<%for(String user:UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {%>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+					<%} %>
+				</div>
+			</div>
+			<div id="fourth" class="widget-area">
+				<div id="example-widget-3" class="widget example">
+				<h3 class="widget-title">Popular Posts</h3>
 					<ul class="post-list">
 						<li>
 							<div class="frame">
@@ -206,61 +212,6 @@
 										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(2).getName()%></a>
 								</h6>
 								<em><%=PostDAO.getInstance().getTopTenPosts().get(2).getCreatedOn()%></em>
-							</div>
-				
-				</li>
-				</ul>
-				</div>
-			</div>
-			<div id="fourth" class="widget-area">
-				<div id="example-widget-3" class="widget example">
-				<h3 class="widget-title"></h3><br>
-					<ul class="post-list">
-						<li>
-							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(3).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(3).getId()%>"
-									alt="" width="80px"></a>
-							</div>
-							<div class="meta">
-								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(3).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(3).getName()%></a>
-								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(3).getCreatedOn()%></em>
-							</div>
-							</li>
-							
-						<li>
-							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(4).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(4).getId()%>"
-									alt="" width="80px"></a>
-							</div>
-							<div class="meta">
-								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(5).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(4).getName()%></a>
-								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(4).getCreatedOn()%></em>
-							</div>
-							</li>
-						<li>
-							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(5).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(5).getId()%>"
-									alt="" width="80px"></a>
-							</div>
-							<div class="meta">
-								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(5).getId()%>"></a>
-								</h6>
-								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(5).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(5).getName()%></a>
-								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(5).getCreatedOn()%></em>
 							</div>
 				
 				</li>

@@ -1,3 +1,5 @@
+<%@page import="model.db.AlbumDAO"%>
+<%@page import="model.pojo.Album"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="model.pojo.UsersManager"%>
@@ -8,7 +10,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>Obscura</title>
+<title>My Wif | My Albums</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -33,6 +35,12 @@
 <script src="style/js/jquery.dcflickr.1.0.js"></script>
 <script src="style/js/twitter.min.js"></script>
 <script>$.backstretch("style/images/bg/1.jpg");</script>
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+ }
+</script>
 </head>
 <body>
 <div class="scanlines"></div>
@@ -44,11 +52,11 @@
        <ul id="tiny">
           <li><a href="main.jsp">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
-		  <li><a href="myAlbums.jsp">My Albums</a>
+		  <li class="active"><a href="myAlbums.jsp">My Albums</a>
           </li>
           <li><a>Categories</a>
             <ul>
-              <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
+              <li><a href="CategoryServlet?category=abstract">Abstract</a></li>
               <li><a href="CategoryServlet?category=animals">Animals</a></li>
 			  <li><a href="CategoryServlet?category=email">Family</a></li>
 			  <li><a href="CategoryServlet?category=food">Food</a></li>
@@ -70,10 +78,9 @@
   </div>
 </div>
 <div class="wrapper">
-<%String category=request.getAttribute("category").toString(); %>
-  <div class="intro"><%=category.substring(0,1).toUpperCase()+category.substring(1) %></div>
+  <div class="intro">Your Albums... </div>
   <ul class="social">
-    <li><a class="rss" href="https://www.rss.com/"></a></li>
+   <li><a class="rss" href="https://www.rss.com/"></a></li>
     <li><a class="facebook" href="https://www.facebook.com/"></a></li>
     <li><a class="twitter" href="https://twitter.com/"></a></li>
     <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
@@ -81,19 +88,42 @@
     <li><a class="flickr" href="https://www.flickr.com/"></a></li>
     <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
   </ul>
+   <a class="comment-reply-link" href="javascript:showhide('create')">Create album</a>
   <div class="blog-wrap">
+  <div id="create" style="display:none;">
+    <div class="post format-image box">
+      <form class="forms" action="CreateAlbumServlet" method="post">
+        <fieldset>
+          <ol>
+            <li class="form-row text-input-row">
+              <label>name of album</label>
+              <input type="text" name="name" value="" class="text-input required">
+            </li>
+            <li class="button-row">
+              <input type="submit" value="Create album" name="submit" class="btn-submit">
+            </li>
+          </ol>
+        </fieldset>
+      </form>
+      </div>
+   </div>
     <div class="blog-grid">
-   <%   
-	for (Post post : PostDAO.getInstance().getAllPostsByCategory(category)) {
+    
+   <%
+		for (Album album:AlbumDAO.getInstance().getAllAlbumsByUser(request.getSession().getAttribute("USER").toString()).values()) {
 	%>
       <div class="post format-image box">
-        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <div class="details"> 
-	      <span class="icon-artist"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
-	        <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	        <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span> 
-	    </div>
+        <div class="frame"> <a href="DetailsAlbumServlet?albumId=<%=album.getAlbumId()%>">
+      <% if(album.getPosts().size()!=0){
+    	  %>
+			<img =src="PostPictureServlet?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId())%>">
+		<%
+			}
+			else{%>
+				<img src="style/images/bg/1.jpg">
+			<%}
+      %> </a>
+       </div>
       </div>
       <%} %>
       
