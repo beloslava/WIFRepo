@@ -116,7 +116,7 @@
         <div class="frame"> <a href="DetailsAlbumServlet?albumId=<%=album.getAlbumId()%>">
       <% if(album.getPosts().size()!=0){
     	  %>
-			<img =src="PostPictureServlet?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId())%>">
+			<img src="PostPictureServlet?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
 		<%
 			}
 			else{%>
