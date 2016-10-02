@@ -129,8 +129,8 @@
 					Enter new name<input type="text" name="newName" value="<%=user.getName() %>" class="text-input required">
 					Enter old password<input type="password" name="oldPass" value="" class="text-input required">
 					Enter new password<input type="password" name="newPass" value="" class="text-input required">
-					Repeat new password<input type="password" name="newPass2" value="" class="text-input required">
-					Gender <span><input type="radio" name="gender" value="male">Male <input type="radio" name="gender" value="female">Female </span>
+					Repeat new password<input type="password" name="newPass2" value="" class="text-input required"><br>
+					Gender <span><select name="gender"> <option value="female">Female<option value="male">Male</select></span>
 					Enter your description<input type="text" name="newDescription" value="<%=user.getAbout() %>" class="text-input required"><br>
 					<input type="submit" value="Save profile settings">
 				</form>

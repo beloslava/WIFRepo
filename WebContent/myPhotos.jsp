@@ -106,19 +106,18 @@
             </li>
             <li class="form-row text-input-row">
               <label>Category</label>
-              <input list="categories" name="category">
-			  <datalist id="categories">
-			    <option value="abstract">
-			    <option value="animals">
-			    <option value="family">
-			    <option value="food">
-			    <option value="nature">
-			    <option value="people">
-			    <option value="sport">
-			    <option value="travel">
-			    <option value="urban">
-			    <option value="uncategorized">
-			  </datalist>
+                <select name="category">
+				       <option value="abstract">Abstract
+				       <option value="animals">Animals
+				       <option value="family">Family
+				       <option value="food">Food
+				       <option value="nature">Nature
+				       <option value="people">People
+				       <option value="sport">Sport
+				       <option value="travel">Travel
+				       <option value="urban">Urban
+				       <option value="uncategorized">Uncategorized
+				</select>
             </li>
             <li class="form-row text-input-row">
               <label>Key words</label>
