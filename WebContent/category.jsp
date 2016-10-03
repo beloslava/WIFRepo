@@ -5,6 +5,10 @@
 <%@ page import="model.pojo.User"%>
 <%@ page import="model.pojo.Post"%>
 <%@ page import="model.db.PostDAO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -90,10 +94,12 @@
 		</div>
 	</div>
 	<div class="wrapper">
-		<%
-			String category = request.getAttribute("category").toString();
-		%>
-		<div class="intro"><%=category.substring(0, 1).toUpperCase() + category.substring(1)%></div>
+	
+	<c:set var="category" value="${param.category}" scope="request"/>	
+		
+	<c:set var="categoryName" value="${fn:toUpperCase(fn:substring(category, 0, 1))}${fn:toLowerCase(fn:substring(category, 1, -1))}"/>
+		
+		<div class="intro"><c:out value="${fn:toUpperCase(fn:substring(category, 0, 1))}${fn:toLowerCase(fn:substring(category, 1, -1))}"></c:out></div>
 		<ul class="social">
 			<li><a class="rss" href="https://www.rss.com/"></a></li>
 			<li><a class="facebook" href="https://www.facebook.com/"></a></li>
@@ -105,31 +111,34 @@
 		</ul>
 		<div class="blog-wrap">
 			<div class="blog-grid">
-				<%
-					for (Post post : PostDAO.getInstance().getAllPostsByCategory(category)) {
-				%>
+			
+				<c:forEach var='post' items='${PostDAO.getInstance().getAllPostsByCategory(category)}'>
+		
 				<div class="post format-image box">
 					<div class="frame">
-						<a href="DetailsServlet?postId=<%=post.getId()%>"><img
-							src="PostPictureServlet?postId=<%=post.getId()%>" /></a>
+						<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+							src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>" /></a>
 					</div>
 					<div class="details">
 						<span class="icon-artist"><a
-							href="ProfileServlet?email=<%=post.getUserEmail()%>"
-							title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></a></span>
+							href="ProfileServlet?email=<c:out value="${post.userEmail}"></c:out>"
+							
+							<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
+							title="author name"><c:out value= "${userName}"></c:out></a></span>
+							
 						<span class="likes"><a
-							href="LikesServlet?postId=<%=post.getId()%>" class="likeThis"
-							title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span>
+							href="LikesServlet?postId=<c:out value="${post.id}"></c:out>" class="likeThis"
+							title="likes"> <c:out value="${fn:length(post.dislikes)}"></c:out></a></span>
 						<span class="likes"><a
-							href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis"
-							title="dislikes"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span>
-						<span class="comments"><a
-							href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span>
+							href="DislikeServlet?postId=<c:out value="${post.id}"></c:out>" class="likeThis"
+							title="dislikes"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
+						<span class="comments"><a 
+							href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${fn:length(post.comments)}"></c:out></a></span> 
+						
 					</div>
 				</div>
-				<%
-					}
-				%>
+				
+				</c:forEach>
 
 			</div>
 		</div>
@@ -173,7 +182,8 @@
 			</div>
 			<div id="second" class="widget-area">
 				<div id="example-widget-3" class="widget example">
-					<h3 class="widget-title">My followors</h3>
+					<h3 class="widget-title">My followers</h3>
+					
 					<%
 						for (String user : UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())) {
 					%>
@@ -181,6 +191,7 @@
 					<%
 						}
 					%>
+					
 				</div>
 			</div>
 			<div id="third" class="widget-area">
