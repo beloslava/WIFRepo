@@ -90,7 +90,31 @@ input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner {
 input[type="submit"]:focus, input[type="button"]:focus {
 	outline : none;
 }
-
+select {
+    background: rgba(0, 0, 0, 0.25);
+    border: none;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+option {
+	 background: rgba(0, 0, 0, 0.25);
+    border: none;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+}
 ::selection {
 	background: #fefac7; /* Safari */
 	color: #555555;
@@ -148,7 +172,7 @@ p {
     margin-bottom: 20px
 }
 a {
-    color: #65817a;
+    color: #debde6;
     text-decoration: none;
     -webkit-transition: all 200ms ease-in;
     -o-transition: all 200ms ease-in;
@@ -1296,8 +1320,7 @@ li.post.pingback p {
     visibility: hidden;
 }
 .searchform input {
-    padding: 8px 10px;
-    margin-bottom: 20px;
+/*     padding: 8px 10px; */
 }
 .form-allowed-tags {
     display: none

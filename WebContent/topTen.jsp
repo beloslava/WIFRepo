@@ -45,12 +45,30 @@
 	<div class="scanlines"></div>
 	<div class="header-wrapper opacity">
 		<div class="header">
-			 <div class="logo"> <a href="main.jsp"> <img src="style/images/logo.png" alt=""> </a> </div>
+			<div class="logo">
+				<a href="main.jsp"> <img src="style/images/logo.png" alt="">
+				</a>
+				
+			</div>
+
 			<div id="menu-wrapper">
+
 				<div id="menu" class="menu">
+				
 					<ul id="tiny">
-						<li><a href="main.jsp">Home</a>
-						<li><a href="myProfile.jsp">My profile</a>
+					<li>
+						<form class="searchform" method="get" action="SearchServlet">
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
+					</li>
+						<li><a href="main.jsp">Home</a></li>
+						<li><a href="myProfile.jsp">My profile</a></li>
 						<li><a href="myAlbums.jsp">My albums</a></li>
 						<li><a>Categories</a>
 							<ul>
@@ -78,15 +96,15 @@
 		<div class="intro">Top 10 photos...</div>
 		<ul class="social">
 			<li><a class="rss" href="https://www.rss.com/"></a></li>
-    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
-    <li><a class="twitter" href="https://twitter.com/"></a></li>
-    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
-    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
-    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
+			<li><a class="facebook" href="https://www.facebook.com/"></a></li>
+			<li><a class="twitter" href="https://twitter.com/"></a></li>
+			<li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+			<li><a class="dribbble" href="https://dribbble.com/"></a></li>
+			<li><a class="flickr" href="https://www.flickr.com/"></a></li>
+			<li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
 		</ul>
 		<div class="blog-wrap">
-			<div class="blog-grid" >
+			<div class="blog-grid">
 				<%
 					for (Post post : PostDAO.getInstance().getTopTenPosts()) {
 				%>
@@ -95,19 +113,12 @@
 						<a href="DetailsServlet?postId=<%=post.getId()%>"><img
 							src="PostPictureServlet?postId=<%=post.getId()%>" /></a>
 					</div>
-					<div class="details">
-						<span class="icon-artist"><a
-							href="ProfileServlet?email=<%=post.getUserEmail()%>"
-							title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName()%></a></span>
-						<span class="likes"><a
-							href="LikesServlet?postId=<%=post.getId()%>" class="likeThis"
-							title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span>
-						<span class="likes"><a
-							href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis"
-							title="dislikes"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span>
-						<span class="comments"><a
-							href="DetailsServlet?postId=<%=post.getId()%>" title="comments"><%=post.getComments().size()%></a></span>
-					</div>
+					<div class="details"> 
+	       <span class="icon-artist"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
+	       <span class="dislikes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span>    
+	    </div>
 				</div>
 				<%
 					}
@@ -127,9 +138,15 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					 <form class="searchform" method="get" action="SearchServlet">
-          <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
-        </form>
+					<form class="searchform" method="get" action="SearchServlet">
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
@@ -150,26 +167,35 @@
 			<div id="second" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">My followors</h3>
-					<%for(String user:UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())){ %>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
-					<%} %>
+					<%
+						for (String user : UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())) {
+					%>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
+					<%
+						}
+					%>
 				</div>
 			</div>
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Users who follow</h3>
-					<%for(String user:UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {%>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
-					<%} %>
+					<%
+						for (String user : UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {
+					%>
+					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
+					<%
+						}
+					%>
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">
 				<div id="example-widget-3" class="widget example">
-				<h3 class="widget-title">Popular Posts</h3>
+					<h3 class="widget-title">Popular Posts</h3>
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><img
+								<a
+									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><img
 									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"
 									alt="" width="80px"></a>
 							</div>
@@ -180,11 +206,12 @@
 								</h6>
 								<em><%=PostDAO.getInstance().getTopTenPosts().get(0).getCreatedOn()%></em>
 							</div>
-							</li>
-							
+						</li>
+
 						<li>
 							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><img
+								<a
+									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><img
 									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"
 									alt="" width="80px"></a>
 							</div>
@@ -195,10 +222,11 @@
 								</h6>
 								<em><%=PostDAO.getInstance().getTopTenPosts().get(1).getCreatedOn()%></em>
 							</div>
-							</li>
+						</li>
 						<li>
 							<div class="frame">
-								<a href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><img
+								<a
+									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><img
 									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"
 									alt="" width="80px"></a>
 							</div>
@@ -213,9 +241,9 @@
 								</h6>
 								<em><%=PostDAO.getInstance().getTopTenPosts().get(2).getCreatedOn()%></em>
 							</div>
-				
-				</li>
-				</ul>
+
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

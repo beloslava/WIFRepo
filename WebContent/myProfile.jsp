@@ -51,6 +51,17 @@
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
+        <li>
+						<form class="searchform" method="get" action="SearchServlet">
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
+					</li>
           <li><a href="main.jsp">Home</a>
 		  <li class="active"><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myAlbums.jsp">My Albums</a>
@@ -146,8 +157,14 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					 <form class="searchform" method="get" action="SearchServlet">
-          <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
-        </form>
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>

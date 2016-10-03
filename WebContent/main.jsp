@@ -42,6 +42,17 @@
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
+        <li>
+						<form class="searchform" method="get" action="SearchServlet">
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
+					</li>
           <li class="active"><a href="main.jsp">Home</a>
 		  <li><a href="myProfile.jsp">My profile</a>
 		  <li><a href="myAlbums.jsp">My Albums</a>
@@ -88,10 +99,10 @@
       <div class="post format-image box">
         <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
-	         <span class="icon-artist"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
-	        <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	        <span class="dislikes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	        <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span> 
+	       <span class="icon-artist"><a href="ProfileServlet?email=<%=post.getUserEmail()%>" title="author name"><%=UsersManager.getInstance().getUser(post.getUserEmail()).getName() %></a></span> 
+	       <span class="dislikes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span>    
 	    </div>
       </div>
       <%} %>
@@ -108,8 +119,14 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					 <form class="searchform" method="get" action="SearchServlet">
-          <input type="text" name="userName" value="type and hit enter" onFocus="this.value=''" onBlur="this.value='type and hit enter'"/>
-        </form>
+							<input type="text" name="userName" value="type and hit enter"
+								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								<label>Search in </label>
+			                <select name="where">
+							       <option value="users">users
+							       <option value="posts">posts
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
