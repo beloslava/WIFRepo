@@ -17,6 +17,7 @@ import java.util.TreeMap;
 
 import model.pojo.Comment;
 import model.pojo.Post;
+import model.pojo.Searchable;
 import model.pojo.User;
 import model.pojo.UsersManager;
 
@@ -471,6 +472,11 @@ public class PostDAO implements IPostDAO {
 		return topTen;
 	}
 	
+
+	/**
+	 * get posts by album
+	 * @return posts by album
+	 */
 	public List<Post> getPostsByAlbum(int albumId){
 		ArrayList<Post> postsForAlbum = new ArrayList<>();
 		for (Post post : takeAllPosts().values()) { // or allPosts?
@@ -481,4 +487,24 @@ public class PostDAO implements IPostDAO {
 		return postsForAlbum;
 	}
 
+
+	/**
+	 * search posts by name and key words from all posts
+	 * @return list with posts which contains that name
+	 */
+	public List<Searchable> searchPostByNameAndKeyWords(String name) {
+		List<Searchable> posts = new ArrayList<>();
+		for(Post post : allPosts.values()){
+			StringBuilder postName = new StringBuilder();
+			postName.append(post.getName().toLowerCase());
+			postName.append(post.getKeyWords().toLowerCase());			
+			name = name.toLowerCase();
+			if(postName.toString().contains(name)){
+				posts.add(post);
+			}
+		}
+		
+		return posts;
+	}
+	
 }

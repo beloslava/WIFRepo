@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.db.PostDAO;
 import model.db.UserDAO;
 
 public class UsersManager implements IUserManager {
@@ -187,8 +188,8 @@ public class UsersManager implements IUserManager {
 	 * @return list of users that have that name
 	 */
 	@Override
-	public List<User> searchUsersByName(String name) {
-		ArrayList<User> users = new ArrayList<>();
+	public List<Searchable> searchUsersByName(String name) {
+		ArrayList<Searchable> users = new ArrayList<>();
 		for(User user : registerredUsers.values()){
 			String userName = user.getName().toLowerCase();
 			name = name.toLowerCase();
@@ -200,5 +201,18 @@ public class UsersManager implements IUserManager {
 		return users;
 	}
 
+	/**
+	 * search users and posts by name and key words
+	 * @param user name/ post name and key words and type - user or post
+	 * @return list of users/posts that contains that name
+	 */
+	public List<Searchable> search(String name, String type){
+		if(type.equals("post")){
+		return	PostDAO.getInstance().searchPostByNameAndKeyWords(name);
+		}
+		else{
+			return searchUsersByName(name);
+		}
+	}
 	
 }

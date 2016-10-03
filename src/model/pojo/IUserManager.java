@@ -22,5 +22,5 @@ public interface IUserManager {
 	
 	boolean isUserExists(String email);
 	
-	List<User> searchUsersByName(String name);
+	List<Searchable> searchUsersByName(String name);
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class User {
+public class User implements Searchable {
 	// email, password, name, avatarPath, age, gender, personalDescription
 
 	private String email;
