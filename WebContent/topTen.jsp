@@ -151,16 +151,16 @@
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
 					<ul>
-						<li><a href="asbtract.jsp">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
-						<li><a href="animals.jsp">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
-						<li><a href="family.jsp">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
-						<li><a href="food.jsp">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
-						<li><a href="nature.jsp">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
-						<li><a href="people.jsp">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
-						<li><a href="sport.jsp">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
-						<li><a href="travel.jsp">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
-						<li><a href="urban.jsp">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
-						<li><a href="uncategorized.jsp">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
+						<li><a href="CategoryServlet?category=abstract">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+						<li><a href="CategoryServlet?category=family">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
+						<li><a href="CategoryServlet?category=nature">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
+						<li><a href="CategoryServlet?category=people">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
+						<li><a href="CategoryServlet?category=sport">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
+						<li><a href="CategoryServlet?category=travel">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
+						<li><a href="CategoryServlet?category=urban">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
+						<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
 					</ul>
 				</div>
 			</div>
@@ -168,26 +168,23 @@
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">My followers</h3>
 					
-					<%
-						for (String user : UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())) {
-					%>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
-					<%
-						}
-					%>
-					
+					<c:set var="user" value="${sessionScope.USER}" />									
+					<c:forEach var='followerEmail' items='${UsersManager.getInstance().getFollowersByUser(user)}' end="5">
+  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}"/>
+				       	<a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>
+   					</c:forEach>
+		
 				</div>
 			</div>
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Users who follow</h3>
-					<%
-						for (String user : UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {
-					%>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
-					<%
-						}
-					%>
+					
+					<c:forEach var='followedEmail' items='${UsersManager.getInstance().getFollowedByUser(user)}' end="5">
+  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}"/>
+				       	<a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>
+   					</c:forEach>
+					
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">

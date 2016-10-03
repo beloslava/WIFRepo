@@ -183,27 +183,24 @@
 			<div id="second" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">My followers</h3>
-					
-					<%
-						for (String user : UsersManager.getInstance().getFollowersByUser(session.getAttribute("USER").toString())) {
-					%>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
-					<%
-						}
-					%>
-					
+										
+					<c:set var="user" value="${sessionScope.USER}" />									
+					<c:forEach var='followerEmail' items='${UsersManager.getInstance().getFollowersByUser(user)}' end="5">
+  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}"/>
+				       	<a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>	     
+   					</c:forEach>	
+   								
 				</div>
 			</div>
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Users who follow</h3>
-					<%
-						for (String user : UsersManager.getInstance().getFollowedByUser(session.getAttribute("USER").toString())) {
-					%>
-					<a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName()%></a>
-					<%
-						}
-					%>
+					
+					<c:forEach var='followedEmail' items='${UsersManager.getInstance().getFollowedByUser(user)}' end="5">
+  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}"/>
+				       	<a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>
+   					</c:forEach>
+   					
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">
