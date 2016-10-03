@@ -208,10 +208,10 @@ public class UsersManager implements IUserManager {
 	 */
 	public List<Searchable> search(String name, String type){
 		if(type.equals("post")){
-		return	PostDAO.getInstance().searchPostByNameAndKeyWords(name);
+		return	PostDAO.getInstance().searchPostByNameAndKeyWords(type);
 		}
 		else{
-			return searchUsersByName(name);
+			return searchUsersByName(type);
 		}
 	}
 	

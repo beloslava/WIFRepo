@@ -100,10 +100,13 @@
     <li><a class="flickr" href="https://www.flickr.com/"></a></li>
     <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
 </ul>
+<%
+    User user=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString());
+    %>
   <div class="box">
     <div class="one-third">
-      <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=request.getSession().getAttribute("USER")%>" alt=""></span></div>
-      <a class="comment-reply-link" href="javascript:showhide('changePicture')">Change profile picture</a>
+      <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=user.getEmail()%>" alt=""></span></div>
+      <a class="button" href="javascript:showhide('changePicture')">Change profile picture</a>
       <div id="changePicture" style="display:none;">	
 		<fieldset>
 				<form action="ChangeProfilePictureServlet" method="post" enctype="multipart/form-data">
@@ -112,10 +115,16 @@
 				</form>
 		</fieldset>
 		</div>
+		 <h1>Followers</h1>
+      <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
+      <h4><a href="ProfileServlet?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
+      <%} %>
+      <h1>Following</h1>
+      <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
+      	<h4><a href="ProfileServlet?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
+      <%} %>
     </div>
-    <%
-    User user=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString());
-    %>
+    
     <div class="two-third last">
 	    <h2><%=user.getName() %></h2>
 		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
@@ -133,7 +142,7 @@
 	    	<%} %>  	
 	</div>
 	<div class="tree-third last">
-		<a class="comment-reply-link" href="javascript:showhide('changeProfile')">Change profile</a>
+		<a class="button" href="javascript:showhide('changeProfile')">Change profile</a>
 		<div id="changeProfile" style="display:none;">	
 		<fieldset>
 				<form action="ChangeProfileServlet" method="post">

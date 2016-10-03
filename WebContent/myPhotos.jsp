@@ -98,7 +98,7 @@
     <li><a class="flickr" href="https://www.flickr.com/"></a></li>
     <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
   </ul>
-  <a class="comment-reply-link" href="javascript:showhide('upload')">Upload picture</a>
+  <a class="button" href="javascript:showhide('upload')">Upload picture</a>
   <div class="blog-wrap">
   <div id="upload" style="display:none;">
     <div class="post format-image box">

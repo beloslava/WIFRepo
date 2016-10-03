@@ -99,7 +99,7 @@
     <li><a class="flickr" href="https://www.flickr.com/"></a></li>
     <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
   </ul>
-   <a class="comment-reply-link" href="javascript:showhide('create')">Create album</a>
+   <a class="button" href="javascript:showhide('create')">Create album</a>
   <div class="blog-wrap">
   <div id="create" style="display:none;">
     <div class="post format-image box">

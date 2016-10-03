@@ -4,6 +4,7 @@
 <%@page import="model.db.PostDAO"%>
 <%@page import="model.pojo.UsersManager"%>
 <%@page import="model.pojo.Post"%>
+<%@page import="model.pojo.Searchable"%>
 <%@page import="model.pojo.User"%>
 <%@page import="java.util.ArrayList" %>
 <html lang="en">
@@ -94,12 +95,14 @@
   <div class="box">
     <div class="two-third last">
     <%
-    ArrayList<User> users=(ArrayList<User>)request.getAttribute("users");
-    for(User user: users){
-    %>
-   <a href="ProfileServlet?email=<%=user.getEmail()%>"><img alt="" src="PictureServlet?email=<%=user.getEmail()%>" width="100px"><%=user.getName() %></a>
-
-      <%} %>
+    ArrayList<Searchable> search=(ArrayList<Searchable>)request.getAttribute("search");
+    for(Searchable searchRez: search){
+    	if(request.getAttribute("type").toString().equalsIgnoreCase("users")){
+        %> 
+       <a href="ProfileServlet?email=<%=%>"><img alt="" src="PictureServlet?email=<%=%>" width="100px"><%=%></a>
+          <%}else{ %>
+                 <a href="DetailsServlet?postId=<%=%>"><img alt="" src="PostPictureServlet?postId=<%=%>" width="100px"><%=%></a>
+          <%}}%>
        </div>
     <div class="clear"></div>
   </div>

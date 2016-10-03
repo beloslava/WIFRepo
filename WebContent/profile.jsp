@@ -110,13 +110,13 @@
     
     	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>"><img src="style/images/follow.png" width="100" alt="" /></a><br>
       <div class="outer none"><span class="inset"><img src="PictureServlet?email=<%=user.getEmail()%>" alt=""></span></div>
-      <p>My followers</p>
+      <h1>Followers</h1>
       <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
-      	<a href="ProfileServlet?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a>
+      <h4><a href="ProfileServlet?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
       <%} %>
-      <p>Followed users</p>
+      <h1>Following</h1>
       <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
-      	<a href="ProfileServlet?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a>
+      	<h4><a href="ProfileServlet?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
       <%} %>
     </div>
     
