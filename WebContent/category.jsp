@@ -72,8 +72,7 @@
 						<li><a href="myAlbums.jsp">My Albums</a></li>
 						<li><a>Categories</a>
 							<ul>
-								<li class="active"><a
-									href="CategoryServlet?category=abstract">Abstract</a></li>
+								<li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
 								<li><a href="CategoryServlet?category=animals">Animals</a></li>
 								<li><a href="CategoryServlet?category=email">Family</a></li>
 								<li><a href="CategoryServlet?category=food">Food</a></li>
@@ -209,52 +208,47 @@
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<a
-									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"
+								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[0]}" scope="session"/>							
+								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
 									alt="" width="80px"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(0).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(0).getName()%></a>
+									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
 								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(0).getCreatedOn()%></em>
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 						</li>
 
 						<li>
 							<div class="frame">
-								<a
-									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"
+							
+								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[1]}" scope="session"/>
+								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
 									alt="" width="80px"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(1).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(1).getName()%></a>
+									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
 								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(1).getCreatedOn()%></em>
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 						</li>
 						<li>
 							<div class="frame">
-								<a
-									href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><img
-									src="PostPictureServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"
+							
+								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[2]}" scope="session"/>
+								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
 									alt="" width="80px"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"></a>
-								</h6>
-								<h6>
-									<a
-										href="DetailsServlet?postId=<%=PostDAO.getInstance().getTopTenPosts().get(2).getId()%>"><%=PostDAO.getInstance().getTopTenPosts().get(2).getName()%></a>
-								</h6>
-								<em><%=PostDAO.getInstance().getTopTenPosts().get(2).getCreatedOn()%></em>
+									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
+								</h6>			
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 
 						</li>
