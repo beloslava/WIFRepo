@@ -3,6 +3,7 @@ package model.pojo;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,9 @@ public class UsersManager implements IUserManager {
 				followed.put(userEmail, UserDAO.getInstance().getAllFollowedForUser(userEmail));
 			}
 		}
+		System.out.println("Followed size " +followed.size());
+		System.out.println("Followers size " +followers.size());
+
 		
 	}
 
@@ -84,8 +88,8 @@ public class UsersManager implements IUserManager {
 	 */
 	@Override
 	public void regUser(String email, String password, String name, String avatarPath, 
-			List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, Album> albums) {
-		User user = new User(email, password, name, null, null, avatarPath, posts, followers, followed, albums);
+			 Set<String> followers, Set<String> followed, Map<Integer, Album> albums) {
+		User user = new User(email, password, name, null, null, avatarPath,  followers, followed, albums);
 		registerredUsers.put(email, user);
 		try {
 			registerredUsers.get(email).setPassword(convertToMd5(password));
@@ -121,12 +125,22 @@ public class UsersManager implements IUserManager {
 	}
 	
 	public void follow(String userEmail, String followerEmail){
-		getUser(userEmail).getFollowers().add(followerEmail); //add follower email in user's set of followers
-		getUser(followerEmail).getFollowed().add(userEmail); //add followed email in user's set of users that user follows
-		followers.get(userEmail).add(followerEmail); // add follower email in the set of followers
-		followed.get(followerEmail).add(userEmail);  // add user email in the set of followed
-		if(!followed.get(followerEmail).contains(userEmail))
-		UserDAO.getInstance().followUser(userEmail, followerEmail);
+		
+		if(!followed.containsKey(followerEmail)){
+			followed.put(followerEmail, new HashSet<>());
+		}
+		
+		System.out.println("Before follow method");
+		if(!followed.get(followerEmail).contains(userEmail)){
+			System.out.println("Call follow method");
+			UserDAO.getInstance().followUser(userEmail, followerEmail);
+			System.out.println("After follow method");
+			
+			getUser(userEmail).addFollower(followerEmail); //add follower email in user's set of followers
+			getUser(followerEmail).addFollowed(userEmail); //add followed email in user's set of users that user follows
+			followers.get(userEmail).add(followerEmail); // add follower email in the set of followers
+			followed.get(followerEmail).add(userEmail);  // add user email in the set of followed
+		}
 	}
 	
 	/**

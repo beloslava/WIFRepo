@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,12 +20,11 @@ public class Post {
 	private String keyWords;
 	private String createdOn;
 	private List<Comment> comments;
-	private Set<String> likes; //user's emails of users that liked the post
-	private Set<String> dislikes; //user's emails of users that liked the post
+	private Set<String> likes; // user's emails of users that liked the post
+	private Set<String> dislikes; // user's emails of users that liked the post
 
-
-	public Post(int id, String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
-			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
+	public Post(int id, String userEmail, Integer albumId, String category, String picture, String name,
+			String keyWords, Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
 		this.id = id;
 		this.userEmail = userEmail;
 		this.albumId = albumId;
@@ -38,6 +38,20 @@ public class Post {
 		this.dislikes = dislikes;
 	}
 
+	// add comment in comments collection
+	public void addComent(Comment comment) {
+		comments.add(comment);
+	}
+
+	// add like in post likes
+	public void addLike(String userEmail) {
+		likes.add(userEmail);
+	}
+
+	// add dislike in post dislikes
+	public void addDislike(String userEmail) {
+		dislikes.add(userEmail);
+	}
 
 	public int getId() {
 		return id;
@@ -104,26 +118,16 @@ public class Post {
 	}
 
 	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+		Collections.sort(comments, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return Collections.unmodifiableList(comments);
 	}
 
 	public Set<String> getLikes() {
-		return likes;
+		return Collections.unmodifiableSet(likes);
 	}
-	
-	public void setLikes(Set<String> likes) {
-		this.likes = likes;
-	}
-	
+
 	public Set<String> getDislikes() {
-		return dislikes;
+		return Collections.unmodifiableSet(dislikes);
 	}
-	
-	public void setDislikes(Set<String> dislikes) {
-		this.dislikes = dislikes;
-	}
+
 }

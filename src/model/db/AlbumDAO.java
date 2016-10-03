@@ -59,7 +59,7 @@ public class AlbumDAO {
 //			TreeMap<Integer, Album> albums = new TreeMap<>();
 //			albums.put((int)id, album);
 
-			user.getAlbums().put((int)id, album);
+			user.addAlbumInAlbum(album);
 			allAlbums.put((int)id, album);
 	
 		} catch (SQLException e) {

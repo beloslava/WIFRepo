@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Comment {
@@ -14,11 +16,11 @@ public class Comment {
 	private Integer parentCommentId;
 	private String text;
 	private String createdOn;
-	private ArrayList<Comment> commentComments;
+	private List<Comment> commentComments;
 	private Set<String> commentLikes;
 
 
-	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, ArrayList<Comment> commentComments, Set<String> commentLikes) {
+	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, List<Comment> commentComments, Set<String> commentLikes) {
 		this.commentId = commentId;
 		this.postId = postId;
 		this.userEmail = userEmail;
@@ -28,14 +30,17 @@ public class Comment {
 		this.commentComments = commentComments;
 		this.commentLikes = commentLikes;
 	}
-	
+	 //add comment like
+	public void addCommentLike(String userEmail){
+		commentLikes.add(userEmail);
+	}
+	//add comment to comment
+	public void addCommentComment(Comment comment){
+		commentComments.add(comment);
+	}
 	
 	public Set<String> getCommentLikes() {
-		return commentLikes;
-	}
-
-	public void setCommentLikes(Set<String> commentLikes) {
-		this.commentLikes = commentLikes;
+		return Collections.unmodifiableSet(commentLikes);
 	}
 	
 	public int getCommentId() {
@@ -86,8 +91,9 @@ public class Comment {
 		this.createdOn = createdOn;
 	}
 
-	public ArrayList<Comment> getCommentComments() {
-		return commentComments;
+	public List<Comment> getCommentComments() {
+		Collections.sort(commentComments, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return Collections.unmodifiableList(commentComments);
 	}
 	
 	public void setCommentComments(ArrayList<Comment> commentComments) {

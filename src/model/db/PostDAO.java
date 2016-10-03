@@ -176,7 +176,8 @@ public class PostDAO implements IPostDAO {
 					comments, postLikes, postDislikes);
 
 			User user = UsersManager.getInstance().getUser(userEmail);
-			user.getPosts().add(post);
+			//user.getPosts().add(post);
+			user.getAlbums().get(albumId).addPost(post);
 			allPosts.put(post.getId(), post);
 		} catch (SQLException e) {
 			System.out.println("Cannot upload post right now");
@@ -227,7 +228,7 @@ public class PostDAO implements IPostDAO {
 	public void likePost(int postId, String userEmail) {	
 		PreparedStatement statement = null;
 		//System.out.println(postLikes.get(postId).contains(userEmail) + " " + postLikes.get(postId));
-		if( !postLikes.containsKey(postId) ||
+		if( (!postLikes.containsKey(postId)) ||
 				(!postLikes.get(postId).contains(userEmail)) && (!postDislikes.get(postId).contains(userEmail))){
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
@@ -236,10 +237,12 @@ public class PostDAO implements IPostDAO {
 				statement.executeUpdate();
 				
 				Post post = getPost(postId);
-				HashSet<String> likes = (HashSet<String>) post.getLikes();
-				likes.add(userEmail);
-				post.setLikes(likes);
-				postLikes.put(postId, likes);
+				post.addLike(userEmail);
+				
+				if(!postLikes.containsKey(postId)){
+					postLikes.put(postId, new HashSet<>());
+				}
+				postLikes.get(postId).add(userEmail);
 				
 				System.out.println("like post");
 			} catch (SQLException e) {
@@ -271,7 +274,7 @@ public class PostDAO implements IPostDAO {
 //		System.out.println(postDislikes.get(postId).size());
 //		System.out.println(postDislikes.get(postId).contains(userEmail));
 		PreparedStatement statement = null; 
-		if( !postDislikes.containsKey(postId) ||
+		if( (!postDislikes.containsKey(postId)) ||
 				(!postDislikes.get(postId).contains(userEmail) && (!postLikes.get(postId).contains(userEmail)))){
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(DISLIKE_POST);
@@ -280,10 +283,13 @@ public class PostDAO implements IPostDAO {
 				statement.executeUpdate();
 				
 				Post post = getPost(postId);
-				HashSet<String> dislikes = (HashSet<String>) post.getDislikes();
-				dislikes.add(userEmail);
-				post.setDislikes(dislikes);
-				postDislikes.put(postId, dislikes);
+				post.addDislike(userEmail);
+				
+				if(!postDislikes.containsKey(postId)){
+					postDislikes.put(postId, new HashSet<>());
+				}
+				postDislikes.get(postId).add(userEmail);
+				
 				System.out.println("dislike post");
 			} catch (SQLException e) {
 				System.out.println("The post cannot be disliked right now");
@@ -474,7 +480,5 @@ public class PostDAO implements IPostDAO {
 		}
 		return postsForAlbum;
 	}
-
-	
 
 }

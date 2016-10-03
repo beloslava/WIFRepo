@@ -3,6 +3,7 @@ package model.pojo;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Collections;
 import java.util.List;
 
 public class Album {
@@ -12,16 +13,14 @@ public class Album {
 	private String userEmail;
 	private String createdOn;
 	private List<Post> posts;
-	
-	
-	public Album(int albumId, String name, String userEmail, Timestamp time, List<Post> posts) {		
+
+	public Album(int albumId, String name, String userEmail, Timestamp time, List<Post> posts) {
 		this.albumId = albumId;
 		this.name = name;
 		this.userEmail = userEmail;
 		this.createdOn = time.toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 		this.posts = posts;
 	}
-
 
 	public int getAlbumId() {
 		return albumId;
@@ -54,13 +53,15 @@ public class Album {
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
-	
+
 	public List<Post> getPosts() {
-		return posts;
+		return Collections.unmodifiableList(posts);
 	}
-	
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
+
+	// add post in posts
+	public void addPost(Post post) {
+		posts.add(post);
 	}
+
 	
 }

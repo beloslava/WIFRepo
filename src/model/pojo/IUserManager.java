@@ -14,7 +14,7 @@ public interface IUserManager {
 			throws UnsupportedEncodingException;
 	
 	void regUser(String email, String password, String name, String avatarPath,
-			List<Post> posts, Set<String> followers, Set<String> followed, Map<Integer, Album> albums);
+			 Set<String> followers, Set<String> followed, Map<Integer, Album> albums);
 	
 	boolean validLogin(String email, String password) throws UnsupportedEncodingException;
 	

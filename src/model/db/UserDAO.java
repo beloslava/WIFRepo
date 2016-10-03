@@ -51,23 +51,27 @@ public class UserDAO implements IUserDAO {
 			statement = DBManager.getInstance().getConnection().createStatement();
 			resultSet = statement.executeQuery(SELECT_ALL_USERS);
 			while (resultSet.next()) {
-				List<Post> posts = (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
+				
+			//	List<Post> posts = (List<Post>) PostDAO.getInstance().getAllPostsByUser(resultSet.getString("email"));
+				
 				Set<String> followers = getAllFollowersForUser(resultSet.getString("email"));
 				Set<String> followed = getAllFollowedForUser(resultSet.getString("email"));
 				TreeMap<Integer, Album> albums = AlbumDAO.getInstance().getAllAlbumsByUser(resultSet.getString("email"));
-				for(Album album : albums.values()){ //put posts in each album
-					for(Post post : posts){
-						if(post.getAlbumId() == album.getAlbumId())
-							album.getPosts().add(post);
-					}
-				}
+//				for(Album album : albums.values()){ //put posts in each album
+//					for(Post post : posts){
+//						if(post.getAlbumId() == album.getAlbumId())
+//							//album.getPosts().add(post);
+//							album.addPost(post);
+//						PostDAO.getInstance().getPostsByAlbum(album.getAlbumId());
+//					}
+//				}
 				users.add(new User( resultSet.getString("email"), 
 									resultSet.getString("user_password"),
 									resultSet.getString("user_name"),
 									resultSet.getString("gender"),
 									resultSet.getString("about"),
 									resultSet.getString("avatar"),
-									posts, 
+//									posts, 
 									followers,
 									followed,
 									albums

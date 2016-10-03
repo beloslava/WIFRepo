@@ -50,10 +50,12 @@ public class CommentDAO implements ICommentDAO {
 		return instance;
 	}
 
+	// get comment by id
 	public Comment getComment(int commentId){
 		return allComments.get(commentId);
 	}
 	
+	//get comment likes by id
 	public int getCommentLikes(int commentId){
 		return getComment(commentId).getCommentLikes().size();
 	}
@@ -73,7 +75,6 @@ public class CommentDAO implements ICommentDAO {
 			statement.setInt(1, postId);
 			statement.setString(2, userEmail);
 			statement.setObject(3, parentCommentId);
-			//statement.setNull(3, java.sql.Types.INTEGER);
 			statement.setString(4, text);
 			statement.executeUpdate();
 
@@ -89,10 +90,10 @@ public class CommentDAO implements ICommentDAO {
 			allComments.put((int)commentId, comment);
 			
 			if(parentCommentId == null){			
-				PostDAO.getInstance().getPost(postId).getComments().add(comment);
+				PostDAO.getInstance().getPost(postId).addComent(comment);
 			}
 			else{
-				allComments.get(parentCommentId).getCommentComments().add(comment);	
+				allComments.get(parentCommentId).addCommentComment(comment);	
 			}
 
 		} catch (SQLException e) {
@@ -298,8 +299,8 @@ public class CommentDAO implements ICommentDAO {
 	@Override
 	public List<Comment> takeAllCommentsByPost(int postId) { 
 		Post post = PostDAO.getInstance().getPost(postId);
-		ArrayList<Comment> commentsByPost = (ArrayList<Comment>) post.getComments();
-		Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		List<Comment> commentsByPost = post.getComments();
+		//Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByPost;
 	}
 	
@@ -310,8 +311,8 @@ public class CommentDAO implements ICommentDAO {
 	 */
 	public List<Comment> takeAllCommentsByComment(int commentId) { 
 		Comment comment = getComment(commentId);
-		ArrayList<Comment> commentsByComment = (ArrayList<Comment>) comment.getCommentComments();
-		Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		List<Comment> commentsByComment = comment.getCommentComments();
+		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByComment;
 	}
 	
@@ -358,10 +359,14 @@ public class CommentDAO implements ICommentDAO {
 				statement.executeUpdate();
 				
 				Comment comment = getComment(commentId);
-				HashSet<String> likes = (HashSet<String>) comment.getCommentLikes();
-				likes.add(userEmail);
-				comment.setCommentLikes(likes);
-				commentLikes.put(commentId, likes);
+
+				if(!commentLikes.containsKey(commentId)){
+					commentLikes.put(commentId, new HashSet<>());
+				}
+				commentLikes.get(commentId).add(userEmail);
+				
+				comment.addCommentLike(userEmail);
+
 				
 				System.out.println("like comment");
 			} catch (SQLException e) {
