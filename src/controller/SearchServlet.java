@@ -21,11 +21,12 @@ import model.pojo.UsersManager;
 public class SearchServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("userName");
-		ArrayList<Searchable> users = (ArrayList<Searchable>) UsersManager.getInstance().search(userName, "user");
-		request.setAttribute("users", users);
-		request.setAttribute("userName", userName);
-		request.setAttribute("count", users.size());
+		String input = request.getParameter("input");
+		String type=request.getParameter("type");
+		ArrayList<Searchable> search = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
+		request.setAttribute("search", search);
+		request.setAttribute("input", input);
+		request.setAttribute("count", search.size());
 		
 		RequestDispatcher view = request.getRequestDispatcher("search.jsp");
 		view.forward(request, response);

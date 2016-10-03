@@ -58,10 +58,10 @@
 					<ul id="tiny">
 					<li>
 						<form class="searchform" method="get" action="SearchServlet">
-							<input type="text" name="userName" value="type and hit enter"
+							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
-			                <select name="where">
+			                <select name="type">
 							       <option value="users">users
 							       <option value="posts">posts
 							</select>
@@ -139,10 +139,10 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="SearchServlet">
-							<input type="text" name="userName" value="type and hit enter"
+							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
-			                <select name="where">
+			                <select name="type">
 							       <option value="users">users
 							       <option value="posts">posts
 							</select>
