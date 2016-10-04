@@ -125,69 +125,92 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					 <form class="searchform" method="get" action="SearchServlet">
-							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
-								<label>Search in </label>
-			                <select name="type">
-							       <option value="users">users
-							       <option value="posts">posts
-							</select>
-						</form>
+					<form class="searchform" method="get" action="SearchServlet">
+						<input type="text" name="input" value="type and hit enter"
+							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+						<label>Search in </label> <select name="type">
+							<option value="users">users
+
+								<option value="posts">posts
+						
+						</select>
+					</form>
 				</div>
+				<div class="widget widget_search">
+				<h3 class="widget-title"></h3>
+				<ul class="social">
+					<li><a class="facebook" href="https://www.facebook.com/"></a></li>
+					<li><a class="twitter" href="https://twitter.com/"></a></li>
+					<li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+					<li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
+				</ul>
+				</div>
+
+			</div>
+			<div id="second" class="widget-area">
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
 					<ul>
-						<li><a href="asbtract.jsp">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
-						<li><a href="animals.jsp">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
-						<li><a href="family.jsp">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
-						<li><a href="food.jsp">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
-						<li><a href="nature.jsp">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
-						<li><a href="people.jsp">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
-						<li><a href="sport.jsp">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
-						<li><a href="travel.jsp">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
-						<li><a href="urban.jsp">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
-						<li><a href="uncategorized.jsp">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
+						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+						<li><a href="CategoryServlet?category=email">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
+						<li><a href="CategoryServlet?category=nature">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
+						<li><a href="CategoryServlet?category=people">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
+						<li><a href="CategoryServlet?category=sport">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
+						<li><a href="CategoryServlet?category=travel">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
+						<li><a href="CategoryServlet?category=urban">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
+						<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
 					</ul>
 				</div>
-			</div>
-			<div id="second" class="widget-area">
-				<div id="example-widget-3" class="widget example">
-					<h3 class="widget-title">My followers</h3>
-					
-					<c:set var="user" value="${sessionScope.USER}" />									
-					<c:forEach var='followerEmail' items='${UsersManager.getInstance().getFollowersByUser(user)}' end="5">
-  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}"/>
-				       	<a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>
-   					</c:forEach>
-   					
-				</div>
+
 			</div>
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
-					<h3 class="widget-title">Users who follow</h3>
-					
-					<c:forEach var='followedEmail' items='${UsersManager.getInstance().getFollowedByUser(user)}' end="5">
-  		        		<c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}"/>
-				       	<a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a>
+					<h3 class="widget-title">Followers</h3>
+					<c:set var="user" value="${sessionScope.USER}" />									
+					<c:forEach var='followerEmail'
+						items='${UsersManager.getInstance().getFollowersByUser(user)}'
+						end="5">
+  		        		<c:set var="userName"
+							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
+				       	<a
+							href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>"
+							title="author name"><c:out value="${userName}"></c:out></a>	     
+   					</c:forEach>	
+				</div>
+				<div id="example-widget-3" class="widget example">
+					<h3 class="widget-title">Following</h3>
+					<c:forEach var='followedEmail'
+						items='${UsersManager.getInstance().getFollowedByUser(user)}'
+						end="5">
+  		        		<c:set var="userName"
+							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
+				       	<a
+							href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>"
+							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
-   					
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">
 				<div id="example-widget-3" class="widget example">
-				<h3 class="widget-title">Popular Posts</h3>
+					<h3 class="widget-title">Popular Posts</h3>
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[0]}" scope="session"/>							
-								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+								<c:set var="post"
+									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
+									scope="session" />							
+								<a
+									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
 									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
-									alt="" width="80px"></a>
+									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
+									<a
+										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
@@ -196,14 +219,19 @@
 						<li>
 							<div class="frame">
 							
-								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[1]}" scope="session"/>
-								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+								<c:set var="post"
+									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
+									scope="session" />
+								<a
+									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
 									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
-									alt="" width="80px"></a>
+									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
+									<a
+										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
@@ -211,24 +239,29 @@
 						<li>
 							<div class="frame">
 							
-								<c:set var="post" value="${PostDAO.getInstance().getTopTenPosts()[2]}" scope="session"/>
-								<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
+								<c:set var="post"
+									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
+									scope="session" />
+								<a
+									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
 									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
-									alt="" width="80px"></a>
+									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out value="${post.name}"></c:out></a>
+									<a
+										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
-				
-				</li>
-				</ul>
+
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</div>
+		</div>
 <div class="site-generator-wrapper">
 </div>
 <script src="style/js/scripts.js"></script>
