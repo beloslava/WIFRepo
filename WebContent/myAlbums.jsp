@@ -92,15 +92,6 @@
 </div>
 <div class="wrapper">
   <div class="intro">Your Albums... </div>
-  <ul class="social">
-   <li><a class="rss" href="https://www.rss.com/"></a></li>
-    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
-    <li><a class="twitter" href="https://twitter.com/"></a></li>
-    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
-    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
-    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
-  </ul>
    <a class="button" href="javascript:showhide('create')">Create album</a>
   <div class="blog-wrap">
   <div id="create" style="display:none;">

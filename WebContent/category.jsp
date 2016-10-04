@@ -12,7 +12,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>Obscura</title>
+<title>My Wif</title>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -104,15 +104,6 @@
 			<c:out
 				value="${fn:toUpperCase(fn:substring(category, 0, 1))}${fn:toLowerCase(fn:substring(category, 1, -1))}"></c:out>
 		</div>
-		<ul class="social">
-			<li><a class="rss" href="https://www.rss.com/"></a></li>
-			<li><a class="facebook" href="https://www.facebook.com/"></a></li>
-			<li><a class="twitter" href="https://twitter.com/"></a></li>
-			<li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-			<li><a class="dribbble" href="https://dribbble.com/"></a></li>
-			<li><a class="flickr" href="https://www.flickr.com/"></a></li>
-			<li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
-		</ul>
 		<div class="blog-wrap">
 			<div class="blog-grid">
 

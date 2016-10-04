@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>Obscura | Blog Post</title>
+<title>My Wif</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style/css/style.css" media="all">
@@ -96,15 +96,6 @@
   <div class="intro">
   <h1>"<%=post.getName()%>" created by <a href="ProfileServlet?email=<%=post.getUserEmail()%>"><%=postUser.getName() %></a></h1>
   </div>
-  <ul class="social">
-    <li><a class="rss" href="https://www.rss.com/"></a></li>
-    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
-    <li><a class="twitter" href="https://twitter.com/"></a></li>
-    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
-    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
-    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
-  </ul>
   <div class="main-image">
     <div class="outer"> <span class="inset"><img src="PostPictureServlet?postId=<%=post.getId()%>"></span> </div>
   </div>

@@ -94,15 +94,6 @@
     User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
     %>
 <div class="intro"><%=user.getName() %>'s profile</div>
-<ul class="social">
-    <li><a class="rss" href="https://www.rss.com/"></a></li>
-    <li><a class="facebook" href="https://www.facebook.com/"></a></li>
-    <li><a class="twitter" href="https://twitter.com/"></a></li>
-    <li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-    <li><a class="dribbble" href="https://dribbble.com/"></a></li>
-    <li><a class="flickr" href="https://www.flickr.com/"></a></li>
-    <li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
-</ul>
   <div class="box">
    
     <div class="one-third">
