@@ -72,7 +72,7 @@
             <ul>
               <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
               <li><a href="CategoryServlet?category=animals">Animals</a></li>
-			  <li><a href="CategoryServlet?category=email">Family</a></li>
+			  <li><a href="CategoryServlet?category=family">Family</a></li>
 			  <li><a href="CategoryServlet?category=food">Food</a></li>
               <li><a href="CategoryServlet?category=nature">Nature</a></li>
 			  <li><a href="CategoryServlet?category=people">People</a></li>
@@ -183,10 +183,9 @@
 			<div id="second" class="widget-area">
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
-					<ul>
-						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
-						<li><a href="CategoryServlet?category=email">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
-						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+					<ul><li class="active"><a href="CategoryServlet?category=abstract">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+						<li><a href="CategoryServlet?category=family">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
 						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
 						<li><a href="CategoryServlet?category=nature">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
 						<li><a href="CategoryServlet?category=people">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>

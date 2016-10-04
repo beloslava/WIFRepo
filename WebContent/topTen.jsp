@@ -77,7 +77,7 @@
 								<li class="active"><a
 									href="CategoryServlet?category=abstract">Abstract</a></li>
 								<li><a href="CategoryServlet?category=animals">Animals</a></li>
-								<li><a href="CategoryServlet?category=email">Family</a></li>
+								<li><a href="CategoryServlet?category=family">Family</a></li>
 								<li><a href="CategoryServlet?category=food">Food</a></li>
 								<li><a href="CategoryServlet?category=nature">Nature</a></li>
 								<li><a href="CategoryServlet?category=people">People</a></li>
@@ -155,9 +155,9 @@
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
 					<ul>
-						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
-						<li><a href="CategoryServlet?category=email">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
-						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
+						<li class="active"><a href="CategoryServlet?category=abstract">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
+						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
+						<li><a href="CategoryServlet?category=family">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
 						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
 						<li><a href="CategoryServlet?category=nature">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
 						<li><a href="CategoryServlet?category=people">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
@@ -165,7 +165,7 @@
 						<li><a href="CategoryServlet?category=travel">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
 						<li><a href="CategoryServlet?category=urban">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
 						<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
-					</ul>
+				   </ul>
 				</div>
 
 			</div>
