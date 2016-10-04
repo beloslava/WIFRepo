@@ -195,6 +195,7 @@ public class UsersManager implements IUserManager {
 			name = name.toLowerCase();
 			if(userName.contains(name)){
 				users.add(user);
+				System.out.println(users.size());
 			}
 		}
 		
@@ -206,12 +207,12 @@ public class UsersManager implements IUserManager {
 	 * @param user name/ post name and key words and type - user or post
 	 * @return list of users/posts that contains that name
 	 */
-	public List<Searchable> search(String name, String type){
-		if(type.equals("post")){
-		return	PostDAO.getInstance().searchPostByNameAndKeyWords(type);
+	public List<Searchable> search(String input, String type){
+		if(type.equals("posts")){
+		return	PostDAO.getInstance().searchPostByNameAndKeyWords(input);
 		}
 		else{
-			return searchUsersByName(type);
+			return searchUsersByName(input);
 		}
 	}
 	

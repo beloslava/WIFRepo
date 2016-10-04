@@ -82,7 +82,7 @@
   </div>
 </div>
 <div class="wrapper">
-  <div class="intro">Search results for "<%=request.getAttribute("userName") %>" <%=request.getAttribute("count") %> :</div>
+  <div class="intro">Search results for "<%=request.getAttribute("input") %>" in <%=request.getAttribute("type") %> <%=request.getAttribute("count") %> :</div>
   <ul class="social">
    <li><a class="rss" href="https://www.rss.com/"></a></li>
     <li><a class="facebook" href="https://www.facebook.com/"></a></li>
@@ -99,9 +99,9 @@
     for(Searchable searchRez: search){
     	if(request.getAttribute("type").toString().equalsIgnoreCase("users")){
         %> 
-       <a href="ProfileServlet?email=<%=%>"><img alt="" src="PictureServlet?email=<%=%>" width="100px"><%=%></a>
+       <a href="ProfileServlet?email=<%=searchRez.getSearchableId()%>"><img alt="" src="PictureServlet?email=<%=searchRez.getSearchableId()%>" width="100px"><%=UsersManager.getInstance().getUser(searchRez.getSearchableId()).getName()%></a>
           <%}else{ %>
-                 <a href="DetailsServlet?postId=<%=%>"><img alt="" src="PostPictureServlet?postId=<%=%>" width="100px"><%=%></a>
+                 <a href="DetailsServlet?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>"><img alt="" src="PostPictureServlet?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>" width="100px"><%=PostDAO.getInstance().getPostUserName(Integer.parseInt(searchRez.getSearchableId()))%></a>
           <%}}%>
        </div>
     <div class="clear"></div>

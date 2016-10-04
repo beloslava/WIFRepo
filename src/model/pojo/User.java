@@ -115,5 +115,10 @@ public class User implements Searchable {
 		return Collections.unmodifiableMap(albums);
 	}
 
+	@Override
+	public String getSearchableId() {
+		return getEmail();	
+	}
+
 
 }

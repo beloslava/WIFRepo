@@ -130,4 +130,9 @@ public class Post implements Searchable {
 		return Collections.unmodifiableSet(dislikes);
 	}
 
+	@Override
+	public String getSearchableId() {
+		return Integer.toString(getId());
+	}
+
 }

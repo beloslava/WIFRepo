@@ -28,6 +28,9 @@ public class SearchServlet extends HttpServlet {
 		request.setAttribute("input", input);
 		request.setAttribute("count", search.size());
 		request.setAttribute("type", type);
+		System.out.println(type);
+		System.out.println(input);
+		System.out.println(search.size());
 		RequestDispatcher view = request.getRequestDispatcher("search.jsp");
 		view.forward(request, response);
 	}

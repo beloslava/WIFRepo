@@ -501,10 +501,14 @@ public class PostDAO implements IPostDAO {
 			name = name.toLowerCase();
 			if(postName.toString().contains(name)){
 				posts.add(post);
+				System.out.println(posts.size());
 			}
 		}
 		
 		return posts;
 	}
-	
+	public String getPostUserName(int id){
+		String email=getPost(id).getUserEmail();
+		return UsersManager.getInstance().getUser(email).getName();
+	}
 }
