@@ -140,20 +140,23 @@
       </div>
    </div>
     <div class="blog-grid">
-   <%	int albumId=Integer.parseInt(request.getAttribute("albumId").toString());
-		for (Post post : PostDAO.getInstance().getPostsByAlbum(albumId)) {
-	%>
-      <div class="post format-image box">
-        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
+    
+      <c:forEach var='post' items='${PostDAO.getInstance().getPostsByAlbum(requestScope.albumId)}'>
+    
+     <div class="post format-image box">
+        <div class="frame"> <a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
         <div class="details"> 
-	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	       <span class="dislikes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>" title="comments"></a><%=post.getComments().size()%></span>    
+        
+        	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
+	       <span class="icon-artist"><a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>>" ><c:out value= "${post.createdOn}"></c:out></a></span> 
+	       <span class="dislikes"><a href="DislikeServlet?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
+	       <span class="likes"><a href="LikesServlet?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       </div>
-      <%} %>
-      
+    
+    </c:forEach>
+     
     </div>
   </div>
   <div id="navigation">

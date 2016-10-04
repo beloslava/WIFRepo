@@ -93,6 +93,10 @@
 </div>
 <div class="wrapper">
   <div class="intro">Your profile...</div>
+  
+   <c:set var="userEmail" value="${sessionScope.USER}" />
+  <c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />
+  
 <%
     User user=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString());
     %>
@@ -184,7 +188,7 @@
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
 					<ul>
-						<li class="active"><a 
+					<li class="active"><a 
 							   	   href="CategoryServlet?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
 							<li><a href="CategoryServlet?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
 							<li><a href="CategoryServlet?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
