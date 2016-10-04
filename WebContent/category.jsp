@@ -176,16 +176,18 @@
 			<div id="second" class="widget-area">
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
-					<ul><li class="active"><a href="CategoryServlet?category=abstract">Abstract</a>(<%=PostDAO.getInstance().getAllPostsByCategory("asbtract").size()%>)</li>
-						<li><a href="CategoryServlet?category=animals">Animals</a>(<%=PostDAO.getInstance().getAllPostsByCategory("animals").size()%>)</li>
-						<li><a href="CategoryServlet?category=family">Family</a>(<%=PostDAO.getInstance().getAllPostsByCategory("family").size()%>)</li>
-						<li><a href="CategoryServlet?category=food">Food</a>(<%=PostDAO.getInstance().getAllPostsByCategory("food").size()%>)</li>
-						<li><a href="CategoryServlet?category=nature">Nature</a>(<%=PostDAO.getInstance().getAllPostsByCategory("nature").size()%>)</li>
-						<li><a href="CategoryServlet?category=people">People</a>(<%=PostDAO.getInstance().getAllPostsByCategory("people").size()%>)</li>
-						<li><a href="CategoryServlet?category=sport">Sport</a>(<%=PostDAO.getInstance().getAllPostsByCategory("sport").size()%>)</li>
-						<li><a href="CategoryServlet?category=travel">Travel</a>(<%=PostDAO.getInstance().getAllPostsByCategory("travel").size()%>)</li>
-						<li><a href="CategoryServlet?category=urban">Urban</a>(<%=PostDAO.getInstance().getAllPostsByCategory("urban").size()%>)</li>
-						<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<%=PostDAO.getInstance().getAllPostsByCategory("uncategorized").size()%>)</li>
+					<ul>
+						<li class="active"><a 
+							   	   href="CategoryServlet?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
+							<li><a href="CategoryServlet?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
+							<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 

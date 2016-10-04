@@ -443,6 +443,10 @@ public class PostDAO implements IPostDAO {
 
 	}
 	
+	public int getSizeOfPostsByCategory(String category){
+		return getAllPostsByCategory(category).size();
+	}
+	
 	/**
 	 * get top ten posts from allPosts collection
 	 * @return list with ten most liked posts

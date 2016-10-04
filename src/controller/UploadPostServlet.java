@@ -62,6 +62,9 @@ public class UploadPostServlet extends HttpServlet {
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>(), new HashSet(), new HashSet<>());
 			html = "main.jsp";
+			
+			request.getServletContext().setAttribute(category+"Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
+			
 		} else {
 			html = "index.html";
 		}
