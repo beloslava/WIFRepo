@@ -14,12 +14,12 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<link rel="stylesheet" type="text/css" href="static/css/style.css"
+<link rel="stylesheet" type="text/css" href="css/style.css"
 	media="all">
 <link rel="stylesheet" type="text/css"
-	href="static/css/media-queries.css">
+	href="css/media-queries.css">
 <link rel="stylesheet" type="text/css"
-	href="static/js/player/mediaelementplayer.css">
+	href="js/player/mediaelementplayer.css">
 <link rel="stylesheet" type='text/css'
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
 <!--[if IE 8]>
@@ -59,7 +59,7 @@
 				
 					<ul id="tiny">
 					<li>
-						<form class="searchform" method="get" action="/search">
+						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -100,8 +100,8 @@
 			
 	<c:forEach var='post' items='${PostDAO.getInstance().getTopTenPosts()}'>
     
-     <div class="post format-image box">
-        <div class="frame"> <a href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img src="/picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
+     <div class="post format-image box">"
+        <div class="frame"> <a href="details/post?postId=<c:out value="${post.id}"></c:out>"/><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
         <div class="details"> 
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
@@ -110,7 +110,7 @@
 	       <span class="likes"><a href="/post/like?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
 	       <span class="comments"><a href="/details/post?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
-      </div>
+      
     
    	</c:forEach>
 			
@@ -128,7 +128,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="/search">
+					<form class="searchform" method="get" action="search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -179,7 +179,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -191,7 +191,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -206,14 +206,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -227,14 +227,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -247,14 +247,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>

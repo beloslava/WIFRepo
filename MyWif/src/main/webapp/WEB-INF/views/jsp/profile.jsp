@@ -14,45 +14,45 @@
 <title>My Wif | <%=UsersManager.getInstance().getUser(request.getAttribute("email").toString()).getName() %></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<link rel="stylesheet" type="text/css" href="static/css/style.css" media="all">
-<link rel="stylesheet" type="text/css" href="static/css/media-queries.css">
-<link rel="stylesheet" type="text/css" href="static/js/player/mediaelementplayer.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/media-queries.css">
+<link rel="stylesheet" type="text/css" href="js/player/mediaelementplayer.css">
 <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="static/css/ie8.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie8.css" media="all">
 <![endif]-->
 <!--[if IE 9]>
-<link rel="stylesheet" type="text/css" href="static/css/ie9.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie9.css" media="all">
 <![endif]-->
-<script src="static/js/jquery-1.7.2.min.js"></script>
-<script src="static/js/ddsmoothmenu.js"></script>
-<script src="static/js/retina.js"></script>
-<script src="static/js/selectnav.js"></script>
-<script src="static/js/jquery.masonry.min.js"></script>
-<script src="static/js/jquery.fitvids.js"></script>
-<script src="static/js/jquery.backstretch.min.js"></script>
-<script src="static/js/mediaelement.min.js"></script>
-<script src="static/js/mediaelementplayer.min.js"></script>
-<script src="static/js/jquery.dcflickr.1.0.js"></script>
-<script src="static/js/twitter.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/ddsmoothmenu.js"></script>
+<script src="js/retina.js"></script>
+<script src="js/selectnav.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/jquery.fitvids.js"></script>
+<script src="js/jquery.backstretch.min.js"></script>
+<script src="js/mediaelement.min.js"></script>
+<script src="js/mediaelementplayer.min.js"></script>
+<script src="js/jquery.dcflickr.1.0.js"></script>
+<script src="js/twitter.min.js"></script>
 <script type="text/javascript">
  function showhide(id) {
     var e = document.getElementById(id);
     e.style.display = (e.style.display == 'block') ? 'none' : 'block';
  }
 </script>
-<script>$.backstretch("static/img/bg/1.jpg");</script>
+<script>$.backstretch("img/bg/1.jpg");</script>
 </head>
 <body>
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
- <div class="logo"> <a href="main.jsp"> <img src="static/img/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main.jsp"> <img src="img/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
         <li>
-						<form class="searchform" method="get" action="/search">
+						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -97,19 +97,19 @@
   <div class="box">
    
     <div class="one-third">
-<!--     <button onclick="document.getElementById('myImage').src='static/img/following.png'">Turn on the light</button> -->
+<!--     <button onclick="document.getElementById('myImage').src='img/following.png'">Turn on the light</button> -->
 
-<!-- <img id="myImage" src="static/img/follow.png" style="width:100px"> -->
+<!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->
     
-    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>"><img src="static/img/follow.png" width="100" alt="" /></a><br>
-      <div class="outer none"><span class="inset"><img src="/picture/profile?email=<%=user.getEmail()%>" alt=""></span></div>
+    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>"><img src="img/follow.png" width="100" alt="" /></a><br>
+      <div class="outer none"><span class="inset"><img src="picture/profile?email=<%=user.getEmail()%>" alt=""></span></div>
       <h1>Followers</h1>
       <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
-      <h4><a href="/details/profile?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
+      <h4><a href="details/profile?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
       <%} %>
       <h1>Following</h1>
       <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
-      	<h4><a href="/details/profile?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
+      	<h4><a href="details/profile?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
       <%} %>
     </div>
     
@@ -134,12 +134,12 @@
 		for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
 	%>
 	 <div class="post format-image box" >
-        <div class="frame"> <a href="/details/post?postId=<%=post.getId()%>"><img src="/picture/post?postId=<%=post.getId() %>"/></a> </div>
+        <div class="frame"> <a href="details/post?postId=<%=post.getId()%>"><img src="picture/post?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
-	       <span class="icon-artist"><a href="/details/post?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	       <span class="likes"><a href="/post/like?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	       <span class="likes"><a href="/post/dislike?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="/details/post?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
+	       <span class="icon-artist"><a href="details/post?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
+	       <span class="likes"><a href="post/like?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	       <span class="likes"><a href="post/dislike?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="details/post?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
         </div>
       </div>
       <%} %>
@@ -152,7 +152,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="/search">
+					<form class="searchform" method="get" action="search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -203,7 +203,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -215,7 +215,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -230,14 +230,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -251,14 +251,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -271,14 +271,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -290,6 +290,6 @@
 			</div>
 		</div>
 		</div>
-<script src="static/js/scripts.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>

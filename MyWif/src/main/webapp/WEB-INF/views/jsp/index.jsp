@@ -10,17 +10,20 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="static/css/bootstrap.min.css">
-        <link rel="stylesheet" href="static/font/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="static/css/form-elements.css">
-        <link rel="stylesheet" href="static/css/style_form.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/form-elements.css">
+        <link rel="stylesheet" href="css/style_form.css">
         
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="static/img/logo.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="img/logo.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="img/ico/apple-touch-icon-57-precomposed.png">
+        <script>
+	$.backstretch("img/bg/1.jpg");
+</script>
 
     </head>
 
@@ -41,7 +44,7 @@
                     
                     <div class="row">
                         <div class="col-sm-5">
-                        	 <div class="logo"> <a href="main.jsp"> <img src="static/img/logo@2x.png" alt=""> </a> </div>
+                        	 <div class="logo"> <a href="main.jsp"> <img src="img/logo@2x.png" alt=""> </a> </div>
                         	<div class="form-box">
 	                        	<div class="form-top">
 	                        		<div class="form-top-left">
@@ -127,10 +130,10 @@
         </footer>
 
         <!-- Javascript -->
-        <script src="static/js/jquery-1.11.1.min.js"></script>
-        <script src="static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="static/js/jquery.backstretch.min.js"></script>
-        <script src="static/js/scripts.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/form-jquery.backstretch.min.js"></script>
+        <script src="js/form-scripts.js"></script>
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

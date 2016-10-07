@@ -148,7 +148,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: url(../images/tile.png);
+    background: url(../img/tile.png);
 }
 input,
 textarea {
@@ -190,7 +190,7 @@ a.button,
 .forms fieldset .btn-submit,
 #commentform input#submit {
     font-family: 'Open Sans Condensed', sans-serif;
-    background: #f2f2f2 url(../images/button.png) repeat-x;
+    background: #f2f2f2 url(../img/button.png) repeat-x;
     height: 31px;
     line-height: 31px;
     color: #383838;
@@ -301,7 +301,7 @@ ol li {
 }
 hr {
     border: none;
-    background: transparent url(../images/line.png) repeat-x;
+    background: transparent url(../img/line.png) repeat-x;
     height: 3px;
     margin-top: 10px;
     margin-bottom: 30px;
@@ -369,7 +369,7 @@ hr {
     visibility: hidden
 }
 .loading {
-    background: transparent url(../images/loading.gif) no-repeat 50% 20px;
+    background: transparent url(../img/loading.gif) no-repeat 50% 20px;
     opacity: 0.44;
 }
 .outer {
@@ -637,7 +637,7 @@ hr {
     padding: 13px 0;
     line-height: 1;
     font-size: 13px;
-    background-image: url(../images/line.png);
+    background-image: url(../img/line.png);
     background-repeat: repeat-x;
     background-position: left top;
 }
@@ -732,7 +732,7 @@ iframe {
     text-decoration: none;
     width: 100%;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.55) url(../images/icon-more.png) no-repeat center center;
+    background: rgba(0, 0, 0, 0.55) url(../img/icon-more.png) no-repeat center center;
 }
 .post .details {
     background: rgba(0, 0, 0, 0.12);
@@ -753,7 +753,7 @@ iframe {
     color: #86aca3
 }
 .post .details .likes a {
-    background: transparent url(../images/icon-like.png) no-repeat left 13px;
+    background: transparent url(../img/icon-like.png) no-repeat left 13px;
     float: right;
     position: relative;
     height: 8px;
@@ -767,7 +767,7 @@ iframe {
     color: #797979
 }
 .post .details .dislikes a {
-    background: transparent url(../images/icon-dislike.png) no-repeat left 13px;
+    background: transparent url(../img/icon-dislike.png) no-repeat left 13px;
     float: right;
     position: relative;
     height: 8px;
@@ -781,7 +781,7 @@ iframe {
     color: #797979
 }
 .post .details .comments {
-    background: transparent url(../images/icon-comment.png) no-repeat left 7px;
+    background: transparent url(../img/icon-comment.png) no-repeat left 7px;
     float: right;
     position: relative;
     padding: 0 0 6px 14px;
@@ -802,46 +802,46 @@ iframe {
     float: left;
 }
 .icon-audio {
-    background: transparent url(../images/icon-audio.png) no-repeat left 5px;
+    background: transparent url(../img/icon-audio.png) no-repeat left 5px;
     padding: 0 0 5px 15px;
 }
 .icon-chat {
-    background: transparent url(../images/icon-chat.png) no-repeat left 6px;
+    background: transparent url(../img/icon-chat.png) no-repeat left 6px;
     padding: 0 0 6px 17px;
 }
 .icon-image {
-    background: transparent url(../images/icon-image.png) no-repeat left 6px;
+    background: transparent url(../img/icon-image.png) no-repeat left 6px;
     padding: 0 0 6px 20px;
 }
 .icon-artist {
-    background: transparent url(../images/icon-artist.png) no-repeat left 6px;
+    background: transparent url(../img/icon-artist.png) no-repeat left 6px;
     padding: 0 0 6px 20px;
 }
 .icon-date {
-    background: transparent url(../images/icon-date.png) no-repeat left 6px;
+    background: transparent url(../img/icon-date.png) no-repeat left 6px;
     padding: 0 0 6px 20px;
 }
 .icon-author{
     padding: 0 0 6px 20px;
 }
 .icon-link {
-    background: transparent url(../images/icon-link.png) no-repeat left 5px;
+    background: transparent url(../img/icon-link.png) no-repeat left 5px;
     padding: 0 0 5px 18px;
 }
 .icon-quote {
-    background: transparent url(../images/icon-quote.png) no-repeat left 7px;
+    background: transparent url(../img/icon-quote.png) no-repeat left 7px;
     padding: 0 0 7px 17px;
 }
 .icon-standard {
-    background: transparent url(../images/icon-standard.png) no-repeat left 5px;
+    background: transparent url(../img/icon-standard.png) no-repeat left 5px;
     padding: 0 0 5px 18px;
 }
 .icon-video {
-    background: transparent url(../images/icon-video.png) no-repeat left 6px;
+    background: transparent url(../img/icon-video.png) no-repeat left 6px;
     padding: 0 0 6px 18px;
 }
 .post-nav {
-    background: transparent url(../images/line.png) center top repeat-x;
+    background: transparent url(../img/line.png) center top repeat-x;
     margin: 0 -5px;
     overflow: hidden;
     position: relative;
@@ -883,7 +883,7 @@ iframe {
     padding-bottom: 0;
     margin-top: 10px;
     padding-top: 30px;
-    background: transparent url(../images/line.png) top left repeat-x;
+    background: transparent url(../img/line.png) top left repeat-x;
 }
 .sidebox.widget_text,
 .sidebox.widget_text:first-child {
@@ -1026,7 +1026,7 @@ ul.single-gallery li .frame {
 .format-chat ul li {
     margin-top: 8px;
     padding-top: 8px;
-    background: transparent url(../images/line.png) repeat-x left top;
+    background: transparent url(../img/line.png) repeat-x left top;
 }
 .format-chat ul li:first-child {
     margin-top: 15px;
@@ -1043,7 +1043,7 @@ blockquote {
     font-size: 16px;
     line-height: 25px;
     font-weight: 300;
-    background-image: url(../images/quote.png);
+    background-image: url(../img/quote.png);
     background-repeat: no-repeat;
     background-position: right top;
     font-style: italic;
@@ -1052,7 +1052,7 @@ blockquote {
     background: none
 }
 .blog-grid .post.format-quote {
-    background-image: url(../images/quote-bg.png);
+    background-image: url(../img/quote-bg.png);
     background-repeat: no-repeat;
     background-position: right top;
 }
@@ -1131,7 +1131,7 @@ blockquote cite:before {
 .icon-song,
 .icon-album,
 .icon-album {
-    background: transparent url(../images/icon-album.png) no-repeat right 5px
+    background: transparent url(../img/icon-album.png) no-repeat right 5px
 
 }
 
@@ -1165,7 +1165,7 @@ blockquote cite:before {
 ----------------------------------------------- */
 #comments ol.commentlist {
     list-style: none;
-    background: transparent url(../images/line.png) repeat-x left bottom;
+    background: transparent url(../img/line.png) repeat-x left bottom;
     margin-bottom: 30px;
     padding-bottom: 30px;
     margin-top: -15px;
@@ -1344,7 +1344,7 @@ li.post.pingback p {
     margin: 0 2px;
 }
 .social a {
-    background: transparent url(../images/social-icons.png) no-repeat 0 0;
+    background: transparent url(../img/social-icons.png) no-repeat 0 0;
     height: 32px;
     width: 32px;
     display: inline-block;
@@ -1549,7 +1549,7 @@ ul.flickr-feed li img {
     margin-bottom: 15px;
 }
 .widget_twitter ul li {
-    background: transparent url(../images/line.png) repeat-x center top;
+    background: transparent url(../img/line.png) repeat-x center top;
     padding: 0;
     padding-top: 15px !important;
     margin-top: 14px;
@@ -1561,7 +1561,7 @@ ul.flickr-feed li img {
 }
 .follow-button {
     display: block;
-    background: transparent url(../images/line.png) repeat-x left top;
+    background: transparent url(../img/line.png) repeat-x left top;
     margin: 0;
     padding: 15px 0 0 0;
 }

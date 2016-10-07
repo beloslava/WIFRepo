@@ -15,28 +15,28 @@
 <title>My Wif | My Albums</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<link rel="stylesheet" type="text/css" href="static/css/style.css" media="all">
-<link rel="stylesheet" type="text/css" href="static/css/media-queries.css">
-<link rel="stylesheet" type="text/css" href="static/js/player/mediaelementplayer.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/media-queries.css">
+<link rel="stylesheet" type="text/css" href="js/player/mediaelementplayer.css">
 <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="static/css/ie8.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie8.css" media="all">
 <![endif]-->
 <!--[if IE 9]>
-<link rel="stylesheet" type="text/css" href="static/css/ie9.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie9.css" media="all">
 <![endif]-->
-<script src="static/js/jquery-1.7.2.min.js"></script>
-<script src="static/js/ddsmoothmenu.js"></script>
-<script src="static/js/retina.js"></script>
-<script src="static/js/selectnav.js"></script>
-<script src="static/js/jquery.masonry.min.js"></script>
-<script src="static/js/jquery.fitvids.js"></script>
-<script src="static/js/jquery.backstretch.min.js"></script>
-<script src="static/js/mediaelement.min.js"></script>
-<script src="static/js/mediaelementplayer.min.js"></script>
-<script src="static/js/jquery.dcflickr.1.0.js"></script>
-<script src="static/js/twitter.min.js"></script>
-<script>$.backstretch("static/img/bg/1.jpg");</script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/ddsmoothmenu.js"></script>
+<script src="js/retina.js"></script>
+<script src="js/selectnav.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/jquery.fitvids.js"></script>
+<script src="js/jquery.backstretch.min.js"></script>
+<script src="js/mediaelement.min.js"></script>
+<script src="js/mediaelementplayer.min.js"></script>
+<script src="js/jquery.dcflickr.1.0.js"></script>
+<script src="js/twitter.min.js"></script>
+<script>$.backstretch("img/bg/1.jpg");</script>
 <script type="text/javascript">
  function showhide(id) {
     var e = document.getElementById(id);
@@ -48,12 +48,12 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
- <div class="logo"> <a href="main.jsp"> <img src="static/img/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main.jsp"> <img src="img/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
        <ul id="tiny">
        <li>
-						<form class="searchform" method="get" action="/search">
+						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -96,7 +96,7 @@
   <div class="blog-wrap">
   <div id="create" style="display:none;">
     <div class="post format-image box">
-      <form class="forms" action="/create/album" method="post">
+      <form class="forms" action="create/album" method="post">
         <fieldset>
           <ol>
             <li class="form-row text-input-row">
@@ -120,17 +120,17 @@
         <div class="frame"> <a href="details/album?albumId=<%=album.getAlbumId()%>">
       <% if(album.getPosts().size()!=0){
     	  %>
-			<img src="/picture/post?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
+			<img src="picture/post?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
 		<%
 			}
 			else{%>
-				<img src="static/img/bg/1.jpg">
+				<img src="img/bg/1.jpg">
 			<%}
       %> </a>
       
        </div>
        <div class="details"> 
-	         <span class="icon-artist"><a href="/details/profile?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
+	         <span class="icon-artist"><a href="details/profile?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
 	         <span class="icon-date"><a href=""><%=album.getCreatedOn() %></a></span>
 	        </div>
       </div>
@@ -147,7 +147,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="/search">
+					<form class="searchform" method="get" action="search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -198,7 +198,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -210,7 +210,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -225,14 +225,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -246,14 +246,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -266,14 +266,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
-									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
+									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -287,6 +287,6 @@
 		</div>
 <div class="site-generator-wrapper">
 </div>
-<script src="static/js/scripts.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
