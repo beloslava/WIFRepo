@@ -18,8 +18,8 @@ import com.mywif.model.db.CommentDAO;
 public class CommentController {
 
 	@RequestMapping(value = "/likeComment", method = RequestMethod.GET)
-	protected String likeComment(@RequestParam String commentId, @RequestParam String postId,
-			@RequestParam String email, HttpServletRequest request) {
+	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
+			@RequestParam("email") String email, HttpServletRequest request) {
 		request.setAttribute(commentId, Integer.parseInt(commentId));
 		request.setAttribute(postId, Integer.parseInt(postId));
 
@@ -32,13 +32,13 @@ public class CommentController {
 	
 	
 	@RequestMapping(value = "/writeComment", method = RequestMethod.GET)
-	protected String writeComment(@RequestParam String emailUser, @RequestParam String comment,
-			 HttpServletRequest request, @RequestParam String parentCommentId,  @RequestParam String postId) {
+	protected String writeComment(@RequestParam("emailUser") String emailUser, @RequestParam("comment") String comment,
+			 HttpServletRequest request, @RequestParam("parentCommentId") String parentCommentId,  @RequestParam("postId") String postId) {
 	
-		parentCommentId=null;
-		if(!parentCommentId.equals("parent")){
-			request.setAttribute("parentCommentId", Integer.parseInt(parentCommentId));
-		}
+//		parentCommentId=null;
+//		if(!parentCommentId.equals("parent")){
+//			request.setAttribute("parentCommentId", Integer.parseInt(parentCommentId));
+//		}
 		
 		if(comment!=null){
 			CommentDAO.getInstance().addComment(Integer.parseInt(postId), emailUser, Integer.parseInt(parentCommentId), comment, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(),new HashSet<>());

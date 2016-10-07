@@ -41,7 +41,6 @@ public class UserController {
 	
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
-
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logIn(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
 		try {
@@ -77,9 +76,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/changeSettings", method = RequestMethod.POST)
-	protected String changeSettings(@RequestParam String newName, @RequestParam String oldPass,
-			@RequestParam String newPass, @RequestParam String newPass2, @RequestParam String gender,
-			@RequestParam String newDescription, HttpServletRequest request) {
+	protected String changeSettings(@RequestParam("newName") String newName, @RequestParam("oldPass") String oldPass,
+			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2, @RequestParam("gender") String gender,
+			@RequestParam("newDescription") String newDescription, HttpServletRequest request) {
 
 		String email=request.getSession().getAttribute("USER").toString();
 		 
@@ -106,7 +105,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
 	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow, @RequestParam("USER") String myEmail)  {
-
 		
 		return "details/profile?email="+emaiToFollow;
 	}

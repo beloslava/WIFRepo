@@ -42,4 +42,24 @@ public class DetailController {
 		}
 		return jsp;
 	}
+	
+	@RequestMapping(value="/topTen", method=RequestMethod.GET)
+	public String viewTopTen(){
+		return "topTen";
+	}
+		
+	@RequestMapping(value="/main", method=RequestMethod.GET)
+	public String viewMain(){
+		return "main";
+	}
+	
+	@RequestMapping(value="/myProfile", method=RequestMethod.GET)
+	public String viewMyProfile(){
+		return "myProfile";
+	}
+	
+	@RequestMapping(value="/myAlbums", method=RequestMethod.GET)
+	public String viewMyAlbums(){
+		return "myAlbums";
+	}
 }
