@@ -95,14 +95,11 @@
   <div class="intro">Your profile...</div>
   
    <c:set var="userEmail" value="${sessionScope.USER}" />
-  <c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />
-  
-<%
-    User user=UsersManager.getInstance().getUser(request.getSession().getAttribute("USER").toString());
-    %>
+   <c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />
+
   <div class="box">
     <div class="one-third">
-      <div class="outer none"><span class="inset"><img src="picture/profile?email=<%=user.getEmail()%>" alt=""></span></div>
+      <div class="outer none"><span class="inset"><img src="picture/profile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <a class="button" href="javascript:showhide('/picture/change')">Change profile picture</a>
       <div id="picture/change" style="display:none;">	
 		<fieldset>
@@ -113,42 +110,54 @@
 		</fieldset>
 		</div>
 		 <h1>Followers</h1>
-      <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
-      <h4><a href="details/profile?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
-      <%} %>
+       <c:set var="userEmail" value="${sessionScope.USER}" />
+		 
+		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
+  		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
+  		    <h4><a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+   		</c:forEach>
+
       <h1>Following</h1>
-      <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
-      	<h4><a href="details/profile?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
-      <%} %>
-    </div>
+      
+       <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
+  		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
+  		    <h4><a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+   		</c:forEach>
     
     <div class="two-third last">
-	    <h2><%=user.getName() %></h2>
-		<h1><b>Email: </b><%=request.getSession().getAttribute("USER").toString()%></h1>
-		<%if(user.getGender()!=null) {%>
-	    <h1><b>Gender: </b><%=user.getGender()%></h1>
-	    <%} else
-	    	{%>
-	    	<h1><b>Gender: </b><i>Not specified</i></h1>
-	    	<%}
-		if(user.getAbout()!=null){%>
-		<h1><b>About: </b><%=user.getAbout()%></h1>
-		<%} else
-	    	{%>
-	    			<h1><b>About: </b><i>Not specified</i></h1>
-	    	<%} %>  	
+	    <h2><c:out value="${user.name}"></c:out></h2>
+		<h1><b>Email: </b><c:out value="${user.email}"></c:out></h1>
+		<c:choose>
+			<c:when test= "${user.gender != null}">
+			<h1><b>Gender: </b><c:out value="${user.gender}"></c:out></h1>
+									
+			</c:when>
+			<c:otherwise>
+				<h1><b>Gender: </b><i>Not specified</i></h1>
+			</c:otherwise>
+		</c:choose>
+		
+			<c:choose>
+			<c:when test= "${user.about != null}">
+			<h1><b>Gender: </b><c:out value="${user.about}"></c:out></h1>
+									
+			</c:when>
+			<c:otherwise>
+				<h1><b>About: </b><i>Not specified</i></h1>
+			</c:otherwise>
+		</c:choose> 	
 	</div>
 	<div class="tree-third last">
 		<a class="button" href="javascript:showhide('changeProfile')">Change profile</a>
 		<div id="changeProfile" style="display:none;">	
 		<fieldset>
 				<form action="changeSettings" method="post">
-					Enter new name<input type="text" name="newName" value="<%=user.getName() %>" class="text-input required">
+					Enter new name<input type="text" name="newName" value="<c:out value="${user.name}"></c:out>" class="text-input required">
 					Enter old password<input type="password" name="oldPass" value="" class="text-input required">
 					Enter new password<input type="password" name="newPass" value="" class="text-input required">
 					Repeat new password<input type="password" name="newPass2" value="" class="text-input required"><br>
 					Gender <span><select name="gender"> <option value="female">Female<option value="male">Male</select></span>
-					Enter your description<input type="text" name="newDescription" value="<%=user.getAbout() %>" class="text-input required"><br>
+					Enter your description<input type="text" name="newDescription" value="<c:out value="${user.about}"></c:out>" class="text-input required"><br>
 					<input type="submit" value="Save profile settings">
 				</form>
 		</fieldset>
@@ -156,6 +165,7 @@
 	</div>
     <div class="clear"></div>
   </div>
+</div>
 </div>
 <div class="footer-wrapper">
 		<div id="footer" class="four">

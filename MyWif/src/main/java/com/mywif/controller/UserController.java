@@ -51,7 +51,7 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addAttribute("user", email);
+	//	model.addAttribute("user", email);
 		System.out.println("hi");
 		return "main";
 	}

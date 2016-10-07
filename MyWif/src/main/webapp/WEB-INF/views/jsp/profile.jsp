@@ -90,10 +90,11 @@
   </div>
 </div>
 <div class="wrapper">
- <%
-    User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
-    %>
-<div class="intro"><%=user.getName() %>'s profile</div>
+
+	<c:set var="userEmail" value="${requestScope.email}" />
+    <c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />
+
+<div class="intro"><c:out value="${user.name}"></c:out>'s profile</div>
   <div class="box">
    
     <div class="one-third">
@@ -101,48 +102,82 @@
 
 <!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->
     
-    	<a href="FollowServlet?emaiToFollow=<%=user.getEmail()%>"><img src="img/follow.png" width="100" alt="" /></a><br>
-      <div class="outer none"><span class="inset"><img src="picture/profile?email=<%=user.getEmail()%>" alt=""></span></div>
+    	<a href="FollowServlet?emaiToFollow=<c:out value="${user.email}"></c:out>"><img src="img/follow.png" width="100" alt="" /></a><br>
+      <div class="outer none"><span class="inset"><img src="picture/profile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <h1>Followers</h1>
-      <%for(String followerEmail: UsersManager.getInstance().getFollowersByUser(user.getEmail())){ %>
-      <h4><a href="details/profile?email=<%=followerEmail%>"><%=UsersManager.getInstance().getUser(followerEmail).getName() %></a></h4>
-      <%} %>
+       <c:set var="userEmail" value="${sessionScope.USER}" />
+		 
+		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
+  		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
+  		    <h4><a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+   		</c:forEach>
+
       <h1>Following</h1>
-      <%for(String followedEmail: UsersManager.getInstance().getFollowedByUser(user.getEmail())){ %>
-      	<h4><a href="details/profile?email=<%=followedEmail%>"><%=UsersManager.getInstance().getUser(followedEmail).getName() %></a></h4>
-      <%} %>
+      
+       <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
+  		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
+  		    <h4><a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+   		</c:forEach>
     </div>
     
     <div id="first" class="widget-area"><br><br>
-	    <h2><%=user.getName() %></h2>
-		<h1><b>Email: </b><%=user.getEmail()%></h1>
-		<%if(user.getGender()!=null) {%>
-	    <h1><b>Gender: </b><%=user.getGender()%></h1>
-	    <%} else
-	    	{%>
-	    	<h1><b>Gender: </b><i>Not specified</i></h1>
-	    	<%}
-		if(user.getAbout()!=null){%>
-		<h1><b>About: </b><%=user.getAbout()%></h1>
-		<%} else
-	    	{%>
-	    			<h1><b>About: </b><i>Not specified</i></h1>
-	    	<%} %>  	
+	    <h2><c:out value="${user.name}"></c:out></h2>
+		<h1><b>Email: </b><c:out value="${user.email}"></c:out></h1>
+		<c:choose>
+			<c:when test= "${user.gender != null}">
+			<h1><b>Gender: </b><c:out value="${user.gender}"></c:out></h1>
+									
+			</c:when>
+			<c:otherwise>
+				<h1><b>Gender: </b><i>Not specified</i></h1>
+			</c:otherwise>
+		</c:choose>
+		
+			<c:choose>
+			<c:when test= "${user.about != null}">
+			<h1><b>Gender: </b><c:out value="${user.about}"></c:out></h1>
+									
+			</c:when>
+			<c:otherwise>
+				<h1><b>About: </b><i>Not specified</i></h1>
+			</c:otherwise>
+		</c:choose> 		
 	</div>
 	<div class="two-third last">
-		<%
-		for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
+  
+<!--	<c:forEach var='post' items='${PostDAO.getInstance().getPostsByUser(user.email)}'>
+    
+     <div class="post format-image box">
+        <div class="frame"> <a href="details/post?postId=<c:out value="${post.id}"></c:out>"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
+        <div class="details"> 
+        
+        	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
+	       <span class="icon-artist"><a href="details/post?postId=<c:out value="${post.id}"></c:out>>" ><c:out value= "${post.createdOn}"></c:out></a></span> 
+	       <span class="dislikes"><a href="post/dislike?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
+	       <span class="likes"><a href="post/like?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
+	       <span class="comments"><a href="details/post?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
+	    </div>
+      </div>
+    
+    </c:forEach> -->	
+    
+    <%
+    User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
+    %>
+    
+    <%for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
 	%>
 	 <div class="post format-image box" >
-        <div class="frame"> <a href="details/post?postId=<%=post.getId()%>"><img src="picture/post?postId=<%=post.getId() %>"/></a> </div>
+        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
         <div class="details"> 
-	       <span class="icon-artist"><a href="details/post?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	       <span class="likes"><a href="post/like?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	       <span class="likes"><a href="post/dislike?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="details/post?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
+	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
+	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
+	       <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
         </div>
       </div>
       <%} %>
+	
 	</div>
     <div class="clear"></div>
   </div>
