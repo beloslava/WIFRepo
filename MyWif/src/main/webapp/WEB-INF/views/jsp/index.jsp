@@ -84,7 +84,7 @@
 	                        		</div>
 	                            </div>
 	                            <div class="form-bottom">
-				                    <form role="form" action="RegisterServlet" method="POST" class="registration-form" enctype="multipart/form-data">
+				                    <form role="form" action="register" method="POST" class="registration-form" enctype="multipart/form-data">
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="form-name">Name</label>
 				                        	<input type="text" name="name" placeholder="Name..." class="form-name form-control" id="form-name">

@@ -83,7 +83,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li><a href="LogOutServlet">Log out</a></li>
+          <li><a href="logOut">Log out</a></li>
         </ul>
       </div>
     </div>

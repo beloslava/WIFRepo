@@ -80,7 +80,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li><a href="LogOutServlet">Log out</a></li>
+          <li><a href="logOut">Log out</a></li>
         </ul>
       </div>
     </div>
@@ -147,7 +147,7 @@
         				<div id="comment-form" class="comment-form">
 					        <div id="respond">
 					          <h3 id="reply-title">Leave a Reply to <%=user.getName() %> comment</h3>
-					          <form action="WriteCommentServlet" method="get" id="commentform">
+					          <form action="writeComment" method="get" id="commentform">
 					            <p class="comment-form-author">
 					              <input id="author" name="postId" type="hidden" value="<%=post.getId() %>" size="30" aria-required="true">
 					            </p>
@@ -183,7 +183,7 @@
                   </div>
                   <div class="message"> 
                   <span class="reply-link">
-              		<a class="comment-reply-link" href="LikeCommentServlet?commentId=<%=reply.getCommentId()%>&postId=<%=post.getId()%>">Like <%=CommentDAO.getInstance().getCommentLikes(reply.getCommentId())%></a>
+              		<a class="comment-reply-link" href="likeComment?commentId=<%=reply.getCommentId()%>&postId=<%=post.getId()%>">Like <%=CommentDAO.getInstance().getCommentLikes(reply.getCommentId())%></a>
               	  </span>
                     <div class="info">
                       <a href="/details/profile?email=<%=post.getUserEmail()%>"><h2><%=replyUser.getName() %></h2></a>

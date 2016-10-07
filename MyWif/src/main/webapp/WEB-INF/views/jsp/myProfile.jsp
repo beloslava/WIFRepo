@@ -84,7 +84,7 @@
           </li>
           <li><a href="topTen.jsp">Top 10</a>
           </li>
-          <li><a href="LogOutServlet">Log out</a></li>
+          <li><a href="logOut">Log out</a></li>
         </ul>
       </div>
     </div>
@@ -142,7 +142,7 @@
 		<a class="button" href="javascript:showhide('changeProfile')">Change profile</a>
 		<div id="changeProfile" style="display:none;">	
 		<fieldset>
-				<form action="Change/details/profile" method="post">
+				<form action="changeSettings" method="post">
 					Enter new name<input type="text" name="newName" value="<%=user.getName() %>" class="text-input required">
 					Enter old password<input type="password" name="oldPass" value="" class="text-input required">
 					Enter new password<input type="password" name="newPass" value="" class="text-input required">
