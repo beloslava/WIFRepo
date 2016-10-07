@@ -34,7 +34,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	}
 
  
-    private static final String LOCATION = "/Users/Daskalski/Desktop/UploadedPics/"; // Temporary location where files will be stored
+    private static final String LOCATION = "D:\\MyWifPictures\\"; // Temporary location where files will be stored
  
     private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
                                                         // Beyond that size spring will throw exception.
