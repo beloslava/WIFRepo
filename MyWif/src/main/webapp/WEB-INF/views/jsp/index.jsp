@@ -10,13 +10,13 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="assets/css/form-elements.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/font/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="static/css/form-elements.css">
+        <link rel="stylesheet" href="static/css/style_form.css">
         
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="style/images/logo.png">
+        <link rel="shortcut icon" href="static/img/logo.png">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
@@ -41,7 +41,7 @@
                     
                     <div class="row">
                         <div class="col-sm-5">
-                        	 <div class="logo"> <a href="main.jsp"> <img src="style/images/logo@2x.png" alt=""> </a> </div>
+                        	 <div class="logo"> <a href="main.jsp"> <img src="static/img/logo@2x.png" alt=""> </a> </div>
                         	<div class="form-box">
 	                        	<div class="form-top">
 	                        		<div class="form-top-left">
@@ -127,10 +127,10 @@
         </footer>
 
         <!-- Javascript -->
-        <script src="assets/js/jquery-1.11.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/jquery.backstretch.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <script src="static/js/jquery-1.11.1.min.js"></script>
+        <script src="static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="static/js/jquery.backstretch.min.js"></script>
+        <script src="static/js/scripts.js"></script>
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

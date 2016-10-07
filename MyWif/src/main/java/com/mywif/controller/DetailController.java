@@ -20,13 +20,13 @@ public class DetailController {
 	
 	@RequestMapping(value="/details/album", method=RequestMethod.GET)
 	public String album(@RequestParam("albumId") String albumId,HttpServletRequest request){
-		request.setAttribute("albumId", albumId);
+		request.setAttribute("albumId", Integer.parseInt(albumId));
 		return "myPhotos";
 	}
 	
 	@RequestMapping(value="/details/post", method=RequestMethod.GET)
 	public String post(@RequestParam("postId") String postId,HttpServletRequest request){
-		request.setAttribute("postId", postId);
+		request.setAttribute("postId", Integer.parseInt(postId));
 		return "detailsPost";
 	}
 	

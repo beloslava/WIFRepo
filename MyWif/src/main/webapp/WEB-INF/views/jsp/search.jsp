@@ -56,7 +56,7 @@
 				<div id="menu" class="menu">
 					<ul id="tiny">
 						<li>
-							<form class="searchform" method="get" action="SearchServlet">
+							<form class="searchform" method="get" action="/search">
 								<input type="text" name="input" value="type and hit enter"
 									onFocus="this.value=''"
 									onBlur="this.value='type and hit enter'" /> <label>Search
@@ -71,16 +71,16 @@
 						<li><a href="myAlbums.jsp">My Albums</a></li>
 						<li><a>Categories</a>
 							<ul>
-								<li><a href="CategoryServlet?category=abstract">Abstract</a></li>
-								<li><a href="CategoryServlet?category=animals">Animals</a></li>
-								<li><a href="CategoryServlet?category=family">Family</a></li>
-								<li><a href="CategoryServlet?category=food">Food</a></li>
-								<li><a href="CategoryServlet?category=nature">Nature</a></li>
-								<li><a href="CategoryServlet?category=people">People</a></li>
-								<li><a href="CategoryServlet?category=sport">Sport</a></li>
-								<li><a href="CategoryServlet?category=travel">Travel</a></li>
-								<li><a href="CategoryServlet?category=urban">Urban</a></li>
-								<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
+								<li><a href="category?category=abstract">Abstract</a></li>
+								<li><a href="category?category=animals">Animals</a></li>
+								<li><a href="category?category=family">Family</a></li>
+								<li><a href="category?category=food">Food</a></li>
+								<li><a href="category?category=nature">Nature</a></li>
+								<li><a href="category?category=people">People</a></li>
+								<li><a href="category?category=sport">Sport</a></li>
+								<li><a href="category?category=travel">Travel</a></li>
+								<li><a href="category?category=urban">Urban</a></li>
+								<li><a href="category?category=uncategorized">Uncategorized</a></li>
 							</ul></li>
 						<li><a href="topTen.jsp">Top 10</a></li>
 						<li><a href="LogOutServlet">Log out</a></li>
@@ -108,16 +108,16 @@
 					for (Searchable searchRez : search) {
 						if (request.getAttribute("type").toString().equalsIgnoreCase("users")) {
 				%>
-				<a href="ProfileServlet?email=<%=searchRez.getSearchableId()%>"><img
-					alt="" src="PictureServlet?email=<%=searchRez.getSearchableId()%>"
+				<a href="/details/profile?email=<%=searchRez.getSearchableId()%>"><img
+					alt="" src="/picture/profile?email=<%=searchRez.getSearchableId()%>"
 					width="100px"><%=UsersManager.getInstance().getUser(searchRez.getSearchableId()).getName()%></a>
 				<%
 					} else {
 				%>
 				<a
-					href="DetailsServlet?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>"><img
+					href="/details/post?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>"><img
 					alt=""
-					src="PostPictureServlet?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>"
+					src="/picture/post?postId=<%=Integer.parseInt(searchRez.getSearchableId())%>"
 					width="100px"><%=PostDAO.getInstance().getPostUserName(Integer.parseInt(searchRez.getSearchableId()))%></a>
 				<%
 					}
@@ -133,7 +133,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="SearchServlet">
+					<form class="searchform" method="get" action="/search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -160,16 +160,16 @@
 					<h3 class="widget-title">Categories</h3>
 					<ul>
 						<li class="active"><a 
-							   	   href="CategoryServlet?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
-							<li><a href="CategoryServlet?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
+							   	   href="category?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
+							<li><a href="category?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
+							<li><a href="category?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
+							<li><a href="category?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
+							<li><a href="category?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
+							<li><a href="category?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
+							<li><a href="category?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
+							<li><a href="category?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
+							<li><a href="category?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
+							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 
@@ -184,7 +184,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -196,7 +196,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -211,14 +211,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -232,14 +232,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -252,14 +252,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>

@@ -50,7 +50,7 @@
       <div id="menu" class="menu">
        <ul id="tiny">
        <li>
-						<form class="searchform" method="get" action="SearchServlet">
+						<form class="searchform" method="get" action="/search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -66,16 +66,16 @@
           </li>
           <li><a>Categories</a>
            <ul>
-              <li class="active"><a href="CategoryServlet?category=abstract">Abstract</a></li>
-              <li><a href="CategoryServlet?category=animals">Animals</a></li>
-			  <li><a href="CategoryServlet?category=family">Family</a></li>
-			  <li><a href="CategoryServlet?category=food">Food</a></li>
-              <li><a href="CategoryServlet?category=nature">Nature</a></li>
-			  <li><a href="CategoryServlet?category=people">People</a></li>
-			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
-			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
-			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
-			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
+              <li class="active"><a href="category?category=abstract">Abstract</a></li>
+              <li><a href="category?category=animals">Animals</a></li>
+			  <li><a href="category?category=family">Family</a></li>
+			  <li><a href="category?category=food">Food</a></li>
+              <li><a href="category?category=nature">Nature</a></li>
+			  <li><a href="category?category=people">People</a></li>
+			  <li><a href="category?category=sport">Sport</a></li>
+			  <li><a href="category?category=travel">Travel</a></li>
+			  <li><a href="category?category=urban">Urban</a></li>
+			  <li><a href="category?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
           <li><a href="topTen.jsp">Top 10</a>
@@ -94,18 +94,18 @@
 
 	%>
   <div class="intro">
-  <h1>"<%=post.getName()%>" created by <a href="ProfileServlet?email=<%=post.getUserEmail()%>"><%=postUser.getName() %></a></h1>
+  <h1>"<%=post.getName()%>" created by <a href="/details/profile?email=<%=post.getUserEmail()%>"><%=postUser.getName() %></a></h1>
   </div>
   <div class="main-image">
-    <div class="outer"> <span class="inset"><img src="PostPictureServlet?postId=<%=post.getId()%>"></span> </div>
+    <div class="outer"> <span class="inset"><img src="/picture/post?postId=<%=post.getId()%>"></span> </div>
   </div>
   <div class="content">
 
     <div class="post format-image box">
       <div class="details"> 
 	      <span class="icon-date"><%=post.getCreatedOn()%></span> 
-	      <span class="dislikes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	      <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span>
+	      <span class="dislikes"><a href="/post/dislike?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
+	      <span class="likes"><a href="/post/like?postId=<%=post.getId()%>" class="likeThis"><%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span>
 	      <span class="comments"><%=post.getComments().size()%></span>
       </div>
       <div class="tags"><a href="#"><%=post.getKeyWords() %></a></div>
@@ -124,8 +124,8 @@
           <li class="comment">
             <div class="comment">
               <div class="comment-author vcard user frame"> 
-                  <a href="ProfileServlet?email=<%=user.getEmail()%>">
-                  <img src="PictureServlet?email=<%=user.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
+                  <a href="/details/profile?email=<%=user.getEmail()%>">
+                  <img src="/picture/profile?email=<%=user.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
                   </a>
                   </div>
               <div class="message"> 
@@ -134,7 +134,7 @@
               		<a class="comment-reply-link" href="LikeCommentServlet?commentId=<%=comment.getCommentId()%>&postId=<%=post.getId()%>">Like <%=CommentDAO.getInstance().getCommentLikes(comment.getCommentId())%></a>
               	</span>
                 <div class="info">
-                  <a href="ProfileServlet?email=<%=post.getUserEmail()%>"><h2><%=user.getName() %></h2></a>
+                  <a href="/details/profile?email=<%=post.getUserEmail()%>"><h2><%=user.getName() %></h2></a>
                   <span class="meta"><%=comment.getCreatedOn() %></span> </div>
                 <div class="comment-body ">
                   <p><%=comment.getText() %></p>
@@ -177,8 +177,8 @@
               <li class="comment even depth-2" id="li-comment-5">
                 <div id="comment-5" class="com-wrap">
                   <div class="comment-author vcard user frame"> 
-                  <a href="ProfileServlet?email=<%=replyUser.getEmail()%>">
-                  <img src="PictureServlet?email=<%=replyUser.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
+                  <a href="/details/profile?email=<%=replyUser.getEmail()%>">
+                  <img src="/picture/profile?email=<%=replyUser.getEmail()%>" class="avatar avatar-70 photo" height="70" width="70" alt="">
                   </a>
                   </div>
                   <div class="message"> 
@@ -186,7 +186,7 @@
               		<a class="comment-reply-link" href="LikeCommentServlet?commentId=<%=reply.getCommentId()%>&postId=<%=post.getId()%>">Like <%=CommentDAO.getInstance().getCommentLikes(reply.getCommentId())%></a>
               	  </span>
                     <div class="info">
-                      <a href="ProfileServlet?email=<%=post.getUserEmail()%>"><h2><%=replyUser.getName() %></h2></a>
+                      <a href="/details/profile?email=<%=post.getUserEmail()%>"><h2><%=replyUser.getName() %></h2></a>
                       <span class="meta"><%=reply.getCreatedOn() %></span> </div>
                     <div class="comment-body ">
                       <p><%=reply.getText() %></p>
@@ -230,7 +230,7 @@
   <div class="sidebar box">
   <div class="sidebox widget">
       <h3 class="widget-title">Search</h3>
-       <form class="searchform" method="get" action="SearchServlet">
+       <form class="searchform" method="get" action="/search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -243,13 +243,13 @@
     <div class="sidebox widget">
       <h3 class="widget-title">likes <%=post.getLikes().size() %></h3>
       <%for(String user:PostDAO.getInstance().getAllLikesForPost(post.getId())){ %>
-      <a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+      <a href="/details/profile?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
       <%} %>
     </div>
     <div class="sidebox widget">
       <h3 class="widget-title">dislikes <%=post.getDislikes().size() %></h3>
       <%for(String user:PostDAO.getInstance().getAllLikesForPost(post.getId())){ %>
-      <a href="ProfileServlet?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
+      <a href="/details/profile?email=<%=user%>"><%=UsersManager.getInstance().getUser(user).getName() %></a>
       <%} %>
     </div>
   </div>
@@ -260,7 +260,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="SearchServlet">
+					<form class="searchform" method="get" action="/search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -287,16 +287,16 @@
 					<h3 class="widget-title">Categories</h3>
 					<ul>
 						<li class="active"><a 
-							   	   href="CategoryServlet?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
-							<li><a href="CategoryServlet?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
+							   	   href="category?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
+							<li><a href="category?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
+							<li><a href="category?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
+							<li><a href="category?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
+							<li><a href="category?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
+							<li><a href="category?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
+							<li><a href="category?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
+							<li><a href="category?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
+							<li><a href="category?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
+							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 
@@ -311,7 +311,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -323,7 +323,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -338,14 +338,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -359,14 +359,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -379,14 +379,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>

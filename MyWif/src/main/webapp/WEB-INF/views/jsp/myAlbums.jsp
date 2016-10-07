@@ -53,7 +53,7 @@
       <div id="menu" class="menu">
        <ul id="tiny">
        <li>
-						<form class="searchform" method="get" action="SearchServlet">
+						<form class="searchform" method="get" action="/search">
 							<input type="text" name="input" value="type and hit enter"
 								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 								<label>Search in </label>
@@ -69,16 +69,16 @@
           </li>
           <li><a>Categories</a>
             <ul>
-              <li><a href="CategoryServlet?category=abstract">Abstract</a></li>
-              <li><a href="CategoryServlet?category=animals">Animals</a></li>
-			  <li><a href="CategoryServlet?category=family">Family</a></li>
-			  <li><a href="CategoryServlet?category=food">Food</a></li>
-              <li><a href="CategoryServlet?category=nature">Nature</a></li>
-			  <li><a href="CategoryServlet?category=people">People</a></li>
-			  <li><a href="CategoryServlet?category=sport">Sport</a></li>
-			  <li><a href="CategoryServlet?category=travel">Travel</a></li>
-			  <li><a href="CategoryServlet?category=urban">Urban</a></li>
-			  <li><a href="CategoryServlet?category=uncategorized">Uncategorized</a></li>
+              <li><a href="category?category=abstract">Abstract</a></li>
+              <li><a href="category?category=animals">Animals</a></li>
+			  <li><a href="category?category=family">Family</a></li>
+			  <li><a href="category?category=food">Food</a></li>
+              <li><a href="category?category=nature">Nature</a></li>
+			  <li><a href="category?category=people">People</a></li>
+			  <li><a href="category?category=sport">Sport</a></li>
+			  <li><a href="category?category=travel">Travel</a></li>
+			  <li><a href="category?category=urban">Urban</a></li>
+			  <li><a href="category?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
           <li><a href="topTen.jsp">Top 10</a>
@@ -96,7 +96,7 @@
   <div class="blog-wrap">
   <div id="create" style="display:none;">
     <div class="post format-image box">
-      <form class="forms" action="CreateAlbumServlet" method="post">
+      <form class="forms" action="/create/album" method="post">
         <fieldset>
           <ol>
             <li class="form-row text-input-row">
@@ -117,10 +117,10 @@
 		for (Album album:AlbumDAO.getInstance().getAllAlbumsByUser(request.getSession().getAttribute("USER").toString()).values()) {
 	%>
       <div class="post format-image box">
-        <div class="frame"> <a href="DetailsAlbumServlet?albumId=<%=album.getAlbumId()%>">
+        <div class="frame"> <a href="details/album?albumId=<%=album.getAlbumId()%>">
       <% if(album.getPosts().size()!=0){
     	  %>
-			<img src="PostPictureServlet?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
+			<img src="/picture/post?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
 		<%
 			}
 			else{%>
@@ -130,7 +130,7 @@
       
        </div>
        <div class="details"> 
-	         <span class="icon-artist"><a href="ProfileServlet?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
+	         <span class="icon-artist"><a href="/details/profile?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
 	         <span class="icon-date"><a href=""><%=album.getCreatedOn() %></a></span>
 	        </div>
       </div>
@@ -147,7 +147,7 @@
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
-					<form class="searchform" method="get" action="SearchServlet">
+					<form class="searchform" method="get" action="/search">
 						<input type="text" name="input" value="type and hit enter"
 							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
 						<label>Search in </label> <select name="type">
@@ -174,16 +174,16 @@
 					<h3 class="widget-title">Categories</h3>
 					<ul>
 						<li class="active"><a 
-							   	   href="CategoryServlet?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
-							<li><a href="CategoryServlet?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
-							<li><a href="CategoryServlet?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
+							   	   href="category?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
+							<li><a href="category?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
+							<li><a href="category?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
+							<li><a href="category?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
+							<li><a href="category?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
+							<li><a href="category?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
+							<li><a href="category?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
+							<li><a href="category?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
+							<li><a href="category?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
+							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 
@@ -198,7 +198,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -210,7 +210,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>>"
+							href="/details/profile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -225,14 +225,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -246,14 +246,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -266,14 +266,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><img
-									src="PostPictureServlet?postId=<c:out value="${post.id}"></c:out>"
+									href="/details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									src="/picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="DetailsServlet?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="/details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
