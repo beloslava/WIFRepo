@@ -10,8 +10,10 @@
 
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-<title>My Wif | <%=UsersManager.getInstance().getUser(request.getAttribute("email").toString()).getName() %></title>
+<head> 
+	<c:set var="userEmail" value="${requestScope.email}" />
+	<c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />    
+<title>My Wif | <c:out value="${user.name}"></c:out></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
@@ -91,9 +93,6 @@
 </div>
 <div class="wrapper">
 
-	<c:set var="userEmail" value="${requestScope.email}" />
-    <c:set var="user" value="${UsersManager.getInstance().getUser(userEmail)}" />
-
 <div class="intro"><c:out value="${user.name}"></c:out>'s profile</div>
   <div class="box">
    
@@ -145,7 +144,7 @@
 	</div>
 	<div class="two-third last">
   
-<!--	<c:forEach var='post' items='${PostDAO.getInstance().getPostsByUser(user.email)}'>
+	<c:forEach var='post' items='${PostDAO.getInstance().getAllPostsByUser(param.email)}'>
     
      <div class="post format-image box">
         <div class="frame"> <a href="details/post?postId=<c:out value="${post.id}"></c:out>"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
@@ -159,24 +158,7 @@
 	    </div>
       </div>
     
-    </c:forEach> -->	
-    
-    <%
-    User user=UsersManager.getInstance().getUser(request.getAttribute("email").toString());
-    %>
-    
-    <%for (Post post : PostDAO.getInstance().getAllPostsByUser(user.getEmail())) {
-	%>
-	 <div class="post format-image box" >
-        <div class="frame"> <a href="DetailsServlet?postId=<%=post.getId()%>"><img src="PostPictureServlet?postId=<%=post.getId() %>"/></a> </div>
-        <div class="details"> 
-	       <span class="icon-artist"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getCreatedOn()%></a></span> 
-	       <span class="likes"><a href="LikesServlet?postId=<%=post.getId()%>" class="likeThis" title="likes"> <%=PostDAO.getInstance().getNumberOfPostLikes(post.getId())%></a></span> 
-	       <span class="likes"><a href="DislikeServlet?postId=<%=post.getId()%>" class="likeThis" title="dislikes" ><%=PostDAO.getInstance().getNumberOfPostDislikes(post.getId())%></a></span> 
-	       <span class="comments"><a href="DetailsServlet?postId=<%=post.getId()%>"><%=post.getComments().size()%></a></span> 
-        </div>
-      </div>
-      <%} %>
+    </c:forEach> 	
 	
 	</div>
     <div class="clear"></div>
