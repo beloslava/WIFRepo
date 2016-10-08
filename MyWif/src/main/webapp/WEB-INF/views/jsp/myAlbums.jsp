@@ -112,30 +112,28 @@
       </div>
    </div>
     <div class="blog-grid">
-    
-   <%
-		for (Album album:AlbumDAO.getInstance().getAllAlbumsByUser(request.getSession().getAttribute("USER").toString()).values()) {
-	%>
-      <div class="post format-image box">
-        <div class="frame"> <a href="details/album?albumId=<%=album.getAlbumId()%>">
-      <% if(album.getPosts().size()!=0){
-    	  %>
-			<img src="picture/post?postId=<%= PostDAO.getInstance().getPost(album.getPosts().get(0).getId()).getId()%>">
-		<%
-			}
-			else{%>
-				<img src="img/bg/1.jpg">
-			<%}
-      %> </a>
       
-       </div>
-       <div class="details"> 
-	         <span class="icon-artist"><a href="details/profile?email=<%=album.getUserEmail()%>" title="author name"><%=album.getName() %></a></span> 
-	         <span class="icon-date"><a href=""><%=album.getCreatedOn() %></a></span>
-	        </div>
-      </div>
-      <%} %>
-      
+      <c:forEach var='album' items='${AlbumDAO.getInstance().getAllAlbumsByUser(sessionScope.USER).values()}'>   
+	    <div class="post format-image box">
+	        <div class="frame"> <a href="details/album?albumId=<c:out value= "${album.albumId}"></c:out>">
+	    
+	    	<c:choose>
+				<c:when test= "${empty fn:length(album.posts)}">
+					<img src="style/images/bg/1.jpg">										
+				</c:when>
+				<c:otherwise>
+					<img src="picture/post?postId=<c:out value= "${PostDAO.getInstance().getPost(album.posts[0].id).id}"></c:out>">
+				</c:otherwise>
+			 </c:choose> </a>
+	   
+	     </div>
+	       <div class="details"> 
+		         <span class="icon-artist"><a href="details/profile?email=<c:out value= "${album.userEmail}"></c:out>" title="author name"><c:out value= "${album.name}"></c:out></a></span> 
+		         <span class="icon-date"><a href=""><c:out value= "${album.createdOn}"></c:out></a></span>
+		        </div>
+	      </div>   
+    </c:forEach>
+            
     </div>
   </div>
   <div id="navigation">
