@@ -35,7 +35,7 @@ import com.mywif.model.db.AlbumDAO;
 @Controller
 public class AlbumController {
 	
-	@RequestMapping(value="/create/album", method=RequestMethod.POST)
+	@RequestMapping(value="/createalbum", method=RequestMethod.POST)
 	public String createAlbum(@RequestParam(value="name") String name,HttpSession session){
 		String email=session.getAttribute("USER").toString();
 		AlbumDAO.getInstance().addAlbum(name, email, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());

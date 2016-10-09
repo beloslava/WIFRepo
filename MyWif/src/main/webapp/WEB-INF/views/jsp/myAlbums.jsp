@@ -96,7 +96,7 @@
   <div class="blog-wrap">
   <div id="create" style="display:none;">
     <div class="post format-image box">
-      <form class="forms" action="create/album" method="post">
+      <form class="forms" action="createalbum" method="post">
         <fieldset>
           <ol>
             <li class="form-row text-input-row">
