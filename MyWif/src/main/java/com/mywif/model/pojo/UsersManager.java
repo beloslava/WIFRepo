@@ -16,14 +16,14 @@ import com.mywif.model.db.UserDAO;
 public class UsersManager implements IUserManager {
 
 	private ConcurrentHashMap<String, User> registerredUsers;// username -> user
-	private HashMap<String, Set<String>> followers; //users that follow the user 
-	private HashMap<String, Set<String>> followed; //users that the user follows
+	private ConcurrentHashMap<String, Set<String>> followers; //users that follow the user 
+	private ConcurrentHashMap<String, Set<String>> followed; //users that the user follows
 	
 	private static UsersManager instance;
 
 	private UsersManager() {
-		followers = new HashMap<>();
-		followed = new HashMap<>();
+		followers = new ConcurrentHashMap<>();
+		followed = new ConcurrentHashMap<>();
 
 		registerredUsers = new ConcurrentHashMap<>();
 		for (User u : UserDAO.getInstance().getAllUsers()) {
@@ -125,6 +125,7 @@ public class UsersManager implements IUserManager {
 		UserDAO.getInstance().updateAvatar(user);
 	}
 	
+	//follow user
 	public void follow(String userEmail, String followerEmail){
 		
 		if(!followed.containsKey(followerEmail)){
@@ -142,6 +143,18 @@ public class UsersManager implements IUserManager {
 			followers.get(userEmail).add(followerEmail); // add follower email in the set of followers
 			followed.get(followerEmail).add(userEmail);  // add user email in the set of followed
 		}
+	}
+	
+	//unfollow user
+	public void unfollow(String userEmail, String followerEmail){
+		if(followed.containsKey(followerEmail)){
+			UserDAO.getInstance().unfollowUser(userEmail, followerEmail);
+			if(followed.get(followerEmail).contains(userEmail)){
+				followed.get(followerEmail).remove(userEmail);
+				followers.get(userEmail).remove(followerEmail);
+			}
+		}
+		
 	}
 	
 	/**

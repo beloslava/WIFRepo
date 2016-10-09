@@ -104,8 +104,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow, @RequestParam("USER") String myEmail)  {
-		
+	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow,  HttpSession session)  {
+		String myEmail = (String) session.getAttribute("USER");
+		UsersManager.getInstance().follow(emaiToFollow, myEmail);
 		return "detailsprofile?email="+emaiToFollow;
 	}
 

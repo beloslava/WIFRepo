@@ -24,7 +24,8 @@ public class UserDAO implements IUserDAO {
 	private static final String SELECT_FOLLOWERS = "SELECT follower_email FROM followers WHERE user_email = ?;";
 	private static final String SELECT_FOLLOWED = "SELECT user_email FROM followers WHERE follower_email = ?;";
 	private static final String INSERT_FOLLOWER = "INSERT INTO followers (user_email, follower_email) VALUES (?,?);";
-
+	private static final String DELETE_FOLLOWER = "DELETE FROM followers WHERE user_email = ? AND follower_email = ?";
+	
 	private static UserDAO instance;
 
 	private UserDAO() {
@@ -279,6 +280,30 @@ public class UserDAO implements IUserDAO {
 
 		return followed;
 
+	}
+	
+	public void unfollowUser(String userEmail, String followerEmail){
+		PreparedStatement statement = null;
+		try {
+			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
+			statement.setString(1, userEmail);
+			statement.setString(1, followerEmail);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Can not unfollow user right now");
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
