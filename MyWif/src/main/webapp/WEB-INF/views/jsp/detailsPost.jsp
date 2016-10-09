@@ -107,7 +107,7 @@
         <h3 id="comments-title"><c:out value="${fn:length(post.comments)}"></c:out> Responses </h3>
         <ol id="singlecomments" class="commentlist">
            <c:set var="x" value="0"/>
-		 <c:forEach var='comment' items='${CommentDAO.getInstance().getAllCommentsByPost(post.id)}'>		 
+		 <c:forEach var='comment' items='${CommentDAO.getInstance().takeAllCommentsByPost(post.id)}'>		 
 		 	   <c:set var="user" value="${UsersManager.getInstance().getUser(comment.userEmail)}"/>		
 			   <c:set var="x" value="${1+x}"/>
           <li class="comment">
@@ -120,7 +120,7 @@
               <div class="message"> 
               	<span class="reply-link">
               		<a class="comment-reply-link" href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
-              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<a class="comment-reply-link" href="comment/like?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
               	</span>
                 <div class="info">
                   <a href="picture/profile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>

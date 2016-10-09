@@ -106,7 +106,7 @@ public class UserController {
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
 	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow, @RequestParam("USER") String myEmail)  {
 		
-		return "details/profile?email="+emaiToFollow;
+		return "detailsprofile?email="+emaiToFollow;
 	}
 
 	

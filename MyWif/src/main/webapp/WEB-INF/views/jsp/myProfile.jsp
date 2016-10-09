@@ -103,7 +103,7 @@
       <a class="button" href="javascript:showhide('/picture/change')">Change profile picture</a>
       <div id="picture/change" style="display:none;">	
 		<fieldset>
-				<form action="settings/change" method="post" enctype="multipart/form-data">
+				<form action="picture/change" method="post" enctype="multipart/form-data">
 					Upload your new profile picture<input type="file" name="fileField" value="" class="text-input required"><br>
 					<input type="submit" value="Save">
 				</form>
@@ -151,7 +151,7 @@
 		<a class="button" href="javascript:showhide('changeProfile')">Change profile</a>
 		<div id="changeProfile" style="display:none;">	
 		<fieldset>
-				<form action="settings/change" method="post">
+				<form action="settingschange" method="post">
 					Enter new name<input type="text" name="newName" value="<c:out value="${user.name}"></c:out>" class="text-input required">
 					Enter old password<input type="password" name="oldPass" value="" class="text-input required">
 					Enter new password<input type="password" name="newPass" value="" class="text-input required">
@@ -257,7 +257,7 @@
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -298,7 +298,7 @@
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
