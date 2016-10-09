@@ -42,7 +42,7 @@ public class UserController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String logIn(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
+	public String logIn(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
 		try {
 			if (!UsersManager.getInstance().validLogin(email, password)) {
 				return "indecc";
@@ -51,7 +51,7 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	//	model.addAttribute("user", email);
+		session.setAttribute("USER", email);
 		System.out.println("hi");
 		return "main";
 	}
