@@ -103,27 +103,26 @@
 		<div class="box">
 			<div class="two-third last">
 			
-				<c:set var="search" value="${param.search}"  />
-				<c:forEach var='searchRez' items='${requestScope.search}'>
+				<c:set var="search" value="${requestScope.search}"  />
+				<c:forEach var='searchResult' items='${requestScope.search}'>
 						<c:set var="users" value="users" />
 						<c:set var="type" value="${requestScope.type}" />
-						<c:out value="${searchRez.getSearchableId()}"></c:out>
-
+	
 						<c:choose>
-	   						 <c:when test="${fn:containsIgnoreCase(users, type)}">	   						 
-	   						 	<c:set var="email" value="${searchRez.getSearchableId()}" />   						 
-						        <a href="ProfileServlet?email=<c:out value="${email}"></c:out>"><img
-								alt="" src="PictureServlet?email=<c:out value="${email}"></c:out>"								
+	   						 <c:when test="${fn:containsIgnoreCase(type, users)}">	   						 
+	   						 	<c:set var="email" value="${searchResult.getSearchableId()}" />   						 
+						        <a href="details/profile?email=<c:out value="${email}"></c:out>"><img
+								alt="" src="picture/profile?email=<c:out value="${email}"></c:out>"								
 								<c:set var="userName" value="${UsersManager.getInstance().getUser(email).name}"/>															
 								width="100px"><c:out value="${userName}"></c:out></a>															
 						   	 </c:when>
 						   
 						 	 <c:otherwise>
-						<a href="PostPictureServlet?postId=<c:out value="${Integer.parseInt(searchRez.getSearchableId())}"></c:out>"><img
-					alt=""
-					src="picture/post?postId=<c:out value="${Integer.parseInt(searchRez.getSearchableId())}"></c:out>"	
-					<c:set var="userName" value="${PostDAO.getInstance().getPostUserName(Integer.parseInt(searchRez.getSearchableId()))}"/>					
-					width="100px"><c:out value="${userName}"></c:out></a>
+								<a href="details/post?postId=<c:out value="${searchResult.getSearchableId()}"></c:out>"><img
+								alt=""
+								src="picture/post?postId=<c:out value="${searchResult.getSearchableId()}"></c:out>"	
+								<c:set var="userName" value="${PostDAO.getInstance().getPostUserName(searchResult.getSearchableId())}"/>					
+								width="100px"><c:out value="${userName}"></c:out></a>
 						     </c:otherwise>
 						</c:choose>
 
