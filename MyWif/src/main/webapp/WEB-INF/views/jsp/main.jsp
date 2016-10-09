@@ -40,7 +40,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
- <div class="logo"> <a href="main.jsp"> <img src="img/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main"> <img src="img/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -55,9 +55,9 @@
 							</select>
 						</form>
 					</li>
-          <li class="active"><a href="main.jsp">Home</a>
-		  <li><a href="myProfile.jsp">My profile</a>
-		  <li><a href="myAlbums.jsp">My Albums</a>
+          <li class="active"><a href="main">Home</a>
+		  <li><a href="myProfile">My profile</a>
+		  <li><a href="myAlbums">My Albums</a>
           </li>
           <li><a>Categories</a>
             <ul>
@@ -73,7 +73,7 @@
 								<li><a href="category?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
-          <li><a href="topTen.jsp">Top 10</a>
+          <li><a href="topTen">Top 10</a>
           </li>
           <li><a href="logOut">Log out</a></li>
         </ul>

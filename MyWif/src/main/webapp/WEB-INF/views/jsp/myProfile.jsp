@@ -49,7 +49,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
- <div class="logo"> <a href="main.jsp"> <img src="img/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main"> <img src="img/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -64,9 +64,9 @@
 							</select>
 						</form>
 					</li>
-          <li><a href="main.jsp">Home</a>
-		  <li class="active"><a href="myProfile.jsp">My profile</a>
-		  <li><a href="myAlbums.jsp">My Albums</a>
+          <li><a href="main">Home</a>
+		  <li class="active"><a href="myProfile">My profile</a>
+		  <li><a href="myAlbums">My Albums</a>
           </li>
           <li><a>Categories</a>
             <ul>
@@ -82,7 +82,7 @@
 			  <li><a href="category?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
-          <li><a href="topTen.jsp">Top 10</a>
+          <li><a href="topTen">Top 10</a>
           </li>
           <li><a href="logOut">Log out</a></li>
         </ul>
@@ -103,7 +103,7 @@
       <a class="button" href="javascript:showhide('/picture/change')">Change profile picture</a>
       <div id="picture/change" style="display:none;">	
 		<fieldset>
-				<form action="ChangeProfilePictureServlet" method="post" enctype="multipart/form-data">
+				<form action="settings/change" method="post" enctype="multipart/form-data">
 					Upload your new profile picture<input type="file" name="fileField" value="" class="text-input required"><br>
 					<input type="submit" value="Save">
 				</form>
@@ -114,14 +114,14 @@
 		 
 		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
-  		    <h4><a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="picture/profile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
 
       <h1>Following</h1>
       
        <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
-  		    <h4><a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="picture/profile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
     
     <div class="two-third last">

@@ -28,10 +28,29 @@ public class PictureController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
 	@RequestMapping(value="/picture/profile", method=RequestMethod.GET)
-	public String profile(){
-		return null;
+	public void profile(@RequestParam (value="email") String email, HttpSession session,HttpServletResponse response){
+		if(email != null){
+			User user = UsersManager.getInstance().getUser(email);
+			returnProfilePic(user, response);
+		}
+		String logged = (String) session.getAttribute("USER");
+		if(logged == null){//session is new or expired
+			System.out.println("This should not happen right now. Might happen later on other pages");
+		}
+		else{
+			User user = UsersManager.getInstance().getUser(logged);
+			returnProfilePic(user, response);
+			
+		}
 	}
-	
+	public static void returnProfilePic(User u,  HttpServletResponse response) throws IOException{
+		File profilePicFile = new File("D:\\MyWifPictures\\userProfilePics", u.getAvatarPath());
+		response.setContentLength((int)profilePicFile.length());
+		String contentType = "image/"+profilePicFile.getName().split("[.]")[profilePicFile.getName().split("[.]").length-1];
+		response.setContentType(contentType);
+		OutputStream out = response.getOutputStream();
+		Files.copy(profilePicFile.toPath(), out);
+	}
 	@RequestMapping(value="/picture/post", method=RequestMethod.GET)
 	public String post(@RequestParam (value="postId") String postId,HttpServletResponse response){
 		if (PostDAO.getInstance().getAllPosts().containsKey(Integer.parseInt(postId))) {
@@ -94,11 +113,12 @@ public class PictureController {
 	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String search(@RequestParam("input") String input,@RequestParam("type") String type,HttpServletRequest request){
-		ArrayList<Searchable> search = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
-		request.setAttribute("search", search);
+		ArrayList<Searchable> searchResult = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
+		request.setAttribute("search", searchResult);
 		request.setAttribute("input", input);
-		request.setAttribute("count", search.size());
+		request.setAttribute("count", searchResult.size());
 		request.setAttribute("type", type);
+		System.out.println(searchResult.size());
 		return "search";
 	}
 }

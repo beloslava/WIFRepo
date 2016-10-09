@@ -23,24 +23,24 @@
 <link rel="stylesheet" type='text/css'
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="static/css/ie8.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie8.css" media="all">
 <![endif]-->
 <!--[if IE 9]>
-<link rel="stylesheet" type="text/css" href="static/css/ie9.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/ie9.css" media="all">
 <![endif]-->
-<script src="static/js/jquery-1.7.2.min.js"></script>
-<script src="static/js/ddsmoothmenu.js"></script>
-<script src="static/js/retina.js"></script>
-<script src="static/js/selectnav.js"></script>
-<script src="static/js/jquery.masonry.min.js"></script>
-<script src="static/js/jquery.fitvids.js"></script>
-<script src="static/js/jquery.backstretch.min.js"></script>
-<script src="static/js/mediaelement.min.js"></script>
-<script src="static/js/mediaelementplayer.min.js"></script>
-<script src="static/js/jquery.dcflickr.1.0.js"></script>
-<script src="static/js/twitter.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/ddsmoothmenu.js"></script>
+<script src="js/retina.js"></script>
+<script src="js/selectnav.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/jquery.fitvids.js"></script>
+<script src="js/jquery.backstretch.min.js"></script>
+<script src="js/mediaelement.min.js"></script>
+<script src="js/mediaelementplayer.min.js"></script>
+<script src="js/jquery.dcflickr.1.0.js"></script>
+<script src="js/twitter.min.js"></script>
 <script>
-	$.backstretch("static/img/bg/1.jpg");
+	$.backstretch("img/bg/1.jpg");
 </script>
 </head>
 <body>
@@ -48,7 +48,7 @@
 	<div class="header-wrapper opacity">
 		<div class="header">
 			<div class="logo">
-				<a href="main.jsp"> <img src="static/img/logo.png" alt="">
+				<a href="main"> <img src="img/logo.png" alt="">
 				</a>
 				
 			</div>
@@ -69,9 +69,9 @@
 							</select>
 						</form>
 					</li>
-						<li><a href="main.jsp">Home</a></li>
-						<li><a href="myProfile.jsp">My profile</a></li>
-						<li><a href="myAlbums.jsp">My albums</a></li>
+						<li><a href="main">Home</a></li>
+						<li><a href="myProfile">My profile</a></li>
+						<li><a href="myAlbums">My albums</a></li>
 						<li><a>Categories</a>
 							<ul>
 								<li><a href="category?category=abstract">Abstract</a></li>
@@ -85,7 +85,7 @@
 								<li><a href="category?category=urban">Urban</a></li>
 								<li><a href="category?category=uncategorized">Uncategorized</a></li>
 							</ul></li>
-						<li class="active"><a href="topTen.jsp">Top 10</a></li>
+						<li class="active"><a href="topTen">Top 10</a></li>
 						<li><a href="logOut">Log out</a></li>
 					</ul>
 				</div>
@@ -101,7 +101,7 @@
 	<c:forEach var='post' items='${PostDAO.getInstance().getTopTenPosts()}'>
     
      <div class="post format-image box">"
-        <div class="frame"> <a href="details/post?postId=<c:out value="${post.id}"></c:out>"/><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
+        <div class="frame"> <a href="details/post?postId=<c:out value="${post.id}"></c:out>"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"></a> </div>
         <div class="details"> 
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
@@ -111,7 +111,7 @@
 	       <span class="comments"><a href="/details/post?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       
-    
+    </div>
    	</c:forEach>
 			
 			</div>
@@ -265,7 +265,8 @@
 				</div>
 			</div>
 		</div>
+		</div>
 	<div class="site-generator-wrapper"></div>
-	<script src="static/js/scripts.js"></script>
+	<script src="js/scripts.js"></script>
 </body>
 </html>

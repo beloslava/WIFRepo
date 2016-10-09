@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/form-elements.css">
-        <link rel="stylesheet" href="css/style_form.css">
+        <link rel="stylesheet" href="css/form-style.css">
         
         <!-- Favicon and touch icons -->
         <link rel="shortcut icon" href="img/logo.png">
@@ -44,7 +44,7 @@
                     
                     <div class="row">
                         <div class="col-sm-5">
-                        	 <div class="logo"> <a href="main.jsp"> <img src="img/logo@2x.png" alt=""> </a> </div>
+                        	 <div class="logo"> <a> <img src="img/logo@2x.png" alt=""> </a> </div>
                         	<div class="form-box">
 	                        	<div class="form-top">
 	                        		<div class="form-top-left">

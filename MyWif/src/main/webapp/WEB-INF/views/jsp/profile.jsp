@@ -49,7 +49,7 @@
 <div class="scanlines"></div>
 <div class="header-wrapper opacity">
   <div class="header">
- <div class="logo"> <a href="main.jsp"> <img src="img/logo.png" alt=""> </a> </div>
+ <div class="logo"> <a href="main"> <img src="img/logo.png" alt=""> </a> </div>
     <div id="menu-wrapper">
       <div id="menu" class="menu">
         <ul id="tiny">
@@ -64,9 +64,9 @@
 							</select>
 						</form>
 					</li>
-          <li><a href="main.jsp">Home</a>
-		  <li ><a href="myProfile.jsp">My profile</a>
-		  <li><a href="myAlbums.jsp">My Albums</a>
+          <li><a href="main">Home</a>
+		  <li ><a href="myProfile">My profile</a>
+		  <li><a href="myAlbums">My Albums</a>
           </li>
           <li><a>Categories</a>
             <ul>
@@ -82,7 +82,7 @@
 			  <li><a href="category?category=uncategorized">Uncategorized</a></li>
             </ul>
           </li>
-          <li><a href="topTen.jsp">Top 10</a>
+          <li><a href="topTen">Top 10</a>
           </li>
           <li><a href="logOut">Log out</a></li>
         </ul>
@@ -101,21 +101,21 @@
 
 <!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->
     
-    	<a href="FollowServlet?emaiToFollow=<c:out value="${user.email}"></c:out>"><img src="img/follow.png" width="100" alt="" /></a><br>
+    	<a href="follow?emaiToFollow=<c:out value="${user.email}"></c:out>"><img src="img/follow.png" width="100" alt="" /></a><br>
       <div class="outer none"><span class="inset"><img src="picture/profile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <h1>Followers</h1>
        <c:set var="userEmail" value="${sessionScope.USER}" />
 		 
 		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
-  		    <h4><a href="ProfileServlet?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="picture/profile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
 
       <h1>Following</h1>
       
        <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
-  		    <h4><a href="ProfileServlet?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="picture/profile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
     </div>
     
