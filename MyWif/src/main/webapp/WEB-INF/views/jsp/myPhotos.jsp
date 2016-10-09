@@ -95,7 +95,7 @@
   <div class="blog-wrap">
   <div id="upload" style="display:none;">
     <div class="post format-image box">
-      <form class="forms" action="create/post" method="post" enctype="multipart/form-data">
+      <form class="forms" action="createpost" method="post" enctype="multipart/form-data">
         <fieldset>
           <ol>
             <li class="form-row text-input-row">
