@@ -1,5 +1,9 @@
 package com.mywif.model.db;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,12 +28,17 @@ import com.mywif.model.pojo.UsersManager;
 public class PostDAO implements IPostDAO {
 
 	private static final String INSERT_INTO_POSTS = "INSERT INTO posts (user_email, album_id, category_name, picture, post_name, key_words) VALUES (?,?,?,?,?,?);";
-	private static final String DELETE_POST = "DELETE FROM posts WHERE post_id = ?;";
 	private static final String SELECT_ALL_POSTS = "SELECT post_id, user_email, album_id, category_name, picture, post_name, key_words, post_date FROM posts ORDER BY post_date DESC;";
 	private static final String LIKE_POST = "INSERT INTO post_likes (post_id, user_email) VALUES (?,?);";
 	private static final String DISLIKE_POST = "INSERT INTO post_dislikes (post_id, user_email) VALUES (?,?);";
 	private static final String SELECT_LIKES_BY_POST = "SELECT user_email FROM post_likes WHERE post_id = ?;";
 	private static final String SELECT_DISLIKES_BY_POST = "SELECT user_email FROM post_dislikes WHERE post_id = ?;";
+	private static final String DELETE_POST = "DELETE FROM posts WHERE post_id = ?;";
+	private static final String DELETE_LIKES = "DELETE FROM post_likes WHERE post_id = ?;";
+	private static final String DELETE_DISLIKES = "DELETE FROM post_dislikes WHERE post_id = ?;";
+	private static final String DELETE_PARENT_COMMENTS = "DELETE FROM post_comments WHERE parent_comment_id = ?;";
+	private static final String DELETE_COMMENTS = "DELETE FROM post_comments WHERE post_id = ?;";
+	private static final String DELETE_COMMENTS_LIKES = "DELETE FROM comments_likes WHERE comment_id = ?;";
 	
 	private TreeMap<Integer, Post> allPosts; // all posts from the page
 	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from userEmails
@@ -159,7 +168,6 @@ public class PostDAO implements IPostDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, userEmail);
 			statement.setObject(2, albumId);
-		//	statement.setNull(2, java.sql.Types.INTEGER);
 			statement.setString(3, category);
 			statement.setString(4, picture);
 			statement.setString(5, name);
@@ -511,8 +519,110 @@ public class PostDAO implements IPostDAO {
 		
 		return posts;
 	}
+	
 	public String getPostUserName(int id){
 		String email=getPost(id).getUserEmail();
 		return UsersManager.getInstance().getUser(email).getName();
+	}
+	
+	public void deletePostFromDB(int postId) {
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		PreparedStatement ps4 = null;
+		PreparedStatement ps5 = null;
+		PreparedStatement ps6 = null;
+
+		Connection conn = (Connection) DBManager.getInstance().getConnection();
+		try{
+			DBManager.getInstance().getConnection().setAutoCommit(false);
+			
+			ps1 = conn.prepareStatement(DELETE_LIKES);
+			ps1.setInt(1, postId); //delete post likes
+			ps1.executeUpdate(); 
+			
+			ps2 = conn.prepareStatement(DELETE_DISLIKES);
+			ps2.setInt(1, postId); //delete post dislikes
+			ps2.executeUpdate();
+			
+			ps3 = conn.prepareStatement(DELETE_COMMENTS_LIKES);	
+			ps4 = conn.prepareStatement(DELETE_PARENT_COMMENTS);			
+
+			for(Comment comment : getPost(postId).getComments()){
+				ps3.setInt(1, comment.getCommentId()); //delete comment likes
+				ps3.executeUpdate();
+				
+				ps4.setObject(1, comment.getParentCommentId()); //delete comments that have parent comment
+				ps4.executeUpdate();
+			}
+			
+			ps5 = conn.prepareStatement(DELETE_COMMENTS);			
+			ps5.setInt(1, postId); //delete comments
+			ps5.executeUpdate();
+						
+			ps6 = conn.prepareStatement(DELETE_POST);
+			ps6.setInt(1, postId); //delete post
+			ps6.executeUpdate();
+			
+			conn.commit();
+		}
+		catch(SQLException e){
+			try {
+				conn.rollback();
+				System.out.println("Rollback!");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally {
+			try {
+				conn.setAutoCommit(true);
+				if(ps1 != null){
+					ps1.close();
+				}
+				if(ps2 != null){
+					ps2.close();
+				}
+				if(ps3 != null){
+					ps3.close();
+				}
+				if(ps4 != null){
+					ps4.close();
+				}
+				if(ps5 != null){
+					ps5.close();
+				}
+				if(ps6 != null){
+					ps6.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Something went wrong with setting autoCommit true!");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public void removePost(int postId, String userName) {
+		// TODO
+		if (allPosts.containsKey(postId)) {
+			allPosts.remove(postId);
+			postDislikes.remove(postId);
+			postLikes.remove(postId);
+			Post postToDelete = allPosts.get(postId);
+			
+			//remove comments from CommentDAO
+			File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());
+			
+			try {
+				Files.deleteIfExists(picture.toPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+		}
+
 	}
 }

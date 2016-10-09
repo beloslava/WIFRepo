@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,7 @@ import com.mywif.model.pojo.UsersManager;
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
-
+@Controller
 public class PictureController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
@@ -31,7 +33,12 @@ public class PictureController {
 	public void profile(@RequestParam (value="email") String email, HttpSession session,HttpServletResponse response){
 		if(email != null){
 			User user = UsersManager.getInstance().getUser(email);
-			returnProfilePic(user, response);
+			try {
+				returnProfilePic(user, response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		String logged = (String) session.getAttribute("USER");
 		if(logged == null){//session is new or expired
@@ -39,7 +46,12 @@ public class PictureController {
 		}
 		else{
 			User user = UsersManager.getInstance().getUser(logged);
-			returnProfilePic(user, response);
+			try {
+				returnProfilePic(user, response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 	}
@@ -69,7 +81,7 @@ public class PictureController {
 		User user = UsersManager.getInstance().getUser(email);
 		File picFile = new File("D:\\MyWifPictures\\userPostPics" + user.getName(), post.getPicture());
 		response.setContentLength((int) picFile.length());
-		String contentType = "image/" + picFile.getName().split("[.]")[picFile.getName().split("[.]").length - 1];
+		String contentType = "image/" + picFile.getName().split("[.]")[picFile.getName().split("[.]").length-1];
 		response.setContentType(contentType);
 		OutputStream out = response.getOutputStream();
 		Files.copy(picFile.toPath(), out);
