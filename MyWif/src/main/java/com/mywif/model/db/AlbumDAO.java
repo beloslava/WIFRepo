@@ -6,14 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.mywif.model.pojo.Album;
-import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -23,7 +20,7 @@ public class AlbumDAO {
 	private static final String INSERT_INTO_ALBUMS = "INSERT INTO albums (album_name, user_email) VALUES (?,?);";
 	private static final String SELECT_ALBUMS = "SELECT album_id, album_name, user_email, album_date FROM albums ORDER BY album_date DESC;";
 	
-	private HashMap<String, TreeMap<Integer, ArrayList<Post>>> albumsByUser; // user email -> album id -> list of posts
+	//private HashMap<String, TreeMap<Integer, ArrayList<Post>>> albumsByUser; // user email -> album id -> list of posts
 	private TreeMap<Integer, Album> allAlbums; //album id -> album
 	
 	private static AlbumDAO instance;

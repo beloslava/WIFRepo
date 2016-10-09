@@ -5,6 +5,8 @@
 <%@ page import="com.mywif.model.pojo.User"%>
 <%@ page import="com.mywif.model.pojo.Post"%>
 <%@ page import="com.mywif.model.db.PostDAO"%>
+<%@ page import="com.mywif.model.db.CommentDAO"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
@@ -107,6 +109,8 @@
         <h3 id="comments-title"><c:out value="${fn:length(post.comments)}"></c:out> Responses </h3>
         <ol id="singlecomments" class="commentlist">
            <c:set var="x" value="0"/>
+           <c:set var="postId" value="${post.id} "/>
+           
 		 <c:forEach var='comment' items='${CommentDAO.getInstance().takeAllCommentsByPost(post.id)}'>		 
 		 	   <c:set var="user" value="${UsersManager.getInstance().getUser(comment.userEmail)}"/>		
 			   <c:set var="x" value="${1+x}"/>

@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.UsersManager;
-
+@SessionAttributes({ "USER"})
 @Controller
 @MultipartConfig
 public class UserController {
@@ -51,7 +51,8 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		session.setAttribute("USER", email);
+	//	session.setAttribute("USER", email);
+		model.addAttribute("USER", email);
 		System.out.println("hi");
 		return "main";
 	}
