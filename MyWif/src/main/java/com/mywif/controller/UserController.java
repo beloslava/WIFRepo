@@ -32,17 +32,19 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mywif.model.db.PostDAO;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @MultipartConfig
 public class UserController {
-	
+
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String logIn(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
+	public String logIn(@RequestParam("email") String email, @RequestParam("password") String password, Model model,
+			HttpSession session) {
 		try {
 			if (!UsersManager.getInstance().validLogin(email, password)) {
 				return "indecc";
@@ -51,19 +53,16 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
 		session.setAttribute("USER", email);
 		System.out.println("hi");
 		return "main";
 	}
-	
-	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welcome() {
-
 		return "index";
 	}
-
 
 	@Scope("session")
 	@RequestMapping(value = "/logOut", method = RequestMethod.POST)
@@ -77,11 +76,12 @@ public class UserController {
 
 	@RequestMapping(value = "/settingschange", method = RequestMethod.POST)
 	protected String changeSettings(@RequestParam("newName") String newName, @RequestParam("oldPass") String oldPass,
-			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2, @RequestParam("gender") String gender,
-			@RequestParam("newDescription") String newDescription, HttpServletRequest request) {
+			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2,
+			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
+			HttpServletRequest request) {
 
-		String email=request.getSession().getAttribute("USER").toString();
-		 
+		String email = request.getSession().getAttribute("USER").toString();
+
 		System.out.println(newName);
 		System.out.println(oldPass);
 		System.out.println(newPass);
@@ -102,19 +102,17 @@ public class UserController {
 
 		return "myProfile";
 	}
-	
+
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow,  HttpSession session)  {
-		String myEmail = (String) session.getAttribute("USER");
-		UsersManager.getInstance().follow(emaiToFollow, myEmail);
-		return "detailsprofile?email="+emaiToFollow;
+	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow, @RequestParam("USER") String myEmail) {
+		return "detailsprofile?email=" + emaiToFollow;
 	}
 
-	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	protected String register(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("password2") String password2,
-			@RequestParam("email") String email, @RequestParam("fileField") MultipartFile avatar) {
-		
+	protected String register(@RequestParam("name") String name, @RequestParam("password") String password,
+			@RequestParam("password2") String password2, @RequestParam("email") String email,
+			@RequestParam("fileField") MultipartFile avatar) throws IOException {
+
 		InputStream avatarStream = null;
 		try {
 			avatarStream = avatar.getInputStream();
@@ -126,34 +124,27 @@ public class UserController {
 				"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
 		Matcher mattcher = pattern.matcher(email);
 		String jsp = "";
-		
-		if ( ((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty()) && (!password.isEmpty()) && (password.equals(password2))
-				&& (!name.isEmpty())) {
+
+		if (((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty())
+				&& (!password.isEmpty()) && (password.equals(password2)) && (!name.isEmpty())) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			File avatarFile=new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
+			File avatarFile = new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
 			System.out.println(avatarFile.getAbsolutePath());
-			try {
-				Files.copy(avatarStream, avatarFile.toPath(),StandardCopyOption.REPLACE_EXISTING );
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Files.copy(avatarStream, avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
 			System.out.println("Try to save file with name: " + avatarFile.getName());
 			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
-			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(),
-					new HashSet<>(),new HashSet<>(), 
-					new TreeMap<Integer, Album>());
-			jsp="index";
+			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
+					new HashSet<>(), new TreeMap<Integer, Album>());
+			jsp = "index";
+		} else {
+			jsp = "registerFailed";
 		}
-		else {
-			jsp="registerFailed";
-		}
-		
+
 		return jsp;
 	}
-
 
 }

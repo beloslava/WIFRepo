@@ -113,7 +113,7 @@
 						<div class="frame">
 							<a
 								href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-								src="picture/post?postId=<c:out value="${post.id}"></c:out>" /></a>
+								src="picturepost?postId=<c:out value="${post.id}"></c:out>" /></a>
 						</div>
 						<div class="details">
 							<span class="icon-artist"><a
@@ -121,11 +121,11 @@
 								<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
 								title="author name"><c:out value="${userName}"></c:out></a></span> <span
 								class="likes"><a
-								href="post/like?postId=<c:out value="${post.id}"></c:out>"
+								href="postlike?postId=<c:out value="${post.id}"></c:out>"
 								class="likeThis" title="likes"> <c:out
 										value="${fn:length(post.dislikes)}"></c:out></a></span> <span
 								class="likes"><a
-								href="post/dislike?postId=<c:out value="${post.id}"></c:out>"
+								href="postdislike?postId=<c:out value="${post.id}"></c:out>"
 								class="likeThis" title="dislikes"><c:out
 										value="${fn:length(post.likes)}"></c:out></a></span> <span
 								class="comments"><a
@@ -230,7 +230,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -251,7 +251,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -271,7 +271,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">

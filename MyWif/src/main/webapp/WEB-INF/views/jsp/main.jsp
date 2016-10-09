@@ -88,16 +88,16 @@
     <div class="blog-grid">
     
     
-    <c:forEach var='post' items='${PostDAO.getInstance().getAllPosts().values()}'>
+    <c:forEach var="post" items="${allPosts}">
     
      <div class="post format-image box">
-        <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
+        <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
         <div class="details"> 
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
 	       <span class="icon-artist"><a href="detailsprofile?email=<c:out value="${post.userEmail}"></c:out>>" title="author name"><c:out value= "${userName}"></c:out></a></span> 
-	       <span class="dislikes"><a href="post/dislike?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
-	       <span class="likes"><a href="post/like?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
+	       <span class="dislikes"><a href="postdislike?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
+	       <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
 	       <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       </div>

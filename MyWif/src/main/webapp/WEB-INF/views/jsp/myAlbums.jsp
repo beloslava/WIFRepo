@@ -118,11 +118,11 @@
 	        <div class="frame"> <a href="detailsalbum?albumId=<c:out value= "${album.albumId}"></c:out>">
 	    
 	    	<c:choose>
-				<c:when test= "${empty fn:length(album.posts)}">
-					<img src="style/images/bg/1.jpg">										
+				<c:when test= "${fn:length(album.posts)==0}">
+					<img src="img/bg/1.jpg">										
 				</c:when>
 				<c:otherwise>
-					<img src="picture/post?postId=<c:out value= "${PostDAO.getInstance().getPost(album.posts[0].id).id}"></c:out>">
+					<img src="picturepost?postId=<c:out value= "${PostDAO.getInstance().getPost(album.posts[0].id).id}"></c:out>">
 				</c:otherwise>
 			 </c:choose> </a>
 	   
@@ -224,7 +224,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -245,7 +245,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -265,7 +265,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">

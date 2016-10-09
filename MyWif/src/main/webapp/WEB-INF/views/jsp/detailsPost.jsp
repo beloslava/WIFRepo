@@ -35,6 +35,12 @@
 <script src="js/jquery.dcflickr.1.0.js"></script>
 <script src="js/twitter.min.js"></script>
 <script>$.backstretch("img/bg/1.jpg");</script>
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+ }
+</script>
 </head>
 <body class="single">
 <div class="scanlines"></div>
@@ -83,21 +89,19 @@
   </div>
 </div>
 <div class="wrapper">
- <c:set var="post" value="${PostDAO.getInstance().getPost(param.postId)}" scope="page"/>   
-   <c:set var="postUser" value="${UsersManager.getInstance().getUser(post.userEmail)}"/>
   <div class="intro">
-  <h1>"<c:out value="${post.name}"></c:out>" created by <a href="picture/profile?email=<c:out value="${post.userEmail}"></c:out>"><c:out value="${postUser.name}"></c:out></a></h1>
+  <h1>"<c:out value="${post.name}"></c:out>" created by <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><c:out value="${postUser.name}"></c:out></a></h1>
   </div>
   <div class="main-image">
-    <div class="outer"> <span class="inset"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"></span> </div>
+    <div class="outer"> <span class="inset"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span> </div>
   </div>
   <div class="content">
 
     <div class="post format-image box">
       <div class="details"> 
 	      <span class="icon-date"><c:out value="${post.createdOn}"></c:out></span> 
-	      <span class="dislikes"><a href="post/dislike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
-	      <span class="likes"><a href="post/like?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
+	      <span class="dislikes"><a href="postdislike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
+	      <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
 	      <span class="comments"><c:out value="${fn:length(post.comments)}"></c:out></span>
       </div>
       <div class="tags"><a href="#"><c:out value="${post.keyWords}"></c:out></a></div>
@@ -107,23 +111,23 @@
         <h3 id="comments-title"><c:out value="${fn:length(post.comments)}"></c:out> Responses </h3>
         <ol id="singlecomments" class="commentlist">
            <c:set var="x" value="0"/>
-		 <c:forEach var='comment' items='${CommentDAO.getInstance().takeAllCommentsByPost(post.id)}'>		 
+		 <c:forEach var='comment' items='${comments}'>		 
 		 	   <c:set var="user" value="${UsersManager.getInstance().getUser(comment.userEmail)}"/>		
-			   <c:set var="x" value="${1+x}"/>
+			   <c:set var="x" value="${x+1}"/>
           <li class="comment">
             <div class="comment">
               <div class="comment-author vcard user frame"> 
-                  <a href="picture/profile?email=<c:out value="${user.email}"></c:out>">
-                  <img src="picture/profile?email=<c:out value="${user.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
+                  <a href="pictureprofile?email=<c:out value="${user.email}"></c:out>">
+                  <img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
                   </a>
                   </div>
               <div class="message"> 
               	<span class="reply-link">
               		<a class="comment-reply-link" href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
-              		<a class="comment-reply-link" href="comment/like?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
               	</span>
                 <div class="info">
-                  <a href="picture/profile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>
+                  <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>
                   <span class="meta"><c:out value="${comment.createdOn}"></c:out></span> </div>
                 <div class="comment-body ">
                   <p><c:out value="${comment.text}"></c:out></p>
@@ -136,7 +140,7 @@
         				<div id="comment-form" class="comment-form">
 					        <div id="respond">
 					          <h3 id="reply-title">Leave a Reply to <c:out value="${user.name}"></c:out> comment</h3>
-					          <form action="comment/write" method="get" id="commentform">
+					          <form action="commentwrite" method="get" id="commentform">
 					            <p class="comment-form-author">
 					              <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
 					            </p>
@@ -158,7 +162,7 @@
 					      </div>
     				</div>
             <div class="clear"></div>
-<c:forEach var='reply' items='${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}'>
+<c:forEach var="reply" items="${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}">
 		 	   <c:set var="replyUser" value="${UsersManager.getInstance().getUser(reply.userEmail)}"/>
 		 	
                        <ul class='children'>
@@ -171,10 +175,10 @@
                   </div>
                   <div class="message"> 
                   <span class="reply-link">
-              		<a class="comment-reply-link" href="comment/like?commentId=<c:out value="${reply.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${reply.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
               	  </span>
                     <div class="info">
-                      <a href="picture/profile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${replyUser.name}"></c:out></h2></a>
+                      <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${replyUser.name}"></c:out></h2></a>
                       <span class="meta"><c:out value="${reply.createdOn}"></c:out></span> </div>
                     <div class="comment-body ">
                       <p><c:out value="${reply.text}"></c:out></p>
@@ -194,7 +198,7 @@
       <div id="comment-form" class="comment-form">
         <div id="respond">
           <h3 id="reply-title">Leave a Reply</h3>
-          <form action="comment/write" method="get" id="commentform">
+          <form action="commentwrite" method="get" id="commentform">
             <p class="comment-form-author">
               <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
             </p>
@@ -202,7 +206,7 @@
 				<input id="author" name="parentCommentId" type="hidden" value="parent" size="30" aria-required="true">
 			</p>
             <p class="comment-form-email">
-<%--               <input id="email" name="email" type="hidden" value="<%=session.getAttribute("USER").toString() %>" size="30" aria-required="true"> --%>
+              <input id="email" name="email" type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>" size="30" aria-required="true">
             </p>
             <p class="comment-form-comment">
               <label for="comment">Comment</label>
@@ -288,8 +292,8 @@
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
 					<c:set var="user" value="${sessionScope.USER}" />									
-					<c:forEach var='followerEmail'
-						items='${UsersManager.getInstance().getFollowersByUser(user)}'
+					<c:forEach var="followerEmail"
+						items="${UsersManager.getInstance().getFollowersByUser(user)}"
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
@@ -300,8 +304,8 @@
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
-					<c:forEach var='followedEmail'
-						items='${UsersManager.getInstance().getFollowedByUser(user)}'
+					<c:forEach var="followedEmail"
+						items="${UsersManager.getInstance().getFollowedByUser(user)}"
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
@@ -322,7 +326,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -343,7 +347,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -363,7 +367,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
