@@ -120,7 +120,7 @@
               <div class="message"> 
               	<span class="reply-link">
               		<a class="comment-reply-link" href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
-              		<a class="comment-reply-link" href="comment/like?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
               	</span>
                 <div class="info">
                   <a href="picture/profile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>
@@ -294,7 +294,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="picture/profile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="pictureprofile?email=<c:out value="${followerEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -306,7 +306,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="picture/profile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -321,14 +321,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -342,14 +342,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -362,14 +362,14 @@
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="details/post?postId=<c:out value="${post.id}"></c:out>"><img
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>

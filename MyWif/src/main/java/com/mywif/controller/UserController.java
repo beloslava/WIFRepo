@@ -75,7 +75,7 @@ public class UserController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/settings/change", method = RequestMethod.POST)
+	@RequestMapping(value = "/settingschange", method = RequestMethod.POST)
 	protected String changeSettings(@RequestParam("newName") String newName, @RequestParam("oldPass") String oldPass,
 			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2, @RequestParam("gender") String gender,
 			@RequestParam("newDescription") String newDescription, HttpServletRequest request) {

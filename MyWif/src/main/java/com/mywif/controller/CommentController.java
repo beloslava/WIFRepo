@@ -17,7 +17,7 @@ import com.mywif.model.db.CommentDAO;
 @Controller
 public class CommentController {
 
-	@RequestMapping(value = "/comment/like", method = RequestMethod.GET)
+	@RequestMapping(value = "/commentlike", method = RequestMethod.GET)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			@RequestParam("email") String email, HttpServletRequest request) {
 		request.setAttribute(commentId, Integer.parseInt(commentId));
@@ -31,7 +31,7 @@ public class CommentController {
 	}
 	
 	
-	@RequestMapping(value = "/comment/write", method = RequestMethod.GET)
+	@RequestMapping(value = "/commentwrite", method = RequestMethod.GET)
 	protected String writeComment(@RequestParam("emailUser") String emailUser, @RequestParam("comment") String comment,
 			 HttpServletRequest request, @RequestParam("parentCommentId") String parentCommentId,  @RequestParam("postId") String postId) {
 	

@@ -18,19 +18,19 @@ public class DetailController {
 		return "category";
 	}
 	
-	@RequestMapping(value="/details/album", method=RequestMethod.GET)
+	@RequestMapping(value="/detailsalbum", method=RequestMethod.GET)
 	public String album(@RequestParam("albumId") String albumId,HttpServletRequest request){
 		request.setAttribute("albumId", Integer.parseInt(albumId));
 		return "myPhotos";
 	}
 	
-	@RequestMapping(value="/details/post", method=RequestMethod.GET)
+	@RequestMapping(value="/detailspost", method=RequestMethod.GET)
 	public String post(@RequestParam("postId") String postId,HttpServletRequest request){
-		request.setAttribute("postId", Integer.parseInt(postId));
+		request.setAttribute("postId", postId);
 		return "detailsPost";
 	}
 	
-	@RequestMapping(value="/details/profile", method=RequestMethod.GET)
+	@RequestMapping(value="/detailsprofile", method=RequestMethod.GET)
 	public String profile(@RequestParam("email") String email,HttpServletRequest request){
 		request.setAttribute("email", email);
 		String jsp="";
