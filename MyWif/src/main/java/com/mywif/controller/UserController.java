@@ -11,32 +11,22 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
-import com.mywif.model.db.UserDAO;
 import com.mywif.model.pojo.Album;
+import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
 
 @Controller
@@ -81,18 +71,13 @@ public class UserController {
 		return "index";
 	}
 
-	@Scope("session")
 	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
-	protected String logOut(@RequestParam("USER") String email, HttpSession session, Model model) {
+	protected String logOut(HttpSession session, Model model) {
 		if (session.getAttribute("USER") != null) {
 			session.setAttribute("USER", null);
 			session.invalidate();
 
 		}
-		// if(model.containsAttribute("USER")){
-		// model.addAttribute("USER", null);
-		//
-		// }
 		return "index";
 	}
 
@@ -104,15 +89,8 @@ public class UserController {
 
 		String email = request.getSession().getAttribute("USER").toString();
 
-		System.out.println(newName);
-		System.out.println(oldPass);
-		System.out.println(newPass);
-		System.out.println(newPass2);
-		System.out.println(gender);
-		System.out.println(newDescription);
-		System.out.println(email);
-		if (newName != null && oldPass != null && newPass != null && newPass2 != null && gender != null
-				&& newDescription != null) {
+		if (newName != null && oldPass != null && newPass != null && newPass2 != null && 
+				newPass.equals(newPass2) && gender != null && newDescription != null) {
 			try {
 				UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
 			} catch (UnsupportedEncodingException e) {
@@ -161,17 +139,16 @@ public class UserController {
 		String jsp = "";
 
 		if (((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty())
-				&& (!password.isEmpty()) && (password.equals(password2)) && (!name.isEmpty())) {
+				&& (!password.isEmpty()) && (password.equals(password2) && User.isPaswordStrong(password)) && (!name.isEmpty()) && (name.trim().length() >= 3)) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 			File avatarFile = new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
-			System.out.println(avatarFile.getAbsolutePath());
+//			System.out.println(avatarFile.getAbsolutePath());
 			Files.copy(avatarStream, avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-			System.out.println("Try to save file with name: " + avatarFile.getName());
-			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
+//			System.out.println("Try to save file with name: " + avatarFile.getName());
+//			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
 			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
 					new HashSet<>(), new TreeMap<Integer, Album>());
 			jsp = "index";

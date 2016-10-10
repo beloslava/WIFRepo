@@ -1,12 +1,8 @@
 package com.mywif.model.pojo;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class User implements Searchable {
 	// email, password, name, avatarPath, age, gender, personalDescription
@@ -61,13 +57,13 @@ public class User implements Searchable {
 	// remove follower from user followers
 	public void removeFollower(String userEmail) {
 		followers.remove(userEmail);
-		
+
 	}
 
 	// remove followed from user followed users
 	public void removeFollowed(String userEmail) {
 		followed.remove(userEmail);
-		
+
 	}
 
 	public String getAvatarPath() {
@@ -135,4 +131,22 @@ public class User implements Searchable {
 		return getEmail();
 	}
 
+	public static boolean isPaswordStrong(String password) {
+		boolean letter = false;
+		boolean number = false;
+
+		for (int i = 0; i < password.length(); i++) {
+			if (letter == false && password.charAt(i) >= 'A' && password.charAt(i) <= 'z') {
+				letter = true;
+			}
+			if (number == false && password.charAt(i) >= '0' && password.charAt(i) <= '9') {
+				number = true;
+			}
+
+			if (number && letter && password.length() > 4) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

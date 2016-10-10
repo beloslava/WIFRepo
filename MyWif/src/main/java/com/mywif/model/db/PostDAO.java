@@ -572,4 +572,9 @@ public class PostDAO implements IPostDAO {
 		}
 
 	}
+	
+	public String getPostUserName(int id){
+		String email=getPost(id).getUserEmail();
+		return UsersManager.getInstance().getUser(email).getName();
+	}
 }

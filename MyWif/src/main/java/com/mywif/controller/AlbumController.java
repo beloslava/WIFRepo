@@ -60,7 +60,7 @@ public class AlbumController {
 	public String likePost(@RequestParam(value="postId") String postId,Model model,Session session ){
 		model.addAttribute("postId", postId);
 		String email=session.getAttribute("USER").toString();
-		PostDAO.getInstance().likePost(Integer.parseInt(postId),email );
+		PostDAO.getInstance().likePost(Integer.parseInt(postId),email);
 		return "detailsPost";
 	}
 	

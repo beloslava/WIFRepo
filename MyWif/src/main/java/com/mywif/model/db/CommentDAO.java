@@ -278,9 +278,8 @@ public class CommentDAO implements ICommentDAO {
 				e.printStackTrace();
 			}
 		}
-
+		
 		return commentComments;
-
 	}
 	
 	/**
@@ -331,7 +330,6 @@ public class CommentDAO implements ICommentDAO {
 		}
 
 		return allComments;
-
 	}
 	
 	/**

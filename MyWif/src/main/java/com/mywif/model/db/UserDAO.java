@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import com.mywif.model.pojo.Album;
-import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
 
