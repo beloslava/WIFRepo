@@ -108,17 +108,17 @@
 
 <!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->   
     <c:choose>
-			<c:when test= "${isFollowed}">
-				<form action="unfollow" method="post" >
-				 <input type="image" src="img/following.png" width="100" alt="" />
+			<c:when test= "${not isFollowed}">
+				<form action="follow" method="post" >
+				 <input type="image" src="img/follow.png" width="100" alt="" />
 			     <input type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>">
 				 <input name="email" type="hidden" value="<c:out value="${user.email}"></c:out>" >       
 				 <input type="submit" value="">					           
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="follow" method="post" >
-				 <input type="image" src="img/follow.png" width="100" alt="" />
+				<form action="unfollow" method="post" >
+				 <input type="image" src="img/following.png" width="100" alt="" />
 			     <input type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>">
 				 <input name="email" type="hidden" value="<c:out value="${user.email}"></c:out>" >       
 				 <input type="submit" value="">					           
