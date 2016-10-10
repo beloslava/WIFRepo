@@ -15,7 +15,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,8 @@ import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @MultipartConfig
-@SessionAttributes({"animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts", "uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts"})
+@SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class UserController {
 
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
@@ -51,7 +51,7 @@ public class UserController {
 		session.setAttribute("USER", email);
 		model.addAttribute("USER", email);
 		System.out.println("hi");
-		
+
 		model.addAttribute("animalsPosts", PostDAO.getInstance().getAllPostsByCategory("animals").size());
 		model.addAttribute("abstractPosts", PostDAO.getInstance().getAllPostsByCategory("abstract").size());
 		model.addAttribute("foodPosts", PostDAO.getInstance().getAllPostsByCategory("food").size());
@@ -62,7 +62,7 @@ public class UserController {
 		model.addAttribute("familyPosts", PostDAO.getInstance().getAllPostsByCategory("family").size());
 		model.addAttribute("sportPosts", PostDAO.getInstance().getAllPostsByCategory("sport").size());
 		model.addAttribute("travelPosts", PostDAO.getInstance().getAllPostsByCategory("travel").size());
-		
+
 		return "main";
 	}
 
@@ -76,7 +76,6 @@ public class UserController {
 		if (session.getAttribute("USER") != null) {
 			session.setAttribute("USER", null);
 			session.invalidate();
-
 		}
 		return "index";
 	}
@@ -86,39 +85,54 @@ public class UserController {
 			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2,
 			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
 			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			String email = request.getSession().getAttribute("USER").toString();
 
-		String email = request.getSession().getAttribute("USER").toString();
+			if (newName != null && oldPass != null && newPass != null && newPass2 != null && newPass.equals(newPass2)
+					&& gender != null && newDescription != null) {
+				try {
+					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-		if (newName != null && oldPass != null && newPass != null && newPass2 != null && 
-				newPass.equals(newPass2) && gender != null && newDescription != null) {
-			try {
-				UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
+			return "myProfile";
+		} else {
+			return "index";
 		}
 
-		return "myProfile";
 	}
 
 	@RequestMapping(value = "/unfollow", method = RequestMethod.POST)
-	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
-		model.addAttribute("email", emaiToFollow);
-		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
-		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
-		return "profile";
+	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			model.addAttribute("email", emaiToFollow);
+			model.addAttribute("myEmail", session.getAttribute("USER").toString());
+			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
+					session.getAttribute("USER").toString()));
+			return "profile";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
-	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
-		model.addAttribute("email", emaiToFollow);
-		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
-		return "profile";
+	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			model.addAttribute("email", emaiToFollow);
+			model.addAttribute("myEmail", session.getAttribute("USER").toString());
+			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
+					session.getAttribute("USER").toString()));
+			return "profile";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -139,16 +153,19 @@ public class UserController {
 		String jsp = "";
 
 		if (((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty())
-				&& (!password.isEmpty()) && (password.equals(password2) && User.isPaswordStrong(password)) && (!name.isEmpty()) && (name.trim().length() >= 3)) {
+				&& (!password.isEmpty()) && (password.equals(password2) && User.isPaswordStrong(password))
+				&& (!name.isEmpty()) && (name.trim().length() >= 3)) {
 			File dir = new File(USERS_PROFILE_PICS_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 			File avatarFile = new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
-//			System.out.println(avatarFile.getAbsolutePath());
+			// System.out.println(avatarFile.getAbsolutePath());
 			Files.copy(avatarStream, avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//			System.out.println("Try to save file with name: " + avatarFile.getName());
-//			System.out.println("abs. path = " + avatarFile.getAbsolutePath());
+			// System.out.println("Try to save file with name: " +
+			// avatarFile.getName());
+			// System.out.println("abs. path = " +
+			// avatarFile.getAbsolutePath());
 			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
 					new HashSet<>(), new TreeMap<Integer, Album>());
 			jsp = "index";
@@ -157,6 +174,10 @@ public class UserController {
 		}
 
 		return jsp;
+	}
+
+	public static boolean isUserInSession(HttpServletRequest request) {
+		return request.getSession().getAttribute("USER") != null;
 	}
 
 }

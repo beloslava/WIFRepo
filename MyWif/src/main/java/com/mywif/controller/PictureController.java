@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -75,38 +76,47 @@ public class PictureController {
 	}
 
 	@RequestMapping(value = "/picturechange", method = RequestMethod.POST)
-	public String change(HttpSession session, @RequestParam(value = "fileField") MultipartFile picture)
-			throws IOException {
-		String email = session.getAttribute("USER").toString();
-		String name = UsersManager.getInstance().getUser(email).getName();
-		InputStream pictureStream = null;
-		try {
-			pictureStream = picture.getInputStream();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		File dir = new File(USERS_PROFILE_PICS_DIR);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		System.out.println(picture.getContentType());
-		File pictureFile = new File(dir, name + "-profile-pic." + picture.getContentType().split("/")[1]);
-		System.out.println(pictureFile.getAbsolutePath());
-		Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		UsersManager.getInstance().changeAvatar(pictureFile.getName(), email);
+	public String change(HttpSession session, @RequestParam(value = "fileField") MultipartFile picture,
+			HttpServletRequest request) throws IOException {
+		if (UserController.isUserInSession(request)) {
+			String email = session.getAttribute("USER").toString();
+			String name = UsersManager.getInstance().getUser(email).getName();
+			InputStream pictureStream = null;
+			try {
+				pictureStream = picture.getInputStream();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			File dir = new File(USERS_PROFILE_PICS_DIR);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			System.out.println(picture.getContentType());
+			File pictureFile = new File(dir, name + "-profile-pic." + picture.getContentType().split("/")[1]);
+			System.out.println(pictureFile.getAbsolutePath());
+			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			UsersManager.getInstance().changeAvatar(pictureFile.getName(), email);
 
-		return "myProfile";
+			return "myProfile";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search(@RequestParam("input") String input, @RequestParam("type") String type, Model model) {
-		ArrayList<Searchable> searchResult = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
-		model.addAttribute("search", searchResult);
-		model.addAttribute("input", input);
-		model.addAttribute("count", searchResult.size());
-		model.addAttribute("type", type);
-		System.out.println(searchResult.size());
-		return "search";
+	public String search(@RequestParam("input") String input, @RequestParam("type") String type, Model model,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			ArrayList<Searchable> searchResult = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
+			model.addAttribute("search", searchResult);
+			model.addAttribute("input", input);
+			model.addAttribute("count", searchResult.size());
+			model.addAttribute("type", type);
+			System.out.println(searchResult.size());
+			return "search";
+		} else {
+			return "index";
+		}
 	}
 }
