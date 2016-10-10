@@ -5,6 +5,8 @@
 <%@ page import="com.mywif.model.pojo.User"%>
 <%@ page import="com.mywif.model.pojo.Post"%>
 <%@ page import="com.mywif.model.db.PostDAO"%>
+<%@ page import="com.mywif.model.db.CommentDAO"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
@@ -139,7 +141,7 @@
         				<div id="comment-form" class="comment-form">
 					        <div id="respond">
 					          <h3 id="reply-title">Leave a Reply to <c:out value="${user.name}"></c:out> comment</h3>
-					          <form action="commentwrite" method="get" id="commentform">
+					          <form action="commentwrite" method="post" id="commentform">
 					            <p class="comment-form-author">
 					              <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
 					            </p>
@@ -161,7 +163,7 @@
 					      </div>
     				</div>
             <div class="clear"></div>
-<c:forEach var="reply" items="${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}">
+		<c:forEach var="reply" items="${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}">
 		 	   <c:set var="replyUser" value="${UsersManager.getInstance().getUser(reply.userEmail)}"/>
 		 	
                        <ul class='children'>
@@ -174,7 +176,7 @@
                   </div>
                   <div class="message"> 
                   <span class="reply-link">
-              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${reply.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${reply.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(reply.commentLikes)}"></c:out></a>
               	  </span>
                     <div class="info">
                       <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${replyUser.name}"></c:out></h2></a>
