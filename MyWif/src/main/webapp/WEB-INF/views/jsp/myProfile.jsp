@@ -56,11 +56,11 @@
         <li>
 						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+								onFocus="this.value=''" />
 								<label>Search in </label>
 			                <select name="type">
-							       <option value="users">users
 							       <option value="posts">posts
+							       <option value="users">users
 							</select>
 						</form>
 					</li>
@@ -100,10 +100,10 @@
   <div class="box">
     <div class="one-third">
       <div class="outer none"><span class="inset"><img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
-      <a class="button" href="javascript:showhide('/picture/change')">Change profile picture</a>
+      <a class="button" href="javascript:showhide('picture/change')">Change profile picture</a>
       <div id="picture/change" style="display:none;">	
 		<fieldset>
-				<form action="picture/change" method="post" enctype="multipart/form-data">
+				<form action="picturechange" method="post" enctype="multipart/form-data">
 					Upload your new profile picture<input type="file" name="fileField" value="" class="text-input required"><br>
 					<input type="submit" value="Save">
 				</form>
@@ -123,7 +123,7 @@
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
   		    <h4><a href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
-    
+    </div>
     <div class="two-third last">
 	    <h2><c:out value="${user.name}"></c:out></h2>
 		<h1><b>Email: </b><c:out value="${user.email}"></c:out></h1>
@@ -139,7 +139,7 @@
 		
 			<c:choose>
 			<c:when test= "${user.about != null}">
-			<h1><b>Gender: </b><c:out value="${user.about}"></c:out></h1>
+			<h1><b>About: </b><c:out value="${user.about}"></c:out></h1>
 									
 			</c:when>
 			<c:otherwise>
@@ -166,22 +166,20 @@
     <div class="clear"></div>
   </div>
 </div>
-</div>
 <div class="footer-wrapper">
 		<div id="footer" class="four">
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
-						<input type="text" name="input" value="type and hit enter"
-							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
-						<label>Search in </label> <select name="type">
-							<option value="users">users
-
-								<option value="posts">posts
-						
-						</select>
-					</form>
+							<input type="text" name="input" value="type and hit enter"
+								onFocus="this.value=''" />
+								<label>Search in </label>
+			                <select name="type">
+							       <option value="posts">posts
+							       <option value="users">users
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_search">
 				<h3 class="widget-title"></h3>

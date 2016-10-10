@@ -57,14 +57,14 @@
 					<ul id="tiny">
 						<li>
 							<form class="searchform" method="get" action="search">
-								<input type="text" name="input" value="type and hit enter"
-									onFocus="this.value=''"
-									onBlur="this.value='type and hit enter'" /> <label>Search
-									in </label> <select name="type">
-									<option value="users">users
-									<option value="posts">posts
-								</select>
-							</form>
+							<input type="text" name="input" value="type and hit enter"
+								onFocus="this.value=''" />
+								<label>Search in </label>
+			                <select name="type">
+							       <option value="posts">posts
+							       <option value="users">users
+							</select>
+						</form>
 						</li>
 						<li><a href="main">Home</a>
 						<li><a href="myProfile">My profile</a>
@@ -101,7 +101,7 @@
 			:
 		</div>
 		<div class="box">
-			<div class="two-third last">
+<!-- 			<div class="two-third last"> -->
 			
 				<c:set var="search" value="${requestScope.search}"  />
 				<c:forEach var='searchResult' items='${requestScope.search}'>
@@ -128,7 +128,7 @@
 
 				</c:forEach>
 			
-			</div>
+<!-- 			</div> -->
 			<div class="clear"></div>
 		</div>
 	</div>
@@ -138,15 +138,14 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
-						<input type="text" name="input" value="type and hit enter"
-							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
-						<label>Search in </label> <select name="type">
-							<option value="users">users
-
-								<option value="posts">posts
-						
-						</select>
-					</form>
+							<input type="text" name="input" value="type and hit enter"
+								onFocus="this.value=''" />
+								<label>Search in </label>
+			                <select name="type">
+							       <option value="posts">posts
+							       <option value="users">users
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_search">
 				<h3 class="widget-title"></h3>
