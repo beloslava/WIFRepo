@@ -41,6 +41,7 @@ import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @MultipartConfig
+@SessionAttributes({"animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts", "uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts"})
 public class UserController {
 
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
@@ -60,6 +61,18 @@ public class UserController {
 		session.setAttribute("USER", email);
 		model.addAttribute("USER", email);
 		System.out.println("hi");
+		
+		model.addAttribute("animalsPosts", PostDAO.getInstance().getAllPostsByCategory("animals").size());
+		model.addAttribute("abstractPosts", PostDAO.getInstance().getAllPostsByCategory("abstract").size());
+		model.addAttribute("foodPosts", PostDAO.getInstance().getAllPostsByCategory("food").size());
+		model.addAttribute("peoplePosts", PostDAO.getInstance().getAllPostsByCategory("people").size());
+		model.addAttribute("naturePosts", PostDAO.getInstance().getAllPostsByCategory("nature").size());
+		model.addAttribute("urbanPosts", PostDAO.getInstance().getAllPostsByCategory("urban").size());
+		model.addAttribute("uncategorizedPosts", PostDAO.getInstance().getAllPostsByCategory("uncategorized").size());
+		model.addAttribute("familyPosts", PostDAO.getInstance().getAllPostsByCategory("family").size());
+		model.addAttribute("sportPosts", PostDAO.getInstance().getAllPostsByCategory("sport").size());
+		model.addAttribute("travelPosts", PostDAO.getInstance().getAllPostsByCategory("travel").size());
+		
 		return "main";
 	}
 
@@ -116,8 +129,8 @@ public class UserController {
 	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
 		model.addAttribute("email", emaiToFollow);
 		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
 		UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
 		return "profile";
 	}
 
@@ -125,8 +138,8 @@ public class UserController {
 	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
 		model.addAttribute("email", emaiToFollow);
 		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
 		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
 		return "profile";
 	}
 
