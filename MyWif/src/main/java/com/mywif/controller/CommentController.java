@@ -22,7 +22,7 @@ import com.mywif.model.pojo.UsersManager;
 @Controller
 public class CommentController {
 
-	@RequestMapping(value = "/commentlike", method = RequestMethod.GET)
+	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			@RequestParam("email") String email, HttpServletRequest request,Model model,HttpSession session) {
 		model.addAttribute("commentId", Integer.parseInt(commentId));

@@ -59,10 +59,11 @@
 						<li>
 							<form class="searchform" method="get" action="search">
 								<input type="text" name="input" value="type and hit enter"
-									onFocus="this.value=''" /> <label>Search
+									onFocus="this.value=''"
+									onBlur="this.value='type and hit enter'" /> <label>Search
 									in </label> <select name="type">
-									<option value="post">users
-									<option value="users">posts
+									<option value="users">users
+									<option value="posts">posts
 								</select>
 							</form>
 						</li>
@@ -151,13 +152,15 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
-								<input type="text" name="input" value="type and hit enter"
-									onFocus="this.value=''" /> <label>Search
-									in </label> <select name="type">
-									<option value="post">users
-									<option value="users">posts
-								</select>
-							</form>
+						<input type="text" name="input" value="type and hit enter"
+							onFocus="this.value=''" onBlur="this.value='type and hit enter'" />
+						<label>Search in </label> <select name="type">
+							<option value="users">users
+
+								<option value="posts">posts
+						
+						</select>
+					</form>
 				</div>
 				<div class="widget widget_search">
 				<h3 class="widget-title"></h3>
