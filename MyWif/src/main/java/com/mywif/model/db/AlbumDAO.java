@@ -6,24 +6,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.mywif.model.pojo.Album;
-import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
 
-public class AlbumDAO {
+public class AlbumDAO implements IAlbumDAO {
 
 	private static final String INSERT_INTO_ALBUMS = "INSERT INTO albums (album_name, user_email) VALUES (?,?);";
 	private static final String SELECT_ALBUMS = "SELECT album_id, album_name, user_email, album_date FROM albums ORDER BY album_date DESC;";
 	
-	private HashMap<String, TreeMap<Integer, ArrayList<Post>>> albumsByUser; // user email -> album id -> list of posts
 	private TreeMap<Integer, Album> allAlbums; //album id -> album
 	
 	private static AlbumDAO instance;
@@ -40,6 +36,7 @@ public class AlbumDAO {
 		return instance;
 	}
 	
+	@Override
 	public void addAlbum(String albumName, String userEmail, Timestamp time, List<Post> posts){
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -56,8 +53,6 @@ public class AlbumDAO {
 						
 			Album album = new Album((int)id, albumName, userEmail, time, new ArrayList<Post>());
 			User user = UsersManager.getInstance().getUser(userEmail);
-//			TreeMap<Integer, Album> albums = new TreeMap<>();
-//			albums.put((int)id, album);
 
 			user.addAlbumInAlbum(album);
 			allAlbums.put((int)id, album);
@@ -82,7 +77,7 @@ public class AlbumDAO {
 		
 	}
 	
-	public Map<Integer, Album> getAllAlbums(){
+	private Map<Integer, Album> getAllAlbums(){
 		TreeMap<Integer, Album> allAlbums = new TreeMap<Integer, Album>((albumId1, albumId2) -> albumId2 - albumId1);
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -126,6 +121,7 @@ public class AlbumDAO {
 		return allAlbums;
 	}
 	
+	@Override
 	public TreeMap<Integer, Album> getAllAlbumsByUser(String userEmail){
 		TreeMap<Integer, Album> albums = new TreeMap<>((albumId1, albumId2) -> albumId2 - albumId1); //album id->list from posts
 		for(Album album : allAlbums.values()){

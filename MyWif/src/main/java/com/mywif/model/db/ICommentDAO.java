@@ -13,9 +13,11 @@ public interface ICommentDAO {
 			Timestamp time, ArrayList<Comment> commentComments, Set<String> likes);
 
 	void removeComment(int commentId);
-
-	List<Comment> getAllCommentsByPost(int postId);
 	
 	List<Comment> takeAllCommentsByPost(int postId);
+	
+	List<Comment> takeAllCommentsByComment(int commentId);
+	
+	void likeComment(int commentId, String userEmail);
 
 }

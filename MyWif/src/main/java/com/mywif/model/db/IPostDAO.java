@@ -14,8 +14,6 @@ public interface IPostDAO {
 	void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
 			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes);
 
-	void removePost(String userEmail, Post post);
-
 	void likePost(int postId, String userEmail);
 
 	void dislikePost(int postId, String userEmail);
@@ -32,10 +30,4 @@ public interface IPostDAO {
 	
 	Set<String> getAllDislikesForPost(int postId); //get all user's emails that disliked the post
 	
-	int getNumberOfPostDislikes(int postId);
-	
-	int getNumberOfPostLikes(int postId);
-
-
-
 }

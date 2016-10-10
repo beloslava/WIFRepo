@@ -117,7 +117,6 @@ public class PostDAO implements IPostDAO {
 				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"), 
 																	resultSet.getString("user_email"),
 																	(int)resultSet.getLong("album_id"),
-																//	resultSet.getInt("album_id"),
 																	resultSet.getString("category_name"),
 																	resultSet.getString("picture"),
 																	resultSet.getString("post_name"),
@@ -207,27 +206,6 @@ public class PostDAO implements IPostDAO {
 
 	}
 
-	@Override
-	public void removePost(String userEmail, Post post) {
-		//TODO
-		if (getAllPostsByUser(userEmail).contains(post)) {
-			getAllPostsByUser(userEmail).remove(post);
-			// user.getPosts().remove(post);
-			allPosts.remove(post.getId());
-
-			try {
-				PreparedStatement statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_POST);
-				statement.setInt(1, post.getId());
-				statement.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("The post can not be delete right now");
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("There is no such post for this user");
-		}
-
-	}
 	/**
 	 * like post and put it in db and user's posts
 	 * @param post id
@@ -393,26 +371,6 @@ public class PostDAO implements IPostDAO {
 	}
 	
 	/**
-	 * get number of likes for the post from post collection
-	 * @param post id
-	 * @return number of likes for the post
-	 */
-	@Override
-	public int getNumberOfPostLikes(int postId){
-		return getPost(postId).getLikes().size();
-	}
-	
-	/**
-	 * get number of dislikes for the post from post collection
-	 * @param post id
-	 * @return number of dislikes for the post
-	 */
-	@Override
-	public int getNumberOfPostDislikes(int postId){
-		return getPost(postId).getDislikes().size();
-	}
-	
-	/**
 	 * get all posts for a user from allPosts collection
 	 * @param user email
 	 * @return list with user's posts
@@ -446,15 +404,9 @@ public class PostDAO implements IPostDAO {
 				postsByTag.add(post);
 			}
 		}
-
 		return postsByTag;
+	}
 
-	}
-	
-	public int getSizeOfPostsByCategory(String category){
-		return getAllPostsByCategory(category).size();
-	}
-	
 	/**
 	 * get top ten posts from allPosts collection
 	 * @return list with ten most liked posts
@@ -518,11 +470,6 @@ public class PostDAO implements IPostDAO {
 		}
 		
 		return posts;
-	}
-	
-	public String getPostUserName(int id){
-		String email=getPost(id).getUserEmail();
-		return UsersManager.getInstance().getUser(email).getName();
 	}
 	
 	public void deletePostFromDB(int postId) {

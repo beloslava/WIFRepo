@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -130,95 +128,90 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 
-	/**
-	 * get all comments from db
-	 * @return map with comment id -> comment 
-	 */
-	public Map<Integer, Comment> getAllComments() {
-		TreeMap<Integer, Comment> allComments = new TreeMap<Integer, Comment>((commentId1, commentId2) -> commentId2 - commentId1);
-		
-		Statement statement = null;
-		ResultSet resultSet = null;
-		try {
-			statement = DBManager.getInstance().getConnection().createStatement();
-			//comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date
-			resultSet = statement.executeQuery(SELECT_ALL_COMMENTS);
-			while (resultSet.next()) {
-				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
-				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
-				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
-						resultSet.getInt("post_id"),
-						resultSet.getString("user_email"),
-						(int) resultSet.getLong("parent_comment_id"),
-						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date"),
-						commentComments, 
-						commentLikes
-
-			));
-
-			}
-		} catch (SQLException e) {
-			System.out.println("Cannot get comments right now");
-			e.printStackTrace();
-			return allComments;
-
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-				if (resultSet != null) {
-					resultSet.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return allComments;
-
-	}
+	
+	
 	
 	/**
-	 * get all comments for a post from db
-	 * @param comment id
+	 * get all comments for a post from the post 
+	 * @param post id
 	 * @return list with comments for this post
 	 */
 	@Override
-	public List<Comment> getAllCommentsByPost(int postId) {
-		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
-		// post_comments
-		List<Comment> postComments = new ArrayList<>();
+	public List<Comment> takeAllCommentsByPost(int postId) { 
+		Post post = PostDAO.getInstance().getPost(postId);
+		List<Comment> commentsByPost = post.getComments();
+		//Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return commentsByPost;
+	}
+	
+	/**
+	 * get all comments for comment from the comment 
+	 * @param comment id
+	 * @return list with comments for this comment
+	 */
+	@Override
+	public List<Comment> takeAllCommentsByComment(int commentId) { 
+		Comment comment = getComment(commentId);
+		List<Comment> commentsByComment = comment.getCommentComments();
+		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return commentsByComment;
+	}
+	
+	
+	@Override
+	public void likeComment(int commentId, String userEmail){
+		PreparedStatement statement = null;
+	//	System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
+		if((!commentLikes.containsKey(commentId) || !commentLikes.get(commentId).contains(userEmail))){
+			try {
+				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_COMMENT);
+				statement.setInt(1, commentId);
+				statement.setString(2, userEmail);
+				statement.executeUpdate();
+				
+				Comment comment = getComment(commentId);
 
+				if(!commentLikes.containsKey(commentId)){
+					commentLikes.put(commentId, new HashSet<>());
+				}
+				commentLikes.get(commentId).add(userEmail);
+				
+				comment.addCommentLike(userEmail);
+
+				
+				System.out.println("like comment");
+			} catch (SQLException e) {
+				System.out.println("The post cannot be liked right now");
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement != null) {
+						statement.close();
+					}
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+	
+	private Set<String> getAllLikesForComment(int commentId) {	
+		HashSet<String> likesByComment = new HashSet<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_POST);
-			statement.setInt(1, postId);
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENT_LIKES);
+			statement.setInt(1, commentId);
 			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
-				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
-
-				postComments.add(new Comment(resultSet.getInt("comment_id"), 
-						resultSet.getInt("post_id"),
-						resultSet.getString("user_email"), 
-				(int) resultSet.getLong("parent_comment_id"),
-						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date"),
-						commentComments, 
-						commentLikes
-
-				));
-
+			while(resultSet.next()){
+				likesByComment.add(resultSet.getString("user_email"));
 			}
 		} catch (SQLException e) {
-			System.out.println("Cannot get post's comments right now");
+			System.out.println("The likes for the comment cannot be selected right now");
 			e.printStackTrace();
-			return postComments;
-
 		} finally {
 			try {
 				if (statement != null) {
@@ -232,9 +225,8 @@ public class CommentDAO implements ICommentDAO {
 				e.printStackTrace();
 			}
 		}
-
-		return postComments;
-
+		
+		return likesByComment;
 	}
 	
 	/**
@@ -292,56 +284,38 @@ public class CommentDAO implements ICommentDAO {
 	}
 	
 	/**
-	 * get all comments for a post from the post 
-	 * @param post id
-	 * @return list with comments for this post
+	 * get all comments from db
+	 * @return map with comment id -> comment 
 	 */
-	@Override
-	public List<Comment> takeAllCommentsByPost(int postId) { 
-		Post post = PostDAO.getInstance().getPost(postId);
-		List<Comment> commentsByPost = post.getComments();
-		//Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
-		return commentsByPost;
-	}
-	
-	/**
-	 * get all comments for comment from the comment 
-	 * @param comment id
-	 * @return list with comments for this comment
-	 */
-	public List<Comment> takeAllCommentsByComment(int commentId) { 
-		Comment comment = getComment(commentId);
-		List<Comment> commentsByComment = comment.getCommentComments();
-		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
-		return commentsByComment;
-	}
-	
-	public List<Comment> takeCommentsByComment() { 
+	public Map<Integer, Comment> getAllComments() {
+		TreeMap<Integer, Comment> allComments = new TreeMap<Integer, Comment>((commentId1, commentId2) -> commentId2 - commentId1);
 		
-		List<Comment> commentsByComment = new ArrayList<>();
-		for(Comment c : getAllComments().values()){
-			if(c.getParentCommentId() != 0){
-				commentsByComment.add(c);
-			}
-		}
-		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
-		return commentsByComment;
-	}
-	
-	public Set<String> getAllLikesForComment(int commentId) {	
-		HashSet<String> likesByComment = new HashSet<>();
-		PreparedStatement statement = null;
+		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENT_LIKES);
-			statement.setInt(1, commentId);
-			resultSet = statement.executeQuery();
-			while(resultSet.next()){
-				likesByComment.add(resultSet.getString("user_email"));
+			statement = DBManager.getInstance().getConnection().createStatement();
+			//comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date
+			resultSet = statement.executeQuery(SELECT_ALL_COMMENTS);
+			while (resultSet.next()) {
+				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
+				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
+						resultSet.getInt("post_id"),
+						resultSet.getString("user_email"),
+						(int) resultSet.getLong("parent_comment_id"),
+						resultSet.getString("comment_text"),
+						resultSet.getTimestamp("comment_date"),
+						commentComments, 
+						commentLikes
+
+			));
+
 			}
 		} catch (SQLException e) {
-			System.out.println("The likes for the comment cannot be selected right now");
+			System.out.println("Cannot get comments right now");
 			e.printStackTrace();
+			return allComments;
+
 		} finally {
 			try {
 				if (statement != null) {
@@ -355,46 +329,64 @@ public class CommentDAO implements ICommentDAO {
 				e.printStackTrace();
 			}
 		}
-		
-		return likesByComment;
+
+		return allComments;
+
 	}
 	
-	public void likeComment(int commentId, String userEmail){
+	/**
+	 * get all comments for a post from db
+	 * @param comment id
+	 * @return list with comments for this post
+	 */
+	
+	public List<Comment> getAllCommentsByPost(int postId) {
+		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
+		// post_comments
+		List<Comment> postComments = new ArrayList<>();
+
 		PreparedStatement statement = null;
-	//	System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
-		if((!commentLikes.containsKey(commentId) || !commentLikes.get(commentId).contains(userEmail))){
+		ResultSet resultSet = null;
+		try {
+			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_COMMENTS_BY_POST);
+			statement.setInt(1, postId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
+				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
+
+				postComments.add(new Comment(resultSet.getInt("comment_id"), 
+						resultSet.getInt("post_id"),
+						resultSet.getString("user_email"), 
+				(int) resultSet.getLong("parent_comment_id"),
+						resultSet.getString("comment_text"),
+						resultSet.getTimestamp("comment_date"),
+						commentComments, 
+						commentLikes
+
+				));
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Cannot get post's comments right now");
+			e.printStackTrace();
+			return postComments;
+
+		} finally {
 			try {
-				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_COMMENT);
-				statement.setInt(1, commentId);
-				statement.setString(2, userEmail);
-				statement.executeUpdate();
-				
-				Comment comment = getComment(commentId);
-
-				if(!commentLikes.containsKey(commentId)){
-					commentLikes.put(commentId, new HashSet<>());
+				if (statement != null) {
+					statement.close();
 				}
-				commentLikes.get(commentId).add(userEmail);
-				
-				comment.addCommentLike(userEmail);
-
-				
-				System.out.println("like comment");
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
-				System.out.println("The post cannot be liked right now");
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				try {
-					if (statement != null) {
-						statement.close();
-					}
-
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		}
+
+		return postComments;
 
 	}
 	
