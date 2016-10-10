@@ -322,62 +322,62 @@
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
-									scope="session" />							
+									 />							
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 						</li>
 
 						<li>
 							<div class="frame">
 							
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
-									scope="session" />
+									 />
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 						</li>
 						<li>
 							<div class="frame">
 							
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
-									scope="session" />
+									/>
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>			
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 
 						</li>
