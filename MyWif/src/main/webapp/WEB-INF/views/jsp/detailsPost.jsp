@@ -92,7 +92,7 @@
 </div>
 <div class="wrapper">
   <div class="intro">
-  <h1>"<c:out value="${post.name}"></c:out>" created by <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><c:out value="${postUser.name}"></c:out></a></h1>
+  <h1>"<c:out value="${post.name}"></c:out>" created by <a href="detailsprofile?email=<c:out value="${post.userEmail}"></c:out>"><c:out value="${postUser.name}"></c:out></a></h1>
   </div>
   <div class="main-image">
     <div class="outer"> <span class="inset"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span> </div>
@@ -106,7 +106,7 @@
 	      <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
 	      <span class="comments"><c:out value="${fn:length(post.comments)}"></c:out></span>
       </div>
-      <div class="tags"><a href="#"><c:out value="${post.keyWords}"></c:out></a></div>
+      <div class="tags"><a><c:out value="${post.keyWords}"></c:out></a></div>
     </div>
     <div id="comment-wrapper" class="box">
       <div id="comments">
