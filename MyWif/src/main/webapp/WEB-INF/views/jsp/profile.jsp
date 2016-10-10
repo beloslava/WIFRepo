@@ -106,9 +106,16 @@
     <div class="one-third">
 <!--     <button onclick="document.getElementById('myImage').src='img/following.png'">Turn on the light</button> -->
 
-<!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->
+<!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->   
     
-      <img src="img/follow.png" onclick="followUser('<c:out value="${user.email}"></c:out>')" width="100" alt="" /><br>
+   			<form action="follow2" method="post" >
+				 <input type="image" src="img/follow.png" width="100" alt="" />
+			    <input type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>">
+				<input name="email" type="hidden" value="<c:out value="${user.email}"></c:out>" >       
+				<input type="submit" value="">					           
+			</form>  
+    
+  <!--      <img src="img/follow.png" onclick="followUser('<c:out value="${user.email}"></c:out>')" width="100" alt="" /><br>-->
       <div class="outer none"><span class="inset"><img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <h1>Followers</h1>
        <c:set var="userEmail" value="${sessionScope.USER}" />

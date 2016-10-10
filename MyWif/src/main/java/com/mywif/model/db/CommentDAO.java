@@ -316,6 +316,17 @@ public class CommentDAO implements ICommentDAO {
 		return commentsByComment;
 	}
 	
+	public List<Comment> takeCommentsByComment() { 
+		
+		List<Comment> commentsByComment = new ArrayList<>();
+		for(Comment c : getAllComments().values()){
+			if(c.getParentCommentId() != 0){
+				commentsByComment.add(c);
+			}
+		}
+		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
+		return commentsByComment;
+	}
 	
 	public Set<String> getAllLikesForComment(int commentId) {	
 		HashSet<String> likesByComment = new HashSet<>();

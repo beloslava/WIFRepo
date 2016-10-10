@@ -118,6 +118,14 @@ public class UserController {
 		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
 		//return "detailsprofile?email=" + emaiToFollow;
 	}
+	
+	@RequestMapping(value = "/follow2", method = RequestMethod.POST)
+	protected String follow2(@RequestParam("email") String emaiToFollow, HttpSession session, Model model){
+		model.addAttribute("email", emaiToFollow);
+		model.addAttribute("myEmail", session.getAttribute("USER").toString());
+		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+		return "profile";
+	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	protected String register(@RequestParam("name") String name, @RequestParam("password") String password,
