@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
@@ -27,6 +28,7 @@ import io.undertow.server.session.Session;
 import com.mywif.model.db.AlbumDAO;
 
 @Controller
+@SessionAttributes({"animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts", "uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts"})
 public class AlbumController {
 	
 	@RequestMapping(value="/createalbum", method=RequestMethod.POST)
@@ -38,7 +40,7 @@ public class AlbumController {
 	
 	@RequestMapping(value="/createpost", method=RequestMethod.POST)
 	public String createPost(@RequestParam(value="category") String category,@RequestParam(value="nameOfPost") String nameOfPost,
-			@RequestParam(value="keyWords") String keyWords,@RequestParam(value="email") String email,@RequestParam("fileField") MultipartFile picture,@RequestParam("albumId") int albumId) throws IOException{
+			@RequestParam(value="keyWords") String keyWords,@RequestParam(value="email") String email,@RequestParam("fileField") MultipartFile picture,@RequestParam("albumId") int albumId, Model model) throws IOException{
 		category=category.toLowerCase();
 		InputStream pictureStream = picture.getInputStream();
 			File dir = new File("D:\\MyWifPictures\\userPostPics"+UsersManager.getInstance().getUser(email).getName());
@@ -50,7 +52,8 @@ public class AlbumController {
 							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 				Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>(), new HashSet(), new HashSet<>());
+			PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords, Timestamp.valueOf(LocalDateTime.now()),new ArrayList<>(), new HashSet<>(), new HashSet<>());
+			model.addAttribute(category+"Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
 			return "main";
 	}
 	@RequestMapping(value="/postlike", method=RequestMethod.GET)
