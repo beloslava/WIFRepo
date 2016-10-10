@@ -55,23 +55,23 @@ public class DetailController {
 
 	 @RequestMapping(value="/topTen", method=RequestMethod.GET)
 	 public String viewTopTen(){
-	 return "topTen";
+		 return "topTen";
 	 }
 
 	 @RequestMapping(value = "/main", method = RequestMethod.GET)
 	 public String viewMain(Model model) {
 	 System.out.println(PostDAO.getInstance().getAllPosts().values().size());
 	 model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
-	 return "main";
+	 	return "main";
 	 }
 
 	 @RequestMapping(value="/myProfile", method=RequestMethod.GET)
 	 public String viewMyProfile(){
-	 return "myProfile";
+		 return "myProfile";
 	 }
 
 	 @RequestMapping(value="/myAlbums", method=RequestMethod.GET)
 	 public String viewMyAlbums(){
-	 return "myAlbums";
+		 return "myAlbums";
 	 }
 }

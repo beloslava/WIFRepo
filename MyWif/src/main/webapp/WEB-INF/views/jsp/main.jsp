@@ -195,7 +195,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -216,7 +216,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -236,7 +236,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">

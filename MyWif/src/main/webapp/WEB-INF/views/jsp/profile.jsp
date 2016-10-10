@@ -42,6 +42,13 @@
     var e = document.getElementById(id);
     e.style.display = (e.style.display == 'block') ? 'none' : 'block';
  }
+ 
+ function followUser(followedEmail){
+	 alert(followedEmail);
+	 $.post("follow", { email: followedEmail }  ,function(data, status){
+	        alert("yei");
+	    });
+ }
 </script>
 <script>$.backstretch("img/bg/1.jpg");</script>
 </head>
@@ -101,21 +108,21 @@
 
 <!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->
     
-    	<a href="follow?emaiToFollow=<c:out value="${user.email}"></c:out>"><img src="img/follow.png" width="100" alt="" /></a><br>
-      <div class="outer none"><span class="inset"><img src="picture/profile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
+      <img src="img/follow.png" onclick="followUser('<c:out value="${user.email}"></c:out>')" width="100" alt="" /><br>
+      <div class="outer none"><span class="inset"><img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <h1>Followers</h1>
        <c:set var="userEmail" value="${sessionScope.USER}" />
 		 
-		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
+		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(user.email)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
-  		    <h4><a href="picture/profile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="pictureprofile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
 
       <h1>Following</h1>
       
-       <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
+       <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(user.email)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
-  		    <h4><a href="picture/profile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
     </div>
     
@@ -147,7 +154,7 @@
 	<c:forEach var='post' items='${PostDAO.getInstance().getAllPostsByUser(param.email)}'>
     
      <div class="post format-image box">
-        <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picture/post?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
+        <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
         <div class="details"> 
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
@@ -248,7 +255,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -269,7 +276,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -289,7 +296,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">

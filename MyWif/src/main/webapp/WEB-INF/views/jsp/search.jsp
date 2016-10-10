@@ -112,7 +112,7 @@
 	   						 <c:when test="${fn:containsIgnoreCase(type, users)}">	   						 
 	   						 	<c:set var="email" value="${searchResult.getSearchableId()}" />   						 
 						        <a href="detailsprofile?email=<c:out value="${email}"></c:out>"><img
-								alt="" src="picture/profile?email=<c:out value="${email}"></c:out>"								
+								alt="" src="pictureprofile?email=<c:out value="${email}"></c:out>"								
 								<c:set var="userName" value="${UsersManager.getInstance().getUser(email).name}"/>															
 								width="100px"><c:out value="${userName}"></c:out></a>															
 						   	 </c:when>
@@ -120,7 +120,7 @@
 						 	 <c:otherwise>
 								<a href="detailspost?postId=<c:out value="${searchResult.getSearchableId()}"></c:out>"><img
 								alt=""
-								src="picture/post?postId=<c:out value="${searchResult.getSearchableId()}"></c:out>"	
+								src="picturepost?postId=<c:out value="${searchResult.getSearchableId()}"></c:out>"	
 								<c:set var="userName" value="${PostDAO.getInstance().getPostUserName(searchResult.getSearchableId())}"/>					
 								width="100px"><c:out value="${userName}"></c:out></a>
 						     </c:otherwise>
@@ -216,7 +216,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -237,7 +237,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -257,7 +257,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">

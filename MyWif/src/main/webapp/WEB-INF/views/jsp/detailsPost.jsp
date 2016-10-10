@@ -155,7 +155,7 @@
 					              <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
 					            </p>
 					            <p class="form-submit">
-					              <input name="submit" type="submit" id="submit" value="Post Comment">
+					              <input name="submit" type="submit" id="submit" value="Post Reply">
 					            </p>
 					          </form>
 					        </div>
@@ -169,8 +169,8 @@
               <li class="comment even depth-2" id="li-comment-5">
                 <div id="comment-5" class="com-wrap">
                   <div class="comment-author vcard user frame"> 
-                  <a href="picture/profile?email=<c:out value="${replyUser.email}"></c:out>">
-                  <img src="picture/profile?email=<c:out value="${replyUser.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
+                  <a href="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>">
+                  <img src="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
                   </a>
                   </div>
                   <div class="message"> 
@@ -198,7 +198,7 @@
       <div id="comment-form" class="comment-form">
         <div id="respond">
           <h3 id="reply-title">Leave a Reply</h3>
-          <form action="commentwrite" method="get" id="commentform">
+          <form action="commentwrite" method="post" id="commentform">
             <p class="comment-form-author">
               <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
             </p>

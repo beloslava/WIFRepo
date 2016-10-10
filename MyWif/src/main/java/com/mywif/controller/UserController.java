@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,10 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.db.UserDAO;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.UsersManager;
 
@@ -55,6 +58,7 @@ public class UserController {
 		}
 		model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
 		session.setAttribute("USER", email);
+		model.addAttribute("USER", email);
 		System.out.println("hi");
 		return "main";
 	}
@@ -65,12 +69,17 @@ public class UserController {
 	}
 
 	@Scope("session")
-	@RequestMapping(value = "/logOut", method = RequestMethod.POST)
-	protected String logOut(@RequestParam("email") String email, HttpSession session) {
+	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
+	protected String logOut(@RequestParam("USER") String email, HttpSession session, Model model) {
 		if (session.getAttribute("USER") != null) {
 			session.setAttribute("USER", null);
 			session.invalidate();
+			
 		}
+//		if(model.containsAttribute("USER")){
+//			model.addAttribute("USER", null);
+//			
+//		}
 		return "index";
 	}
 
@@ -102,10 +111,12 @@ public class UserController {
 
 		return "myProfile";
 	}
-
-	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	protected String follow(@RequestParam("emaiToFollow") String emaiToFollow, @RequestParam("USER") String myEmail) {
-		return "detailsprofile?email=" + emaiToFollow;
+	
+	@RequestMapping(value = "/follow", method = RequestMethod.POST)
+	@ResponseStatus(value=HttpStatus.OK)
+	protected void follow(@RequestParam("email") String emaiToFollow, HttpSession session) {
+		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+		//return "detailsprofile?email=" + emaiToFollow;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

@@ -34,7 +34,7 @@ public class CommentController {
 	}
 	
 	
-	@RequestMapping(value = "/commentwrite", method = RequestMethod.GET)
+	@RequestMapping(value = "/commentwrite", method = RequestMethod.POST)
 	protected String writeComment(@RequestParam("email") String email, @RequestParam("comment") String comment,
 			  @RequestParam("parentCommentId") String parentCommentId,  @RequestParam("postId") String postId,Model model) {
 		Integer parentId=null;

@@ -99,7 +99,7 @@
 
   <div class="box">
     <div class="one-third">
-      <div class="outer none"><span class="inset"><img src="picture/profile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
+      <div class="outer none"><span class="inset"><img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" alt=""></span></div>
       <a class="button" href="javascript:showhide('/picture/change')">Change profile picture</a>
       <div id="picture/change" style="display:none;">	
 		<fieldset>
@@ -114,14 +114,14 @@
 		 
 		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
-  		    <h4><a href="picture/profile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="pictureprofile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
 
       <h1>Following</h1>
       
        <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(userEmail)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
-  		    <h4><a href="picture/profile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
     
     <div class="two-third last">
@@ -251,7 +251,7 @@
 									scope="session" />							
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -272,7 +272,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
@@ -292,7 +292,7 @@
 									scope="session" />
 								<a
 									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picture/post?postId=<c:out value="${post.id}"></c:out>"
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
