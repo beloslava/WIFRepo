@@ -74,12 +74,12 @@ public class UserController {
 		if (session.getAttribute("USER") != null) {
 			session.setAttribute("USER", null);
 			session.invalidate();
-			
+
 		}
-//		if(model.containsAttribute("USER")){
-//			model.addAttribute("USER", null);
-//			
-//		}
+		// if(model.containsAttribute("USER")){
+		// model.addAttribute("USER", null);
+		//
+		// }
 		return "index";
 	}
 
@@ -111,18 +111,21 @@ public class UserController {
 
 		return "myProfile";
 	}
-	
-	@RequestMapping(value = "/follow", method = RequestMethod.POST)
-	@ResponseStatus(value=HttpStatus.OK)
-	protected void follow(@RequestParam("email") String emaiToFollow, HttpSession session) {
-		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-		//return "detailsprofile?email=" + emaiToFollow;
-	}
-	
-	@RequestMapping(value = "/follow2", method = RequestMethod.POST)
-	protected String follow2(@RequestParam("email") String emaiToFollow, HttpSession session, Model model){
+
+	@RequestMapping(value = "/unfollow", method = RequestMethod.POST)
+	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
 		model.addAttribute("email", emaiToFollow);
 		model.addAttribute("myEmail", session.getAttribute("USER").toString());
+		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
+		UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+		return "profile";
+	}
+
+	@RequestMapping(value = "/follow", method = RequestMethod.POST)
+	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model) {
+		model.addAttribute("email", emaiToFollow);
+		model.addAttribute("myEmail", session.getAttribute("USER").toString());
+		model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow, session.getAttribute("USER").toString()));
 		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
 		return "profile";
 	}

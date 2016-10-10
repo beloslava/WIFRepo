@@ -40,21 +40,36 @@ public class User implements Searchable {
 	public void addPostInAlbum(Post post) {
 		albums.get(post.getAlbumId()).addPost(post);
 	}
-	// add album in user albums 
-	public void addAlbumInAlbum( Album album) {
+
+	// add album in user albums
+	public void addAlbumInAlbum(Album album) {
 		albums.put(album.getAlbumId(), album);
 	}
-	
-	//add follower into user followers
-	public void addFollower(String userEmail){
-		followers.add(userEmail);;
+
+	// add follower into user followers
+	public void addFollower(String userEmail) {
+		followers.add(userEmail);
+		;
 	}
-	
-	//add followed into user followed users
-	public void addFollowed(String userEmail){
-		followed.add(userEmail);;
+
+	// add followed into user followed users
+	public void addFollowed(String userEmail) {
+		followed.add(userEmail);
+		;
 	}
-	
+
+	// remove follower from user followers
+	public void removeFollower(String userEmail) {
+		followers.remove(userEmail);
+		
+	}
+
+	// remove followed from user followed users
+	public void removeFollowed(String userEmail) {
+		followed.remove(userEmail);
+		
+	}
+
 	public String getAvatarPath() {
 		return avatarPath;
 	}
@@ -117,8 +132,7 @@ public class User implements Searchable {
 
 	@Override
 	public String getSearchableId() {
-		return getEmail();	
+		return getEmail();
 	}
-
 
 }

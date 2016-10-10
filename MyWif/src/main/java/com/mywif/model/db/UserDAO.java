@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
+import com.mywif.model.pojo.UsersManager;
 
 public class UserDAO implements IUserDAO {
 	// email, password, name, gender, about, avatarPath
@@ -198,6 +199,7 @@ public class UserDAO implements IUserDAO {
 	
 	public void followUser(String userEmail, String followerEmail){
 		PreparedStatement statement = null;
+		if(!UsersManager.getInstance().isUserFollowedByUser(userEmail, followerEmail)){
 		try {
 			// email, user_password, user_name, gender, about, avatar
 			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
@@ -219,6 +221,7 @@ public class UserDAO implements IUserDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		}
 	}
 	
@@ -284,10 +287,11 @@ public class UserDAO implements IUserDAO {
 	
 	public void unfollowUser(String userEmail, String followerEmail){
 		PreparedStatement statement = null;
+		if(UsersManager.getInstance().isUserFollowedByUser(userEmail, followerEmail)){
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
+			statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_FOLLOWER);
 			statement.setString(1, userEmail);
-			statement.setString(1, followerEmail);
+			statement.setString(2, followerEmail);
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -305,5 +309,5 @@ public class UserDAO implements IUserDAO {
 			}
 		}
 	}
-
+	}
 }

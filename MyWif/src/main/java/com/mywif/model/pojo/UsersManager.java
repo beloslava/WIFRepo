@@ -148,13 +148,24 @@ public class UsersManager implements IUserManager {
 	//unfollow user
 	public void unfollow(String userEmail, String followerEmail){
 		if(followed.containsKey(followerEmail)){
+			System.out.println("Before unfollow");
 			UserDAO.getInstance().unfollowUser(userEmail, followerEmail);
+			System.out.println("After unfollow");
+
 			if(followed.get(followerEmail).contains(userEmail)){
 				followed.get(followerEmail).remove(userEmail);
 				followers.get(userEmail).remove(followerEmail);
 			}
+			getUser(followerEmail).removeFollowed(userEmail);
+			getUser(userEmail).removeFollower(followerEmail);
+
 		}
 		
+	}
+	
+	//is user follows user
+	public boolean isUserFollowedByUser(String userEmail, String followerEmail){		
+		return getUser(followerEmail).getFollowed().contains(userEmail);
 	}
 	
 	/**
