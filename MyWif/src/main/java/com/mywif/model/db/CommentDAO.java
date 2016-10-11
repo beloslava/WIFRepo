@@ -59,7 +59,7 @@ public class CommentDAO implements ICommentDAO {
 	}
 	
 	/**
-	 * get comments by post from allComments collection
+	 * get comments by post from allComments collection (use in delete post)
 	 * @return list with comments by post
 	 */
 	public List < Comment> getCommentsByPost(int postId){
