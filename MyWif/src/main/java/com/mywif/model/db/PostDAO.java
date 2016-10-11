@@ -551,22 +551,22 @@ public class PostDAO implements IPostDAO {
 	
 	
 	public void removePost(int postId, String userName) {
-		// TODO
 		if (allPosts.containsKey(postId)) {
 			allPosts.remove(postId);
 			postDislikes.remove(postId);
 			postLikes.remove(postId);
-			Post postToDelete = allPosts.get(postId);
+			User user = UsersManager.getInstance().getUser(userName);
+			Post postToDelete = allPosts.get(postId);			
+
+			user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
 			
-			//remove comments from CommentDAO
-			File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());
-			
-			try {
-				Files.deleteIfExists(picture.toPath());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		//	File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
+//			try {
+//				Files.deleteIfExists(picture.toPath());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 
 		}

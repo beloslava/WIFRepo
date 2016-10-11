@@ -63,5 +63,9 @@ public class Album {
 		posts.add(post);
 	}
 
-	
+	// delete post in posts
+	public void deletePost(Post post) {
+		posts.remove(post);
+	}
+
 }

@@ -7,13 +7,19 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Properties;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.PostConstruct;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,10 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mywif.model.db.PostDAO;
-import com.mywif.model.db.UserDAO;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -180,22 +184,49 @@ public class UserController {
 
 		return jsp;
 	}
-
+	
 	public static boolean isUserInSession(HttpServletRequest request) {
 		return request.getSession().getAttribute("USER") != null;
 	}
 	
-	
-//	public static void init(HttpSession session, List<User> users){
-//		List<User> allUsers = users;
-//		for (User u : users) {
-//			 Set<String> followers = UserDAO.getInstance().getAllFollowersForUser(u.getEmail());
-//			for(String userEmail : followers){
-//			session.setAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(u.getEmail(),
-//					userEmail));
+//	class SendMailThread implements Runnable{
 //		
+//		@Override
+//		public void run() {
+//			// Sending mail
+//			Properties props = new Properties();
+//
+//			props.setProperty("mail.host", "mail.qkoa.info");
+//			props.setProperty("mail.smtp.port", "25");
+//			props.setProperty("mail.smtp.auth", "true");
+//
+//			Authenticator auth = new Authenticator() {
+//				@Override
+//				protected PasswordAuthentication getPasswordAuthentication() {
+//
+//					return new PasswordAuthentication("office@qkoa.info", "Istinataboli1@");
+//				}
+//
+//			};
+//
+//			Session session = Session.getDefaultInstance(props);
+//
+//			Message msg = new MimeMessage(session);
+//			try {
+//				msg.setSubject("validate account");
+//
+//				msg.setText("");
+//				msg.setFrom(new InternetAddress("office@qkoa.info", "WorkPlan Registration"));
+//				msg.setRecipient(Message.RecipientType.TO, new InternetAddress());
+//
+//				Transport.send(msg);
+//			} catch (MessagingException | UnsupportedEncodingException e) {
+//			
+//				e.printStackTrace();
 //			}
+//			
 //		}
+//		
 //	}
 	
 }
