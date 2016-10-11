@@ -108,7 +108,8 @@
 
 <!-- <img id="myImage" src="img/follow.png" style="width:100px"> -->   
     <c:choose>
-			<c:when test= "${not isFollowed}">
+			<c:when test= "${not UsersManager.getInstance().isUserFollowedByUser(user.email,
+					sessionScope.USER)}">
 				<form action="follow" method="post" >
 				 <input type="image" src="img/follow.png" width="100" alt="" />
 			     <input type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>">

@@ -70,8 +70,8 @@
 						</form>
 					</li>
 						<li><a href="main">Home</a></li>
-						<li><a href="myProfile">My profile</a></li>
-						<li><a href="myAlbums">My albums</a></li>
+						<li><a href="myProfile">My Profile</a></li>
+						<li><a href="myAlbums">My Albums</a></li>
 						<li><a>Categories</a>
 							<ul>
 								<li><a href="category?category=abstract">Abstract</a></li>

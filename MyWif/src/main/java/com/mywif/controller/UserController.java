@@ -7,10 +7,13 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.db.UserDAO;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -112,8 +117,8 @@ public class UserController {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
-			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
-					session.getAttribute("USER").toString()));
+//			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
+//					session.getAttribute("USER").toString()));
 			return "profile";
 		} else {
 			return "index";
@@ -127,8 +132,8 @@ public class UserController {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
-					session.getAttribute("USER").toString()));
+//			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
+//					session.getAttribute("USER").toString()));
 			return "profile";
 		} else {
 			return "index";
@@ -179,5 +184,18 @@ public class UserController {
 	public static boolean isUserInSession(HttpServletRequest request) {
 		return request.getSession().getAttribute("USER") != null;
 	}
-
+	
+	
+//	public static void init(HttpSession session, List<User> users){
+//		List<User> allUsers = users;
+//		for (User u : users) {
+//			 Set<String> followers = UserDAO.getInstance().getAllFollowersForUser(u.getEmail());
+//			for(String userEmail : followers){
+//			session.setAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(u.getEmail(),
+//					userEmail));
+//		
+//			}
+//		}
+//	}
+	
 }
