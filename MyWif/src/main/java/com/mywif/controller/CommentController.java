@@ -24,12 +24,11 @@ public class CommentController {
 
 	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
-			@RequestParam("email") String email, HttpServletRequest request, Model model, HttpSession session) {
+			Model model, HttpSession session) {
 			model.addAttribute("commentId", Integer.parseInt(commentId));
 			model.addAttribute("postId", Integer.parseInt(postId));
-			email = session.getAttribute("USER").toString();
+			String email = session.getAttribute("USER").toString();
 			CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
-			model.addAttribute("postId", postId);
 			return "detailsPost";
 	}
 

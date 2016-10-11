@@ -51,7 +51,6 @@ public class UserController {
 		model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
 		session.setAttribute("USER", email);
 		model.addAttribute("USER", email);
-		System.out.println("hi");
 
 		model.addAttribute("animalsPosts", PostDAO.getInstance().getAllPostsByCategory("animals").size());
 		model.addAttribute("abstractPosts", PostDAO.getInstance().getAllPostsByCategory("abstract").size());

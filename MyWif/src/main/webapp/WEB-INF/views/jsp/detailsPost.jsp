@@ -135,7 +135,12 @@
               <div class="message"> 
               	<span class="reply-link">
               		<a class="comment-reply-link" href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
-              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a>
+              		<form action="commentlike" method="post">
+              			<input type="hidden" name="commentId" value="${comment.commentId}">
+              			<input type="hidden" name="postId" value="${post.id}">
+              			<input type="submit" value="like">
+              		</form>
+<%--               		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a> --%>
               	</span>
                 <div class="info">
                   <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>
