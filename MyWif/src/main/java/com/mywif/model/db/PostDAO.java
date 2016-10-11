@@ -36,11 +36,12 @@ public class PostDAO implements IPostDAO {
 	private static final String DELETE_PARENT_COMMENTS = "DELETE FROM post_comments WHERE parent_comment_id = ?;";
 	private static final String DELETE_COMMENTS = "DELETE FROM post_comments WHERE post_id = ?;";
 	private static final String DELETE_COMMENTS_LIKES = "DELETE FROM comments_likes WHERE comment_id = ?;";
-	
-	private TreeMap<Integer, Post> allPosts; // all posts from the page
-	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from userEmails
-	private HashMap<Integer, HashSet<String>> postDislikes; // postId -> list from userEmails
 
+	private TreeMap<Integer, Post> allPosts; // all posts from the page
+	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from
+															// userEmails
+	private HashMap<Integer, HashSet<String>> postDislikes; // postId -> list
+															// from userEmails
 
 	private static PostDAO instance;
 
@@ -50,8 +51,8 @@ public class PostDAO implements IPostDAO {
 		postDislikes = new HashMap<>();
 		allPosts = new TreeMap<Integer, Post>();
 		allPosts = (TreeMap<Integer, Post>) takeAllPosts();
-		
-		for(Post post : allPosts.values()){
+
+		for (Post post : allPosts.values()) {
 			int id = post.getId();
 			postLikes.put(id, (HashSet<String>) getAllLikesForPost(id));
 			postDislikes.put(id, (HashSet<String>) getAllDislikesForPost(id));
@@ -66,9 +67,9 @@ public class PostDAO implements IPostDAO {
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * get post by id from allPosts collection
+	 * get post by id from allPosts collection 
 	 * @return post
 	 */
 	public Post getPost(int postId) {
@@ -83,11 +84,10 @@ public class PostDAO implements IPostDAO {
 	public Map<Integer, Post> getAllPosts() {
 		return allPosts;
 	}
-	
+
 	/**
-	 * take all posts from db
-	 * generate posts comments from db
-	 * generate likes and dislikes for posts from db
+	 * take all posts from db generate posts comments from db generate likes and
+	 * dislikes for posts from db
 	 * @return map with post id -> post values
 	 */
 	public Map<Integer, Post> takeAllPosts() {
@@ -102,28 +102,27 @@ public class PostDAO implements IPostDAO {
 			while (resultSet.next()) {
 				List<Comment> postComments = (List<Comment>) CommentDAO.getInstance()
 						.getAllCommentsByPost(resultSet.getInt("post_id"));
-				for(Comment c : postComments){
+				for (Comment c : postComments) {
 					List<Comment> commentComments = (List<Comment>) CommentDAO.getInstance()
 							.getAllCommentsByComment(c.getCommentId());
 					c.setCommentComments((ArrayList<Comment>) commentComments);
 				}
-				
+
 				Set<String> postLikes = getAllLikesForPost(resultSet.getInt("post_id"));
 				Set<String> postDislikes = getAllDislikesForPost(resultSet.getInt("post_id"));
 
-				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"), 
+				allPosts.put(resultSet.getInt("post_id"), new Post( resultSet.getInt("post_id"),
 																	resultSet.getString("user_email"),
-																	(int)resultSet.getLong("album_id"),
+																	(int) resultSet.getLong("album_id"),
 																	resultSet.getString("category_name"),
 																	resultSet.getString("picture"),
 																	resultSet.getString("post_name"),
 																	resultSet.getString("key_words"),
 																	resultSet.getTimestamp("post_date"),
-																	postComments, 
-																	postLikes, 
-																	postDislikes
+																	postComments,
+																	postLikes, postDislikes
 
-														));
+						));
 
 			}
 		} catch (SQLException e) {
@@ -155,12 +154,12 @@ public class PostDAO implements IPostDAO {
 	 * add post in db, allPosts collection and user's posts
 	 */
 	@Override
-	public void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
-			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
+	public void addPost(String userEmail, Integer albumId, String category, String picture, String name,
+			String keyWords, Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS, 
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_POSTS,
 					Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, userEmail);
 			statement.setObject(2, albumId);
@@ -173,15 +172,15 @@ public class PostDAO implements IPostDAO {
 			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
 			long id = resultSet.getLong(1);
-			
-			Set<String> postLikes = getAllLikesForPost((int)id);
-			Set<String> postDislikes = getAllDislikesForPost((int)id);
-			
-			Post post = new Post((int) id, userEmail, albumId, category, picture, name, keyWords, time, 
-					comments, postLikes, postDislikes);
+
+			Set<String> postLikes = getAllLikesForPost((int) id);
+			Set<String> postDislikes = getAllDislikesForPost((int) id);
+
+			Post post = new Post((int) id, userEmail, albumId, category, picture, name, keyWords, time, comments,
+					postLikes, postDislikes);
 
 			User user = UsersManager.getInstance().getUser(userEmail);
-			//user.getPosts().add(post);
+			// user.getPosts().add(post);
 			user.getAlbums().get(albumId).addPost(post);
 			allPosts.put(post.getId(), post);
 		} catch (SQLException e) {
@@ -209,25 +208,26 @@ public class PostDAO implements IPostDAO {
 	 * @param user email
 	 */
 	@Override
-	public void likePost(int postId, String userEmail) {	
+	public void likePost(int postId, String userEmail) {
 		PreparedStatement statement = null;
-		//System.out.println(postLikes.get(postId).contains(userEmail) + " " + postLikes.get(postId));
-		if( (!postLikes.containsKey(postId)) ||
-				(!postLikes.get(postId).contains(userEmail)) && (!postDislikes.get(postId).contains(userEmail))){
+		// System.out.println(postLikes.get(postId).contains(userEmail) + " " +
+		// postLikes.get(postId));
+		if ((!postLikes.containsKey(postId))
+				|| (!postLikes.get(postId).contains(userEmail)) && (!postDislikes.get(postId).contains(userEmail))) {
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
 				statement.setInt(1, postId);
 				statement.setString(2, userEmail);
 				statement.executeUpdate();
-				
+
 				Post post = getPost(postId);
 				post.addLike(userEmail);
-				
-				if(!postLikes.containsKey(postId)){
+
+				if (!postLikes.containsKey(postId)) {
 					postLikes.put(postId, new HashSet<>());
 				}
 				postLikes.get(postId).add(userEmail);
-				
+
 				System.out.println("like post");
 			} catch (SQLException e) {
 				System.out.println("The post cannot be liked right now");
@@ -249,31 +249,34 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * dislike post and put it in db and user's posts
-	 * @param post id
-	 * @param user email
+	 * 
+	 * @param post
+	 *            id
+	 * @param user
+	 *            email
 	 */
 	@Override
 	public void dislikePost(int postId, String userEmail) {
-//		System.out.println(postDislikes.containsKey(postId));
-//		System.out.println(postDislikes.get(postId).size());
-//		System.out.println(postDislikes.get(postId).contains(userEmail));
-		PreparedStatement statement = null; 
-		if( (!postDislikes.containsKey(postId)) ||
-				(!postDislikes.get(postId).contains(userEmail) && (!postLikes.get(postId).contains(userEmail)))){
+		// System.out.println(postDislikes.containsKey(postId));
+		// System.out.println(postDislikes.get(postId).size());
+		// System.out.println(postDislikes.get(postId).contains(userEmail));
+		PreparedStatement statement = null;
+		if ((!postDislikes.containsKey(postId))
+				|| (!postDislikes.get(postId).contains(userEmail) && (!postLikes.get(postId).contains(userEmail)))) {
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(DISLIKE_POST);
 				statement.setInt(1, postId);
 				statement.setString(2, userEmail);
 				statement.executeUpdate();
-				
+
 				Post post = getPost(postId);
 				post.addDislike(userEmail);
-				
-				if(!postDislikes.containsKey(postId)){
+
+				if (!postDislikes.containsKey(postId)) {
 					postDislikes.put(postId, new HashSet<>());
 				}
 				postDislikes.get(postId).add(userEmail);
-				
+
 				System.out.println("dislike post");
 			} catch (SQLException e) {
 				System.out.println("The post cannot be disliked right now");
@@ -290,7 +293,7 @@ public class PostDAO implements IPostDAO {
 				}
 			}
 		}
-		
+
 	}
 
 	/**
@@ -299,7 +302,7 @@ public class PostDAO implements IPostDAO {
 	 * @return set with users emails that liked the post
 	 */
 	@Override
-	public Set<String> getAllLikesForPost(int postId) {	
+	public Set<String> getAllLikesForPost(int postId) {
 		HashSet<String> likesByPost = new HashSet<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -307,7 +310,7 @@ public class PostDAO implements IPostDAO {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_LIKES_BY_POST);
 			statement.setInt(1, postId);
 			resultSet = statement.executeQuery();
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				likesByPost.add(resultSet.getString("user_email"));
 			}
 		} catch (SQLException e) {
@@ -326,7 +329,7 @@ public class PostDAO implements IPostDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return likesByPost;
 	}
 
@@ -336,7 +339,7 @@ public class PostDAO implements IPostDAO {
 	 * @return set with users emails that disliked the post
 	 */
 	@Override
-	public Set<String> getAllDislikesForPost(int postId) {		
+	public Set<String> getAllDislikesForPost(int postId) {
 		HashSet<String> dislikesByPost = new HashSet<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -344,7 +347,7 @@ public class PostDAO implements IPostDAO {
 			statement = DBManager.getInstance().getConnection().prepareStatement(SELECT_DISLIKES_BY_POST);
 			statement.setInt(1, postId);
 			resultSet = statement.executeQuery();
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				dislikesByPost.add(resultSet.getString("user_email"));
 			}
 		} catch (SQLException e) {
@@ -363,10 +366,10 @@ public class PostDAO implements IPostDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return dislikesByPost;
 	}
-	
+
 	/**
 	 * get all posts for a user from allPosts collection
 	 * @param user email
@@ -432,22 +435,20 @@ public class PostDAO implements IPostDAO {
 		}
 		return topTen;
 	}
-	
 
 	/**
-	 * get posts by album
+	 * get posts by album 
 	 * @return posts by album
 	 */
-	public List<Post> getPostsByAlbum(int albumId){
+	public List<Post> getPostsByAlbum(int albumId) {
 		ArrayList<Post> postsForAlbum = new ArrayList<>();
 		for (Post post : takeAllPosts().values()) { // or allPosts?
-			if(post.getAlbumId() == albumId){
+			if (post.getAlbumId() == albumId) {
 				postsForAlbum.add(post);
 			}
 		}
 		return postsForAlbum;
 	}
-
 
 	/**
 	 * search posts by name and key words from all posts
@@ -455,22 +456,26 @@ public class PostDAO implements IPostDAO {
 	 */
 	public List<Searchable> searchPostByNameAndKeyWords(String name) {
 		List<Searchable> posts = new ArrayList<>();
-		for(Post post : allPosts.values()){
+		for (Post post : allPosts.values()) {
 			StringBuilder postName = new StringBuilder();
 			postName.append(post.getName().toLowerCase());
-			postName.append(post.getKeyWords().toLowerCase());			
+			postName.append(post.getKeyWords().toLowerCase());
 			name = name.toLowerCase();
-			if(postName.toString().contains(name)){
+			if (postName.toString().contains(name)) {
 				posts.add(post);
 				System.out.println(posts.size());
 			}
 		}
-		
+
 		return posts;
 	}
-	
+
+	/**
+	 * delete post by id from db and collection and user
+	 * @param post id
+	 */
 	public void deletePost(int postId) {
-			
+
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
 		PreparedStatement ps3 = null;
@@ -479,49 +484,42 @@ public class PostDAO implements IPostDAO {
 		PreparedStatement ps6 = null;
 
 		Connection conn = (Connection) DBManager.getInstance().getConnection();
-		try{
+		try {
 			DBManager.getInstance().getConnection().setAutoCommit(false);
-			
+
 			ps1 = conn.prepareStatement(DELETE_LIKES);
-			ps1.setInt(1, postId); //delete post likes
-			ps1.executeUpdate(); 
-			
+			ps1.setInt(1, postId); // delete post likes
+			ps1.executeUpdate();
+
 			ps2 = conn.prepareStatement(DELETE_DISLIKES);
-			ps2.setInt(1, postId); //delete post dislikes
+			ps2.setInt(1, postId); // delete post dislikes
 			ps2.executeUpdate();
-			
-			ps3 = conn.prepareStatement(DELETE_COMMENTS_LIKES);	
-			ps4 = conn.prepareStatement(DELETE_PARENT_COMMENTS);			
-			System.out.println("------------------"+postId);
-			if(!getPost(postId).getComments().isEmpty()){
-			for(Comment comment : getPost(postId).getComments()){
-				ps3.setInt(1, comment.getCommentId()); //delete comment likes
-				ps3.executeUpdate();
-				System.out.println("Parentcomment"+comment.getParentCommentId());
-				//TODO
-//				if(comment.getParentCommentId() == null){
-//				ps4.setLong(1, 0); //delete comments that have parent comment
-//				}else{
-				ps4.setObject(1, comment.getParentCommentId());
-			//	}
-				ps4.executeUpdate();
+
+			ps3 = conn.prepareStatement(DELETE_COMMENTS_LIKES);
+			ps4 = conn.prepareStatement(DELETE_PARENT_COMMENTS);
+			System.out.println("------------------" + postId);
+			if (!getPost(postId).getComments().isEmpty()) {
+				for (Comment comment : CommentDAO.getInstance().getCommentsByPost(postId)) {
+					ps3.setInt(1, comment.getCommentId()); // delete comment 															// // likes
+					ps3.executeUpdate();
+
+					ps4.setObject(1, comment.getParentCommentId()); 
+					ps4.executeUpdate();
+				}
 			}
-			}
-			
-			ps5 = conn.prepareStatement(DELETE_COMMENTS);			
-			ps5.setInt(1, postId); //delete comments
+
+			ps5 = conn.prepareStatement(DELETE_COMMENTS);
+			ps5.setInt(1, postId); // delete comments
 			ps5.executeUpdate();
-						
+
 			ps6 = conn.prepareStatement(DELETE_POST);
-			ps6.setInt(1, postId); //delete post
+			ps6.setInt(1, postId); // delete post
 			ps6.executeUpdate();
-			
+
 			conn.commit();
-			
+
 			if (allPosts.containsKey(postId)) {
 				Post postToDelete = getPost(postId);
-				System.out.println(postToDelete.toString());
-				System.out.println("---------------" + postToDelete.getUserEmail());
 				User user = UsersManager.getInstance().getUser(postToDelete.getUserEmail());
 				user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
 				System.out.println("It's working!!!!!!!!");
@@ -529,42 +527,41 @@ public class PostDAO implements IPostDAO {
 				postDislikes.remove(postId);
 				postLikes.remove(postId);
 				
-//				File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
-//				try {
-//					Files.deleteIfExists(picture.toPath());
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				// File picture = new File("D:\\MyWifPictures\\userPostPics" +
+				// userName, postToDelete.getPicture());
+				// try {
+				// Files.deleteIfExists(picture.toPath());
+				// } catch (IOException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
 			}
-		}
-		catch(SQLException e){
+		} catch (SQLException e) {
 			try {
 				conn.rollback();
 				System.out.println("Rollback!");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}
-		finally {
+		} finally {
 			try {
 				conn.setAutoCommit(true);
-				if(ps1 != null){
+				if (ps1 != null) {
 					ps1.close();
 				}
-				if(ps2 != null){
+				if (ps2 != null) {
 					ps2.close();
 				}
-				if(ps3 != null){
+				if (ps3 != null) {
 					ps3.close();
 				}
-				if(ps4 != null){
+				if (ps4 != null) {
 					ps4.close();
 				}
-				if(ps5 != null){
+				if (ps5 != null) {
 					ps5.close();
 				}
-				if(ps6 != null){
+				if (ps6 != null) {
 					ps6.close();
 				}
 			} catch (SQLException e) {
@@ -573,5 +570,5 @@ public class PostDAO implements IPostDAO {
 			}
 		}
 	}
-	
+
 }

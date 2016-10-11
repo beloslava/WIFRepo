@@ -59,6 +59,20 @@ public class CommentDAO implements ICommentDAO {
 	}
 	
 	/**
+	 * get comments by post from allComments collection
+	 * @return list with comments by post
+	 */
+	public List < Comment> getCommentsByPost(int postId){
+		List<Comment> comments = new ArrayList<>();
+		for(Comment c : allComments.values()){
+			if(c.getPostId() == postId){
+				comments.add(c);
+			}
+		}
+		return comments;
+	}
+	
+	/**
 	 * add comment in db, allComments collection and post's comments or comment comments collection
 	 */
 	@Override
@@ -87,7 +101,7 @@ public class CommentDAO implements ICommentDAO {
 			
 			allComments.put((int)commentId, comment);
 			
-			if(parentCommentId == null){			
+			if(parentCommentId == null){
 				PostDAO.getInstance().getPost(postId).addComent(comment);
 			}
 			else{
@@ -128,9 +142,6 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 
-	
-	
-	
 	/**
 	 * get all comments for a post from the post 
 	 * @param post id
@@ -249,13 +260,13 @@ public class CommentDAO implements ICommentDAO {
 				ArrayList<Comment> commentCommentscom = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
 				commentComments.add(new Comment(resultSet.getInt("comment_id"), 
-						resultSet.getInt("post_id"),
-						resultSet.getString("user_email"), 
-						resultSet.getInt("parent_comment_id"),
-						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date"),
-						commentCommentscom,
-						commentLikes
+												resultSet.getInt("post_id"),
+												resultSet.getString("user_email"), 
+												resultSet.getInt("parent_comment_id"),
+												resultSet.getString("comment_text"),
+												resultSet.getTimestamp("comment_date"),
+												commentCommentscom,
+												commentLikes
 
 				));
 
@@ -388,6 +399,5 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 	
-	
-	
+
 }
