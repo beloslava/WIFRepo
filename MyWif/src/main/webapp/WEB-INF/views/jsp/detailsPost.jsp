@@ -1,3 +1,4 @@
+<%@page import="org.springframework.ui.Model"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.mywif.model.pojo.UsersManager"%>
@@ -6,6 +7,7 @@
 <%@ page import="com.mywif.model.pojo.Post"%>
 <%@ page import="com.mywif.model.db.PostDAO"%>
 <%@ page import="com.mywif.model.db.CommentDAO"%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -98,10 +100,10 @@
     <div class="outer"> <span class="inset"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span> </div>
   </div>
   <div class="content">
-
+<c:set var="sessionUser" scope="session" value="${session.USER}"></c:set>
     <div class="post format-image box">
       <div class="details"> 
-	      <span class="icon-date"><c:out value="${post.createdOn}"></c:out></span> 
+	      <span class="icon-date"><c:out value="${post.createdOn}"></c:out></span>
 	      <span class="dislikes"><a href="postdislike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
 	      <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
 	      <span class="comments"><c:out value="${fn:length(post.comments)}"></c:out></span>
@@ -240,6 +242,18 @@
     </div>
     <div class="sidebox widget">
       <h3 class="widget-title">dislikes <c:out value="${fn:length(post.dislikes)}"></c:out></h3>
+    </div>
+    <div class="sidebox widget">
+    	<c:choose>
+	      <c:when test="${sessionScope.USER==post.userEmail}">
+	      <span>
+	      	<form action="deletepost" method="post">
+	      		<input type="hidden" name="postId" value="${post.id}">
+	      		<input type="submit" name="deletePost" value="delete">
+	      	</form>
+	      </span>
+	      </c:when>
+	      </c:choose>
     </div>
   </div>
   <div class="clear"></div>

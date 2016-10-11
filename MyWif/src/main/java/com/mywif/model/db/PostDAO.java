@@ -550,15 +550,14 @@ public class PostDAO implements IPostDAO {
 	}
 	
 	
-	public void removePost(int postId, String userName) {
+	public void removePost(int postId, String email) {
 		if (allPosts.containsKey(postId)) {
-			allPosts.remove(postId);
+			Post postToDelete = allPosts.get(postId);
+			User user = UsersManager.getInstance().getUser(email);
+			user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
 			postDislikes.remove(postId);
 			postLikes.remove(postId);
-			User user = UsersManager.getInstance().getUser(userName);
-			Post postToDelete = allPosts.get(postId);			
-
-			user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
+			allPosts.remove(postId);
 			
 		//	File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
 //			try {
