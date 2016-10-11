@@ -248,7 +248,7 @@
 	      <c:when test="${sessionScope.USER==post.userEmail}">
 	      <span>
 	      	<form action="deletepost" method="post">
-	      		<input type="hidden" name="postId" value="${post.id}">
+	      		<input type="hidden" name="postId" value="<c:out value="${post.id}"></c:out>">
 	      		<input type="submit" name="deletePost" value="delete">
 	      	</form>
 	      </span>

@@ -67,11 +67,11 @@ public class Comment {
 		this.userEmail = userEmail;
 	}
 
-	public int getParentCommentId() {
+	public Integer getParentCommentId() {
 		return parentCommentId;
 	}
 
-	public void setParentCommentId(int parentCommentId) {
+	public void setParentCommentId(Integer parentCommentId) {
 		this.parentCommentId = parentCommentId;
 	}
 

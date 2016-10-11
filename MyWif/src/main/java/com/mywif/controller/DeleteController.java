@@ -16,7 +16,7 @@ public class DeleteController {
 	public String deletePost(@RequestParam(value="postId") String postId,HttpSession session){
 		System.out.println(Integer.parseInt(postId));
 		System.out.println(Integer.parseInt(postId)+session.getAttribute("USER").toString());
-		PostDAO.getInstance().removePost(Integer.parseInt(postId), session.getAttribute("USER").toString());
+		PostDAO.getInstance().deletePost(Integer.parseInt(postId));
 		return "main";
 	}
 }

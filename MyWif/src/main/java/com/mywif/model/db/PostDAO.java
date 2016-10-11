@@ -469,7 +469,8 @@ public class PostDAO implements IPostDAO {
 		return posts;
 	}
 	
-	public void deletePostFromDB(int postId) {
+	public void deletePost(int postId) {
+			
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
 		PreparedStatement ps3 = null;
@@ -496,8 +497,13 @@ public class PostDAO implements IPostDAO {
 			for(Comment comment : getPost(postId).getComments()){
 				ps3.setInt(1, comment.getCommentId()); //delete comment likes
 				ps3.executeUpdate();
-				
-				ps4.setObject(1, comment.getParentCommentId()); //delete comments that have parent comment
+				System.out.println("Parentcomment"+comment.getParentCommentId());
+				//TODO
+//				if(comment.getParentCommentId() == null){
+//				ps4.setLong(1, 0); //delete comments that have parent comment
+//				}else{
+				ps4.setObject(1, comment.getParentCommentId());
+			//	}
 				ps4.executeUpdate();
 			}
 			}
@@ -511,6 +517,26 @@ public class PostDAO implements IPostDAO {
 			ps6.executeUpdate();
 			
 			conn.commit();
+			
+			if (allPosts.containsKey(postId)) {
+				Post postToDelete = getPost(postId);
+				System.out.println(postToDelete.toString());
+				System.out.println("---------------" + postToDelete.getUserEmail());
+				User user = UsersManager.getInstance().getUser(postToDelete.getUserEmail());
+				user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
+				System.out.println("It's working!!!!!!!!");
+				allPosts.remove(postId);
+				postDislikes.remove(postId);
+				postLikes.remove(postId);
+				
+//				File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
+//				try {
+//					Files.deleteIfExists(picture.toPath());
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+			}
 		}
 		catch(SQLException e){
 			try {
@@ -548,32 +574,4 @@ public class PostDAO implements IPostDAO {
 		}
 	}
 	
-	
-	public void removePost(int postId, String email) {
-		if (allPosts.containsKey(postId)) {
-			allPosts.remove(postId);
-			postDislikes.remove(postId);
-			postLikes.remove(postId);
-			User user = UsersManager.getInstance().getUser(email);
-			Post postToDelete = allPosts.get(postId);			
-System.out.println(postId);
-		//	user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
-			deletePostFromDB(postId);
-		//	File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
-//			try {
-//				Files.deleteIfExists(picture.toPath());
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-
-
-		}
-
-	}
-	
-	public String getPostUserName(int id){
-		String email=getPost(id).getUserEmail();
-		return UsersManager.getInstance().getUser(email).getName();
-	}
 }
