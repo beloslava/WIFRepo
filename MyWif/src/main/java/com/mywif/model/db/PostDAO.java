@@ -1,8 +1,5 @@
 package com.mywif.model.db;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -494,13 +491,15 @@ public class PostDAO implements IPostDAO {
 			
 			ps3 = conn.prepareStatement(DELETE_COMMENTS_LIKES);	
 			ps4 = conn.prepareStatement(DELETE_PARENT_COMMENTS);			
-
+			System.out.println("------------------"+postId);
+			if(!getPost(postId).getComments().isEmpty()){
 			for(Comment comment : getPost(postId).getComments()){
 				ps3.setInt(1, comment.getCommentId()); //delete comment likes
 				ps3.executeUpdate();
 				
 				ps4.setObject(1, comment.getParentCommentId()); //delete comments that have parent comment
 				ps4.executeUpdate();
+			}
 			}
 			
 			ps5 = conn.prepareStatement(DELETE_COMMENTS);			
@@ -552,13 +551,14 @@ public class PostDAO implements IPostDAO {
 	
 	public void removePost(int postId, String email) {
 		if (allPosts.containsKey(postId)) {
-			Post postToDelete = allPosts.get(postId);
-			User user = UsersManager.getInstance().getUser(email);
-			user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
+			allPosts.remove(postId);
 			postDislikes.remove(postId);
 			postLikes.remove(postId);
-			allPosts.remove(postId);
-			
+			User user = UsersManager.getInstance().getUser(email);
+			Post postToDelete = allPosts.get(postId);			
+System.out.println(postId);
+		//	user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
+			deletePostFromDB(postId);
 		//	File picture = new File("D:\\MyWifPictures\\userPostPics" + userName, postToDelete.getPicture());			
 //			try {
 //				Files.deleteIfExists(picture.toPath());

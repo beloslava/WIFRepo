@@ -128,8 +128,8 @@
 	   
 	     </div>
 	       <div class="details"> 
-		         <span class="icon-artist"><a href="detailsprofile?email=<c:out value= "${album.userEmail}"></c:out>" title="author name"><c:out value= "${album.name}"></c:out></a></span> 
-		         <span class="icon-date"><a href=""><c:out value= "${album.createdOn}"></c:out></a></span>
+		         <span class="icon-artist"><a href="detailsalbum?albumId=<c:out value= "${album.albumId}"></c:out>" title="author name"><c:out value= "${album.name}"></c:out></a></span> 
+		         <span class="icon-date"><a href="detailsalbum?albumId=<c:out value= "${album.albumId}"></c:out>"><c:out value= "${album.createdOn}"></c:out></a></span>
 		        </div>
 	      </div>   
     </c:forEach>
@@ -195,7 +195,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -207,7 +207,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>

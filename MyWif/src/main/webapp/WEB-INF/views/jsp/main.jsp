@@ -166,7 +166,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -178,7 +178,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>

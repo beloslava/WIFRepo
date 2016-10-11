@@ -14,6 +14,7 @@ public class DeleteController {
 	
 	@RequestMapping(value="/deletepost",method=RequestMethod.POST)
 	public String deletePost(@RequestParam(value="postId") String postId,HttpSession session){
+		System.out.println(Integer.parseInt(postId));
 		System.out.println(Integer.parseInt(postId)+session.getAttribute("USER").toString());
 		PostDAO.getInstance().removePost(Integer.parseInt(postId), session.getAttribute("USER").toString());
 		return "main";

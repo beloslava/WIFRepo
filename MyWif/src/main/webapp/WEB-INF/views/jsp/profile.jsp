@@ -134,14 +134,14 @@
 		 
 		 <c:forEach var='followerEmail'	items='${UsersManager.getInstance().getFollowersByUser(user.email)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followerEmail).name}" />	        		
-  		    <h4><a href="pictureprofile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followerEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
 
       <h1>Following</h1>
       
        <c:forEach var='followedEmail'	items='${UsersManager.getInstance().getFollowedByUser(user.email)}' end="5">
   		    <c:set var="userName" value="${UsersManager.getInstance().getUser(followedEmail).name}" />	        		
-  		    <h4><a href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
+  		    <h4><a href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"><c:out value="${UsersManager.getInstance().getUser(followedEmail).name}"></c:out></a></h4> 		        				    
    		</c:forEach>
     </div>
     
@@ -245,7 +245,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -257,7 +257,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>

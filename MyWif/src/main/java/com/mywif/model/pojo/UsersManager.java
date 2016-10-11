@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.db.UserDAO;
+import com.mywif.model.exception.DBException;
 
 public class UsersManager implements IUserManager {
 

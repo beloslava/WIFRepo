@@ -103,10 +103,10 @@
               <input type="text" name="nameOfPost" value="" class="text-input required">
             </li>
             <li class="form-row text-input-row">
-              <input type="hidden" name="email" value="<%=session.getAttribute("USER").toString() %>" class="text-input required">
+              <input type="hidden" name="email" value="${USER}" class="text-input required">
             </li>
             <li class="form-row text-input-row">
-              <input type="hidden" name="albumId" value="<%=Integer.parseInt(request.getAttribute("albumId").toString())%>" class="text-input required">
+              <input type="hidden" name="albumId" value="<c:out value="${requestScope.albumId}"></c:out>">" class="text-input required">
             </li>
             <li class="form-row text-input-row">
               <label>Category</label>
@@ -148,7 +148,7 @@
         <div class="details"> 
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
-	       <span class="icon-artist"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" ><c:out value= "${post.createdOn}"></c:out></a></span> 
+	       <span class="icon-artist"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" ><c:out value= "${post.createdOn}"></c:out></a></span> 
 	       <span class="dislikes"><a href="post/dislike?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
 	       <span class="likes"><a href="post/like?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
 	       <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
@@ -218,7 +218,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
@@ -230,7 +230,7 @@
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>

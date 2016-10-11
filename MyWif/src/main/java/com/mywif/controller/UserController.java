@@ -7,11 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -90,7 +89,8 @@ public class UserController {
 		if (UserController.isUserInSession(request)) {
 			String email = request.getSession().getAttribute("USER").toString();
 
-			if (newName != null && oldPass != null && newPass != null && newPass2 != null && newPass.equals(newPass2)
+			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null && 
+					(!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty())&& newPass.equals(newPass2)
 					&& gender != null && newDescription != null) {
 				try {
 					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
@@ -128,7 +128,7 @@ public class UserController {
 		if (UserController.isUserInSession(request)) {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
-			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());			
 //			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
 //					session.getAttribute("USER").toString()));
 			return "profile";
@@ -181,45 +181,5 @@ public class UserController {
 	public static boolean isUserInSession(HttpServletRequest request) {
 		return request.getSession().getAttribute("USER") != null;
 	}
-	
-//	class SendMailThread implements Runnable{
-//		
-//		@Override
-//		public void run() {
-//			// Sending mail
-//			Properties props = new Properties();
-//
-//			props.setProperty("mail.host", "mail.qkoa.info");
-//			props.setProperty("mail.smtp.port", "25");
-//			props.setProperty("mail.smtp.auth", "true");
-//
-//			Authenticator auth = new Authenticator() {
-//				@Override
-//				protected PasswordAuthentication getPasswordAuthentication() {
-//
-//					return new PasswordAuthentication("office@qkoa.info", "Istinataboli1@");
-//				}
-//
-//			};
-//
-//			Session session = Session.getDefaultInstance(props);
-//
-//			Message msg = new MimeMessage(session);
-//			try {
-//				msg.setSubject("validate account");
-//
-//				msg.setText("");
-//				msg.setFrom(new InternetAddress("office@qkoa.info", "WorkPlan Registration"));
-//				msg.setRecipient(Message.RecipientType.TO, new InternetAddress());
-//
-//				Transport.send(msg);
-//			} catch (MessagingException | UnsupportedEncodingException e) {
-//			
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//		
-//	}
 	
 }
