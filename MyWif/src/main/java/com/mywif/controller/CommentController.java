@@ -25,23 +25,18 @@ public class CommentController {
 	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			@RequestParam("email") String email, HttpServletRequest request, Model model, HttpSession session) {
-		if (UserController.isUserInSession(request)) {
 			model.addAttribute("commentId", Integer.parseInt(commentId));
 			model.addAttribute("postId", Integer.parseInt(postId));
 			email = session.getAttribute("USER").toString();
 			CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
 			model.addAttribute("postId", postId);
 			return "detailsPost";
-		} else {
-			return "index";
-		}
 	}
 
 	@RequestMapping(value = "/commentwrite", method = RequestMethod.POST)
 	protected String writeComment(@RequestParam("email") String email, @RequestParam("comment") String comment,
 			@RequestParam("parentCommentId") String parentCommentId, @RequestParam("postId") String postId, Model model,
 			HttpServletRequest request) {
-		if (UserController.isUserInSession(request)) {
 			Integer parentId = null;
 			if (!parentCommentId.equals("parent")) {
 				parentId = Integer.parseInt(parentCommentId);
@@ -56,9 +51,6 @@ public class CommentController {
 			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
 			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
 			return "detailsPost";
-		} else {
-			return "index";
-		}
 	}
 
 }

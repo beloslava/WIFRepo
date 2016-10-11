@@ -86,7 +86,6 @@ public class UserController {
 			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2,
 			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
 			HttpServletRequest request) {
-		if (UserController.isUserInSession(request)) {
 			String email = request.getSession().getAttribute("USER").toString();
 
 			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null && 
@@ -101,40 +100,28 @@ public class UserController {
 
 			}
 			return "myProfile";
-		} else {
-			return "index";
-		}
-
 	}
 
 	@RequestMapping(value = "/unfollow", method = RequestMethod.POST)
 	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-		if (UserController.isUserInSession(request)) {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
 //			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
 //					session.getAttribute("USER").toString()));
 			return "profile";
-		} else {
-			return "index";
-		}
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-		if (UserController.isUserInSession(request)) {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());			
 //			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
 //					session.getAttribute("USER").toString()));
 			return "profile";
-		} else {
-			return "index";
-		}
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -178,8 +165,8 @@ public class UserController {
 		return jsp;
 	}
 	
-	public static boolean isUserInSession(HttpServletRequest request) {
-		return request.getSession().getAttribute("USER") != null;
-	}
+//	public static boolean isUserInSession(HttpServletRequest request) {
+//		return request.getSession().getAttribute("USER") != null;
+//	}
 	
 }

@@ -78,7 +78,6 @@ public class PictureController {
 	@RequestMapping(value = "/picturechange", method = RequestMethod.POST)
 	public String change(HttpSession session, @RequestParam(value = "fileField") MultipartFile picture,
 			HttpServletRequest request) throws IOException {
-		if (UserController.isUserInSession(request)) {
 			String email = session.getAttribute("USER").toString();
 			String name = UsersManager.getInstance().getUser(email).getName();
 			InputStream pictureStream = null;
@@ -97,17 +96,12 @@ public class PictureController {
 			System.out.println(pictureFile.getAbsolutePath());
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			UsersManager.getInstance().changeAvatar(pictureFile.getName(), email);
-
 			return "myProfile";
-		} else {
-			return "index";
-		}
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(@RequestParam("input") String input, @RequestParam("type") String type, Model model,
 			HttpServletRequest request) {
-		if (UserController.isUserInSession(request)) {
 			ArrayList<Searchable> searchResult = (ArrayList<Searchable>) UsersManager.getInstance().search(input, type);
 			model.addAttribute("search", searchResult);
 			model.addAttribute("input", input);
@@ -115,8 +109,5 @@ public class PictureController {
 			model.addAttribute("type", type);
 			System.out.println(searchResult.size());
 			return "search";
-		} else {
-			return "index";
-		}
 	}
 }

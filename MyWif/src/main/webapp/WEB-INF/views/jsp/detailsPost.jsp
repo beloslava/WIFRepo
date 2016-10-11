@@ -100,10 +100,17 @@
     <div class="outer"> <span class="inset"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span> </div>
   </div>
   <div class="content">
-<c:set var="sessionUser" scope="session" value="${session.USER}"></c:set>
     <div class="post format-image box">
       <div class="details"> 
 	      <span class="icon-date"><c:out value="${post.createdOn}"></c:out></span>
+	      <form action="postdislike" method="post">
+	      	<input type="hidden" name="postId" value="${post.id}">
+	      	<input type="submit" value="dislike" name="like"> 
+	      </form>
+	      <form action="postlike" method="post">
+	      	<input type="hidden" name="postId" value="${post.id}">
+	      	<input type="submit" value="like" name="like"> 
+	      </form>
 	      <span class="dislikes"><a href="postdislike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
 	      <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
 	      <span class="comments"><c:out value="${fn:length(post.comments)}"></c:out></span>
