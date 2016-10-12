@@ -53,7 +53,6 @@ public class PostDAO implements IPostDAO {
 			int id = post.getId();
 			postLikes.put(id, (HashSet<String>) getAllLikesForPost(id));
 			postDislikes.put(id, (HashSet<String>) getAllDislikesForPost(id));
-
 		}
 
 	}
@@ -67,7 +66,6 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get post by id from allPosts collection
-	 * 
 	 * @return post
 	 */
 	public Post getPost(int postId) {
@@ -80,12 +78,27 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get all posts from allPosts collection
-	 * 
 	 * @return map with postId -> post values
 	 */
 	@Override
 	public Map<Integer, Post> getAllPosts() {
 		return allPosts;
+	}
+	
+	/**
+	 * get all likes for post from postLikes collection
+	 * @return set from user emails that like the post
+	 */
+	public HashSet<String> getLikesForPost(int postId){
+		return postLikes.get(postId);
+	}
+	
+	/**
+	 * get all likes for post from postLikes collection
+	 * @return set from user emails that like the post
+	 */
+	public HashSet<String> getDisikesForPost(int postId){
+		return postDislikes.get(postId);
 	}
 
 	/**
@@ -203,11 +216,8 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * like post and put it in db and user's posts
-	 * 
-	 * @param post
-	 *            id
-	 * @param user
-	 *            email
+	 * @param post id
+	 * @param user email
 	 */
 	@Override
 	public void likePost(int postId, String userEmail) {
@@ -251,11 +261,8 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * dislike post and put it in db and user's posts
-	 * 
-	 * @param post
-	 *            id
-	 * @param user
-	 *            email
+	 * @param post id
+	 * @param user email
 	 */
 	@Override
 	public void dislikePost(int postId, String userEmail) {
@@ -300,9 +307,7 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get all likes for post from db
-	 * 
-	 * @param post
-	 *            id
+	 * @param post id
 	 * @return set with users emails that liked the post
 	 */
 	@Override

@@ -56,6 +56,8 @@
 						</form>
 					</li>
           <li class="active"><a href="main">Home</a>
+          <li><a href="myFollowedPosts">Feed</a>
+          </li>
 		  <li><a href="myProfile">My profile</a>
 		  <li><a href="myAlbums">My Albums</a>
           </li>
