@@ -2,7 +2,11 @@
 <html lang="en">
 
 <head>
-
+<%
+response.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
+response.addHeader("Pragma", "no-cache"); 
+response.addDateHeader ("Expires", 0);
+%>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -87,42 +87,54 @@ public class UserController {
 			HttpServletRequest request) {
 		String email = request.getSession().getAttribute("USER").toString();
 
-		if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null
-				&& (!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty()) && newPass.equals(newPass2)
-				&& gender != null && newDescription != null) {
-			try {
-				UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (isUserInSession(request)) {
+			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null
+					&& (!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty()) && newPass.equals(newPass2)
+					&& gender != null && newDescription != null) {
+				try {
+					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
+			}
+			return "myProfile";
+		} else {
+			return "index";
 		}
-		return "myProfile";
 	}
 
 	@RequestMapping(value = "/unfollow", method = RequestMethod.POST)
 	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-		model.addAttribute("email", emaiToFollow);
-		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
-		return "profile";
+		if (isUserInSession(request)) {
+			model.addAttribute("email", emaiToFollow);
+			model.addAttribute("myEmail", session.getAttribute("USER").toString());
+			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+			return "profile";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-		model.addAttribute("email", emaiToFollow);
-		model.addAttribute("myEmail", session.getAttribute("USER").toString());
-		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-		
-		SendMail sendMail = new SendMail();
-		sendMail.setFollowedUserEmail(emaiToFollow);
-		sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
-		sendMail.start();
-		
-		return "profile";
+		if (isUserInSession(request)) {
+			model.addAttribute("email", emaiToFollow);
+			model.addAttribute("myEmail", session.getAttribute("USER").toString());
+			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+
+			SendMail sendMail = new SendMail();
+			sendMail.setFollowedUserEmail(emaiToFollow);
+			sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
+			sendMail.start();
+
+			return "profile";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -166,8 +178,8 @@ public class UserController {
 		return jsp;
 	}
 
-	// public static boolean isUserInSession(HttpServletRequest request) {
-	// return request.getSession().getAttribute("USER") != null;
-	// }
-	
+	public static boolean isUserInSession(HttpServletRequest request) {
+		return request.getSession().getAttribute("USER") != null;
+	}
+
 }

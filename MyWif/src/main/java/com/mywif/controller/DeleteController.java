@@ -1,5 +1,6 @@
 package com.mywif.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,12 +12,17 @@ import com.mywif.model.db.PostDAO;
 
 @Controller
 public class DeleteController {
-	
-	@RequestMapping(value="/deletepost",method=RequestMethod.POST)
-	public String deletePost(@RequestParam(value="postId") String postId,HttpSession session){
-		System.out.println(Integer.parseInt(postId));
-		System.out.println(Integer.parseInt(postId)+session.getAttribute("USER").toString());
-		PostDAO.getInstance().deletePost(Integer.parseInt(postId));
-		return "main";
+
+	@RequestMapping(value = "/deletepost", method = RequestMethod.POST)
+	public String deletePost(@RequestParam(value = "postId") String postId, HttpSession session,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			System.out.println(Integer.parseInt(postId));
+			System.out.println(Integer.parseInt(postId) + session.getAttribute("USER").toString());
+			PostDAO.getInstance().deletePost(Integer.parseInt(postId));
+			return "main";
+		} else {
+			return "index";
+		}
 	}
 }

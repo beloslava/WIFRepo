@@ -37,9 +37,13 @@ public class AlbumController {
 	@RequestMapping(value = "/createalbum", method = RequestMethod.POST)
 	public String createAlbum(@RequestParam(value = "name") String name, HttpSession session,
 			HttpServletRequest request) {
-		String email = session.getAttribute("USER").toString();
-		AlbumDAO.getInstance().addAlbum(name, email, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
-		return "myAlbums";
+		if (UserController.isUserInSession(request)) {
+			String email = session.getAttribute("USER").toString();
+			AlbumDAO.getInstance().addAlbum(name, email, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
+			return "myAlbums";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/createpost", method = RequestMethod.POST)
@@ -47,42 +51,59 @@ public class AlbumController {
 			@RequestParam(value = "nameOfPost") String nameOfPost, @RequestParam(value = "keyWords") String keyWords,
 			@RequestParam(value = "email") String email, @RequestParam("fileField") MultipartFile picture,
 			@RequestParam("albumId") int albumId, Model model, HttpServletRequest request) throws IOException {
-		category = category.toLowerCase();
-		InputStream pictureStream = picture.getInputStream();
-		File dir = new File("D:\\MyWifPictures\\userPostPics" + UsersManager.getInstance().getUser(email).getName());
-		if (!dir.exists()) {
-			dir.mkdir();
+		if (UserController.isUserInSession(request)) {
+			category = category.toLowerCase();
+			InputStream pictureStream = picture.getInputStream();
+			File dir = new File(
+					"D:\\MyWifPictures\\userPostPics" + UsersManager.getInstance().getUser(email).getName());
+			if (!dir.exists()) {
+				dir.mkdir();
+			}
+			File pictureFile = new File(dir,
+					UsersManager.getInstance().getUser(email).getName()
+							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
+							+ picture.getContentType().split("/")[1]);
+			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords,
+					Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>(), new HashSet<>());
+			model.addAttribute(category + "Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
+			return "main";
+		} else {
+			return "index";
 		}
-		File pictureFile = new File(dir,
-				UsersManager.getInstance().getUser(email).getName() + LocalDateTime.now().toString().replaceAll(":", "")
-						+ "-post-pic." + picture.getContentType().split("/")[1]);
-		Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords,
-				Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>(), new HashSet<>());
-		model.addAttribute(category + "Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
-		return "main";
 	}
 
 	@RequestMapping(value = "/postlike", method = RequestMethod.POST)
-	public String likePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session) {
-		System.out.println(postId);
-		Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
-		model.addAttribute("postId", postId);
-		model.addAttribute("post", post);
-		String email = session.getAttribute("USER").toString();
-		PostDAO.getInstance().likePost(Integer.parseInt(postId), email);
-		return "detailsPost";
+	public String likePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			System.out.println(postId);
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
+			String email = session.getAttribute("USER").toString();
+			PostDAO.getInstance().likePost(Integer.parseInt(postId), email);
+			return "detailsPost";
+		} else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/postdislike", method = RequestMethod.POST)
-	public String dislikePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session) {
-		Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
-		model.addAttribute("postId", postId);
-		model.addAttribute("post", post);
-		String email = session.getAttribute("USER").toString();
-		PostDAO.getInstance().dislikePost(Integer.parseInt(postId), email);
-		System.out.println("disliknah te be da ti eba maikata");
-		return "detailsPost";
+	public String dislikePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
+			String email = session.getAttribute("USER").toString();
+			PostDAO.getInstance().dislikePost(Integer.parseInt(postId), email);
+			System.out.println("disliknah te be da ti eba maikata");
+			return "detailsPost";
+		} else {
+			return "index";
+		}
+
 	}
 
 }

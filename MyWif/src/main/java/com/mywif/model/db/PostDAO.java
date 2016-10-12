@@ -97,7 +97,7 @@ public class PostDAO implements IPostDAO {
 	 * get all likes for post from postLikes collection
 	 * @return set from user emails that like the post
 	 */
-	public HashSet<String> getDisikesForPost(int postId){
+	public HashSet<String> getDislikesForPost(int postId){
 		return postDislikes.get(postId);
 	}
 
