@@ -29,6 +29,7 @@ import com.mywif.model.pojo.UsersManager;
 import io.undertow.server.session.Session;
 
 import com.mywif.model.db.AlbumDAO;
+import com.mywif.model.db.CommentDAO;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
@@ -93,6 +94,8 @@ public class AlbumController {
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
 			String email = session.getAttribute("USER").toString();
 			try {
 				PostDAO.getInstance().likePost(Integer.parseInt(postId), email);
@@ -116,6 +119,8 @@ public class AlbumController {
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
 			String email = session.getAttribute("USER").toString();
 			try {
 				PostDAO.getInstance().dislikePost(Integer.parseInt(postId), email);

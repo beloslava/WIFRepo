@@ -166,9 +166,9 @@ response.addDateHeader ("Expires", 0);
      
     </div>
   </div>
-  <div id="navigation">
-    <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div>
-  </div>
+<!--   <div id="navigation"> -->
+<!--     <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div> -->
+<!--   </div> -->
 </div>
 <div class="footer-wrapper">
 		<div id="footer" class="four">
@@ -218,28 +218,36 @@ response.addDateHeader ("Expires", 0);
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
-					<c:set var="user" value="${sessionScope.USER}" />									
+					<c:set var="user" value="${sessionScope.USER}" />	
+					<ul>						
 					<c:forEach var='followerEmail'
 						items='${UsersManager.getInstance().getFollowersByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
+							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
-							title="author name"><c:out value="${userName}"></c:out></a>	     
-   					</c:forEach>	
+							title="author name"><c:out value="${userName}"></c:out></a>	   
+							</li>  
+   					</c:forEach>
+   					</ul>			
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
+					<ul>				
 					<c:forEach var='followedEmail'
 						items='${UsersManager.getInstance().getFollowedByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
+							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
+							</li>
    					</c:forEach>
+   					</ul>
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">
@@ -259,7 +267,7 @@ response.addDateHeader ("Expires", 0);
 							<div class="meta">
 								<h6>
 									<a
-										href="details/post?postId=<c:out value="${post.id}"></c:out>"><c:out
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>

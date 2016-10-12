@@ -146,12 +146,12 @@ response.addDateHeader ("Expires", 0);
 
 			</div>
 		</div>
-		<div id="navigation">
-			<div class="nav-previous">
-				<a href="#"><span class="meta-nav-prev">&larr; Older
-						posts</span></a>
-			</div>
-		</div>
+<!-- 		<div id="navigation"> -->
+<!-- 			<div class="nav-previous"> -->
+<!-- 				<a href="#"><span class="meta-nav-prev">&larr; Older -->
+<!-- 						posts</span></a> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 	</div>
 	<div class="footer-wrapper">
 		<div id="footer" class="four">
@@ -184,7 +184,7 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Categories</h3>
 					<ul>
 						<li class="active"><a 
-							   	  href="category?category=abstract">Abstract</a>(<c:out value="${abstractPosts}"></c:out>)</li>					
+							   	    href="category?category=abstract">Abstract</a>(<c:out value="${abstractPosts}"></c:out>)</li>					
 							<li><a href="category?category=animals">Animals</a>(<c:out value="${animalsPosts}"></c:out>)</li>
 							<li><a href="category?category=family">Family</a>(<c:out value="${familyPosts}"></c:out>)</li>
 							<li><a href="category?category=food">Food</a>(<c:out value="${foodPosts}"></c:out>)</li>
@@ -201,28 +201,36 @@ response.addDateHeader ("Expires", 0);
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
-					<c:set var="user" value="${sessionScope.USER}" />									
+					<c:set var="user" value="${sessionScope.USER}" />	
+					<ul>						
 					<c:forEach var='followerEmail'
 						items='${UsersManager.getInstance().getFollowersByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
+							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
-							title="author name"><c:out value="${userName}"></c:out></a>	     
-   					</c:forEach>	
+							title="author name"><c:out value="${userName}"></c:out></a>	   
+							</li>  
+   					</c:forEach>
+   					</ul>			
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
+					<ul>				
 					<c:forEach var='followedEmail'
 						items='${UsersManager.getInstance().getFollowedByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
+							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
+							</li>
    					</c:forEach>
+   					</ul>
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">

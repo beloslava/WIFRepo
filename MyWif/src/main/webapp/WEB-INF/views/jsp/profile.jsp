@@ -135,7 +135,7 @@
 										value="<c:out value="${sessionScope.USER}"></c:out>">
 										<input name="email" type="hidden"
 										value="<c:out value="${user.email}"></c:out>"> <input
-										type="submit" value="Follow me" class="btn-submit"> <!-- 				  <input type="image" type="submit" src="img/follow.png" width="15px" alt="" />        -->
+										type="submit" value="Follow" class="btn-submit"> <!-- 				  <input type="image" type="submit" src="img/follow.png" width="15px" alt="" />        -->
 										<!-- 				 <input type="submit" value="">					            --></li>
 								</ol>
 							</fieldset>
@@ -149,7 +149,7 @@
 										value="<c:out value="${sessionScope.USER}"></c:out>">
 										<input name="email" type="hidden"
 										value="<c:out value="${user.email}"></c:out>"> <input
-										type="submit" value="Following me" class="btn-green">
+										type="submit" value="Unfollow" class="btn-green">
 										<!-- 				 				 <input type="image" type="submit" src="img/following.png" width="15px" alt="" /> -->
 										<!-- 				 <input type="submit" value="" >					      		            -->
 									</li>
@@ -277,22 +277,23 @@
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
-						<input type="text" name="input" value="type and hit enter"
-							onFocus="this.value=''" required /> <label>Search in </label> <select
-							name="type">
-							<option value="posts">posts
-							<option value="users">users
-						</select>
-					</form>
+							<input type="text" name="input" value="type and hit enter"
+								onFocus="this.value=''" required/>
+								<label>Search in </label>
+			                <select name="type">
+							       <option value="posts">posts
+							       <option value="users">users
+							</select>
+						</form>
 				</div>
 				<div class="widget widget_search">
-					<h3 class="widget-title"></h3>
-					<ul class="social">
-						<li><a class="facebook" href="https://www.facebook.com/"></a></li>
-						<li><a class="twitter" href="https://twitter.com/"></a></li>
-						<li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
-						<li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
-					</ul>
+				<h3 class="widget-title"></h3>
+				<ul class="social">
+					<li><a class="facebook" href="https://www.facebook.com/"></a></li>
+					<li><a class="twitter" href="https://twitter.com/"></a></li>
+					<li><a class="pinterest" href="https://www.pinterest.com/"></a></li>
+					<li><a class="linkedin" href="https://www.linkedin.com/"></a></li>
+				</ul>
 				</div>
 
 			</div>
@@ -300,26 +301,17 @@
 				<div class="widget widget_archive">
 					<h3 class="widget-title">Categories</h3>
 					<ul>
-						<li class="active"><a href="category?category=abstract">Abstract</a>(<c:out
-								value="${abstractPosts}"></c:out>)</li>
-						<li><a href="category?category=animals">Animals</a>(<c:out
-								value="${animalsPosts}"></c:out>)</li>
-						<li><a href="category?category=family">Family</a>(<c:out
-								value="${familyPosts}"></c:out>)</li>
-						<li><a href="category?category=food">Food</a>(<c:out
-								value="${foodPosts}"></c:out>)</li>
-						<li><a href="category?category=nature">Nature</a>(<c:out
-								value="${naturePosts}"></c:out>)</li>
-						<li><a href="category?category=people">People</a>(<c:out
-								value="${peoplePosts}"></c:out>)</li>
-						<li><a href="category?category=sport">Sport</a>(<c:out
-								value="${sportPosts}"></c:out>)</li>
-						<li><a href="category?category=travel">Travel</a>(<c:out
-								value="${travelPosts}"></c:out>)</li>
-						<li><a href="category?category=urban">Urban</a>(<c:out
-								value="${urbanPosts}"></c:out>)</li>
-						<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out
-								value="${uncategorizedPosts}"></c:out>)</li>
+						<li class="active"><a 
+							   	    href="category?category=abstract">Abstract</a>(<c:out value="${abstractPosts}"></c:out>)</li>					
+							<li><a href="category?category=animals">Animals</a>(<c:out value="${animalsPosts}"></c:out>)</li>
+							<li><a href="category?category=family">Family</a>(<c:out value="${familyPosts}"></c:out>)</li>
+							<li><a href="category?category=food">Food</a>(<c:out value="${foodPosts}"></c:out>)</li>
+							<li><a href="category?category=nature">Nature</a>(<c:out value="${naturePosts}"></c:out>)</li>
+							<li><a href="category?category=people">People</a>(<c:out value="${peoplePosts}"></c:out>)</li>
+							<li><a href="category?category=sport">Sport</a>(<c:out value="${sportPosts}"></c:out>)</li>
+							<li><a href="category?category=travel">Travel</a>(<c:out value="${travelPosts}"></c:out>)</li>
+							<li><a href="category?category=urban">Urban</a>(<c:out value="${urbanPosts}"></c:out>)</li>
+							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 
@@ -327,28 +319,36 @@
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
-					<c:set var="user" value="${sessionScope.USER}" />
+					<c:set var="user" value="${sessionScope.USER}" />	
+					<ul>						
 					<c:forEach var='followerEmail'
 						items='${UsersManager.getInstance().getFollowersByUser(user)}'
 						end="5">
-						<c:set var="userName"
+  		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
-						<a
+							<li>
+				       	<a
 							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
-							title="author name"><c:out value="${userName}"></c:out></a>
-					</c:forEach>
+							title="author name"><c:out value="${userName}"></c:out></a>	   
+							</li>  
+   					</c:forEach>
+   					</ul>			
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
+					<ul>				
 					<c:forEach var='followedEmail'
 						items='${UsersManager.getInstance().getFollowedByUser(user)}'
 						end="5">
-						<c:set var="userName"
+  		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
-						<a
+							<li>
+				       	<a
 							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
-					</c:forEach>
+							</li>
+   					</c:forEach>
+   					</ul>
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">
@@ -359,14 +359,16 @@
 							<div class="frame">
 								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
-									scope="session" />
-								<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+									scope="session" />							
+								<a
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+									<a
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -375,17 +377,19 @@
 
 						<li>
 							<div class="frame">
-
+							
 								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
-								<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+								<a
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+									<a
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
 								</h6>
 								<em><c:out value="${post.createdOn}"></c:out></em>
@@ -393,19 +397,21 @@
 						</li>
 						<li>
 							<div class="frame">
-
+							
 								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
-								<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+								<a
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
 									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
-									<a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+									<a
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
 											value="${post.name}"></c:out></a>
-								</h6>
+								</h6>			
 								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 
@@ -414,7 +420,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		</div>
 	<script src="js/scripts.js"></script>
 </body>
 </html>

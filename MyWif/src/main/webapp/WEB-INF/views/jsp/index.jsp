@@ -158,7 +158,7 @@ response.addDateHeader ("Expires", 0);
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/jquery.backstretch.min.js"></script>
-	<script src="js/scripts.js"></script>
+	<script src="js/form-scripts.js"></script>
 	<script type="text/javascript">
 		var _validFileExtensions = [ ".jpg", ".jpeg", ".bmp", ".gif", ".png" ];
 		function Validate(oForm) {
