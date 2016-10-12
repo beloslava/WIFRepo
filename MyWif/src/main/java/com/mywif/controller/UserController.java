@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
+
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
-import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -85,42 +85,44 @@ public class UserController {
 			@RequestParam("newPass") String newPass, @RequestParam("newPass2") String newPass2,
 			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
 			HttpServletRequest request) {
-			String email = request.getSession().getAttribute("USER").toString();
+		String email = request.getSession().getAttribute("USER").toString();
 
-			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null && 
-					(!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty())&& newPass.equals(newPass2)
-					&& gender != null && newDescription != null) {
-				try {
-					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+		if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null
+				&& (!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty()) && newPass.equals(newPass2)
+				&& gender != null && newDescription != null) {
+			try {
+				UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return "myProfile";
+
+		}
+		return "myProfile";
 	}
 
 	@RequestMapping(value = "/unfollow", method = RequestMethod.POST)
 	protected String unfollow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-			model.addAttribute("email", emaiToFollow);
-			model.addAttribute("myEmail", session.getAttribute("USER").toString());
-			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
-//			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
-//					session.getAttribute("USER").toString()));
-			return "profile";
+		model.addAttribute("email", emaiToFollow);
+		model.addAttribute("myEmail", session.getAttribute("USER").toString());
+		UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+		return "profile";
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	protected String follow(@RequestParam("email") String emaiToFollow, HttpSession session, Model model,
 			HttpServletRequest request) {
-			model.addAttribute("email", emaiToFollow);
-			model.addAttribute("myEmail", session.getAttribute("USER").toString());
-			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());			
-//			model.addAttribute("isFollowed", UsersManager.getInstance().isUserFollowedByUser(emaiToFollow,
-//					session.getAttribute("USER").toString()));
-			return "profile";
+		model.addAttribute("email", emaiToFollow);
+		model.addAttribute("myEmail", session.getAttribute("USER").toString());
+		UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+		
+		SendMail sendMail = new SendMail();
+		sendMail.setFollowedUserEmail(emaiToFollow);
+		sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
+		sendMail.start();
+		
+		return "profile";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -163,9 +165,9 @@ public class UserController {
 
 		return jsp;
 	}
-	
-//	public static boolean isUserInSession(HttpServletRequest request) {
-//		return request.getSession().getAttribute("USER") != null;
-//	}
+
+	// public static boolean isUserInSession(HttpServletRequest request) {
+	// return request.getSession().getAttribute("USER") != null;
+	// }
 	
 }
