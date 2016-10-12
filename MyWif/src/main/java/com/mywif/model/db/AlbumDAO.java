@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,6 +22,8 @@ public class AlbumDAO implements IAlbumDAO {
 	private static final String SELECT_ALBUMS = "SELECT album_id, album_name, user_email, album_date FROM albums ORDER BY album_date DESC;";
 	
 	private TreeMap<Integer, Album> allAlbums; //album id -> album
+	
+	private HashMap<String, TreeMap<Integer, ArrayList<Post>>> albumsByUser; // user email -> album id -> list of posts
 	
 	private static AlbumDAO instance;
 

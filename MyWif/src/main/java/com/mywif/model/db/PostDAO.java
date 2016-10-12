@@ -90,7 +90,6 @@ public class PostDAO implements IPostDAO {
 	/**
 	 * take all posts from db generate posts comments from db generate likes and
 	 * dislikes for posts from db
-	 * 
 	 * @return map with post id -> post values
 	 */
 	public Map<Integer, Post> takeAllPosts() {

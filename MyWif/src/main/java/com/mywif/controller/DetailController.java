@@ -73,4 +73,9 @@ public class DetailController {
 	public String viewMyAlbums(HttpServletRequest request) {
 			return "myAlbums";
 	}
+	
+	@RequestMapping(value = "/myFollowedPosts", method = RequestMethod.GET)
+	public String viewFollowedPosts(HttpServletRequest request) {
+			return "myFollowedPosts";
+	}
 }

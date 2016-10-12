@@ -2,6 +2,7 @@ package com.mywif.model.pojo;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,21 @@ public class UsersManager implements IUserManager {
 	public Set<String> getFollowedByUser(String followerEmail){
 		return followed.get(followerEmail);
 	}
+	
+	//get posts of followed users
+	public List<Post> getFollowedPosts(String userEmail){
+		List<Post> followedPosts = new ArrayList<>();
+		for(String email : getFollowedByUser(userEmail)){
+			User followed = getUser(email);
+			for(Album a : followed.getAlbums().values()){
+				List<Post> posts = a.getPosts();
+				followedPosts.addAll(posts);
+			}
+		}
+		Collections.sort(followedPosts, (Post p1, Post p2) -> p2.getCreatedOn().compareTo(p1.getCreatedOn()));
+		return followedPosts;
+	}
+	
 	
 	/**
 	 * convert the pass in md5
