@@ -33,6 +33,8 @@ public class CommentController {
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
 			String email = session.getAttribute("USER").toString();
 			try {
 				CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
