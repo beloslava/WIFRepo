@@ -25,8 +25,9 @@ public class CommentController {
 	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			Model model, HttpSession session) {
-			model.addAttribute("commentId", Integer.parseInt(commentId));
-			model.addAttribute("postId", Integer.parseInt(postId));
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
 			String email = session.getAttribute("USER").toString();
 			CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
 			return "detailsPost";

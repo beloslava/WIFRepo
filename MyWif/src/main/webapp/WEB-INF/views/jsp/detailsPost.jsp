@@ -191,8 +191,11 @@
                   </div>
                   <div class="message"> 
                   <span class="reply-link">
-              		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${reply.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(reply.commentLikes)}"></c:out></a>
-              	  </span>
+					<form action="commentlike" method="post">
+              			<input type="hidden" name="commentId" value="${reply.commentId}">
+              			<input type="hidden" name="postId" value="${post.id}">
+              			<input type="submit" value="like">
+              		</form>                 	  </span>
                     <div class="info">
                       <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${replyUser.name}"></c:out></h2></a>
                       <span class="meta"><c:out value="${reply.createdOn}"></c:out></span> </div>

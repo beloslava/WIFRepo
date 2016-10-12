@@ -32,7 +32,7 @@ public class DetailController {
 	@RequestMapping(value = "/detailspost", method = RequestMethod.GET)
 	public String post(@RequestParam("postId") String postId, HttpServletRequest request, Model model) {
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
-			model.addAttribute("postId", postId);
+			model.addAttribute("postId",postId);
 			model.addAttribute("post", post);
 			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
 			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
