@@ -95,18 +95,18 @@
   <div class="blog-wrap">
   <div id="upload" style="display:none;">
     <div class="post format-image box">
-      <form class="forms" action="createpost" method="post" enctype="multipart/form-data">
+      <form class="forms" action="createpost" method="post" enctype="multipart/form-data" accept="image/*" onsubmit="return Validate(this);">
         <fieldset>
           <ol>
             <li class="form-row text-input-row">
               <label>Say smth about your post</label>
-              <input type="text" name="nameOfPost" value="" class="text-input required">
+              <input type="text" name="nameOfPost" value="" class="text-input required" required placeholder=" ">
             </li>
             <li class="form-row text-input-row">
               <input type="hidden" name="email" value="${USER}" class="text-input required">
             </li>
             <li class="form-row text-input-row">
-              <input type="hidden" name="albumId" value="<c:out value="${requestScope.albumId}"></c:out>">" class="text-input required">
+              <input type="hidden" name="albumId" value="<c:out value="${requestScope.albumId}"></c:out>" class="text-input required">
             </li>
             <li class="form-row text-input-row">
               <label>Category</label>
@@ -125,11 +125,11 @@
             </li>
             <li class="form-row text-input-row">
               <label>Key words</label>
-              <input type="text" name="keyWords" value="" class="text-input required">
+              <input type="text" name="keyWords" value="" class="text-input required" required placeholder=" ">
             </li>
             <li class="form-row text-area-row">
               <label>Upload your photo</label>
-              <input type="file" name="fileField" accept="image/* class="text-input required">
+              <input type="file" name="fileField" accept="image/*" class="text-input required" required placeholder=" ">
             </li>
             <li class="button-row">
               <input type="submit" value="Upload your post" name="submit" class="btn-submit">
@@ -308,5 +308,35 @@
 <div class="site-generator-wrapper">
 </div>
 <script src="js/scripts.js"></script>
+<script type="text/javascript">
+        var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+        function Validate(oForm) {
+            var arrInputs = oForm.getElementsByTagName("input");
+            for (var i = 0; i < arrInputs.length; i++) {
+                var oInput = arrInputs[i];
+                if (oInput.type == "file") {
+                    var sFileName = oInput.value;
+                    if (sFileName.length > 0) {
+                        var blnValid = false;
+                        for (var j = 0; j < _validFileExtensions.length; j++) {
+                            var sCurExtension = _validFileExtensions[j];
+                            if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                                blnValid = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!blnValid) {
+                            alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                            return false;
+                        }
+                    }
+                }
+            }
+          
+            return true;
+        }
+        </script>
+        
 </body>
 </html>

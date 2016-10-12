@@ -101,7 +101,7 @@
           <ol>
             <li class="form-row text-input-row">
               <label>name of album</label>
-              <input type="text" name="name" value="" class="text-input required">
+              <input type="text" name="name" value="" class="text-input required" required placeholder=" ">
             </li>
             <li class="button-row">
               <input type="submit" value="Create album" name="submit" class="btn-submit">
