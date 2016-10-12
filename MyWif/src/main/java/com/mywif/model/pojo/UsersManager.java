@@ -11,11 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.db.UserDAO;
-import com.mywif.model.exception.DBException;
 
 public class UsersManager implements IUserManager {
 
-	private ConcurrentHashMap<String, User> registerredUsers;// username -> user
+	private ConcurrentHashMap<String, User> registerredUsers;// user email -> user
 	private ConcurrentHashMap<String, Set<String>> followers; //users that follow the user 
 	private ConcurrentHashMap<String, Set<String>> followed; //users that the user follows
 	
@@ -37,7 +36,6 @@ public class UsersManager implements IUserManager {
 		System.out.println("Followed size " +followed.size());
 		System.out.println("Followers size " +followers.size());
 
-		
 	}
 
 	public synchronized static UsersManager getInstance() {

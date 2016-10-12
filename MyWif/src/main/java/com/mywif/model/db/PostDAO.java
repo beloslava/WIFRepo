@@ -38,11 +38,8 @@ public class PostDAO implements IPostDAO {
 	private static final String DELETE_COMMENTS_LIKES = "DELETE FROM comments_likes WHERE comment_id = ?;";
 
 	private TreeMap<Integer, Post> allPosts; // all posts from the page
-	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from
-															// userEmails
-	private HashMap<Integer, HashSet<String>> postDislikes; // postId -> list
-															// from userEmails
-
+	private HashMap<Integer, HashSet<String>> postLikes; // postId -> list from															// userEmails
+	private HashMap<Integer, HashSet<String>> postDislikes; // postId -> list from userEmails
 	private static PostDAO instance;
 
 	private PostDAO() {
@@ -75,6 +72,10 @@ public class PostDAO implements IPostDAO {
 	 */
 	public Post getPost(int postId) {
 		return allPosts.get(postId);
+	}
+	
+	public void removeCommentFromAllPosts(int postId, Comment comment) {
+		allPosts.get(postId).removeComent(comment);
 	}
 
 	/**
@@ -338,9 +339,7 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get all dislikes for post from db
-	 * 
-	 * @param post
-	 *            id
+	 * @param post id
 	 * @return set with users emails that disliked the post
 	 */
 	@Override
@@ -377,9 +376,7 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get all posts for a user from allPosts collection
-	 * 
-	 * @param user
-	 *            email
+	 * @param user email
 	 * @return list with user's posts
 	 */
 	@Override
@@ -398,9 +395,7 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get all posts for a certain category from allPosts collection
-	 * 
-	 * @param category
-	 *            name
+	 * @param category name
 	 * @return list with posts from this category
 	 */
 	@Override
@@ -418,7 +413,6 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get top ten posts from allPosts collection
-	 * 
 	 * @return list with ten most liked posts
 	 */
 	@Override
@@ -448,7 +442,6 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * get posts by album
-	 * 
 	 * @return posts by album
 	 */
 	public List<Post> getPostsByAlbum(int albumId) {
@@ -463,7 +456,6 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * search posts by name and key words from all posts
-	 * 
 	 * @return list with posts which contains that name
 	 */
 	public List<Searchable> searchPostByNameAndKeyWords(String name) {
@@ -484,9 +476,7 @@ public class PostDAO implements IPostDAO {
 
 	/**
 	 * delete post by id from db and collection and user
-	 * 
-	 * @param post
-	 *            id
+	 * @param post id
 	 */
 	public void deletePost(int postId) {
 

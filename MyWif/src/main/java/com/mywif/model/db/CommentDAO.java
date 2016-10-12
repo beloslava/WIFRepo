@@ -1,5 +1,6 @@
 package com.mywif.model.db;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,16 +16,20 @@ import java.util.TreeMap;
 
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
+import com.mywif.model.pojo.User;
+import com.mywif.model.pojo.UsersManager;
 
 public class CommentDAO implements ICommentDAO {
 
 	private static final String SELECT_COMMENTS_BY_POST = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE post_id = ? ORDER BY comment_date DESC;";
-	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
 	private static final String INSERT_COMMENT = "INSERT INTO post_comments (post_id, user_email, parent_comment_id, comment_text) VALUES (?,?,?,?);";
 	private static final String SELECT_COMMENTS_BY_COMMENT = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments WHERE parent_comment_id = ? ORDER BY comment_date DESC;";
 	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
 	private static final String SELECT_COMMENT_LIKES = "SELECT user_email FROM comments_likes WHERE comment_id = ?;";
 	private static final String LIKE_COMMENT = "INSERT INTO comments_likes (comment_id, user_email) VALUES (?,?);";
+	private static final String DELETE_COMMENT_LIKES = "DELETE FROM comments_likes WHERE comment_id = ?;";
+	private static final String DELETE_COMMENT_PARENT = "UPDATE post_comments SET parent_comment_id = NULL WHERE parent_comment_id = ?;";
+	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
 	
 	private TreeMap<Integer, Comment> allComments; // comment id -> comment
 	private HashMap<Integer, HashSet<String>> commentLikes;
@@ -127,19 +132,64 @@ public class CommentDAO implements ICommentDAO {
 
 	}
 
+	/**
+	 * remove comment
+	 * @param comment id
+	 */
 	@Override
 	public void removeComment(int commentId) {
 		//TODO
-		PreparedStatement statement;
-		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(DELETE_COMMENT_BY_ID);
-			statement.setInt(1, commentId);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("Cannot delete comment right now");
-			e.printStackTrace();
-		}
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
 
+		Connection conn = (Connection) DBManager.getInstance().getConnection();
+		try {
+			DBManager.getInstance().getConnection().setAutoCommit(false);
+
+			ps1 = conn.prepareStatement(DELETE_COMMENT_LIKES);
+			ps1.setInt(1, commentId); // delete comment likes
+			ps1.executeUpdate();
+
+			ps2 = conn.prepareStatement(DELETE_COMMENT_PARENT);
+			ps2.setInt(1, commentId); // set parentId null
+			ps2.executeUpdate();
+
+			ps3 = conn.prepareStatement(DELETE_COMMENT_BY_ID);
+			ps2.setInt(1, commentId); // delete comment
+			ps2.executeUpdate();
+
+			conn.commit();
+
+			if (allComments.containsKey(commentId)) {
+				Comment comment = getComment(commentId);
+				int postId = comment.getPostId();
+				PostDAO.getInstance().getPost(postId).removeComent(comment);
+			}
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+				System.out.println("Rollback!");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				if (ps1 != null) {
+					ps1.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (ps3 != null) {
+					ps3.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Something went wrong with setting autoCommit true!");
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

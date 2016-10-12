@@ -19,7 +19,6 @@ public class Comment {
 	private List<Comment> commentComments;
 	private Set<String> commentLikes;
 
-
 	public Comment(int commentId, int postId, String userEmail, Integer parentCommentId, String text, Timestamp time, List<Comment> commentComments, Set<String> commentLikes) {
 		this.commentId = commentId;
 		this.postId = postId;
@@ -37,6 +36,14 @@ public class Comment {
 	//add comment to comment
 	public void addCommentComment(Comment comment){
 		commentComments.add(comment);
+	}
+	
+	public void removeCommentComment(Comment comment){
+		commentComments.remove(comment);
+	}
+	
+	public void removeCommentLike(String userEmail){
+		commentLikes.remove(userEmail);
 	}
 	
 	public Set<String> getCommentLikes() {

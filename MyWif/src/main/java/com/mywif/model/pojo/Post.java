@@ -40,6 +40,11 @@ public class Post implements Searchable {
 	public void addComent(Comment comment) {
 		comments.add(comment);
 	}
+	
+	// add comment in comments collection
+		public void removeComent(Comment comment) {
+			comments.remove(comment);
+		}
 
 	// add like in post likes
 	public void addLike(String userEmail) {

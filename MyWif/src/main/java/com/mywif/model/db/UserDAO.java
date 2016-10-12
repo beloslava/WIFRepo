@@ -194,33 +194,32 @@ public class UserDAO implements IUserDAO {
 		}
 
 	}
-
 	
 	public void followUser(String userEmail, String followerEmail){
 		PreparedStatement statement = null;
 		if(!UsersManager.getInstance().isUserFollowedByUser(userEmail, followerEmail)){
-		try {
-			// email, user_password, user_name, gender, about, avatar
-			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
-			statement.setString(1, userEmail);
-			statement.setString(2, followerEmail);		
-			statement.executeUpdate();
-				
-			System.out.println("User followed successfully");
-		} catch (SQLException e) {
-			System.out.println("Cannot follow user right now!");
-			e.printStackTrace();
-		} finally {
 			try {
-				if (statement != null) {
-					statement.close();
-				}
-
+				// email, user_password, user_name, gender, about, avatar
+				statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_FOLLOWER);
+				statement.setString(1, userEmail);
+				statement.setString(2, followerEmail);		
+				statement.executeUpdate();
+					
+				System.out.println("User followed successfully");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Cannot follow user right now!");
 				e.printStackTrace();
+			} finally {
+				try {
+					if (statement != null) {
+						statement.close();
+					}
+	
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		}
 		}
 	}
 	
