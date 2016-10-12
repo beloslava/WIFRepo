@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 
 @Controller
 public class DeleteController {
@@ -19,7 +20,12 @@ public class DeleteController {
 		if (UserController.isUserInSession(request)) {
 			System.out.println(Integer.parseInt(postId));
 			System.out.println(Integer.parseInt(postId) + session.getAttribute("USER").toString());
-			PostDAO.getInstance().deletePost(Integer.parseInt(postId));
+			try {
+				PostDAO.getInstance().deletePost(Integer.parseInt(postId));
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "main";
 		} else {
 			return "index";

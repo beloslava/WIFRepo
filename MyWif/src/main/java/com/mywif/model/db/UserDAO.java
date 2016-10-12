@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -90,8 +91,7 @@ public class UserDAO implements IUserDAO {
 				if (resultSet != null) {
 					resultSet.close();
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} catch (SQLException e) {				
 				e.printStackTrace();
 			}
 		}
@@ -104,7 +104,7 @@ public class UserDAO implements IUserDAO {
 	 * save user in db
 	 */
 	@Override
-	public void saveUser(User user) {
+	public void saveUser(User user) throws DBException {
 		PreparedStatement statement = null;
 		try {
 			// email, user_password, user_name, gender, about, avatar
@@ -116,31 +116,28 @@ public class UserDAO implements IUserDAO {
 			statement.setString(5, user.getAbout());
 			statement.setString(6, user.getAvatarPath());
 				
-			statement.executeUpdate();
-				
+			statement.executeUpdate();				
 			System.out.println("User added successfully");
 		} catch (SQLException e) {
 			System.out.println("Cannot save user right now!");
-			e.printStackTrace();
+			throw new DBException("Cannot save user right now!", e);
 		} finally {
 			try {
 				if (statement != null) {
 					statement.close();
 				}
-
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
-		}
-		
+		}		
 	}
 	
 	/**
 	 * update user in db
 	 */
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(User user) throws DBException {
 		PreparedStatement statement = null;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_USER);
@@ -153,23 +150,21 @@ public class UserDAO implements IUserDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("Can not updadte user right now");
-			e.printStackTrace();
+			throw new DBException("Can not updadte user right now", e);
+
 		} finally {
 			try {
 				if (statement != null) {
 					statement.close();
 				}
-
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+				
 			}
 		}
-
 	}
 	
-	public void updateAvatar(User user) {
+	public void updateAvatar(User user) throws DBException {
 		PreparedStatement statement = null;
 		try {
 			statement = DBManager.getInstance().getConnection().prepareStatement(UPDATE_AVATAR);
@@ -180,22 +175,19 @@ public class UserDAO implements IUserDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Can not updadte avatar right now");
-			e.printStackTrace();
+			throw new DBException("Can not updadte avatar right now", e);
 		} finally {
 			try {
 				if (statement != null) {
 					statement.close();
 				}
-
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
 			}
 		}
-
 	}
 	
-	public void followUser(String userEmail, String followerEmail){
+	public void followUser(String userEmail, String followerEmail) throws DBException{
 		PreparedStatement statement = null;
 		if(!UsersManager.getInstance().isUserFollowedByUser(userEmail, followerEmail)){
 			try {
@@ -207,8 +199,7 @@ public class UserDAO implements IUserDAO {
 					
 				System.out.println("User followed successfully");
 			} catch (SQLException e) {
-				System.out.println("Cannot follow user right now!");
-				e.printStackTrace();
+				throw new DBException("Cannot follow user right now!", e);
 			} finally {
 				try {
 					if (statement != null) {
@@ -216,8 +207,7 @@ public class UserDAO implements IUserDAO {
 					}
 	
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
 				}
 			}
 		}
@@ -250,7 +240,6 @@ public class UserDAO implements IUserDAO {
 		}
 
 		return followers;
-
 	}
 	
 	public Set<String> getAllFollowedForUser(String followerEmail){
@@ -280,10 +269,9 @@ public class UserDAO implements IUserDAO {
 		}
 
 		return followed;
-
 	}
 	
-	public void unfollowUser(String userEmail, String followerEmail){
+	public void unfollowUser(String userEmail, String followerEmail) throws DBException{
 		PreparedStatement statement = null;
 		if(UsersManager.getInstance().isUserFollowedByUser(userEmail, followerEmail)){
 		try {
@@ -293,8 +281,7 @@ public class UserDAO implements IUserDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("Can not unfollow user right now");
-			e.printStackTrace();
+			throw new DBException("Cannot unfollow user right now", e);
 		} finally {
 			try {
 				if (statement != null) {
@@ -302,8 +289,7 @@ public class UserDAO implements IUserDAO {
 				}
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
 			}
 		}
 	}

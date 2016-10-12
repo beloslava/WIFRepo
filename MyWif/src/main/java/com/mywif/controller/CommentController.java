@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mywif.model.db.CommentDAO;
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.UsersManager;
 
@@ -30,7 +31,12 @@ public class CommentController {
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
 			String email = session.getAttribute("USER").toString();
-			CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
+			try {
+				CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "detailsPost";
 		} else {
 			return "index";
@@ -47,8 +53,13 @@ public class CommentController {
 				parentId = Integer.parseInt(parentCommentId);
 			}
 			if (comment != null) {
-				CommentDAO.getInstance().addComment(Integer.parseInt(postId), email, parentId, comment,
-						Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>());
+				try {
+					CommentDAO.getInstance().addComment(Integer.parseInt(postId), email, parentId, comment,
+							Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>());
+				} catch (DBException e) {
+					System.out.println(DBException.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
 			}
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);

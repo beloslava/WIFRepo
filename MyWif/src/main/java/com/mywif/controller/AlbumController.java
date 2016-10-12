@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.UsersManager;
 
@@ -39,7 +40,12 @@ public class AlbumController {
 			HttpServletRequest request) {
 		if (UserController.isUserInSession(request)) {
 			String email = session.getAttribute("USER").toString();
-			AlbumDAO.getInstance().addAlbum(name, email, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
+			try {
+				AlbumDAO.getInstance().addAlbum(name, email, Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>());
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "myAlbums";
 		} else {
 			return "index";
@@ -64,10 +70,15 @@ public class AlbumController {
 							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords,
-					Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>(), new HashSet<>());
+			try {
+				PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords,
+						Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>(), new HashSet<>());
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			model.addAttribute(category + "Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
-			return "main";
+			return "myAlbums";
 		} else {
 			return "index";
 		}
@@ -82,7 +93,15 @@ public class AlbumController {
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
 			String email = session.getAttribute("USER").toString();
-			PostDAO.getInstance().likePost(Integer.parseInt(postId), email);
+			try {
+				PostDAO.getInstance().likePost(Integer.parseInt(postId), email);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "detailsPost";
 		} else {
 			return "index";
@@ -97,7 +116,12 @@ public class AlbumController {
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
 			String email = session.getAttribute("USER").toString();
-			PostDAO.getInstance().dislikePost(Integer.parseInt(postId), email);
+			try {
+				PostDAO.getInstance().dislikePost(Integer.parseInt(postId), email);
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			System.out.println("disliknah te be da ti eba maikata");
 			return "detailsPost";
 		} else {

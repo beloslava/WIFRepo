@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.User;
 import com.mywif.model.pojo.UsersManager;
@@ -93,8 +94,7 @@ public class UserController {
 					&& gender != null && newDescription != null) {
 				try {
 					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
+				} catch (UnsupportedEncodingException | DBException e) {
 					e.printStackTrace();
 				}
 
@@ -111,7 +111,12 @@ public class UserController {
 		if (isUserInSession(request)) {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
-			UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+			try {
+				UsersManager.getInstance().unfollow(emaiToFollow, session.getAttribute("USER").toString());
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "profile";
 		} else {
 			return "index";
@@ -124,13 +129,17 @@ public class UserController {
 		if (isUserInSession(request)) {
 			model.addAttribute("email", emaiToFollow);
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
-			UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-
-			SendMail sendMail = new SendMail();
-			sendMail.setFollowedUserEmail(emaiToFollow);
-			sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
-			sendMail.start();
-
+			try {
+				UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
+				SendMail sendMail = new SendMail();
+				sendMail.setFollowedUserEmail(emaiToFollow);
+				sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
+				sendMail.start();
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+			
 			return "profile";
 		} else {
 			return "index";
@@ -168,8 +177,13 @@ public class UserController {
 			// avatarFile.getName());
 			// System.out.println("abs. path = " +
 			// avatarFile.getAbsolutePath());
-			UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
-					new HashSet<>(), new TreeMap<Integer, Album>());
+			try {
+				UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
+						new HashSet<>(), new TreeMap<Integer, Album>());
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			jsp = "index";
 		} else {
 			jsp = "registerFailed";

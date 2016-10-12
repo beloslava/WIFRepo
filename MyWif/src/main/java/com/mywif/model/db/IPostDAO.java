@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
 
@@ -12,11 +13,11 @@ import com.mywif.model.pojo.Post;
 public interface IPostDAO {
 
 	void addPost(String userEmail, Integer albumId, String category, String picture, String name, String keyWords,
-			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes);
+			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) throws DBException;
 
-	void likePost(int postId, String userEmail);
+	void likePost(int postId, String userEmail) throws DBException;
 
-	void dislikePost(int postId, String userEmail);
+	void dislikePost(int postId, String userEmail) throws DBException;
 
 	List<Post> getAllPostsByUser(String userEmail);
 

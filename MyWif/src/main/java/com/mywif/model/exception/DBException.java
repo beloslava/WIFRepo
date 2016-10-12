@@ -4,7 +4,8 @@ public class DBException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
-	//public static final String ERROR_MESSAGE = "Something went wrong with DB!";
+	public static final String ERROR_MESSAGE = "There is a problem in DB!";
+	public static final String ERROR_MESSAGE_CLOSE_CONN = "There is a problem in closing the DB connections!";
 	
 	public DBException() {
 		super();

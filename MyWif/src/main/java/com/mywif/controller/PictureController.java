@@ -23,6 +23,7 @@ import com.mywif.model.pojo.Searchable;
 import com.mywif.model.pojo.UsersManager;
 
 import com.mywif.model.db.PostDAO;
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
 
@@ -96,7 +97,12 @@ public class PictureController {
 			File pictureFile = new File(dir, name + "-profile-pic." + picture.getContentType().split("/")[1]);
 			System.out.println(pictureFile.getAbsolutePath());
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			UsersManager.getInstance().changeAvatar(pictureFile.getName(), email);
+			try {
+				UsersManager.getInstance().changeAvatar(pictureFile.getName(), email);
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "myProfile";
 		} else {
 			return "index";

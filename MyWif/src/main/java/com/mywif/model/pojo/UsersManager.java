@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.db.UserDAO;
+import com.mywif.model.exception.DBException;
 
 public class UsersManager implements IUserManager {
 
@@ -87,7 +88,7 @@ public class UsersManager implements IUserManager {
 	 */
 	@Override
 	public void regUser(String email, String password, String name, String avatarPath, 
-			 Set<String> followers, Set<String> followed, Map<Integer, Album> albums) {
+			 Set<String> followers, Set<String> followed, Map<Integer, Album> albums) throws DBException {
 		User user = new User(email, password, name, null, null, avatarPath,  followers, followed, albums);
 		registerredUsers.put(email, user);
 		try {
@@ -105,7 +106,7 @@ public class UsersManager implements IUserManager {
 	 */
 	@Override
 	public void changeSettings(String name, String password, String gender, String about, String email) 
-			throws UnsupportedEncodingException {
+			throws UnsupportedEncodingException, DBException {
 		User user = registerredUsers.get(email);
 		registerredUsers.get(email).setEmail(email);
 		registerredUsers.get(email).setName(name);
@@ -117,14 +118,14 @@ public class UsersManager implements IUserManager {
 	}
 	
 	public void changeAvatar(String avatarPath, String email) 
-			throws UnsupportedEncodingException {
+			throws UnsupportedEncodingException, DBException {
 		User user = registerredUsers.get(email);
 		registerredUsers.get(email).setAvatarPath(avatarPath);
 		UserDAO.getInstance().updateAvatar(user);
 	}
 	
 	//follow user
-	public void follow(String userEmail, String followerEmail){
+	public void follow(String userEmail, String followerEmail) throws DBException{
 		
 		if(!followed.containsKey(followerEmail)){
 			followed.put(followerEmail, new HashSet<>());
@@ -147,7 +148,7 @@ public class UsersManager implements IUserManager {
 	}
 	
 	//unfollow user
-	public void unfollow(String userEmail, String followerEmail){
+	public void unfollow(String userEmail, String followerEmail) throws DBException{
 		if(followed.containsKey(followerEmail)){
 			System.out.println("Before unfollow");
 			UserDAO.getInstance().unfollowUser(userEmail, followerEmail);

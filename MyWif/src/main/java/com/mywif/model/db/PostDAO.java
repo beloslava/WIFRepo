@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.Searchable;
@@ -73,7 +74,9 @@ public class PostDAO implements IPostDAO {
 	}
 	
 	public void removeCommentFromAllPosts(int postId, Comment comment) {
-		allPosts.get(postId).removeComent(comment);
+		if(comment != null){
+			allPosts.get(postId).removeComent(comment);
+		}
 	}
 
 	/**
@@ -140,7 +143,6 @@ public class PostDAO implements IPostDAO {
 		} catch (SQLException e) {
 			System.out.println("Cannot get posts right now");
 			e.printStackTrace();
-			// return Collections.unmodifiableMap(allPosts);
 			return (Map<Integer, Post>) allPosts.clone();
 
 		} finally {
@@ -157,17 +159,17 @@ public class PostDAO implements IPostDAO {
 			}
 		}
 
-		// return Collections.unmodifiableMap(allPosts);
 		return (Map<Integer, Post>) allPosts.clone();
 
 	}
 
 	/**
 	 * add post in db, allPosts collection and user's posts
+	 * @throws DBException 
 	 */
 	@Override
 	public void addPost(String userEmail, Integer albumId, String category, String picture, String name,
-			String keyWords, Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) {
+			String keyWords, Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) throws DBException {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -196,8 +198,8 @@ public class PostDAO implements IPostDAO {
 			user.getAlbums().get(albumId).addPost(post);
 			allPosts.put(post.getId(), post);
 		} catch (SQLException e) {
-			System.out.println("Cannot upload post right now");
-			e.printStackTrace();
+			throw new DBException("Cannot upload post right now", e);
+
 		} finally {
 			try {
 				if (statement != null) {
@@ -207,8 +209,8 @@ public class PostDAO implements IPostDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
 		}
 
@@ -218,9 +220,10 @@ public class PostDAO implements IPostDAO {
 	 * like post and put it in db and user's posts
 	 * @param post id
 	 * @param user email
+	 * @throws DBException 
 	 */
 	@Override
-	public void likePost(int postId, String userEmail) {
+	public void likePost(int postId, String userEmail) throws DBException {
 		PreparedStatement statement = null;
 		// System.out.println(postLikes.get(postId).contains(userEmail) + " " +
 		// postLikes.get(postId));
@@ -242,8 +245,7 @@ public class PostDAO implements IPostDAO {
 
 				System.out.println("like post");
 			} catch (SQLException e) {
-				System.out.println("The post cannot be liked right now");
-				e.printStackTrace();
+				throw new DBException("The post cannot be liked right now", e);
 			} finally {
 				try {
 					if (statement != null) {
@@ -251,8 +253,8 @@ public class PostDAO implements IPostDAO {
 					}
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 				}
 			}
 		}
@@ -263,9 +265,10 @@ public class PostDAO implements IPostDAO {
 	 * dislike post and put it in db and user's posts
 	 * @param post id
 	 * @param user email
+	 * @throws DBException 
 	 */
 	@Override
-	public void dislikePost(int postId, String userEmail) {
+	public void dislikePost(int postId, String userEmail) throws DBException {
 		// System.out.println(postDislikes.containsKey(postId));
 		// System.out.println(postDislikes.get(postId).size());
 		// System.out.println(postDislikes.get(postId).contains(userEmail));
@@ -288,8 +291,8 @@ public class PostDAO implements IPostDAO {
 
 				System.out.println("dislike post");
 			} catch (SQLException e) {
-				System.out.println("The post cannot be disliked right now");
-				e.printStackTrace();
+				throw new DBException("The post cannot be disliked right now", e);
+
 			} finally {
 				try {
 					if (statement != null) {
@@ -297,8 +300,8 @@ public class PostDAO implements IPostDAO {
 					}
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 				}
 			}
 		}
@@ -482,8 +485,9 @@ public class PostDAO implements IPostDAO {
 	/**
 	 * delete post by id from db and collection and user
 	 * @param post id
+	 * @throws DBException 
 	 */
-	public void deletePost(int postId) {
+	public void deletePost(int postId) throws DBException {
 
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
@@ -549,7 +553,7 @@ public class PostDAO implements IPostDAO {
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
-				System.out.println("Rollback!");
+				throw new DBException("Rollback!", e);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -575,8 +579,8 @@ public class PostDAO implements IPostDAO {
 					ps6.close();
 				}
 			} catch (SQLException e) {
-				System.out.println("Something went wrong with setting autoCommit true!");
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
 		}
 	}

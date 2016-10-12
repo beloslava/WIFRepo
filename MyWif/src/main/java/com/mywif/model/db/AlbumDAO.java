@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
@@ -40,7 +41,7 @@ public class AlbumDAO implements IAlbumDAO {
 	}
 	
 	@Override
-	public void addAlbum(String albumName, String userEmail, Timestamp time, List<Post> posts){
+	public void addAlbum(String albumName, String userEmail, Timestamp time, List<Post> posts) throws DBException{
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -61,8 +62,8 @@ public class AlbumDAO implements IAlbumDAO {
 			allAlbums.put((int)id, album);
 	
 		} catch (SQLException e) {
-			System.out.println("Cannot add album right now");
-			e.printStackTrace();
+			throw new DBException("Cannot add album right now", e);
+
 		} finally {
 			try {
 				if (statement != null) {
@@ -72,8 +73,8 @@ public class AlbumDAO implements IAlbumDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
 		}
 		
@@ -92,13 +93,13 @@ public class AlbumDAO implements IAlbumDAO {
 
 
 				allAlbums.put(resultSet.getInt("album_id"), new Album( resultSet.getInt("album_id"), 
-																	resultSet.getString("album_name"),	
-																	resultSet.getString("user_email"),
-																	resultSet.getTimestamp("album_date"),
-																	albumPosts 
+																	   resultSet.getString("album_name"),	
+																	   resultSet.getString("user_email"),
+																	   resultSet.getTimestamp("album_date"),
+																	   albumPosts 
 																	
 
-														));
+																	));
 
 			}
 		} catch (SQLException e) {

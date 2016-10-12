@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
@@ -79,10 +80,11 @@ public class CommentDAO implements ICommentDAO {
 	
 	/**
 	 * add comment in db, allComments collection and post's comments or comment comments collection
+	 * @throws DBException 
 	 */
 	@Override
 	public void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time,
-			ArrayList<Comment> commentComments, Set<String> commentLikes) {
+			ArrayList<Comment> commentComments, Set<String> commentLikes) throws DBException {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -114,8 +116,8 @@ public class CommentDAO implements ICommentDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Cannot add comment right now");
-			e.printStackTrace();
+			throw new DBException("Cannot add comment right now", e);
+
 		} finally {
 			try {
 				if (statement != null) {
@@ -125,8 +127,8 @@ public class CommentDAO implements ICommentDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
 		}
 
@@ -135,9 +137,10 @@ public class CommentDAO implements ICommentDAO {
 	/**
 	 * remove comment
 	 * @param comment id
+	 * @throws DBException 
 	 */
 	@Override
-	public void removeComment(int commentId) {
+	public void removeComment(int commentId) throws DBException {
 		//TODO
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
@@ -169,7 +172,8 @@ public class CommentDAO implements ICommentDAO {
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
-				System.out.println("Rollback!");
+				throw new DBException("Rollback!", e);
+
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -186,8 +190,8 @@ public class CommentDAO implements ICommentDAO {
 					ps3.close();
 				}
 			} catch (SQLException e) {
-				System.out.println("Something went wrong with setting autoCommit true!");
-				e.printStackTrace();
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 			}
 		}
 	}
@@ -220,7 +224,7 @@ public class CommentDAO implements ICommentDAO {
 	
 	
 	@Override
-	public void likeComment(int commentId, String userEmail){
+	public void likeComment(int commentId, String userEmail) throws DBException{
 		PreparedStatement statement = null;
 	//	System.out.println(commentLikes.get(commentId).contains(userEmail) + " " + commentLikes.get(commentId));
 		if((!commentLikes.containsKey(commentId) || !commentLikes.get(commentId).contains(userEmail))){
@@ -242,8 +246,8 @@ public class CommentDAO implements ICommentDAO {
 				
 				System.out.println("like comment");
 			} catch (SQLException e) {
-				System.out.println("The post cannot be liked right now");
-				e.printStackTrace();
+				throw new DBException("The post cannot be liked right now", e);
+
 			} finally {
 				try {
 					if (statement != null) {
@@ -251,8 +255,8 @@ public class CommentDAO implements ICommentDAO {
 					}
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
 				}
 			}
 		}
