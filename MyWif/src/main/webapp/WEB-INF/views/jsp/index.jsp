@@ -118,13 +118,15 @@ response.addDateHeader ("Expires", 0);
 									<div class="form-group">
 										<label class="sr-only" for="form-password">Password</label> <input
 											type="password" name="password" placeholder="Password..."
-											class="form-password form-control" id="password"
+											class="form-password form-control" id="password" 
+											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
 											required placeholder=" ">
 									</div>
 									<div class="form-group">
 										<label class="sr-only" for="form-password2">Repeat
 											password</label> <input type="password" name="password2"
 											placeholder="Confirm Password" id="confirm_password"
+											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
 											class="form-last-name form-control" 
 											required placeholder=" ">
 									</div>

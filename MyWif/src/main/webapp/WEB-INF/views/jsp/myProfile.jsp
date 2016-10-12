@@ -216,16 +216,19 @@ response.addDateHeader ("Expires", 0);
 								</li>
 								<li class="form-row text-input-row">Enter old password<input
 									type="password" name="oldPass" value=""
+									
 									class="text-input required" required placeholder="Old Password">
 								</li>
 								<li class="form-row text-input-row">Enter new password<input
 									type="password" name="newPass" value=""
 									class="text-input required" required id="password" required
-									placeholder="New Password">
+									placeholder="New Password"
+									pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})">
 								</li>
 								<li class="form-row text-input-row">Repeat new password<input
 									type="password" name="newPass2" value=""
 									class="text-input required" placeholder="Confirm Password"
+									pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
 									id="confirm_password" required><br>
 								</li>
 								<li class="form-row text-input-row">Gender <span><select
