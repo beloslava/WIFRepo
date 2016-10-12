@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mywif.model.db.CommentDAO;
 import com.mywif.model.db.PostDAO;
@@ -15,6 +16,8 @@ import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.UsersManager;
 
 @Controller
+@SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
 public class DetailController {
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET)

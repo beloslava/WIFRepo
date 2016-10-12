@@ -33,7 +33,7 @@ import com.mywif.model.pojo.UsersManager;
 @Controller
 @MultipartConfig
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
 public class UserController {
 
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
@@ -53,6 +53,7 @@ public class UserController {
 		session.setAttribute("USER", email);
 		model.addAttribute("USER", email);
 
+		
 		model.addAttribute("animalsPosts", PostDAO.getInstance().getAllPostsByCategory("animals").size());
 		model.addAttribute("abstractPosts", PostDAO.getInstance().getAllPostsByCategory("abstract").size());
 		model.addAttribute("foodPosts", PostDAO.getInstance().getAllPostsByCategory("food").size());
@@ -131,10 +132,10 @@ public class UserController {
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			try {
 				UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-				SendMail sendMail = new SendMail();
-				sendMail.setFollowedUserEmail(emaiToFollow);
-				sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
-				sendMail.start();
+//				SendMail sendMail = new SendMail();
+//				sendMail.setFollowedUserEmail(emaiToFollow);
+//				sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
+//				sendMail.start();
 			} catch (DBException e) {
 				System.out.println(DBException.ERROR_MESSAGE);
 				e.printStackTrace();
@@ -186,7 +187,7 @@ public class UserController {
 			}
 			jsp = "index";
 		} else {
-			jsp = "registerFailed";
+			jsp = "index";
 		}
 
 		return jsp;

@@ -9,23 +9,27 @@
 <%@ page import="com.mywif.model.db.CommentDAO"%>
 
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
 <%
-response.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
-response.addHeader("Pragma", "no-cache"); 
-response.addDateHeader ("Expires", 0);
+	response.addHeader("Cache-Control",
+			"no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0");
+	response.addHeader("Pragma", "no-cache");
+	response.addDateHeader("Expires", 0);
 %>
 <title>My Wif</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/media-queries.css">
-<link rel="stylesheet" type="text/css" href="js/player/mediaelementplayer.css">
-<link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
+<link rel="stylesheet" type="text/css"
+	href="js/player/mediaelementplayer.css">
+<link rel="stylesheet" type='text/css'
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic|Open+Sans+Condensed:300,700'>
 <!--[if IE 8]>
 <link rel="stylesheet" type="text/css" href="css/ie8.css" media="all">
 <![endif]-->
@@ -43,249 +47,366 @@ response.addDateHeader ("Expires", 0);
 <script src="js/mediaelementplayer.min.js"></script>
 <script src="js/jquery.dcflickr.1.0.js"></script>
 <script src="js/twitter.min.js"></script>
-<script>$.backstretch("img/bg/1.jpg");</script>
+<script>
+	$.backstretch("img/bg/1.jpg");
+</script>
 <script type="text/javascript">
- function showhide(id) {
-    var e = document.getElementById(id);
-    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
- }
+	function showhide(id) {
+		var e = document.getElementById(id);
+		e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+	}
 </script>
 </head>
 <body class="single">
-<div class="scanlines"></div>
-<div class="header-wrapper opacity">
-  <div class="header">
- <div class="logo"> <a href="main"> <img src="img/logo.png" alt=""> </a> </div>
-    <div id="menu-wrapper">
-      <div id="menu" class="menu">
-       <ul id="tiny">
-       <li>
-						<form class="searchform" method="get" action="search">
-							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" />
-								<label>Search in </label>
-			                <select name="type">
-							       <option value="posts">posts
-							       <option value="users">users
-							</select>
+	<div class="scanlines"></div>
+	<div class="header-wrapper opacity">
+		<div class="header">
+			<div class="logo">
+				<a href="main"> <img src="img/logo.png" alt="">
+				</a>
+			</div>
+			<div id="menu-wrapper">
+				<div id="menu" class="menu">
+					<ul id="tiny">
+						<li>
+							<form class="searchform" method="get" action="search">
+								<input type="text" name="input" value="type and hit enter"
+									onFocus="this.value=''" required /> <label>Search in </label> <select
+									name="type">
+									<option value="posts">posts
+									<option value="users">users
+								</select>
+							</form>
+						</li>
+						<li><a href="main">Home</a>
+						<li><a href="myFollowedPosts">Feed</a>
+						<li><a href="myProfile">My profile</a>
+						<li><a href="myAlbums">My Albums</a></li>
+						<li><a>Categories</a>
+							<ul>
+								<li class="active"><a href="category?category=abstract">Abstract</a></li>
+								<li><a href="category?category=animals">Animals</a></li>
+								<li><a href="category?category=family">Family</a></li>
+								<li><a href="category?category=food">Food</a></li>
+								<li><a href="category?category=nature">Nature</a></li>
+								<li><a href="category?category=people">People</a></li>
+								<li><a href="category?category=sport">Sport</a></li>
+								<li><a href="category?category=travel">Travel</a></li>
+								<li><a href="category?category=urban">Urban</a></li>
+								<li><a href="category?category=uncategorized">Uncategorized</a></li>
+							</ul></li>
+						<li><a href="topTen">Top 10</a></li>
+						<li><a href="logOut">Log out</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="intro">
+			<h1>
+				"
+				<c:out value="${post.name}"></c:out>
+				" created by <a
+					href="detailsprofile?email=<c:out value="${post.userEmail}"></c:out>"><c:out
+						value="${postUser.name}"></c:out></a>
+			</h1>
+		</div>
+		<div class="main-image">
+			<div class="outer">
+				<span class="inset"><img
+					src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span>
+			</div>
+		</div>
+		<div class="content">
+			<div class="post format-image box">
+				<div class="details">
+					<span class="icon-date"><c:out value="${post.createdOn}"></c:out></span>
+					<span class="dislikes"><a
+						href="postdislike?postId=<c:out value="${post.id}"></c:out>"
+						class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span>
+					<span class="likes"><a
+						href="postlike?postId=<c:out value="${post.id}"></c:out>"
+						class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
+					<span class="comments"><c:out
+							value="${fn:length(post.comments)}"></c:out></span>
+				</div>
+				<div>
+					<span>
+						<form class="forms" action="postdislike" method="post">
+							<fieldset>
+								<ol>
+									<li class="button-row"><input type="hidden" name="postId"
+										value="${post.id}"> <input type="submit"
+										value="dislike" name="like" class="btn-submit"></li>
+								</ol>
+							</fieldset>
 						</form>
-					</li>
-          <li><a href="main">Home</a>
-		  <li><a href="myProfile">My profile</a>
-		  <li><a href="myAlbums">My Albums</a>
-          </li>
-          <li><a>Categories</a>
-           <ul>
-              <li class="active"><a href="category?category=abstract">Abstract</a></li>
-              <li><a href="category?category=animals">Animals</a></li>
-			  <li><a href="category?category=family">Family</a></li>
-			  <li><a href="category?category=food">Food</a></li>
-              <li><a href="category?category=nature">Nature</a></li>
-			  <li><a href="category?category=people">People</a></li>
-			  <li><a href="category?category=sport">Sport</a></li>
-			  <li><a href="category?category=travel">Travel</a></li>
-			  <li><a href="category?category=urban">Urban</a></li>
-			  <li><a href="category?category=uncategorized">Uncategorized</a></li>
-            </ul>
-          </li>
-          <li><a href="topTen">Top 10</a>
-          </li>
-          <li><a href="logOut">Log out</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="clear"></div>
-  </div>
-</div>
-<div class="wrapper">
-  <div class="intro">
-  <h1>"<c:out value="${post.name}"></c:out>" created by <a href="detailsprofile?email=<c:out value="${post.userEmail}"></c:out>"><c:out value="${postUser.name}"></c:out></a></h1>
-  </div>
-  <div class="main-image">
-    <div class="outer"> <span class="inset"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"></span> </div>
-  </div>
-  <div class="content">
-    <div class="post format-image box">
-      <div class="details"> 
-	      <span class="icon-date"><c:out value="${post.createdOn}"></c:out></span>
-	      <form action="postdislike" method="post">
-	      	<input type="hidden" name="postId" value="${post.id}">
-	      	<input type="submit" value="dislike" name="like"> 
-	      </form>
-	      <form action="postlike" method="post">
-	      	<input type="hidden" name="postId" value="${post.id}">
-	      	<input type="submit" value="like" name="like"> 
-	      </form>
-	      <span class="dislikes"><a href="postdislike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
-	      <span class="likes"><a href="postlike?postId=<c:out value="${post.id}"></c:out>" class="likeThis"><c:out value="${fn:length(post.likes)}"></c:out></a></span>
-	      <span class="comments"><c:out value="${fn:length(post.comments)}"></c:out></span>
-      </div>
-      <div class="tags"><a><c:out value="${post.keyWords}"></c:out></a></div>
-    </div>
-    <div id="comment-wrapper" class="box">
-      <div id="comments">
-        <h3 id="comments-title"><c:out value="${fn:length(post.comments)}"></c:out> Responses </h3>
-        <ol id="singlecomments" class="commentlist">
-           <c:set var="x" value="0"/>
-		 <c:forEach var='comment' items='${comments}'>		 
-		 	   <c:set var="user" value="${UsersManager.getInstance().getUser(comment.userEmail)}"/>		
-			   <c:set var="x" value="${x+1}"/>
-          <li class="comment">
-            <div class="comment">
-              <div class="comment-author vcard user frame"> 
-                  <a href="pictureprofile?email=<c:out value="${user.email}"></c:out>">
-                  <img src="pictureprofile?email=<c:out value="${user.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
-                  </a>
-                  </div>
-              <div class="message"> 
-              	<span class="reply-link">
-              		<a class="comment-reply-link" href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
-              		<form action="commentlike" method="post">
-              			<input type="hidden" name="commentId" value="${comment.commentId}">
-              			<input type="hidden" name="postId" value="${post.id}">
-              			<input type="submit" value="like">
-              		</form>
-<%--               		<a class="comment-reply-link" href="commentlike?commentId=<c:out value="${comment.commentId}"></c:out>&postId=<c:out value="${post.id}"></c:out>">Like <c:out value="${fn:length(comment.commentLikes)}"></c:out></a> --%>
-              	</span>
-                <div class="info">
-                  <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${user.name}"></c:out></h2></a>
-                  <span class="meta"><c:out value="${comment.createdOn}"></c:out></span> </div>
-                <div class="comment-body ">
-                  <p><c:out value="${comment.text}"></c:out></p>
-                </div>
-              </div>
-              
-              <div class="clear"></div>
-            </div>
-            <div id="reply<c:out value="${x}"></c:out>" style="display:none;">
-        				<div id="comment-form" class="comment-form">
-					        <div id="respond">
-					          <h3 id="reply-title">Leave a Reply to <c:out value="${user.name}"></c:out> comment</h3>
-					          <form action="commentwrite" method="post" id="commentform">
-					            <p class="comment-form-author">
-					              <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
-					            </p>
-					            <p class="comment-form-author">
-					              <input id="author" name="parentCommentId" type="hidden" value="<c:out value="${comment.commentId}"></c:out>" size="30" aria-required="true">
-					            </p>
-					            <p class="comment-form-email">
-					              <input id="email" name="email" type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>" size="30" aria-required="true">
-					            </p>
-					            <p class="comment-form-comment">
-					              <label for="comment">Comment</label>
-					              <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" maxlength="250" required placeholder=" "></textarea>
-					            </p>
-					            <p class="form-submit">
-					              <input name="submit" type="submit" id="submit" value="Post Reply">
-					            </p>
-					          </form>
-					        </div>
-					      </div>
-    				</div>
-            <div class="clear"></div>
-		<c:forEach var="reply" items="${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}">
-		 	   <c:set var="replyUser" value="${UsersManager.getInstance().getUser(reply.userEmail)}"/>
-		 	
-                       <ul class='children'>
-              <li class="comment even depth-2" id="li-comment-5">
-                <div id="comment-5" class="com-wrap">
-                  <div class="comment-author vcard user frame"> 
-                  <a href="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>">
-                  <img src="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>" class="avatar avatar-70 photo" height="70" width="70" alt="">
-                  </a>
-                  </div>
-                  <div class="message"> 
-                  <span class="reply-link">
-					<form action="commentlike" method="post">
-              			<input type="hidden" name="commentId" value="${reply.commentId}">
-              			<input type="hidden" name="postId" value="${post.id}">
-              			<input type="submit" value="like">
-              		</form>                 	  </span>
-                    <div class="info">
-                      <a href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2><c:out value="${replyUser.name}"></c:out></h2></a>
-                      <span class="meta"><c:out value="${reply.createdOn}"></c:out></span> </div>
-                    <div class="comment-body ">
-                      <p><c:out value="${reply.text}"></c:out></p>
-                    </div>
-                    <span class="edit-link"></span> </div>
-                  <div class="clear"></div>
-                </div>
-                <div class="clear"></div>
-              </li>
-            </ul>
-            </c:forEach>
-          
-          </c:forEach>
-          </li>
-        </ol>
-      </div>
-      <div id="comment-form" class="comment-form">
-        <div id="respond">
-          <h3 id="reply-title">Leave a Reply</h3>
-          <form action="commentwrite" method="post" id="commentform">
-            <p class="comment-form-author">
-              <input id="author" name="postId" type="hidden" value="<c:out value="${post.id}"></c:out>" size="30" aria-required="true">
-            </p>
-            <p class="comment-form-author">
-				<input id="author" name="parentCommentId" type="hidden" value="parent" size="30" aria-required="true">
-			</p>
-            <p class="comment-form-email">
-              <input id="email" name="email" type="hidden" value="<c:out value="${sessionScope.USER}"></c:out>" size="30" aria-required="true">
-            </p>
-            <p class="comment-form-comment">
-              <label for="comment">Comment</label>
-              <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" maxlength="250" required placeholder=" "></textarea>
-            </p>
-            <p class="form-submit">
-              <input name="submit" type="submit" id="submit" value="Post Comment">
-            </p>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar box">
-  <div class="sidebox widget">
-      <h3 class="widget-title">Search</h3>
-       <form class="searchform" method="get" action="search">
-							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" />
-								<label>Search in </label>
-			                <select name="type">
-							       <option value="posts">posts
-							       <option value="users">users
-							</select>
+						<form class="forms" action="postlike" method="post">
+							<fieldset>
+								<ol>
+									<li class="button-row"><input type="hidden" name="postId"
+										value="${post.id}"> <input type="submit" value="like"
+										name="like" class="btn-submit"></li>
+								</ol>
+							</fieldset>
 						</form>
-    </div>
-   <div class="sidebox widget">
-      <h3 class="widget-title">likes <c:out value="${fn:length(post.likes)}"></c:out></h3>  
-    </div>
-    <div class="sidebox widget">
-      <h3 class="widget-title">dislikes <c:out value="${fn:length(post.dislikes)}"></c:out></h3>
-    </div>
-    <div class="sidebox widget">
-    	<c:choose>
-	      <c:when test="${sessionScope.USER==post.userEmail}">
-	      <span>
-	      	<form action="deletepost" method="post">
-	      		<input type="hidden" name="postId" value="<c:out value="${post.id}"></c:out>">
-	      		<input type="submit" name="deletePost" value="delete">
-	      	</form>
-	      </span>
-	      </c:when>
-	      </c:choose>
-    </div>
-  </div>
-  <div class="clear"></div>
-</div>
-<div class="footer-wrapper">
+					</span>
+
+				</div>
+				<div class="tags">
+					<a><c:out value="${post.keyWords}"></c:out></a>
+				</div>
+			</div>
+			<div id="comment-wrapper" class="box">
+				<div id="comments">
+					<h3 id="comments-title">
+						<c:out value="${fn:length(post.comments)}"></c:out>
+						Responses
+					</h3>
+					<ol id="singlecomments" class="commentlist">
+						<c:set var="x" value="0" />
+						<c:forEach var='comment' items='${comments}'>
+							<c:set var="user"
+								value="${UsersManager.getInstance().getUser(comment.userEmail)}" />
+							<c:set var="x" value="${x+1}" />
+							<li class="comment">
+								<div class="comment">
+									<div class="comment-author vcard user frame">
+										<a
+											href="pictureprofile?email=<c:out value="${user.email}"></c:out>">
+											<img
+											src="pictureprofile?email=<c:out value="${user.email}"></c:out>"
+											class="avatar avatar-70 photo" height="70" width="70" alt="">
+										</a>
+									</div>
+									<div class="message">
+										<span class="reply-link"> <a class="comment-reply-link"
+											href="javascript:showhide('reply<c:out value="${x}"></c:out>')">Reply</a>
+											<form class="forms" action="commentlike" method="post">
+											<fieldset>
+											<ol>
+											<li class="button-row">
+												<input type="hidden" name="commentId"
+													value="${comment.commentId}"> <input type="hidden"
+													name="postId" value="${post.id}"> <input
+													type="submit" value="like" class="btn-black">
+													</li>
+													</ol>
+													</fieldset>
+											</form>
+																					</span>
+										<div class="info">
+											<a
+												href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2>
+													<c:out value="${user.name}"></c:out>
+												</h2></a> <span class="meta"><c:out
+													value="${comment.createdOn}"></c:out></span>
+										</div>
+										<div class="comment-body ">
+											<p>
+												<c:out value="${comment.text}"></c:out>
+											</p>
+										</div>
+									</div>
+
+									<div class="clear"></div>
+								</div>
+								<div id="reply<c:out value="${x}"></c:out>"
+									style="display: none;">
+									<div id="comment-form" class="comment-form">
+										<div id="respond">
+											<h3 id="reply-title">
+												Leave a Reply to
+												<c:out value="${user.name}"></c:out>
+												comment
+											</h3>
+											<form action="commentwrite" method="post" id="commentform">
+												<p class="comment-form-author">
+													<input id="author" name="postId" type="hidden"
+														value="<c:out value="${post.id}"></c:out>" size="30"
+														aria-required="true">
+												</p>
+												<p class="comment-form-author">
+													<input id="author" name="parentCommentId" type="hidden"
+														value="<c:out value="${comment.commentId}"></c:out>"
+														size="30" aria-required="true">
+												</p>
+												<p class="comment-form-email">
+													<input id="email" name="email" type="hidden"
+														value="<c:out value="${sessionScope.USER}"></c:out>"
+														size="30" aria-required="true">
+												</p>
+												<p class="comment-form-comment">
+													<label for="comment">Comment</label>
+													<textarea id="comment" name="comment" cols="45" rows="8"
+														aria-required="true" maxlength="250" required
+														placeholder=" "></textarea>
+												</p>
+												<p class="form-submit">
+													<input name="submit" type="submit" id="submit"
+														value="Post Reply" class="btn-black">
+												</p>
+											</form>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div> <c:forEach var="reply"
+									items="${CommentDAO.getInstance().takeAllCommentsByComment(comment.commentId)}">
+									<c:set var="replyUser"
+										value="${UsersManager.getInstance().getUser(reply.userEmail)}" />
+
+									<ul class='children'>
+										<li class="comment even depth-2" id="li-comment-5">
+											<div id="comment-5" class="com-wrap">
+												<div class="comment-author vcard user frame">
+													<a
+														href="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>">
+														<img
+														src="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>"
+														class="avatar avatar-70 photo" height="70" width="70"
+														alt="">
+													</a>
+												</div>
+												<div class="message">
+													<span class="reply-link">
+														<form class="forms" action="commentlike" method="post">
+														<fieldset><ol>
+														<li class="button-row">
+															<input type="hidden" name="commentId"
+																value="${reply.commentId}"> <input type="hidden"
+																name="postId" value="${post.id}"> <input
+																type="submit" value="like" class="btn-black">
+																</li>
+																</ol></fieldset>
+														</form>
+													</span>
+													<div class="info">
+														<a
+															href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2>
+																<c:out value="${replyUser.name}"></c:out>
+															</h2></a> <span class="meta"><c:out
+																value="${reply.createdOn}"></c:out></span>
+													</div>
+													<div class="comment-body ">
+														<p>
+															<c:out value="${reply.text}"></c:out>
+														</p>
+													</div>
+													<span class="edit-link"></span>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</li>
+									</ul>
+								</c:forEach>
+						</c:forEach>
+						</li>
+					</ol>
+				</div>
+				<div id="comment-form" class="comment-form">
+					<div id="respond">
+						<h3 id="reply-title">Leave a Reply</h3>
+						<form action="commentwrite" method="post" id="commentform">
+							<p class="comment-form-author">
+								<input id="author" name="postId" type="hidden"
+									value="<c:out value="${post.id}"></c:out>" size="30"
+									aria-required="true">
+							</p>
+							<p class="comment-form-author">
+								<input id="author" name="parentCommentId" type="hidden"
+									value="parent" size="30" aria-required="true">
+							</p>
+							<p class="comment-form-email">
+								<input id="email" name="email" type="hidden"
+									value="<c:out value="${sessionScope.USER}"></c:out>" size="30"
+									aria-required="true">
+							</p>
+							<p class="comment-form-comment">
+								<label for="comment">Comment</label>
+								<textarea id="comment" name="comment" cols="45" rows="8"
+									aria-required="true" maxlength="250" required placeholder=" "></textarea>
+							</p>
+							<p class="form-submit">
+								<input name="submit" type="submit" id="submit"
+									value="Post Comment">
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sidebar box">
+			<div class="sidebox widget">
+				<h3 class="widget-title">Search</h3>
+				<form class="searchform" method="get" action="search">
+					<input type="text" name="input" value="type and hit enter"
+						onFocus="this.value=''" required/> <label>Search in </label> <select
+						name="type">
+						<option value="posts">posts
+						<option value="users">users
+					</select>
+				</form>
+			</div>
+			<div class="sidebox widget">
+				<h3 class="widget-title">
+					People who like this
+					<c:out value="${fn:length(post.likes)}"></c:out>
+				</h3>
+				<c:forEach var="userEmail"
+					items="${PostDAO.getInstance().getLikesForPost(post.id)}">
+					<c:set var="userName"
+						value="${UsersManager.getInstance().getUser(userEmail).name}" />
+					<a
+						href="detailsprofile?email=<c:out value="${userEmail}"></c:out>>"
+						title="author name"><c:out value="${userName}"></c:out></a>
+				</c:forEach>
+			</div>
+			<div class="sidebox widget">
+				<h3 class="widget-title">
+					People who dislike this
+					<c:out value="${fn:length(post.dislikes)}"></c:out>
+				</h3>
+				<c:forEach var="userEmail"
+					items="${PostDAO.getInstance().getDislikesForPost(post.id)}">
+					<c:set var="userName"
+						value="${UsersManager.getInstance().getUser(userEmail).name}" />
+					<a
+						href="detailsprofile?email=<c:out value="${userEmail}"></c:out>>"
+						title="author name"><c:out value="${userName}"></c:out></a>
+				</c:forEach>
+			</div>
+			<div class="sidebox widget">
+				<c:choose>
+					<c:when test="${sessionScope.USER==post.userEmail}">
+						<span>
+							<form class="forms" action="deletepost" method="post">
+								<fieldset>
+									<ol>
+										<li class="button-row"><input type="hidden" name="postId"
+											value="<c:out value="${post.id}"></c:out>"> <input
+											type="submit" name="deletePost" value="delete"
+											class="btn-black"></li>
+									</ol>
+								</fieldset>
+							</form>
+						</span>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footer-wrapper">
 		<div id="footer" class="four">
 			<div id="first" class="widget-area">
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" />
+								onFocus="this.value=''" required />
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts
@@ -309,16 +430,16 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Categories</h3>
 					<ul>
 						<li class="active"><a 
-							   	   href="category?category=abstract">Abstract</a>(<c:out value="${applicationScope.abstractPosts}"></c:out>)</li>					
-							<li><a href="category?category=animals">Animals</a>(<c:out value="${applicationScope.animalsPosts}"></c:out>)</li>
-							<li><a href="category?category=family">Family</a>(<c:out value="${applicationScope.familyPosts}"></c:out>)</li>
-							<li><a href="category?category=food">Food</a>(<c:out value="${applicationScope.foodPosts}"></c:out>)</li>
-							<li><a href="category?category=nature">Nature</a>(<c:out value="${applicationScope.naturePosts}"></c:out>)</li>
-							<li><a href="category?category=people">People</a>(<c:out value="${applicationScope.peoplePosts}"></c:out>)</li>
-							<li><a href="category?category=sport">Sport</a>(<c:out value="${applicationScope.sportPosts}"></c:out>)</li>
-							<li><a href="category?category=travel">Travel</a>(<c:out value="${applicationScope.travelPosts}"></c:out>)</li>
-							<li><a href="category?category=urban">Urban</a>(<c:out value="${applicationScope.urbanPosts}"></c:out>)</li>
-							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${applicationScope.uncategorizedPosts}"></c:out>)</li>
+							   	    href="category?category=abstract">Abstract</a>(<c:out value="${abstractPosts}"></c:out>)</li>					
+							<li><a href="category?category=animals">Animals</a>(<c:out value="${animalsPosts}"></c:out>)</li>
+							<li><a href="category?category=family">Family</a>(<c:out value="${familyPosts}"></c:out>)</li>
+							<li><a href="category?category=food">Food</a>(<c:out value="${foodPosts}"></c:out>)</li>
+							<li><a href="category?category=nature">Nature</a>(<c:out value="${naturePosts}"></c:out>)</li>
+							<li><a href="category?category=people">People</a>(<c:out value="${peoplePosts}"></c:out>)</li>
+							<li><a href="category?category=sport">Sport</a>(<c:out value="${sportPosts}"></c:out>)</li>
+							<li><a href="category?category=travel">Travel</a>(<c:out value="${travelPosts}"></c:out>)</li>
+							<li><a href="category?category=urban">Urban</a>(<c:out value="${urbanPosts}"></c:out>)</li>
+							<li><a href="category?category=uncategorized">Uncategorized</a>(<c:out value="${uncategorizedPosts}"></c:out>)</li>
 					</ul>
 				</div>
 
@@ -327,25 +448,25 @@ response.addDateHeader ("Expires", 0);
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
 					<c:set var="user" value="${sessionScope.USER}" />									
-					<c:forEach var="followerEmail"
-						items="${UsersManager.getInstance().getFollowersByUser(user)}"
+					<c:forEach var='followerEmail'
+						items='${UsersManager.getInstance().getFollowersByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
 				       	<a
-							href="pictureprofile?email=<c:out value="${followerEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>	     
    					</c:forEach>	
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
-					<c:forEach var="followedEmail"
-						items="${UsersManager.getInstance().getFollowedByUser(user)}"
+					<c:forEach var='followedEmail'
+						items='${UsersManager.getInstance().getFollowedByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
 				       	<a
-							href="pictureprofile?email=<c:out value="${followedEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
    					</c:forEach>
 				</div>
@@ -356,62 +477,62 @@ response.addDateHeader ("Expires", 0);
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<c:set var="topPost"
+								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
-									 />							
+									scope="session" />							
 								<a
-									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
-											value="${topPost.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${topPost.createdOn}"></c:out></em>
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 						</li>
 
 						<li>
 							<div class="frame">
 							
-								<c:set var="topPost"
+								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
-									 />
+									scope="session" />
 								<a
-									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
-											value="${topPost.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${topPost.createdOn}"></c:out></em>
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 						</li>
 						<li>
 							<div class="frame">
 							
-								<c:set var="topPost"
+								<c:set var="post"
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
-									/>
+									scope="session" />
 								<a
-									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
-											value="${topPost.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
+											value="${post.name}"></c:out></a>
 								</h6>			
-								<em><c:out value="${topPost.createdOn}"></c:out></em>
+								<em><c:out value="${post.createdOn}"></c:out></em>
 							</div>
 
 						</li>
@@ -420,7 +541,7 @@ response.addDateHeader ("Expires", 0);
 			</div>
 		</div>
 		</div>
-<div class="site-generator-wrapper"></div>
-<script src="js/scripts.js"></script>
+	<div class="site-generator-wrapper"></div>
+	<script src="js/scripts.js"></script>
 </body>
 </html>

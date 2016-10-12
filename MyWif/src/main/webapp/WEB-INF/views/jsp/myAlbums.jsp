@@ -60,7 +60,7 @@ response.addDateHeader ("Expires", 0);
        <li>
 						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" />
+								onFocus="this.value=''" required/>
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts
@@ -154,7 +154,7 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" />
+								onFocus="this.value=''" required/>
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts

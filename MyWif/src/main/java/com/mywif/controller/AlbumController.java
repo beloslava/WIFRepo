@@ -32,7 +32,7 @@ import com.mywif.model.db.AlbumDAO;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
 public class AlbumController {
 
 	@RequestMapping(value = "/createalbum", method = RequestMethod.POST)
@@ -78,7 +78,8 @@ public class AlbumController {
 				e.printStackTrace();
 			}
 			model.addAttribute(category + "Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
-			return "myAlbums";
+			model.addAttribute("albumId",albumId);
+			return "myPhotos";
 		} else {
 			return "index";
 		}

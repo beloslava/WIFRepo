@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mywif.model.pojo.Searchable;
@@ -28,6 +29,8 @@ import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.User;
 
 @Controller
+@SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
 public class PictureController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
