@@ -139,6 +139,9 @@ public class UsersManager implements IUserManager {
 			
 			getUser(userEmail).addFollower(followerEmail); //add follower email in user's set of followers
 			getUser(followerEmail).addFollowed(userEmail); //add followed email in user's set of users that user follows
+			if(!followers.containsKey(userEmail)){
+				followers.put(userEmail, new HashSet<>());
+			}
 			followers.get(userEmail).add(followerEmail); // add follower email in the set of followers
 			followed.get(followerEmail).add(userEmail);  // add user email in the set of followed
 		}
