@@ -33,7 +33,7 @@ import com.mywif.model.pojo.UsersManager;
 @Controller
 @MultipartConfig
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class UserController {
 
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
@@ -131,10 +131,10 @@ public class UserController {
 			model.addAttribute("myEmail", session.getAttribute("USER").toString());
 			try {
 				UsersManager.getInstance().follow(emaiToFollow, session.getAttribute("USER").toString());
-//				SendMail sendMail = new SendMail();
-//				sendMail.setFollowedUserEmail(emaiToFollow);
-//				sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
-//				sendMail.start();
+				SendMail sendMail = new SendMail();
+				sendMail.setFollowedUserEmail(emaiToFollow);
+				sendMail.setFollowerUserEmail(session.getAttribute("USER").toString());
+				sendMail.start();
 			} catch (DBException e) {
 				System.out.println(DBException.ERROR_MESSAGE);
 				e.printStackTrace();

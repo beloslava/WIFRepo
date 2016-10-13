@@ -30,7 +30,7 @@ import com.mywif.model.pojo.User;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class PictureController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 

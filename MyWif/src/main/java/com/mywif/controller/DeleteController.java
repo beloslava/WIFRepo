@@ -16,7 +16,7 @@ import com.mywif.model.exception.DBException;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class DeleteController {
 
 	@RequestMapping(value = "/deletepost", method = RequestMethod.POST)

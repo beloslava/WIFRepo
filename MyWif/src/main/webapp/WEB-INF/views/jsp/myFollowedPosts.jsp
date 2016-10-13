@@ -52,7 +52,7 @@ response.addDateHeader ("Expires", 0);
         <li>
 						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" required/>
+								onFocus="this.value=''" />
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts
@@ -93,9 +93,9 @@ response.addDateHeader ("Expires", 0);
   <div class="intro">Your followed users posts... </div>
   <div class="blog-wrap">
     <div class="blog-grid">
-    
-    
-    <c:forEach var="post" items="${UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">
+    <c:choose>
+				<c:when test= "${ not empty UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">
+					<c:forEach var="post" items="${UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">
     
      <div class="post format-image box">
         <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
@@ -107,9 +107,11 @@ response.addDateHeader ("Expires", 0);
 	        <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       </div>
-    
-    </c:forEach>
-  
+   
+    </c:forEach> 										
+				</c:when>
+		
+			 </c:choose> 
       
     </div>
   </div>
@@ -124,7 +126,7 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" required/>
+								onFocus="this.value=''" />
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts
@@ -165,36 +167,28 @@ response.addDateHeader ("Expires", 0);
 			<div id="third" class="widget-area">
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Followers</h3>
-					<c:set var="user" value="${sessionScope.USER}" />	
-					<ul>						
+					<c:set var="user" value="${sessionScope.USER}" />									
 					<c:forEach var='followerEmail'
 						items='${UsersManager.getInstance().getFollowersByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followerEmail).name}" />
-							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followerEmail}"></c:out>"
-							title="author name"><c:out value="${userName}"></c:out></a>	   
-							</li>  
-   					</c:forEach>
-   					</ul>			
+							title="author name"><c:out value="${userName}"></c:out></a>	     
+   					</c:forEach>	
 				</div>
 				<div id="example-widget-3" class="widget example">
 					<h3 class="widget-title">Following</h3>
-					<ul>				
 					<c:forEach var='followedEmail'
 						items='${UsersManager.getInstance().getFollowedByUser(user)}'
 						end="5">
   		        		<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(followedEmail).name}" />
-							<li>
 				       	<a
 							href="detailsprofile?email=<c:out value="${followedEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a>
-							</li>
    					</c:forEach>
-   					</ul>
 				</div>
 			</div>
 			<div id="fourth" class="widget-area">

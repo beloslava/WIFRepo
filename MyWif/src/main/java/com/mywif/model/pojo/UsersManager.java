@@ -191,6 +191,7 @@ public class UsersManager implements IUserManager {
 	//get posts of followed users
 	public List<Post> getFollowedPosts(String userEmail){
 		List<Post> followedPosts = new ArrayList<>();
+		if(getFollowedByUser(userEmail) != null && !getFollowedByUser(userEmail).isEmpty() && getUser(userEmail) != null){
 		for(String email : getFollowedByUser(userEmail)){
 			User followed = getUser(email);
 			for(Album a : followed.getAlbums().values()){
@@ -199,6 +200,7 @@ public class UsersManager implements IUserManager {
 			}
 		}
 		Collections.sort(followedPosts, (Post p1, Post p2) -> p2.getCreatedOn().compareTo(p1.getCreatedOn()));
+		}
 		return followedPosts;
 	}
 	

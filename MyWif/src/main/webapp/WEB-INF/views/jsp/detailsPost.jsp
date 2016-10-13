@@ -15,8 +15,7 @@
 <html lang="en">
 <head>
 <%
-	response.addHeader("Cache-Control",
-			"no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0");
+	response.addHeader("Cache-Control","no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0");
 	response.addHeader("Pragma", "no-cache");
 	response.addDateHeader("Expires", 0);
 %>
@@ -175,7 +174,7 @@
 								<div class="comment">
 									<div class="comment-author vcard user frame">
 										<a
-											href="pictureprofile?email=<c:out value="${user.email}"></c:out>">
+											href="detailsprofile?email=<c:out value="${user.email}"></c:out>">
 											<img
 											src="pictureprofile?email=<c:out value="${user.email}"></c:out>"
 											class="avatar avatar-70 photo" height="70" width="70" alt="">
@@ -199,7 +198,7 @@
 																					</span>
 										<div class="info">
 											<a
-												href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2>
+												href="detailsprofile?email=<c:out value="${user.email}"></c:out>"><h2>
 													<c:out value="${user.name}"></c:out>
 												</h2></a> <span class="meta"><c:out
 													value="${comment.createdOn}"></c:out></span>
@@ -262,7 +261,7 @@
 											<div id="comment-5" class="com-wrap">
 												<div class="comment-author vcard user frame">
 													<a
-														href="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>">
+														href="detailsprofile?email=<c:out value="${replyUser.email}"></c:out>">
 														<img
 														src="pictureprofile?email=<c:out value="${replyUser.email}"></c:out>"
 														class="avatar avatar-70 photo" height="70" width="70"
@@ -284,7 +283,7 @@
 													</span>
 													<div class="info">
 														<a
-															href="pictureprofile?email=<c:out value="${post.userEmail}"></c:out>"><h2>
+															href="detailsprofile?email=<c:out value="${replyUser.email}"></c:out>"><h2>
 																<c:out value="${replyUser.name}"></c:out>
 															</h2></a> <span class="meta"><c:out
 																value="${reply.createdOn}"></c:out></span>
@@ -485,62 +484,62 @@
 					<ul class="post-list">
 						<li>
 							<div class="frame">
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[0]}"
 									scope="session" />							
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 						</li>
 
 						<li>
 							<div class="frame">
 							
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[1]}"
 									scope="session" />
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 						</li>
 						<li>
 							<div class="frame">
 							
-								<c:set var="post"
+								<c:set var="topPost"
 									value="${PostDAO.getInstance().getTopTenPosts()[2]}"
 									scope="session" />
 								<a
-									href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img
-									src="picturepost?postId=<c:out value="${post.id}"></c:out>"
+									href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><img
+									src="picturepost?postId=<c:out value="${topPost.id}"></c:out>"
 									alt="" height="60"></a>
 							</div>
 							<div class="meta">
 								<h6>
 									<a
-										href="detailspost?postId=<c:out value="${post.id}"></c:out>"><c:out
-											value="${post.name}"></c:out></a>
+										href="detailspost?postId=<c:out value="${topPost.id}"></c:out>"><c:out
+											value="${topPost.name}"></c:out></a>
 								</h6>			
-								<em><c:out value="${post.createdOn}"></c:out></em>
+								<em><c:out value="${topPost.createdOn}"></c:out></em>
 							</div>
 
 						</li>

@@ -227,7 +227,7 @@ public class PostDAO implements IPostDAO {
 		PreparedStatement statement = null;
 		// System.out.println(postLikes.get(postId).contains(userEmail) + " " +
 		// postLikes.get(postId));
-		if ((!postLikes.containsKey(postId))
+		if ((!postLikes.containsKey(postId) && !postDislikes.containsKey(postId))
 				|| (!postLikes.get(postId).contains(userEmail)) && (!postDislikes.get(postId).contains(userEmail))) {
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(LIKE_POST);
@@ -273,7 +273,7 @@ public class PostDAO implements IPostDAO {
 		// System.out.println(postDislikes.get(postId).size());
 		// System.out.println(postDislikes.get(postId).contains(userEmail));
 		PreparedStatement statement = null;
-		if ((!postDislikes.containsKey(postId))
+		if ((!postDislikes.containsKey(postId)  && !postLikes.containsKey(postId))
 				|| (!postDislikes.get(postId).contains(userEmail) && (!postLikes.get(postId).contains(userEmail)))) {
 			try {
 				statement = DBManager.getInstance().getConnection().prepareStatement(DISLIKE_POST);

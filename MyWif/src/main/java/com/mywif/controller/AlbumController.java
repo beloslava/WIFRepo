@@ -26,14 +26,12 @@ import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Post;
 import com.mywif.model.pojo.UsersManager;
 
-import io.undertow.server.session.Session;
-
 import com.mywif.model.db.AlbumDAO;
 import com.mywif.model.db.CommentDAO;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
+	"uncategorizedPosts", "familyPosts" })
 public class AlbumController {
 
 	@RequestMapping(value = "/createalbum", method = RequestMethod.POST)

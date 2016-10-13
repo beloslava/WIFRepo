@@ -17,7 +17,7 @@ import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts","allPosts","USER" })
+	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class DetailController {
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
