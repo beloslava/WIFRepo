@@ -512,10 +512,12 @@ public class PostDAO implements IPostDAO {
 			ps4 = conn.prepareStatement(DELETE_PARENT_COMMENTS);
 			System.out.println("------------------" + postId);
 			if (!getPost(postId).getComments().isEmpty()) {
-				for (Comment comment : CommentDAO.getInstance().getCommentsByPost(postId)) {
+				List < Comment> commentsByPost = CommentDAO.getInstance().getCommentsByPost(postId);
+				for (Comment comment : commentsByPost) {
 					ps3.setInt(1, comment.getCommentId()); // delete comment likes
-					ps3.executeUpdate();
-
+					ps3.executeUpdate();					
+				}
+				for (Comment comment : commentsByPost) {					
 					ps4.setObject(1, comment.getParentCommentId());
 					ps4.executeUpdate();
 				}
