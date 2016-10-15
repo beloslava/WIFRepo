@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class User implements Searchable {
-	// email, password, name, avatarPath, age, gender, personalDescription
 
 	private String email;
 	private String password;
@@ -26,7 +25,6 @@ public class User implements Searchable {
 		this.gender = gender;
 		this.about = about;
 		this.avatarPath = avatarPath;
-		// this.posts = posts;
 		this.followers = followers;
 		this.followed = followed;
 		this.albums = albums;
@@ -131,6 +129,11 @@ public class User implements Searchable {
 		return getEmail();
 	}
 
+	/**
+	 * check if pass contains number, letter and is > 4 symbols
+	 * @param user pass
+	 * @return is pass contains number, letter and is > 4 symbols
+	 */
 	public static boolean isPaswordStrong(String password) {
 		boolean letter = false;
 		boolean number = false;

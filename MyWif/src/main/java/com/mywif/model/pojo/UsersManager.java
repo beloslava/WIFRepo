@@ -101,7 +101,7 @@ public class UsersManager implements IUserManager {
 	}
 
 	/**
-	 * change the users fields in reggisteredUsers and db
+	 * change the user's fields in reggisteredUsers and db
 	 * @param user email, pass, name, gender, about, avatarPath
 	 */
 	@Override
@@ -117,6 +117,10 @@ public class UsersManager implements IUserManager {
 		UserDAO.getInstance().updateUser(user);
 	}
 	
+	/**
+	 * change the user avatar
+	 * @param avatarPath, user email
+	 */
 	public void changeAvatar(String avatarPath, String email) 
 			throws UnsupportedEncodingException, DBException {
 		User user = registerredUsers.get(email);
@@ -124,7 +128,10 @@ public class UsersManager implements IUserManager {
 		UserDAO.getInstance().updateAvatar(user);
 	}
 	
-	//follow user
+	/**
+	 * follow user 
+	 * @param followed email, follower email
+	 */
 	public void follow(String userEmail, String followerEmail) throws DBException{
 		
 		if(!followed.containsKey(followerEmail)){
@@ -147,7 +154,10 @@ public class UsersManager implements IUserManager {
 		}
 	}
 	
-	//unfollow user
+	/**
+	 * unfollow user 
+	 * @param followed email, follower email
+	 */
 	public void unfollow(String userEmail, String followerEmail) throws DBException{
 		if(followed.containsKey(followerEmail)){
 			System.out.println("Before unfollow");
@@ -165,7 +175,11 @@ public class UsersManager implements IUserManager {
 		
 	}
 	
-	//is user follows user
+	/**
+	 * check if user follows user
+	 * @param followed email, follower email
+	 * @return if user follows user
+	 */
 	public boolean isUserFollowedByUser(String userEmail, String followerEmail){		
 		return getUser(followerEmail).getFollowed().contains(userEmail);
 	}
@@ -188,7 +202,11 @@ public class UsersManager implements IUserManager {
 		return followed.get(followerEmail);
 	}
 	
-	//get posts of followed users
+	/**
+	 * get posts of followed users
+	 * @param follower email
+	 * @return list from posts by followed user
+	 */
 	public List<Post> getFollowedPosts(String userEmail){
 		List<Post> followedPosts = new ArrayList<>();
 		if(getFollowedByUser(userEmail) != null && !getFollowedByUser(userEmail).isEmpty() && getUser(userEmail) != null){

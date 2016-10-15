@@ -17,8 +17,6 @@ import java.util.TreeMap;
 import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
-import com.mywif.model.pojo.User;
-import com.mywif.model.pojo.UsersManager;
 
 public class CommentDAO implements ICommentDAO {
 
@@ -54,12 +52,18 @@ public class CommentDAO implements ICommentDAO {
 		return instance;
 	}
 
-	// get comment by id
+	/**
+	 * get comment by id
+	 * @return comment
+	 */
 	public Comment getComment(int commentId){
 		return allComments.get(commentId);
 	}
 	
-	//get comment likes by id
+	/**
+	 * get comment likes by id
+	 * @return number of likes for comment
+	 */
 	public int getCommentLikes(int commentId){
 		return getComment(commentId).getCommentLikes().size();
 	}
@@ -205,7 +209,6 @@ public class CommentDAO implements ICommentDAO {
 	public List<Comment> takeAllCommentsByPost(int postId) { 
 		Post post = PostDAO.getInstance().getPost(postId);
 		List<Comment> commentsByPost = post.getComments();
-		//Collections.sort(commentsByPost, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByPost;
 	}
 	
@@ -218,7 +221,6 @@ public class CommentDAO implements ICommentDAO {
 	public List<Comment> takeAllCommentsByComment(int commentId) { 
 		Comment comment = getComment(commentId);
 		List<Comment> commentsByComment = comment.getCommentComments();
-		//Collections.sort(commentsByComment, (Comment o1, Comment o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()));
 		return commentsByComment;
 	}
 	
@@ -339,7 +341,7 @@ public class CommentDAO implements ICommentDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Can not get all comments by comment right now!");
 				e.printStackTrace();
 			}
 		}
@@ -363,16 +365,16 @@ public class CommentDAO implements ICommentDAO {
 			while (resultSet.next()) {
 				ArrayList<Comment> commentComments = (ArrayList<Comment>) getAllCommentsByComment(resultSet.getInt("comment_id"));
 				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
-				allComments.put(resultSet.getInt("comment_id"), new Comment( resultSet.getInt("comment_id"), 
-						resultSet.getInt("post_id"),
-						resultSet.getString("user_email"),
-						(int) resultSet.getLong("parent_comment_id"),
-						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date"),
-						commentComments, 
-						commentLikes
+				allComments.put(resultSet.getInt("comment_id"), new Comment(resultSet.getInt("comment_id"), 
+																			resultSet.getInt("post_id"),
+																			resultSet.getString("user_email"),
+																			(int) resultSet.getLong("parent_comment_id"),
+																			resultSet.getString("comment_text"),
+																			resultSet.getTimestamp("comment_date"),
+																			commentComments, 
+																			commentLikes
 
-			));
+																));
 
 			}
 		} catch (SQLException e) {
@@ -389,7 +391,7 @@ public class CommentDAO implements ICommentDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Can not get all comments right now!");
 				e.printStackTrace();
 			}
 		}
@@ -401,8 +403,7 @@ public class CommentDAO implements ICommentDAO {
 	 * get all comments for a post from db
 	 * @param comment id
 	 * @return list with comments for this post
-	 */
-	
+	 */	
 	public List<Comment> getAllCommentsByPost(int postId) {
 		// comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM
 		// post_comments
@@ -419,15 +420,15 @@ public class CommentDAO implements ICommentDAO {
 				Set<String> commentLikes = getAllLikesForComment(resultSet.getInt("comment_id"));
 
 				postComments.add(new Comment(resultSet.getInt("comment_id"), 
-						resultSet.getInt("post_id"),
-						resultSet.getString("user_email"), 
-				(int) resultSet.getLong("parent_comment_id"),
-						resultSet.getString("comment_text"),
-						resultSet.getTimestamp("comment_date"),
-						commentComments, 
-						commentLikes
-
-				));
+											resultSet.getInt("post_id"),
+											resultSet.getString("user_email"), 
+											(int) resultSet.getLong("parent_comment_id"),
+											resultSet.getString("comment_text"),
+											resultSet.getTimestamp("comment_date"),
+											commentComments, 
+											commentLikes
+					
+								));
 
 			}
 		} catch (SQLException e) {
@@ -444,13 +445,13 @@ public class CommentDAO implements ICommentDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Can not get all comments by post right now!");
 				e.printStackTrace();
 			}
 		}
-
+		
 		return postComments;
-
+		
 	}
 	
 

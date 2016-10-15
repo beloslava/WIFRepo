@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,9 +22,7 @@ public class AlbumDAO implements IAlbumDAO {
 	private static final String SELECT_ALBUMS = "SELECT album_id, album_name, user_email, album_date FROM albums ORDER BY album_date DESC;";
 	
 	private TreeMap<Integer, Album> allAlbums; //album id -> album
-	
-	private HashMap<String, TreeMap<Integer, ArrayList<Post>>> albumsByUser; // user email -> album id -> list of posts
-	
+		
 	private static AlbumDAO instance;
 
 	private AlbumDAO() {
@@ -40,6 +37,9 @@ public class AlbumDAO implements IAlbumDAO {
 		return instance;
 	}
 	
+	/**
+	 * add album
+	 */
 	@Override
 	public void addAlbum(String albumName, String userEmail, Timestamp time, List<Post> posts) throws DBException{
 		PreparedStatement statement = null;
@@ -80,6 +80,10 @@ public class AlbumDAO implements IAlbumDAO {
 		
 	}
 	
+	/**
+	 * get all albums
+	 * @return map with all albums (album id -> album)
+	 */
 	private Map<Integer, Album> getAllAlbums(){
 		TreeMap<Integer, Album> allAlbums = new TreeMap<Integer, Album>((albumId1, albumId2) -> albumId2 - albumId1);
 		Statement statement = null;
@@ -91,14 +95,12 @@ public class AlbumDAO implements IAlbumDAO {
 			while (resultSet.next()) {
 				List<Post> albumPosts = (List<Post>) PostDAO.getInstance().getPostsByAlbum(resultSet.getInt("album_id"));
 
-
 				allAlbums.put(resultSet.getInt("album_id"), new Album( resultSet.getInt("album_id"), 
 																	   resultSet.getString("album_name"),	
 																	   resultSet.getString("user_email"),
 																	   resultSet.getTimestamp("album_date"),
 																	   albumPosts 
 																	
-
 																	));
 
 			}
@@ -116,7 +118,7 @@ public class AlbumDAO implements IAlbumDAO {
 					resultSet.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Can not get all albums right now!");
 				e.printStackTrace();
 			}
 		}
@@ -124,6 +126,10 @@ public class AlbumDAO implements IAlbumDAO {
 		return allAlbums;
 	}
 	
+	/**
+	 * get all albums by user
+	 * @return map with album id -> album from allAlbums collection
+	 */
 	@Override
 	public TreeMap<Integer, Album> getAllAlbumsByUser(String userEmail){
 		TreeMap<Integer, Album> albums = new TreeMap<>((albumId1, albumId2) -> albumId2 - albumId1); //album id->list from posts

@@ -46,7 +46,7 @@ public class UserController {
 				return "indecc";
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Something went wrong with crypting pass!");
 			e.printStackTrace();
 		}
 		model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
@@ -171,12 +171,7 @@ public class UserController {
 				dir.mkdirs();
 			}
 			File avatarFile = new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
-			// System.out.println(avatarFile.getAbsolutePath());
 			Files.copy(avatarStream, avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			// System.out.println("Try to save file with name: " +
-			// avatarFile.getName());
-			// System.out.println("abs. path = " +
-			// avatarFile.getAbsolutePath());
 			try {
 				UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
 						new HashSet<>(), new TreeMap<Integer, Album>());
