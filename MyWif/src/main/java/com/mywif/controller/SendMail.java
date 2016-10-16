@@ -1,7 +1,8 @@
 package com.mywif.controller;
 
 import java.time.LocalDateTime;
-
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -19,6 +20,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import com.mywif.model.pojo.UsersManager;
+
 public class SendMail extends Thread {
 
 	private static final String protocol = "smtp";
@@ -31,7 +34,7 @@ public class SendMail extends Thread {
 	private Multipart multipart;
 
 	public SendMail() {
-		
+
 		this.multipart = new MimeMultipart();
 	}
 
@@ -101,20 +104,20 @@ public class SendMail extends Thread {
 
 		return properties;
 	}
-	
+
 	private String followedUserEmail = "";
 	private String followerUserEmail = "";
-	
-	public void setFollowedUserEmail(String followedUserEmail){
+
+	public void setFollowedUserEmail(String followedUserEmail) {
 		this.followedUserEmail = followedUserEmail;
 	}
-	
-	public void setFollowerUserEmail(String followerUserEmail){
+
+	public void setFollowerUserEmail(String followerUserEmail) {
 		this.followerUserEmail = followerUserEmail;
 	}
-	
-	public void sendMail(){
-		
+
+	public void sendMail() {
+
 		SendMail sender = new SendMail();
 		sender.setSender("my.world.in.frames@gmail.com", "mywif123");
 		try {
@@ -133,8 +136,9 @@ public class SendMail extends Thread {
 			e.printStackTrace();
 		}
 		try {
-			sender.setBody("You are followed by user with that email " +
-		followerUserEmail + " at: " + LocalDateTime.now()+"!");
+			String followedName = UsersManager.getInstance().getUser(followedUserEmail).getName();
+			sender.setBody("Hi, " + followedName + "! You are followed by user with that email " + followerUserEmail
+			+ " at: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)) + ".");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,17 +149,15 @@ public class SendMail extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("The mail is send!");
-		
+
 	}
 
 	@Override
 	public void run() {
 		sendMail();
-		
-	}
-	
 
-	
+	}
+
 }
