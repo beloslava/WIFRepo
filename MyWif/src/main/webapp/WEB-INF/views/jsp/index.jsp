@@ -3,9 +3,10 @@
 
 <head>
 <%
-response.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
-response.addHeader("Pragma", "no-cache"); 
-response.addDateHeader ("Expires", 0);
+	response.addHeader("Cache-Control",
+			"no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0");
+	response.addHeader("Pragma", "no-cache");
+	response.addDateHeader("Expires", 0);
 %>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +17,8 @@ response.addDateHeader ("Expires", 0);
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="fonts/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/form-elements.css">
 <link rel="stylesheet" href="css/form-style.css">
 
@@ -64,21 +66,22 @@ response.addDateHeader ("Expires", 0);
 								</div>
 							</div>
 							<div class="form-bottom">
-								<form role="form" action="login" method="POST"
-									class="login-form">
+								<form role="form" id="loginForm" action="javasript:validateLogin()" method="POST" class="login-form">
 									<div class="form-group">
 										<label class="sr-only" for="form-username">Email</label> <input
 											type="email" name="email" placeholder="Email..."
-											class="form-username form-control" id="form-username"
+											class="form-username form-control" id="form-username" maxlength="50"
 											required placeholder=" ">
 									</div>
 									<div class="form-group">
 										<label class="sr-only" for="form-password">Password</label> <input
 											type="password" name="password" placeholder="Password..."
 											class="form-password form-control" id="form-password"
-											required placeholder=" ">
+											required placeholder=" " maxlength="20">
 									</div>
-									<button type="submit" class="btn">Sign in!</button>
+									<div id="messages"></div>
+									<button type="submit" class="btn" onclick="validateLogin()">Log in!</button>
+									
 								</form>
 							</div>
 						</div>
@@ -100,43 +103,41 @@ response.addDateHeader ("Expires", 0);
 								</div>
 							</div>
 							<div class="form-bottom">
-								<form role="form" action="register" method="POST"
-									class="registration-form" enctype="multipart/form-data"
-									accept="image/*" onsubmit="return Validate(this);">
+								<form role="form" action="" id="registerForm" method="POST" class="registration-form" enctype="multipart/form-data"
+									accept="image/*" onsubmit="Validate(this)" >
 									<div class="form-group">
 										<label class="sr-only" for="form-name">Name</label> <input
 											type="text" name="name" placeholder="Name..."
-											class="form-name form-control" id="form-name" required
+											class="form-name form-control" maxlength="50" id="form-name" required
 											placeholder=" ">
 									</div>
 									<div class="form-group">
 										<label class="sr-only" for="form-email">Email</label> <input
 											type="email" name="email" placeholder="Email..."
-											class="form-email form-control" id="form-email" required
+											class="form-email form-control" id="form-email" maxlength="50" required
 											placeholder=" ">
 									</div>
 									<div class="form-group">
 										<label class="sr-only" for="form-password">Password</label> <input
 											type="password" name="password" placeholder="Password..."
-											class="form-password form-control" id="password" 
-											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
-											required placeholder=" ">
+											class="form-password form-control" maxlength="20" id="password"
+											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required
+											placeholder=" ">
 									</div>
 									<div class="form-group">
 										<label class="sr-only" for="form-password2">Repeat
 											password</label> <input type="password" name="password2"
-											placeholder="Confirm Password" id="confirm_password"
-											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
-											class="form-last-name form-control" 
-											required placeholder=" ">
+											placeholder="Confirm Password" maxlength="20" id="confirm_password"
+											pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+											class="form-last-name form-control" required placeholder=" ">
 									</div>
 									<div class="form-group">
-										<input type="file" name="fileField"
+										<input type="file" name="fileField" 
 											class="form-file form-control" id="form-file" required
-											placeholder=" ">
+											placeholder=" " enctype="multipart/form-data">
 									</div>
-
-									<button type="submit" class="btn">Sign me up!</button>
+                                    <div id="message"></div>
+									<button id type="submit" class="btn">Sign me up!</button>
 								</form>
 							</div>
 						</div>
@@ -196,7 +197,6 @@ response.addDateHeader ("Expires", 0);
 		}
 	</script>
 	<script type="text/javascript">
-		<script type="text/javascript">
 		var password = document.getElementById("password"), confirm_password = document
 				.getElementById("confirm_password");
 
@@ -211,21 +211,9 @@ response.addDateHeader ("Expires", 0);
 		password.onchange = validatePassword;
 		confirm_password.onkeyup = validatePassword;
 	</script>
-	<script>
-	var password = document.getElementById("password")
-	  , confirm_password = document.getElementById("confirm_password");
-
-	function validatePassword(){
-	  if(password.value != confirm_password.value) {
-	    confirm_password.setCustomValidity("Passwords Don't Match");
-	  } else {
-	    confirm_password.setCustomValidity('');
-	  }
-	}
-
-	password.onchange = validatePassword;
-	confirm_password.onkeyup = validatePassword;
-	</script>
+	
+<script src="js/loginValidate.js"></script>
+<script src="js/registerValidate.js"></script>
 	<!--[if lt IE 10]>
             <script src="js/placeholder.js"></script>
         <![endif]-->

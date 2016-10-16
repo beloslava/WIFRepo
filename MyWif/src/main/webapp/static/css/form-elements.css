@@ -47,14 +47,12 @@ textarea:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { co
 input[type="text"]::-webkit-input-placeholder,input[type="email"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, 
 textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
 
-
-
 button.btn {
 	height: 50px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
-    background: #19b9e7;
+    background: #d580ff;
     border: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -71,6 +69,6 @@ button.btn:hover { opacity: 0.6; color: #fff; }
 
 button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
-button.btn:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
+button.btn:focus { outline: 0; opacity: 0.6; background: #d580ff; color: #fff; }
 
-button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
+button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #d580ff; color: #fff; }

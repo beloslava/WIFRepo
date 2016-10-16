@@ -117,4 +117,5 @@ public class DetailController {
 			return "index";
 		}
 	}
+
 }

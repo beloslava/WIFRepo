@@ -29,6 +29,30 @@ public class CommentController {
 	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
 	protected String likeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			Model model, HttpSession session, HttpServletRequest request) {
+		System.out.println(postId);
+		if (UserController.isUserInSession(request)) {
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
+			
+			String email = session.getAttribute("USER").toString();
+			try {
+				CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+			return "detailsPost";
+		} else {
+			return "index";
+		}
+	}
+	
+	@RequestMapping(value = "/commentunlike", method = RequestMethod.POST)
+	protected String unlikeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
+			Model model, HttpSession session, HttpServletRequest request) {
 		if (UserController.isUserInSession(request)) {
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);
@@ -37,7 +61,7 @@ public class CommentController {
 			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
 			String email = session.getAttribute("USER").toString();
 			try {
-				CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
+				CommentDAO.getInstance().unlikeComment(Integer.parseInt(commentId), email);
 			} catch (DBException e) {
 				System.out.println(DBException.ERROR_MESSAGE);
 				e.printStackTrace();

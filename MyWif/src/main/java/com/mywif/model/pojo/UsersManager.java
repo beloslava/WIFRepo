@@ -228,7 +228,7 @@ public class UsersManager implements IUserManager {
 	 * @param user pass
 	 * @return crypted pass
 	 */
-	private static String convertToMd5(final String md5) throws UnsupportedEncodingException {
+	public static String convertToMd5(final String md5) throws UnsupportedEncodingException {
 		StringBuffer sb = null;
 		try {
 			final java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");

@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.mywif.model.db.CommentDAO;
+
 public class Comment {
 
 	private int commentId;
@@ -33,6 +35,7 @@ public class Comment {
 	public void addCommentLike(String userEmail){
 		commentLikes.add(userEmail);
 	}
+
 	//add comment to comment
 	public void addCommentComment(Comment comment){
 		commentComments.add(comment);
@@ -106,5 +109,12 @@ public class Comment {
 	public void setCommentComments(ArrayList<Comment> commentComments) {
 		this.commentComments = commentComments;
 	}
+//	public boolean isItLiked(String userEmail) {
+//		System.out.println(userEmail);
+//		if (commentLikes.contains(userEmail)) {
+//				return true;
+//			}
+//		return false;
+//	}
 
 }

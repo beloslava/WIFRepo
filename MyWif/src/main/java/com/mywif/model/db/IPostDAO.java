@@ -16,8 +16,10 @@ public interface IPostDAO {
 			Timestamp time, List<Comment> comments, Set<String> likes, Set<String> dislikes) throws DBException;
 
 	void likePost(int postId, String userEmail) throws DBException;
+	void unlikePost(int postId, String userEmail) throws DBException;
 
 	void dislikePost(int postId, String userEmail) throws DBException;
+	void undislikePost(int postId, String userEmail) throws DBException;
 
 	List<Post> getAllPostsByUser(String userEmail);
 

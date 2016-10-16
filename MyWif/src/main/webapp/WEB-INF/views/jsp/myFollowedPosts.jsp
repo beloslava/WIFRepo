@@ -51,7 +51,7 @@ response.addDateHeader ("Expires", 0);
         <ul id="tiny">
         <li>
 						<form class="searchform" method="get" action="search">
-							<input type="text" name="input" value="type and hit enter"
+							<input type="text" name="input" value="type and hit enter" maxlength="50"
 								onFocus="this.value=''" />
 								<label>Search in </label>
 			                <select name="type">
@@ -115,9 +115,6 @@ response.addDateHeader ("Expires", 0);
       
     </div>
   </div>
-  <div id="navigation">
-    <div class="nav-previous"><a href="#" ><span class="meta-nav-prev">&larr; Older posts</span></a></div>
-  </div>
 </div>
 <div class="footer-wrapper">
 		<div id="footer" class="four">
@@ -125,7 +122,7 @@ response.addDateHeader ("Expires", 0);
 				<div class="widget widget_search">
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
-							<input type="text" name="input" value="type and hit enter"
+							<input type="text" name="input" value="type and hit enter" maxlength="50"
 								onFocus="this.value=''" required/>
 								<label>Search in </label>
 			                <select name="type">

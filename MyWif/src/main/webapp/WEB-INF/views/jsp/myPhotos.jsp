@@ -59,7 +59,7 @@ response.addDateHeader ("Expires", 0);
        <li>
 						<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" required />
+								onFocus="this.value=''" maxlength="50" required />
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts
@@ -107,7 +107,7 @@ response.addDateHeader ("Expires", 0);
           <ol>
             <li class="form-row text-input-row">
               <label>Say smth about your post</label>
-              <input type="text" name="nameOfPost" value="" class="text-input required" required placeholder=" ">
+              <input type="text" name="nameOfPost" value="" class="text-input required" maxlength="50" required placeholder=" ">
             </li>
             <li class="form-row text-input-row">
               <input type="hidden" name="email" value="${USER}" class="text-input required">
@@ -132,7 +132,7 @@ response.addDateHeader ("Expires", 0);
             </li>
             <li class="form-row text-input-row">
               <label>Key words</label>
-              <input type="text" name="keyWords" value="" class="text-input required" required placeholder=" ">
+              <input type="text" name="keyWords" value="" maxlength="200" class="text-input required" required placeholder=" ">
             </li>
             <li class="form-row text-area-row">
               <label>Upload your photo</label>
@@ -177,7 +177,7 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" required/>
+								onFocus="this.value=''" maxlength="50" required/>
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts

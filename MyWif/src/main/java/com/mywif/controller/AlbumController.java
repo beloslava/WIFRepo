@@ -126,7 +126,55 @@ public class AlbumController {
 				System.out.println(DBException.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
-			System.out.println("disliknah te be da ti eba maikata");
+			return "detailsPost";
+		} else {
+			return "index";
+		}
+
+	}
+	
+	@RequestMapping(value = "/postunlike", method = RequestMethod.POST)
+	public String unlikePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			System.out.println(postId);
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
+			String email = session.getAttribute("USER").toString();
+			try {
+				PostDAO.getInstance().unlikePost(Integer.parseInt(postId), email);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+			return "detailsPost";
+		} else {
+			return "index";
+		}
+	}
+
+	@RequestMapping(value = "/postundislike", method = RequestMethod.POST)
+	public String undislikePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session,
+			HttpServletRequest request) {
+		if (UserController.isUserInSession(request)) {
+			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
+			model.addAttribute("postId", postId);
+			model.addAttribute("post", post);
+			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
+			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
+			String email = session.getAttribute("USER").toString();
+			try {
+				PostDAO.getInstance().undislikePost(Integer.parseInt(postId), email);
+			} catch (DBException e) {
+				System.out.println(DBException.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 			return "detailsPost";
 		} else {
 			return "index";

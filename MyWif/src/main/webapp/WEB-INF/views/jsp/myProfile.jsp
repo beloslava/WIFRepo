@@ -69,7 +69,7 @@ response.addDateHeader ("Expires", 0);
 						<li>
 							<form class="searchform" method="get" action="search">
 								<input type="text" name="input" value="type and hit enter"
-									onFocus="this.value=''" required placeholder=" " required/> <label>Search
+									onFocus="this.value=''" maxlength="50" required placeholder=" " required/> <label>Search
 									in </label> <select name="type">
 									<option value="posts">posts
 									<option value="users">users
@@ -212,22 +212,22 @@ response.addDateHeader ("Expires", 0);
 								<li class="form-row text-input-row">Enter new name<input
 									type="text" name="newName"
 									value="<c:out value="${user.name}"></c:out>"
-									class="text-input required" required placeholder=" ">
+									class="text-input required" maxlength="50" required placeholder=" ">
 								</li>
 								<li class="form-row text-input-row">Enter old password<input
 									type="password" name="oldPass" value=""
 									
-									class="text-input required" required placeholder="Old Password">
+									class="text-input required" maxlength="20" required placeholder="Old Password">
 								</li>
 								<li class="form-row text-input-row">Enter new password<input
 									type="password" name="newPass" value=""
-									class="text-input required" required id="password" required
-									placeholder="New Password"
+									class="text-input required" maxlength="20" required id="password" required
+									placeholder="New Password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
 									pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})">
 								</li>
 								<li class="form-row text-input-row">Repeat new password<input
 									type="password" name="newPass2" value=""
-									class="text-input required" placeholder="Confirm Password"
+									class="text-input required" placeholder="Confirm Password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" maxlength="20"
 									pattern="((?=.*[1-9])(?=.*[a-z])(?=.*[A-Z]).{3,20})"
 									id="confirm_password" required><br>
 								</li>
@@ -238,7 +238,7 @@ response.addDateHeader ("Expires", 0);
 									</select></span>
 								</li>
 								<li class="form-row text-input-row">Enter your description<input
-									type="text" name="newDescription"
+									type="text" name="newDescription" maxlength="450"
 									value="<c:out value="${user.about}"></c:out>"
 									class="text-input required"><br>
 								</li>
@@ -260,7 +260,7 @@ response.addDateHeader ("Expires", 0);
 					<h3 class="widget-title">Search</h3>
 					<form class="searchform" method="get" action="search">
 							<input type="text" name="input" value="type and hit enter"
-								onFocus="this.value=''" required/>
+								onFocus="this.value=''" maxlength="50" required/>
 								<label>Search in </label>
 			                <select name="type">
 							       <option value="posts">posts

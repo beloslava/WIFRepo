@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
+import com.mywif.model.pojo.UsersManager;
 
 public class CommentDAO implements ICommentDAO {
 
@@ -26,6 +27,7 @@ public class CommentDAO implements ICommentDAO {
 	private static final String SELECT_ALL_COMMENTS = "SELECT comment_id, post_id, user_email, parent_comment_id, comment_text, comment_date FROM post_comments ORDER BY comment_date DESC;";
 	private static final String SELECT_COMMENT_LIKES = "SELECT user_email FROM comments_likes WHERE comment_id = ?;";
 	private static final String LIKE_COMMENT = "INSERT INTO comments_likes (comment_id, user_email) VALUES (?,?);";
+	private static final String UNLIKE_COMMENT = "DELETE FROM comments_likes WHERE comment_id=? AND user_email = ?;";
 	private static final String DELETE_COMMENT_LIKES = "DELETE FROM comments_likes WHERE comment_id = ?;";
 	private static final String DELETE_COMMENT_PARENT = "UPDATE post_comments SET parent_comment_id = NULL WHERE parent_comment_id = ?;";
 	private static final String DELETE_COMMENT_BY_ID = "DELETE FROM post_comments WHERE comment_id = ?;";
@@ -244,6 +246,7 @@ public class CommentDAO implements ICommentDAO {
 				commentLikes.get(commentId).add(userEmail);
 				
 				comment.addCommentLike(userEmail);
+				
 
 				
 				System.out.println("like comment");
@@ -263,6 +266,32 @@ public class CommentDAO implements ICommentDAO {
 			}
 		}
 
+	}
+	
+	@Override
+	public void unlikeComment(int commentId, String userEmail) throws DBException{
+		PreparedStatement statement = null;
+		if((commentLikes.containsKey(commentId) && commentLikes.get(commentId).contains(userEmail))){
+		try {
+			statement = DBManager.getInstance().getConnection().prepareStatement(UNLIKE_COMMENT);
+			statement.setInt(1, commentId);
+			statement.setString(2, userEmail);
+			statement.executeUpdate();
+			Comment comment = getComment(commentId);
+			comment.removeCommentLike(userEmail);
+		} catch (SQLException e) {
+			throw new DBException("Cannot unlike comment right now", e);
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+
+			} catch (SQLException e) {
+				throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+			}
+		}
+	}
 	}
 	
 	private Set<String> getAllLikesForComment(int commentId) {	
@@ -452,6 +481,14 @@ public class CommentDAO implements ICommentDAO {
 		
 		return postComments;
 		
+	}
+
+	@Override
+	public boolean isItLiked(int commentId, String userEmail) {
+		if (CommentDAO.getInstance().getComment(commentId).getCommentLikes().contains(userEmail)) {
+				return true;
+			}
+		return false;
 	}
 	
 

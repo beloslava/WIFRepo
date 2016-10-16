@@ -10,15 +10,19 @@ import com.mywif.model.pojo.Comment;
 
 public interface ICommentDAO {
 
-	void addComment(int postId, String userEmail, Integer parentCommentId, String text, 
-			Timestamp time, ArrayList<Comment> commentComments, Set<String> likes) throws DBException;
+	void addComment(int postId, String userEmail, Integer parentCommentId, String text, Timestamp time,
+			ArrayList<Comment> commentComments, Set<String> likes) throws DBException;
 
 	void removeComment(int commentId) throws DBException;
-	
+
 	List<Comment> takeAllCommentsByPost(int postId);
-	
+
 	List<Comment> takeAllCommentsByComment(int commentId);
-	
+
 	void likeComment(int commentId, String userEmail) throws DBException;
+	
+	void unlikeComment(int commentId, String userEmail) throws DBException;
+
+	boolean isItLiked(int commentId, String userEmail);
 
 }

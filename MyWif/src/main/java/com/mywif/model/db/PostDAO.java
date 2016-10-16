@@ -31,7 +31,9 @@ public class PostDAO implements IPostDAO {
 	private static final String INSERT_INTO_POSTS = "INSERT INTO posts (user_email, album_id, category_name, picture, post_name, key_words) VALUES (?,?,?,?,?,?);";
 	private static final String SELECT_ALL_POSTS = "SELECT post_id, user_email, album_id, category_name, picture, post_name, key_words, post_date FROM posts ORDER BY post_date DESC;";
 	private static final String LIKE_POST = "INSERT INTO post_likes (post_id, user_email) VALUES (?,?);";
+	private static final String UNLIKE_POST = "DELETE FROM post_likes WHERE post_id=? AND user_email = ?;";
 	private static final String DISLIKE_POST = "INSERT INTO post_dislikes (post_id, user_email) VALUES (?,?);";
+	private static final String UNDISLIKE_POST = "DELETE FROM post_dislikes WHERE post_id=? AND user_email = ?;";
 	private static final String SELECT_LIKES_BY_POST = "SELECT user_email FROM post_likes WHERE post_id = ?;";
 	private static final String SELECT_DISLIKES_BY_POST = "SELECT user_email FROM post_dislikes WHERE post_id = ?;";
 	private static final String DELETE_POST = "DELETE FROM posts WHERE post_id = ?;";
@@ -265,6 +267,7 @@ public class PostDAO implements IPostDAO {
 			}
 		}
 	}
+	 
 	
 	@Override
 	public void dislikePost(int postId, String userEmail) throws DBException {
@@ -601,5 +604,91 @@ public class PostDAO implements IPostDAO {
 		String email = getPost(id).getUserEmail();
 		return UsersManager.getInstance().getUser(email).getName();
 	}
+	
+	public boolean isItLiked(int postId, String userEmail) {
+		if(PostDAO.getInstance().getLikesForPost(postId).contains(userEmail)) {
+				return true;
+			}
+		return false;
+	}
 
+	public boolean isItDisliked(int postId, String userEmail) {
+		if(PostDAO.getInstance().getDislikesForPost(postId).contains(userEmail)) {
+				return true;
+			}
+		return false;
+	}
+
+	@Override
+	public void unlikePost(int postId, String userEmail) throws DBException {
+		PreparedStatement statement = null;
+		if (!postLikes.containsKey(postId)){
+				System.out.println("You already unlike that post!");
+				return;
+		}
+		if (postLikes.containsKey(postId)) {
+			if (postLikes.get(postId).contains(userEmail)) {
+				try {
+					statement = DBManager.getInstance().getConnection().prepareStatement(UNLIKE_POST);
+					statement.setInt(1, postId);
+					statement.setString(2, userEmail);
+					statement.executeUpdate();
+
+					Post post = getPost(postId);
+					post.addLike(userEmail);
+					postLikes.get(postId).remove(userEmail);
+					System.out.println("unlike post");
+				} catch (SQLException e) {
+					throw new DBException("The post cannot be unliked right now", e);
+
+				} finally {
+					try {
+						if (statement != null) {
+							statement.close();
+						}
+
+					} catch (SQLException e) {
+						throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
+					}
+				}
+			}
+	}
+		
+	}
+
+	@Override
+	public void undislikePost(int postId, String userEmail) throws DBException {
+		PreparedStatement statement = null;
+		if (!postDislikes.containsKey(postId)){ 
+				System.out.println("You already undislike that post!");
+				return;
+		}
+		if (postDislikes.get(postId).contains(userEmail)) {
+			try {
+				statement = DBManager.getInstance().getConnection().prepareStatement(UNDISLIKE_POST);
+				statement.setInt(1, postId);
+				statement.setString(2, userEmail);
+				statement.executeUpdate();
+
+				Post post = getPost(postId);
+				post.addDislike(userEmail);
+				postDislikes.get(postId).remove(userEmail);
+				System.out.println("undislike post");
+			} catch (SQLException e) {
+				throw new DBException("The post cannot be disliked right now", e);
+
+			} finally {
+				try {
+					if (statement != null) {
+						statement.close();
+					}
+
+				} catch (SQLException e) {
+					throw new DBException(DBException.ERROR_MESSAGE_CLOSE_CONN, e);
+
+				}
+			}
+		}	
+	}
 }
