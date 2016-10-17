@@ -60,12 +60,12 @@ public class AlbumController {
 			category = category.toLowerCase();
 			InputStream pictureStream = picture.getInputStream();
 			File dir = new File(
-					"D:\\MyWifPictures\\userPostPics" + UsersManager.getInstance().getUser(email).getName());
+					"D:\\MyWifPictures\\userPostPics" + email);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
 			File pictureFile = new File(dir,
-					UsersManager.getInstance().getUser(email).getName()
+					email
 							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
 							+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

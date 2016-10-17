@@ -70,8 +70,8 @@ public class PictureController {
 
 	public static void returnPic(Post post, HttpServletResponse response) throws IOException {
 		String email = post.getUserEmail();
-		User user = UsersManager.getInstance().getUser(email);
-		File picFile = new File("D:\\MyWifPictures\\userPostPics" + user.getName(), post.getPicture());
+	//	User user = UsersManager.getInstance().getUser(email);
+		File picFile = new File("D:\\MyWifPictures\\userPostPics" + email, post.getPicture());
 		response.setContentLength((int) picFile.length());
 		String contentType = "image/" + picFile.getName().split("[.]")[picFile.getName().split("[.]").length - 1];
 		response.setContentType(contentType);
@@ -84,7 +84,7 @@ public class PictureController {
 			HttpServletRequest request) throws IOException {
 		if (UserController.isUserInSession(request)) {
 			String email = session.getAttribute("USER").toString();
-			String name = UsersManager.getInstance().getUser(email).getName();
+		//	String name = UsersManager.getInstance().getUser(email).getName();
 			InputStream pictureStream = null;
 			try {
 				pictureStream = picture.getInputStream();
@@ -97,7 +97,7 @@ public class PictureController {
 				dir.mkdirs();
 			}
 			System.out.println(picture.getContentType());
-			File pictureFile = new File(dir, name + "-profile-pic." + picture.getContentType().split("/")[1]);
+			File pictureFile = new File(dir, email + "-profile-pic." + picture.getContentType().split("/")[1]);
 			System.out.println(pictureFile.getAbsolutePath());
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			try {

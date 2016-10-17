@@ -202,6 +202,8 @@ public class PostDAO implements IPostDAO {
 			// user.getPosts().add(post);
 			user.getAlbums().get(albumId).addPost(post);
 			allPosts.put(post.getId(), post);
+			this.postLikes.put(post.getId(), new HashSet<>());
+			this.postDislikes.put(post.getId(), new HashSet<>());
 		} catch (SQLException e) {
 			throw new DBException("Cannot upload post right now", e);
 		} finally {
@@ -546,7 +548,7 @@ public class PostDAO implements IPostDAO {
 				postLikes.remove(postId);
 
 				File picture = new File("D:\\MyWifPictures\\userPostPics" + 
-				UsersManager.getInstance().getUser(postToDelete.getUserEmail()).getName()+ "\\" + postToDelete.getPicture());
+				postToDelete.getUserEmail()+ "\\" + postToDelete.getPicture());
 				try {
 					picture.createNewFile();
 				} catch (IOException e1) {

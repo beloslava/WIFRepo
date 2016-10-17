@@ -88,7 +88,7 @@ public class ValidateController {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			File avatarFile = new File(dir, name + "-profile-pic." + avatar.getContentType().split("/")[1]);
+			File avatarFile = new File(dir, email + "-profile-pic." + avatar.getContentType().split("/")[1]);
 			Files.copy(avatarStream, avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			try {
 				UsersManager.getInstance().regUser(email, password2, name, avatarFile.getName(), new HashSet<>(),
