@@ -156,9 +156,9 @@ response.addDateHeader ("Expires", 0);
         
         	<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
 	       <span class="icon-artist"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" ><c:out value= "${post.createdOn}"></c:out></a></span> 
-	       <span class="dislikes"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
-	       <span class="likes"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
-	       <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
+	       <span class="dislikes"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" class="likeThis" title="dislikes" ><c:out value="${fn:length(post.dislikes)}"></c:out></a></span> 
+	       <span class="likes"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" class="likeThis" title="likes"> <c:out value="${fn:length(post.likes)}"></c:out></a></span> 
+	       <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       </div>
     
