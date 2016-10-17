@@ -36,7 +36,8 @@
 </head>
 
 <body>
-
+<script src="js/loginValidate.js"></script>
+<script src="js/registerValidate.js"></script>
 	<!-- Top content -->
 	<div class="top-content">
 
@@ -103,11 +104,11 @@
 								</div>
 							</div>
 							<div class="form-bottom">
-								<form role="form" action="" id="registerForm" method="POST" class="registration-form" enctype="multipart/form-data"
+								<form role="form" action="javascript:reg()" id="registerForm" method="POST" class="registration-form" enctype="multipart/form-data"
 									accept="image/*" onsubmit="Validate(this)" >
 									<div class="form-group">
 										<label class="sr-only" for="form-name">Name</label> <input
-											type="text" name="name" placeholder="Name..."
+											type="text" name="name"  placeholder="Name..."
 											class="form-name form-control" maxlength="50" id="form-name" required
 											placeholder=" ">
 									</div>
@@ -134,10 +135,10 @@
 									<div class="form-group">
 										<input type="file" name="fileField" 
 											class="form-file form-control" id="form-file" required
-											placeholder=" " enctype="multipart/form-data">
+											placeholder=" ">
 									</div>
                                     <div id="message"></div>
-									<button id type="submit" class="btn">Sign me up!</button>
+									<button  type="submit" class="btn">Sign me up!</button>
 								</form>
 							</div>
 						</div>
@@ -212,12 +213,11 @@
 		confirm_password.onkeyup = validatePassword;
 	</script>
 	
-<script src="js/loginValidate.js"></script>
-<script src="js/registerValidate.js"></script>
+
 	<!--[if lt IE 10]>
             <script src="js/placeholder.js"></script>
         <![endif]-->
 
 </body>
-
+<script src="http://malsup.github.com/jquery.form.js"></script>
 </html>

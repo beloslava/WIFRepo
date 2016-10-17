@@ -79,8 +79,7 @@ public class ValidateController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Pattern pattern = Pattern.compile(
-				"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
+		Pattern pattern = Pattern.compile( "[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\\.[a-z0-9-]+)*");
 		Matcher mattcher = pattern.matcher(email);
 		if (((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty())
 				&& (!password.isEmpty()) && (password.equals(password2) && User.isPaswordStrong(password))
