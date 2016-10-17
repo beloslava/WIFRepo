@@ -8,7 +8,7 @@ import com.mywif.model.pojo.User;
 public interface IUserDAO {
 
 	List<User> getAllUsers();
-	
+
 	void saveUser(User user) throws DBException;
 
 	void updateUser(User user) throws DBException;

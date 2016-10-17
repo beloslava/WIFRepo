@@ -45,8 +45,7 @@ public class AlbumDAO implements IAlbumDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_ALBUMS, 
-					Statement.RETURN_GENERATED_KEYS);
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_INTO_ALBUMS, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, albumName);
 			statement.setString(2, userEmail);			
 			statement.executeUpdate();
@@ -84,7 +83,7 @@ public class AlbumDAO implements IAlbumDAO {
 	 * get all albums
 	 * @return map with all albums (album id -> album)
 	 */
-	private Map<Integer, Album> getAllAlbums(){
+	public Map<Integer, Album> getAllAlbums(){
 		TreeMap<Integer, Album> allAlbums = new TreeMap<Integer, Album>((albumId1, albumId2) -> albumId2 - albumId1);
 		Statement statement = null;
 		ResultSet resultSet = null;

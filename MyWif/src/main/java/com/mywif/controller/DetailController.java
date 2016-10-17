@@ -17,7 +17,7 @@ import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class DetailController {
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
@@ -43,11 +43,13 @@ public class DetailController {
 	@RequestMapping(value = "/detailspost", method = RequestMethod.GET)
 	public String post(@RequestParam("postId") String postId, HttpServletRequest request, Model model) {
 		if (UserController.isUserInSession(request)) {
+
 			Post post = PostDAO.getInstance().getPost(Integer.parseInt(postId));
 			model.addAttribute("postId", postId);
 			model.addAttribute("post", post);
 			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
 			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
+
 			return "detailsPost";
 		} else {
 			return "index";

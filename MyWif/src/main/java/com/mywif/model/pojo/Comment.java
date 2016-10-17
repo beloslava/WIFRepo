@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.mywif.model.db.CommentDAO;
-
 public class Comment {
 
 	private int commentId;
@@ -109,6 +107,7 @@ public class Comment {
 	public void setCommentComments(ArrayList<Comment> commentComments) {
 		this.commentComments = commentComments;
 	}
+	
 //	public boolean isItLiked(String userEmail) {
 //		System.out.println(userEmail);
 //		if (commentLikes.contains(userEmail)) {

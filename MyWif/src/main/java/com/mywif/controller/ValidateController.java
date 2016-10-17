@@ -38,7 +38,7 @@ public class ValidateController {
 	@RequestMapping(value = "/loginValidate", method = RequestMethod.POST)
 	public String loginValidate(@RequestParam("email") String email, @RequestParam("password") String password,
 			HttpSession session, Model model) {
-		
+
 		String message = "";
 		try {
 			if (UsersManager.getInstance().validLogin(email, password)) {
@@ -50,8 +50,7 @@ public class ValidateController {
 				model.addAttribute("peoplePosts", PostDAO.getInstance().getAllPostsByCategory("people").size());
 				model.addAttribute("naturePosts", PostDAO.getInstance().getAllPostsByCategory("nature").size());
 				model.addAttribute("urbanPosts", PostDAO.getInstance().getAllPostsByCategory("urban").size());
-				model.addAttribute("uncategorizedPosts",
-						PostDAO.getInstance().getAllPostsByCategory("uncategorized").size());
+				model.addAttribute("uncategorizedPosts", PostDAO.getInstance().getAllPostsByCategory("uncategorized").size());
 				model.addAttribute("familyPosts", PostDAO.getInstance().getAllPostsByCategory("family").size());
 				model.addAttribute("sportPosts", PostDAO.getInstance().getAllPostsByCategory("sport").size());
 				model.addAttribute("travelPosts", PostDAO.getInstance().getAllPostsByCategory("travel").size());
@@ -79,7 +78,7 @@ public class ValidateController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Pattern pattern = Pattern.compile( "[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\\.[a-z0-9-]+)*");
+		Pattern pattern = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\\.[a-z0-9-]+)*");
 		Matcher mattcher = pattern.matcher(email);
 		if (((!UsersManager.getInstance().isUserExists(email)) && mattcher.matches()) && (!email.isEmpty())
 				&& (!password.isEmpty()) && (password.equals(password2) && User.isPaswordStrong(password))

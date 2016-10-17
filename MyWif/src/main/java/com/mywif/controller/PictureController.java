@@ -31,7 +31,7 @@ import com.mywif.model.pojo.User;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class PictureController {
 	private static final String USERS_PROFILE_PICS_DIR = "D:\\MyWifPictures\\userProfilePics";
 
@@ -71,7 +71,7 @@ public class PictureController {
 
 	public static void returnPic(Post post, HttpServletResponse response) throws IOException {
 		String email = post.getUserEmail();
-	//	User user = UsersManager.getInstance().getUser(email);
+		// User user = UsersManager.getInstance().getUser(email);
 		File picFile = new File("D:\\MyWifPictures\\userPostPics" + email, post.getPicture());
 		response.setContentLength((int) picFile.length());
 		String contentType = "image/" + picFile.getName().split("[.]")[picFile.getName().split("[.]").length - 1];
@@ -85,7 +85,8 @@ public class PictureController {
 			HttpServletRequest request) throws IOException {
 		if (UserController.isUserInSession(request)) {
 			String email = session.getAttribute("USER").toString();
-		//	String name = UsersManager.getInstance().getUser(email).getName();
+			// String name =
+			// UsersManager.getInstance().getUser(email).getName();
 			InputStream pictureStream = null;
 			try {
 				pictureStream = picture.getInputStream();

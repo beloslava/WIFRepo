@@ -11,7 +11,7 @@ import com.mywif.model.pojo.Post;
 public interface IAlbumDAO {
 
 	TreeMap<Integer, Album> getAllAlbumsByUser(String userEmail);
-	
+
 	void addAlbum(String albumName, String userEmail, Timestamp time, List<Post> posts) throws DBException;
-	
+
 }

@@ -20,7 +20,7 @@ public interface ICommentDAO {
 	List<Comment> takeAllCommentsByComment(int commentId);
 
 	void likeComment(int commentId, String userEmail) throws DBException;
-	
+
 	void unlikeComment(int commentId, String userEmail) throws DBException;
 
 	boolean isItLiked(int commentId, String userEmail);

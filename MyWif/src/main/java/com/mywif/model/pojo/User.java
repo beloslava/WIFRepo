@@ -55,14 +55,16 @@ public class User implements Searchable {
 	// remove follower from user followers
 	public void removeFollower(String userEmail) {
 		followers.remove(userEmail);
-
 	}
 
 	// remove followed from user followed users
 	public void removeFollowed(String userEmail) {
 		followed.remove(userEmail);
-
 	}
+	
+//	public void removeFromAlbum(int albumId, Post post){
+//		albums.get(albumId).deletePost(post);
+//	}
 
 	public String getAvatarPath() {
 		return avatarPath;

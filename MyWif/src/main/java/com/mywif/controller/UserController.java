@@ -54,7 +54,6 @@ public class UserController {
 		model.addAttribute("allPosts", PostDAO.getInstance().getAllPosts().values());
 		session.setAttribute("USER", email);
 
-		
 		model.addAttribute("animalsPosts", PostDAO.getInstance().getAllPostsByCategory("animals").size());
 		model.addAttribute("abstractPosts", PostDAO.getInstance().getAllPostsByCategory("abstract").size());
 		model.addAttribute("foodPosts", PostDAO.getInstance().getAllPostsByCategory("food").size());
@@ -89,7 +88,7 @@ public class UserController {
 			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
 			HttpServletRequest request) {
 		String email = request.getSession().getAttribute("USER").toString();
-		String description=StringEscapeUtils.escapeHtml4(newDescription);
+		String description = StringEscapeUtils.escapeHtml4(newDescription);
 		if (isUserInSession(request)) {
 			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null
 					&& (!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty()) && newPass.equals(newPass2)
@@ -141,7 +140,7 @@ public class UserController {
 				System.out.println(DBException.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
-			
+
 			return "profile";
 		} else {
 			return "index";

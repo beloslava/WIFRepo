@@ -32,7 +32,7 @@ import com.mywif.model.db.CommentDAO;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts" })
+		"uncategorizedPosts", "familyPosts" })
 public class AlbumController {
 
 	@RequestMapping(value = "/createalbum", method = RequestMethod.POST)
@@ -60,15 +60,12 @@ public class AlbumController {
 		if (UserController.isUserInSession(request)) {
 			category = category.toLowerCase();
 			InputStream pictureStream = picture.getInputStream();
-			File dir = new File(
-					"D:\\MyWifPictures\\userPostPics" + email);
+			File dir = new File("D:\\MyWifPictures\\userPostPics" + email);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
-			File pictureFile = new File(dir,
-					email
-							+ LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
-							+ picture.getContentType().split("/")[1]);
+			File pictureFile = new File(dir, email + LocalDateTime.now().toString().replaceAll(":", "") + "-post-pic."
+					+ picture.getContentType().split("/")[1]);
 			Files.copy(pictureStream, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			try {
 				PostDAO.getInstance().addPost(email, albumId, category, pictureFile.getName(), nameOfPost, keyWords,
@@ -78,7 +75,7 @@ public class AlbumController {
 				e.printStackTrace();
 			}
 			model.addAttribute(category + "Posts", PostDAO.getInstance().getAllPostsByCategory(category).size());
-			model.addAttribute("albumId",albumId);
+			model.addAttribute("albumId", albumId);
 			return "myPhotos";
 		} else {
 			return "index";
@@ -133,7 +130,7 @@ public class AlbumController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/postunlike", method = RequestMethod.POST)
 	public String unlikePost(@RequestParam(value = "postId") String postId, Model model, HttpSession session,
 			HttpServletRequest request) {

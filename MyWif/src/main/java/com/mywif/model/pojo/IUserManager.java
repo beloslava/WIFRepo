@@ -9,8 +9,7 @@ import com.mywif.model.exception.DBException;
 
 public interface IUserManager {
 	
-	void changeSettings(String name, String password, String gender, String about, String email) 
-			throws UnsupportedEncodingException, DBException;
+	void changeSettings(String name, String password, String gender, String about, String email) throws UnsupportedEncodingException, DBException;
 	
 	void regUser(String email, String password, String name, String avatarPath,
 			 Set<String> followers, Set<String> followed, Map<Integer, Album> albums) throws DBException;

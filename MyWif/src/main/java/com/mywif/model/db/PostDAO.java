@@ -541,6 +541,7 @@ public class PostDAO implements IPostDAO {
 				Post postToDelete = getPost(postId);
 				User user = UsersManager.getInstance().getUser(postToDelete.getUserEmail());
 				user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
+				//user.removeFromAlbum(postToDelete.getAlbumId(), postToDelete);
 				allPosts.remove(postId);
 				postDislikes.remove(postId);
 				postLikes.remove(postId);

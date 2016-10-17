@@ -8,16 +8,16 @@ public class DBManager {
 
 	private static DBManager instance;
 	private Connection connection;
-	
+
 	private static final String DB_IP = "127.0.0.1";
 	private static final String DB_PORT = "3306";
 	private static final String DB_NAME = "my_wif";
 	private static final String DB_USERNAME = "root";
 	private static final String DB_PASSWORD = "mySQL94";
-	private static final String URL = "jdbc:mysql://"+DB_IP+":"+DB_PORT+"/"+DB_NAME;
-	
-	private DBManager(){
-		
+	private static final String URL = "jdbc:mysql://" + DB_IP + ":" + DB_PORT + "/" + DB_NAME;
+
+	private DBManager() {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -29,16 +29,16 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-	
-	public synchronized static DBManager getInstance(){
-		if(instance == null){
+
+	public synchronized static DBManager getInstance() {
+		if (instance == null) {
 			instance = new DBManager();
 		}
 		return instance;
 	}
-	
+
 	public Connection getConnection() {
 		return connection;
 	}
-	
+
 }

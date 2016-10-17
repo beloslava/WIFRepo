@@ -24,7 +24,7 @@ import com.mywif.model.pojo.UsersManager;
 
 @Controller
 @SessionAttributes({ "animalsPosts", "abstractPosts", "foodPosts", "peoplePosts", "naturePosts", "urbanPosts",
-	"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
+		"uncategorizedPosts", "familyPosts", "sportPosts", "travelPosts" })
 public class CommentController {
 
 	@RequestMapping(value = "/commentlike", method = RequestMethod.POST)
@@ -37,7 +37,7 @@ public class CommentController {
 			model.addAttribute("post", post);
 			model.addAttribute("postUser", UsersManager.getInstance().getUser(post.getUserEmail()));
 			model.addAttribute("comments", CommentDAO.getInstance().takeAllCommentsByPost(post.getId()));
-			
+
 			String email = session.getAttribute("USER").toString();
 			try {
 				CommentDAO.getInstance().likeComment(Integer.parseInt(commentId), email);
@@ -50,7 +50,7 @@ public class CommentController {
 			return "index";
 		}
 	}
-	
+
 	@RequestMapping(value = "/commentunlike", method = RequestMethod.POST)
 	protected String unlikeComment(@RequestParam("commentId") String commentId, @RequestParam("postId") String postId,
 			Model model, HttpSession session, HttpServletRequest request) {

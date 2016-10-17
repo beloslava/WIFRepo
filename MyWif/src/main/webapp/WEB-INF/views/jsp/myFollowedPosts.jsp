@@ -93,10 +93,9 @@ response.addDateHeader ("Expires", 0);
   <div class="intro">Your followed users posts... </div>
   <div class="blog-wrap">
     <div class="blog-grid">
-    <c:choose>
+    	<c:choose>
 				<c:when test= "${ not empty UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">
-					<c:forEach var="post" items="${UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">
-    
+					<c:forEach var="post" items="${UsersManager.getInstance().getFollowedPosts(sessionScope.USER)}">   			
      <div class="post format-image box">
         <div class="frame"> <a href="detailspost?postId=<c:out value="${post.id}"></c:out>"><img src="picturepost?postId=<c:out value="${post.id}"></c:out>"/></a> </div>
         <div class="details">       
@@ -107,11 +106,10 @@ response.addDateHeader ("Expires", 0);
 	        <span class="comments"><a href="detailspost?postId=<c:out value="${post.id}"></c:out>" title="comments"></a><c:out value="${fn:length(post.comments)}"></c:out></span>    
 	    </div>
       </div>
-   
-    </c:forEach> 										
+   					 </c:forEach> 										
 				</c:when>
 		
-			 </c:choose> 
+		</c:choose> 
       
     </div>
   </div>

@@ -17,7 +17,6 @@ import java.util.TreeMap;
 import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Comment;
 import com.mywif.model.pojo.Post;
-import com.mywif.model.pojo.UsersManager;
 
 public class CommentDAO implements ICommentDAO {
 
@@ -94,8 +93,7 @@ public class CommentDAO implements ICommentDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT,
-					Statement.RETURN_GENERATED_KEYS);
+			statement = DBManager.getInstance().getConnection().prepareStatement(INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS);
 			// post_id, user_email, parent_comment_id, comment_text
 			statement.setInt(1, postId);
 			statement.setString(2, userEmail);

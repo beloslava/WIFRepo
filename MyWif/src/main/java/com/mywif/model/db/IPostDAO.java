@@ -31,6 +31,6 @@ public interface IPostDAO {
 	
 	Set<String> getAllLikesForPost(int postId); //get all user's emails that liked the post
 	
-	Set<String> getAllDislikesForPost(int postId); //get all user's emails that disliked the post
-	
+	Set<String> getAllDislikesForPost(int postId); // get all user's emails that disliked the post
+
 }
