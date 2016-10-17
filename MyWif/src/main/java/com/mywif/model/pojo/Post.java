@@ -55,6 +55,14 @@ public class Post implements Searchable {
 	public void addDislike(String userEmail) {
 		dislikes.add(userEmail);
 	}
+	
+	public void removeDislike(String userEmail) {
+		dislikes.remove(userEmail);
+	}
+	
+	public void removeLike(String userEmail) {
+		likes.remove(userEmail);
+	}
 
 	public int getId() {
 		return id;

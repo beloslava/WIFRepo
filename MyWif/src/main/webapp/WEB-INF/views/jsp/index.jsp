@@ -105,7 +105,7 @@
 							</div>
 							<div class="form-bottom">
 								<form role="form" action="javascript:reg()" id="registerForm" method="POST" class="registration-form" enctype="multipart/form-data"
-									accept="image/*" onsubmit="Validate(this)" >
+									accept="image/*" onsubmit="return Validate(this)" >
 									<div class="form-group">
 										<label class="sr-only" for="form-name">Name</label> <input
 											type="text" name="name"  placeholder="Name..."

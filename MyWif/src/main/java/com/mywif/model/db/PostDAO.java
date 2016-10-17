@@ -536,33 +536,25 @@ public class PostDAO implements IPostDAO {
 			ps6.setInt(1, postId); // delete post
 			ps6.executeUpdate();
 
-			conn.commit();
 
 			if (allPosts.containsKey(postId)) {
 				Post postToDelete = getPost(postId);
 				User user = UsersManager.getInstance().getUser(postToDelete.getUserEmail());
 				user.getAlbums().get(postToDelete.getAlbumId()).deletePost(postToDelete);
-				System.out.println("It's working!!!!!!!!");
 				allPosts.remove(postId);
 				postDislikes.remove(postId);
 				postLikes.remove(postId);
 
 				File picture = new File("D:\\MyWifPictures\\userPostPics" + 
-				postToDelete.getUserEmail()+ "\\" + postToDelete.getPicture());
-				try {
-					picture.createNewFile();
-				} catch (IOException e1) {
-					System.out.println("Something went wrong with creating the file!");
-					e1.printStackTrace();
-				}
-				try {					
-					Files.deleteIfExists(picture.toPath().toAbsolutePath());
-				} catch (IOException e) {
-					System.out.println("Something went wrong with deleting the file!");
-					e.printStackTrace();
-				}
+				postToDelete.getUserEmail()+ "\\" + postToDelete.getPicture());			
+				picture.createNewFile();		
+				Files.deleteIfExists(picture.toPath().toAbsolutePath());					
+				
 			}
-		} catch (SQLException e) {
+			
+			conn.commit();
+
+		} catch (SQLException | IOException e) {
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -637,7 +629,7 @@ public class PostDAO implements IPostDAO {
 					statement.executeUpdate();
 
 					Post post = getPost(postId);
-					post.addLike(userEmail);
+					post.removeLike(userEmail);
 					postLikes.get(postId).remove(userEmail);
 					System.out.println("unlike post");
 				} catch (SQLException e) {
@@ -674,7 +666,7 @@ public class PostDAO implements IPostDAO {
 				statement.executeUpdate();
 
 				Post post = getPost(postId);
-				post.addDislike(userEmail);
+				post.removeDislike(userEmail);
 				postDislikes.get(postId).remove(userEmail);
 				System.out.println("undislike post");
 			} catch (SQLException e) {
