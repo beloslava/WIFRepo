@@ -60,8 +60,8 @@ response.addDateHeader ("Expires", 0);
 							</select>
 						</form>
 					</li>
-          <li class="active"><a href="main">Home</a>
-          <li><a href="myFollowedPosts">Feed</a>
+          <li><a href="main">Home</a>
+          <li class="active"><a href="myFollowedPosts">Feed</a>
           </li>
 		  <li><a href="myProfile">My profile</a>
 		  <li><a href="myAlbums">My Albums</a>

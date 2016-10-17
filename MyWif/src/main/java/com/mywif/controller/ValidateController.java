@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
+//import org.apache.commons.lang.StringEscapeUtils;
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.exception.DBException;
 import com.mywif.model.pojo.Album;
@@ -38,7 +38,7 @@ public class ValidateController {
 	@RequestMapping(value = "/loginValidate", method = RequestMethod.POST)
 	public String loginValidate(@RequestParam("email") String email, @RequestParam("password") String password,
 			HttpSession session, Model model) {
-
+		
 		String message = "";
 		try {
 			if (UsersManager.getInstance().validLogin(email, password)) {

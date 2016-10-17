@@ -8,6 +8,7 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,14 +77,15 @@ public class CommentController {
 	protected String writeComment(@RequestParam("email") String email, @RequestParam("comment") String comment,
 			@RequestParam("parentCommentId") String parentCommentId, @RequestParam("postId") String postId, Model model,
 			HttpServletRequest request) {
+		String textComment = StringEscapeUtils.escapeHtml4(comment);
 		if (UserController.isUserInSession(request)) {
 			Integer parentId = null;
 			if (!parentCommentId.equals("parent")) {
 				parentId = Integer.parseInt(parentCommentId);
 			}
-			if (comment != null) {
+			if (textComment != null) {
 				try {
-					CommentDAO.getInstance().addComment(Integer.parseInt(postId), email, parentId, comment,
+					CommentDAO.getInstance().addComment(Integer.parseInt(postId), email, parentId, textComment,
 							Timestamp.valueOf(LocalDateTime.now()), new ArrayList<>(), new HashSet<>());
 				} catch (DBException e) {
 					System.out.println(DBException.ERROR_MESSAGE);

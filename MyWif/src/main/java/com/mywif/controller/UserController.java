@@ -16,6 +16,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+//import org.apache.commons.lang.StringEscapeUtils;
 
 import com.mywif.model.db.PostDAO;
 import com.mywif.model.exception.DBException;
@@ -87,13 +89,13 @@ public class UserController {
 			@RequestParam("gender") String gender, @RequestParam("newDescription") String newDescription,
 			HttpServletRequest request) {
 		String email = request.getSession().getAttribute("USER").toString();
-
+		String description=StringEscapeUtils.escapeHtml4(newDescription);
 		if (isUserInSession(request)) {
 			if (newName != null && (!newName.isEmpty()) && oldPass != null && (!oldPass.isEmpty()) && newPass != null
 					&& (!newPass.isEmpty()) && newPass2 != null && (!newPass2.isEmpty()) && newPass.equals(newPass2)
-					&& gender != null && newDescription != null) {
+					&& gender != null && description != null) {
 				try {
-					UsersManager.getInstance().changeSettings(newName, newPass, gender, newDescription, email);
+					UsersManager.getInstance().changeSettings(newName, newPass, gender, description, email);
 				} catch (UnsupportedEncodingException | DBException e) {
 					e.printStackTrace();
 				}
