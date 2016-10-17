@@ -494,8 +494,7 @@
 						items="${PostDAO.getInstance().getLikesForPost(post.id)}">
 						<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(userEmail).name}" />
-						<li><a
-							href="detailsprofile?email=<c:out value="${userEmail}"></c:out>>"
+						<li><a href="detailsprofile?email=<c:out value="${userEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a></li>
 					</c:forEach>
 				</ul>
@@ -511,7 +510,7 @@
 						<c:set var="userName"
 							value="${UsersManager.getInstance().getUser(userEmail).name}" />
 						<li><a
-							href="detailsprofile?email=<c:out value="${userEmail}"></c:out>>"
+							href="detailsprofile?email=<c:out value="${userEmail}"></c:out>"
 							title="author name"><c:out value="${userName}"></c:out></a></li>
 					</c:forEach>
 				</ul>

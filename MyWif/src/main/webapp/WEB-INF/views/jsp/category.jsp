@@ -128,11 +128,11 @@ response.addDateHeader ("Expires", 0);
 								<c:set var="userName" value="${UsersManager.getInstance().getUser(post.userEmail).name}"/>
 								title="author name"><c:out value="${userName}"></c:out></a></span> <span
 								class="likes"><a
-								href="postlike?postId=<c:out value="${post.id}"></c:out>"
+								href="detailspost?postId=<c:out value="${post.id}"></c:out>"
 								class="likeThis" title="likes"> <c:out
 										value="${fn:length(post.dislikes)}"></c:out></a></span> <span
 								class="likes"><a
-								href="postdislike?postId=<c:out value="${post.id}"></c:out>"
+								href="detailspost?postId=<c:out value="${post.id}"></c:out>"
 								class="likeThis" title="dislikes"><c:out
 										value="${fn:length(post.likes)}"></c:out></a></span> <span
 								class="comments"><a

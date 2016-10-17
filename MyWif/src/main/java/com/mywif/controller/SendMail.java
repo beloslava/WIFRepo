@@ -137,7 +137,7 @@ public class SendMail extends Thread {
 		}
 		try {
 			String followedName = UsersManager.getInstance().getUser(followedUserEmail).getName();
-			sender.setBody("Hi, " + followedName + "! You are followed by user with that email " + followerUserEmail
+			sender.setBody("Hi, " + followedName + "! You are followed by the user with e-mail " + followerUserEmail
 			+ " at: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)) + ".");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
